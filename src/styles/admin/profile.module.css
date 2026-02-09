@@ -1,0 +1,170 @@
+/* .photo {
+    background-color: #f7f7f7;
+    border-radius: 20px;
+} */
+
+.cover {
+    width: 100%;
+    height: 200px;
+    background-color: var(--bg-primary);
+    border-radius: 20px;
+    position: relative;
+    /* border-bottom-left-radius: unset;
+    border-bottom-right-radius: unset; */
+    margin-bottom: 80px;
+}
+
+.profile {
+    position: absolute;
+    bottom: -50px;
+    left: 30px;
+}
+
+.profile img {
+    object-fit: cover;
+    border-radius: 20px;
+}
+
+.page-info {
+    color: #a2a2a2;
+    margin-bottom: 30px;
+}
+
+.cover-bottom {
+    padding: 30px;
+    padding-top: 60px;
+}
+
+.cover-bottom section {
+    margin-bottom: 20px;
+    line-height: 25px;
+}
+
+.cover-bottom section p {
+    color: #a2a2a2;
+}
+
+.photo .action {
+    display: flex;
+    column-gap: 10px;
+}
+
+.photo .action button {
+    padding: 5px 10px;
+}
+
+.photo .action button:nth-child(1) {
+    background: transparent;
+    border: 1px solid var(--bg-primary);
+    border-radius: 5px;
+}
+
+.photo .action button:nth-child(2) {
+    background: var(--bg-primary);
+    color: white;
+    border: 1px solid var(--bg-primary);
+    border-radius: 5px;
+}
+
+.cover .profile .change {
+    bottom: -8px !important;
+    right: -8px !important;
+    top: unset;
+    border: 1;
+    background: var(--bg-primary) !important;
+    color: white;
+    border: 2px solid white;
+}
+
+.cover .change {
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    border-radius: 100%;
+    width: 30px;
+    height: 30px;
+    border: none;
+    background: white;
+}
+
+.info h3 {
+    margin-bottom: 10px;
+}
+
+/* .form-groups {
+    display: flex;
+    width: 100%;
+}
+
+.form-group {
+    position: relative;
+    width: 100%;
+}
+
+.form-control {
+  width: calc(100% - 40px);
+  padding: 0px 13px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  background: transparent;
+  outline: none;
+  border-radius: 12px;
+  padding-bottom: 6px;
+  padding-top: 17px;
+}
+
+textarea.form-control {
+  resize: none;
+  height: 140px;
+}
+
+.form-group label {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #999;
+  font-size: 16px;
+  pointer-events: none;
+  background: transparent;
+  padding: 0 4px;
+  transition: 0.2s ease;
+  background-color: white;
+}
+
+.form-group:has(textarea) label {
+  position: absolute;
+  left: 10px;
+  top: 23px !important;
+}
+
+.form-control:focus + label,
+.form-control:not(:placeholder-shown) + label {
+  top: 12px !important;
+  font-size: 11px;
+} */
+
+/* .form section p {
+    margin-bottom: 10px;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    row-gap: 13px;
+} */
+
+
+.btn-update-profile {
+    background: var(--bg-primary);
+    color: white;
+    width: 170px;
+    padding: 12px 0px;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    column-gap: 10px;
+}
