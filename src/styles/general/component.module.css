@@ -1,0 +1,149 @@
+/* Skeleton start */
+
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    #ffffff 25%,
+    #cacaca 37%,
+    #ffffff 63%
+  );
+  background-size: 400% 100%;
+  animation: skeleton-loading 1s ease infinite;
+  display: block;
+}
+
+@keyframes skeleton-loading {
+  0% {
+    background-position: 100% 0;
+  }
+  100% {
+    background-position: 0 0;
+  }
+}
+
+/* Skeleton End */
+
+
+/* Modal Start */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  z-index: 2000;
+}
+
+/* Modal box */
+.modal {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 500px;
+  height: 100vh;
+  background: #fff;
+  transform: translateX(100%);
+  opacity: 0;
+  transition: transform 0.35s ease, opacity 0.20s ease;
+}
+
+/* Active state */
+.active-modal {
+  opacity: 1;
+  pointer-events: auto;  
+  transform: translateX(0px); /* slide into view */
+}
+
+.modal-container {
+  position: relative;
+}
+
+.active-modal .modal {
+  transform: scale(1);
+  opacity: 1;
+}
+
+.header-modal {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid rgb(224, 224, 224);
+
+  position: fixed;
+  left: 0px;
+  right: 0px;
+  top: 0px;
+  padding: 15px 25px;
+}
+
+.modal-title {
+  font-size: 12px;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+/* Close button */
+.modal-close-btn {
+  color: gray;
+  background-color: #f2f2f2;
+  border: 1px solid rgb(226, 226, 226);
+  border-radius: 9px;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  cursor: pointer;
+
+  margin-left: auto;
+  box-shadow: var(--box-shadow-default);
+}
+
+.main-content-modal {
+  padding: 0px 20px;
+  padding-top: 75px !important;
+}
+
+.modal-form-info {
+  font-size: 13px;
+  color: gray;
+}
+
+.footer-modal {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: end;
+  column-gap: 10px;
+  
+  padding: 15px 25px;
+  border-top: 1px solid rgb(224, 224, 224);
+}
+.footer-modal button {
+  padding: 9px 20px;
+  font-size: 15px;
+  border: none;
+  border-radius: 10px;
+}
+
+.footer-modal button:first-child {
+  background-color: #f2f2f2;
+  border: 1px solid rgb(226, 226, 226);
+}
+
+.footer-modal button:last-child {
+  background-color: var(--bg-primary);
+  border: 1px solid rgb(226, 226, 226);
+  color: white;
+}
+
+
+/* Modal End */

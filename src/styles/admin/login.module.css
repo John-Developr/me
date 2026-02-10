@@ -1,0 +1,192 @@
+.login {
+    display: flex;
+    height: 100vh;
+}
+
+.left-side {
+    width: 60%;
+}
+
+.right-side {
+    width: 40%;
+    background-color: #f7f7f7;
+}
+
+.left-side, .right-side {
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.left-side .container {
+    position: relative;
+    margin: 0px auto;
+    width: 650px;
+    padding: 30px;
+}
+
+.left-side a.back {
+    display: flex;
+    align-items: center;
+    color: black;
+    text-decoration: none;
+    column-gap: 15px;
+    margin-bottom: 40px;
+    font-size: 14px;
+}
+
+.left-side a.back > span.icon {
+    display: block;
+    background: white;
+    border: 1.5px solid black;
+    height: 25px;
+    width: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50px;
+}
+
+.left-side a.back:hover {
+    color: rgb(131, 131, 131);
+    transition: 0.5s;
+}
+
+.left-side a.back:hover span.icon {
+    border: 1.5px solid rgb(131, 131, 131);
+    transition: 0.5s;
+}
+
+.left-side .container span.icon svg {
+    transform: scaleX(-1);
+}
+
+.left-side .intro {
+    display: flex;
+    flex-direction: column;
+    row-gap: 30px;
+    margin-top: 30px;
+}
+
+.left-side .intro section {
+    display: flex;
+    position: relative;
+    width: 400px;
+}
+
+.left-side .intro h1 {
+    font-size: 60px;
+} 
+
+.left-side .intro section img {
+    position: absolute;
+    right: 0px;
+    top: -57px;
+}
+
+.left-side .intro p {
+    font-size: 20px;
+}
+
+.left-side footer {
+    margin-top: 60px;
+    color: gray;
+    font-size: 13px;
+}
+
+.right-side .container {
+    position: relative;
+    margin: 0px auto;
+    width: 300px;
+    padding: 30px;
+}
+
+.right-side h2 {
+    text-transform: uppercase;
+    margin-bottom: 20px;
+}
+
+.right-side h2::after {
+    content: "Admin Panel";
+    text-transform: uppercase;
+    display: block;
+    font-size: 13px;
+    color: gray;
+}
+
+.right-side p {
+    font-size: 17px;
+    margin-bottom: 20px;
+}
+
+.right-side .form-group {
+    position: relative;
+}
+
+.right-side .form-group span.icon {
+    position: absolute;
+    top: 11px;
+    left: 11px;
+}
+
+.right-side .form-control {
+    width: calc(100% - 60px);
+    height: 40px;
+    border-radius: 7px;
+    margin-bottom: 7px;
+    border: 1px solid black;
+    padding: 0px 20px;
+    padding-left: 40px !important;
+    outline: none;
+}
+
+.right-side .action {
+    margin-top: 10px;
+}
+
+.right-side .action button {
+    width: 100%;
+    height: 40px;
+    background-color: transparent;
+    border-radius: 7px;
+    border: 1px solid black;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.right-side .action button:first-child {
+    background-color: var(--bg-primary) !important;
+    color: white !important;
+    border: 1px solid var(--bg-primary) !important;;
+}
+
+.right-side .action hr {
+    border: none;
+    border-top: 0.5px solid black !important;
+    margin: 10px 10px;
+    position: relative;
+    overflow: visible;
+    margin-top: 25px;
+}
+
+.right-side .action hr::after {
+    content: "OR";
+    display: block;
+    margin: 0 auto;
+    width: 50px;
+    position: relative;
+    top: -10px;
+    background: #f7f7f7;
+    text-align: center;
+}
+
+@media (max-width: 970px) {
+    .left-side {
+        display: none;
+    }
+
+    .right-side {
+        width: 100%;
+        background-color: #f7f7f7;
+    }
+}

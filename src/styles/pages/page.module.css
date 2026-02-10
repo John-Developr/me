@@ -1,0 +1,607 @@
+/* ===================================
+  General Section Style Start
+=================================== */
+.about,
+.tech-stack,
+.experience,
+.recent-projects,
+.connect,
+.blog {
+  padding: 30px;
+  /* transform: translateY(-2px); */
+  box-shadow: var(--box-shadow-default);
+  border: var(--border-container);
+  border-radius: 12px;
+  position: relative;
+}
+
+div.title {
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  column-gap: 10px;
+}
+
+.title h3 {
+  position: relative;
+  top: -2px;
+  font-size: 15px;
+}
+
+.connect .title h3,
+.blog .title h3,
+.experience .title h3 {
+  top: 0px;
+}
+
+.about p,
+.tech-stack p,
+.experience p:not(ul > p),
+.recent-projects p {
+  line-height: 25px;
+}
+
+.second .tech-stack .see-more,
+.second .experience .see-more,
+.third .recent-projects .see-more,
+.fourth .blog .see-more {
+  position: absolute;
+  right: 15px;
+  bottom: 13px;
+}
+
+.second .tech-stack .see-more a,
+.second .experience .see-more a,
+.third .recent-projects .see-more a,
+.fourth .blog .see-more a {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+  flex-direction: row-reverse;
+  column-gap: 10px;
+  color: #777;
+  text-decoration: none;
+  font-size: 13px;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+/* ===================================
+  General Section Style End
+=================================== */
+
+/* ===================================
+  1st Section Style Start
+=================================== */
+.first {
+  display: flex;
+  column-gap: 40px;
+  margin-top: 20px;
+}
+
+.first > div {
+  line-height: 30px;
+  display: flex;
+  flex-direction: column;
+  row-gap: 3px;
+}
+
+.first .name {
+   font-size: 20px;
+}
+
+.first .role {
+  font-size: 26px;
+  font-weight: bolder;
+}
+
+.first p.location {
+  display: flex;
+  align-items: center;
+  column-gap: 7px;
+  margin-bottom: 5px;
+}
+
+.first .action {
+  display: flex !important;
+  column-gap: 5px;
+}
+
+.first .action button {
+  height: 35px;
+  padding: 0px 16px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  column-gap: 10px;
+}
+
+.first .action button:first-child {
+  background-color: var(--bg-primary);
+  border: none;
+  color: white;
+}
+
+.first .action button:last-child {
+  background-color: white;
+  border: 1px solid rgb(225, 225, 225);
+  color: black;
+}
+
+.first .profile {
+  margin-left: auto;
+  position: relative;
+  height: fit-content;
+}
+
+.first .profile > .avatar {
+  border-radius: 20px;
+  object-fit: cover;
+
+  box-shadow: 1px 1px 20px -3px #000000bf;
+  -webkit-box-shadow: 1px 1px 20px -3px #000000bf;
+  -moz-box-shadow: 1px 1px 20px -3px #000000bf;
+/* 
+    box-shadow: 3px 13px 46px -11px rgba(0,0,0,0.75);
+  -webkit-box-shadow: 3px 13px 46px -11px rgba(0,0,0,0.75);
+  -moz-box-shadow: 3px 13px 46px -11px rgba(0,0,0,0.75); */
+}
+
+/* .first .profile::before {
+  content: "";
+  background-color: #42dd88;
+  border: 2.5px solid #fff;
+  border-radius: 13px;
+  width: 13px;
+  height: 13px;
+  display: block;
+  position: absolute;
+  bottom: -4px;
+  left: -7px;
+} */
+
+.online-indicator {
+  background-color: #42dd88;
+  border-radius: 13px;
+  width: 13px;
+  height: 13px;
+  display: block;
+  position: absolute;
+  bottom: -2px;
+  left: -2px;
+}
+
+.online-indicator::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background-color: rgba(34, 197, 94, 0.6);
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+
+@media (max-width: 850px) {
+  .first {
+    display: block;
+    position: relative;
+  }
+  
+  .first .profile {
+    margin-left: unset;
+    position: absolute !important;
+    height: unset;
+
+    top: 0px;
+    right: 0px;
+  }
+}
+
+@media (max-width: 462px) {
+  .first .role {
+    font-size: clamp(1rem, 5.5vw, 3.5rem);
+  }
+}
+
+/* ===================================
+  1st Section Style End
+=================================== */
+
+
+/* ===================================
+  2nd Section Style Start
+=================================== */
+.second {
+  display: flex;
+  column-gap: 20px;
+}
+
+.second .about p {
+  display: -webkit-box;
+  -webkit-line-clamp: 9;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+} 
+
+.second > .left-content > section {
+  width: calc(100% - 60px);
+}
+
+.second > .left-content {
+  display: flex;
+  flex-direction: column;
+  row-gap: 20px;
+}
+
+.second > .right-content > .experience {
+  height: calc(100% - 62px);
+  width: 240px;
+}
+
+.second .experience p:nth-child(2){
+  margin-bottom: initial !important;
+}
+
+.second .tech-stack * {
+  line-height: unset;
+}
+
+.second .tech-stack ul.tech-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); 
+  column-gap: 10px;
+  row-gap: 10px;
+  margin-bottom: 20px;
+}
+
+.second .tech-stack li.tech-list {
+  list-style: none;
+  display: flex;
+  column-gap: 15px;
+  align-items: center;
+  border: 1px solid #ececec;
+  padding: 10px 15px;
+  border-radius: 8px;
+  width: calc(100% - 30px)
+}
+
+.second .tech-stack li.tech-list div.tech-detail {
+  line-height: 17px !important;
+}
+
+.second .tech-stack li.tech-list div.tech-detail h5 {
+  font-size: 15px;
+}
+
+.second .tech-stack li.tech-list div.tech-detail p {
+  font-size: 10px;
+  color: rgb(158, 158, 158);
+
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@media (max-width: 850px) {
+  .second {
+    flex-direction: column;
+    row-gap: 20px;
+  }
+
+  .second .about p {
+    display: -webkit-box;
+    -webkit-line-clamp: unset;
+    -webkit-box-orient: unset;
+    overflow: unset;
+    text-overflow: unset;
+  } 
+
+  .second .tech-stack ul.tech-container {
+    grid-template-columns: repeat(1, 1fr); 
+  }
+}
+
+/* ===================================
+  2nd Section Style End
+=================================== */
+
+/* ===================================
+  3rd Section Style Start
+=================================== */
+
+.third .recent-content {
+  display: flex;
+}
+
+.third .recent-detail {
+  width: 100%;
+  padding-right: 50px;
+  display: flex;
+  flex-direction: column;
+  row-gap: 20px;
+}
+
+
+.third .recent-detail .name-intro h1 {
+  font-size: 22px;
+}
+
+.third .recent-detail .name-intro h2 {
+  color: #999898; 
+  font-weight: 500;
+  font-size: 15px;
+}
+
+.third .recent-detail .tech-used ul {
+  display: flex;
+  column-gap: 10px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+  row-gap: 10px;
+}
+
+.third .recent-detail .tech-used ul li {
+  list-style-type: none;
+  padding: 5px 13px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  column-gap: 10px;
+  background: #F3F3F3;
+}
+
+.third .recent-image img {
+  display: block;
+  background-color: #eee;
+  border-radius: 20px;
+  border: 1px solid #ececec;
+}
+
+.third .recent-image > .recent-action,
+.third .recent-detail > .recent-action  {
+  display: flex;
+  margin-top: 8px;
+  column-gap: 8px;
+}
+
+.third .recent-image > .recent-action button:first-child,
+.third .recent-detail > .recent-action button:first-child {
+  width: 100%;
+  background-color: var(--bg-primary);
+  border: none;
+  border-radius: 10px;
+  height: 37px;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  column-gap: 10px;
+}
+
+.third .recent-image > .recent-action button:last-child,
+.third .recent-detail > .recent-action button:last-child {
+  background: none;
+  display: flex;
+  align-items: center;
+  border: 1px solid #cecece;
+  padding: 0px 8px;
+  border-radius: 10px;
+  box-shadow: var(--box-shadow-default);
+}
+
+@media (max-width: 850px) {
+  .third .recent-content {
+    display: block;
+  }
+
+  .third .recent-image img {
+    width: 100%;
+    object-fit: cover;
+  }
+}
+
+/* ===================================
+  3rd Section Style End
+=================================== */
+
+
+/* ===================================
+  4th Section Style Start
+=================================== */
+
+.fourth {
+  display: flex;
+  column-gap: 20px;
+}
+
+.fourth .connect {
+  width: 250px;
+}
+
+.fourth .connect section:not(:last-child)::after {
+  content: "";
+  width: 100%;
+  height: 1px;
+  background-color: #f2f2f2;
+  display: block;
+  margin: 19px 0px;
+}
+
+.fourth .connect p {
+  font-size: 12.5px;
+  margin-bottom: 3px;
+}
+
+.fourth .connect h5 {
+  display: flex;
+  align-items: center;
+  font-size: 15.2px;
+}
+
+.fourth .connect h5 a {
+  color: black
+}
+
+.fourth .connect span {
+  display: block;
+  margin-left: auto;
+}
+
+.fourth .connect img {
+  margin-right: 5px;
+}
+
+.fourth .connect section.resume span {
+  margin: unset !important;
+  position: relative;
+  bottom: -2px;
+}
+
+.fourth .connect section.resume a {
+  width: 100%;
+  background-color: var(--bg-primary);
+  color: white;
+  text-decoration: none;
+  height: 35px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  column-gap: 15px;
+  font-size: 14px;
+}
+
+.fourth .blog {
+  width: calc(100% - 394px);
+}
+
+.fourth .blog .card-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.fourth .blog .card-container .card {
+  cursor: pointer;
+  padding: 15px 20px;
+  border: 1px solid #ffffff00;
+  transition: .2s;
+}
+
+.fourth .blog .card-container .card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--box-shadow-default);
+  border: 1px solid #e5e7eb !important;
+  border-radius: 10px;
+}
+
+/* .fourth .blog .card-container .card .hov-icon {
+  position: absolute;
+  right: 30px;
+  bottom: -2px;
+  animation: moveRight 0.8s linear infinite;
+  display: none;
+} */
+
+/* .fourth .blog .card-container .card:hover .hov-icon {
+  display: block;
+  transition: 0.6s;
+}
+
+@keyframes moveRight {
+  0% {
+    right: 30px;
+  }
+  100% {
+    right: 20px;
+  }
+} */
+
+.fourth .blog .card-container hr.card-divider {
+  height: 1px;
+  width: calc(100% - 30px);
+  display: block;
+  background-color: #f2f2f2;
+  margin: 15px 10px;
+  box-shadow: var(--box-shadow-default);
+  border: none;
+}
+
+.fourth .blog .card-container .card h3.title {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 18px;
+}
+
+.fourth .blog .card-container .card div.date-time {
+  font-size: 11px;
+  color: #717171;
+  display: block;
+  margin: 7px 0px;
+}
+
+.fourth .blog .card-container .card div.date-time span {
+  display: inline-block;
+  margin: 0px 5px;
+}
+
+.fourth .blog .card-container .card p.short-intro {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 15px;
+}
+
+.fourth .blog .card-container .card ul {
+  list-style: none;
+  display: flex;
+  column-gap: 10px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+  row-gap: 10px;
+}
+
+.fourth .blog .card-container .card ul li {
+  padding: 3px 7px;
+  border: 1px solid #e5e7eb;
+  display: block;
+  border-radius: 8px;
+  font-size: 10px;
+}
+
+@media (max-width: 900px) {
+  .fourth {
+    flex-direction: column-reverse !important;
+    row-gap: 30px;
+  }
+
+  .fourth .blog {
+    width: calc(100% - 65px) !important;
+  }
+
+  .fourth .connect {
+    width: calc(100% - 65px) !important;
+  }
+}
+
+/* ===================================
+  4th Section Style End
+=================================== */
