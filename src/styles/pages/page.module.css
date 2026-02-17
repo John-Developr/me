@@ -587,7 +587,7 @@ div.title {
   font-size: 10px;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 850px) {
   .fourth {
     flex-direction: column-reverse !important;
     row-gap: 30px;

@@ -71,7 +71,8 @@ export default function ProfileForm() {
                 <Textarea 
                     id="about" 
                     label="Tell them about your self" 
-                    data={user?.about}/>
+                    data={user?.about}
+                    row={7}/>
             </section>
             <HrHorizontal thickness={1} spacing={10} />
             <div className="form-action">
@@ -90,9 +91,10 @@ type TextareaProps = {
   id: string;
   label: string;
   data: string | null | undefined;
+  row: number;
 };
 
-function Textarea({ id, label, data }: TextareaProps) {
+function Textarea({ id, label, data, row }: TextareaProps) {
   const [value, setValue] = React.useState(data);
 
   return (
@@ -112,6 +114,7 @@ function Textarea({ id, label, data }: TextareaProps) {
         name={id}
         className="form-control focus-animate"
         value={value ?? ""}
+        rows={row}
         onChange={(e) => setValue(e.target.value)}
       />
       <label htmlFor={id}>{label}</label>

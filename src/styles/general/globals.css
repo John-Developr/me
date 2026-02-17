@@ -106,7 +106,7 @@ button, a {
 .form-control {
   width: calc(100% - 40px);
   padding: 0px 13px;
-  font-size: 16px;
+  font-size: 13px;
   border: 1px solid #ccc;
   background: transparent;
   outline: none;
@@ -117,7 +117,6 @@ button, a {
 
 textarea.form-control {
   resize: none;
-  height: 140px;
 }
 
 .form-group label {
@@ -126,7 +125,7 @@ textarea.form-control {
   top: 50%;
   transform: translateY(-50%);
   color: #999;
-  font-size: 16px;
+  font-size: 14px;
   pointer-events: none;
   background: transparent;
   padding: 0 4px;
@@ -142,7 +141,7 @@ textarea.form-control {
 
 .form-control:focus + label,
 .form-control:not(:placeholder-shown) + label {
-  top: 12px !important;
+  top: 11px !important;
   font-size: 11px;
 }
 

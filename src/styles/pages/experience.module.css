@@ -127,22 +127,3 @@ ul.list-exp .tools-list span {
   font-size: 12px;
   display: block;
 }
-
-:global([data-from="experiences"]) > li:not(:last-child)::after {
-  margin-bottom: 50px !important;
-  margin-top: 35px !important;
-}
-
-:global([data-from="experiences"]) > li > h4 {
-  font-size: 19px;
-}
-
-:global([data-from="experiences"]) li p.ex-date {
-  font-size: 15px !important;
-  margin-top: 3px !important;
-  display: block !important;
-}
-
-:global([data-from="experiences"]) p.ex-pos {
-  font-size: 20px !important;
-}
