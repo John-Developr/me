@@ -46,9 +46,9 @@ export function useFadeOutRemove(
     return () => clearTimeout(timer);
   }, [
     fadeOutTrigger, 
-    // ref, 
-    // delay, 
-    // fadeOutClass,
-    // options.callback
+    ref, 
+    delay, 
+    fadeOutClass,
+    options.callback
   ]);
 }

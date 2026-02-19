@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { assistantConfig, AssistantConfig, Role, filteredRoles } from "@/config/assistantConfig";
 
 export const useChatAssistant = () => {
@@ -42,13 +42,19 @@ export const useChatAssistant = () => {
     }
   };
 
-  const updateAssistant = (role: Role, message: string) => {
-    setTimeout(() => {
-      assistant.popLastContent(); // remove "responding"
-      assistant.pushContent(role, message);
-      setAssistant({ ...assistant });
-    }, FINAL_RESPONSE_DELAY);
-  };
+  const updateAssistant = useCallback(
+    (role: Role, message: string) => {
+      setTimeout(() => {
+        setAssistant(prev => {
+          const copy = { ...prev };
+          copy.popLastContent();
+          copy.pushContent(role, message);
+          return copy;
+        });
+      }, FINAL_RESPONSE_DELAY);
+    },
+    []
+  );
 
   useEffect(() => {
     const last = assistant.contents.at(-1);
@@ -96,7 +102,7 @@ export const useChatAssistant = () => {
     };
 
     fetchReply();
-  }, [assistant]);
+  }, [assistant, updateAssistant]);
 
   return {
     assistant,

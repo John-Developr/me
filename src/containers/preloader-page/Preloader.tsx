@@ -10,8 +10,8 @@ type PreloaderProps = {
 };
 
 export enum OverlayType {
-  welcome = 'welcome',
-  preloader = 'preloader'
+  welcome = "welcome",
+  preloader = "preloader"
 }
 
 export type OverlayState = {
@@ -22,6 +22,8 @@ export type OverlayState = {
 const MainContent = React.memo(({ children }: { children: ReactNode }) => {
   return <>{children}</>;
 });
+
+MainContent.displayName = "MainContent";
 
 export default function Preloader({  children }: PreloaderProps) {
   const { loading } = useApp();

@@ -8,15 +8,13 @@ import { useChatAssistant } from "@/hooks/useChatAssistant";
 import MessageBubble from "./MessageBubble";
 import MessageInput from "./MessageInput";
 
-import { assistantConfig } from "@/config/assistantConfig";
-
 export default function ChatBox() {
     const messagesEndRef = useRef<HTMLDivElement | null>(null);
     const { assistant, handleSendMessage, handleNewConversation } = useChatAssistant();
 
     useEffect(() => {
         messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-    }, [assistant, assistantConfig.contents]); 
+    }, [assistant]); 
 
     return (
         <>

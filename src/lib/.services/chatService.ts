@@ -14,7 +14,7 @@ import { AssistantConfig, Message, Role, AIBlogResponse } from "@/utils/types";
  */
 
 export default class ChatService {
-    private AI: any; // GoogleGenAI instance
+    private AI: GoogleGenAI; // GoogleGenAI instance
     private config: AssistantConfig; // Configuration for AI chat
     private instruction: string; // System instruction for AI
 
@@ -23,7 +23,7 @@ export default class ChatService {
 
         // Initialize AI instance with API key
         this.AI = new GoogleGenAI({
-            apiKey: process.env.NEXT_PUBLIC_GEMINI_API_KEY2,
+            apiKey: process.env.NEXT_PUBLIC_GEMINI_API_KEY,
         });
 
         // Default chat configuration
@@ -34,6 +34,7 @@ export default class ChatService {
                 systemInstruction: this.instruction
             },
             history: [],
+            contents: ""
         };
     }
 
@@ -55,6 +56,10 @@ export default class ChatService {
         const reply = await chat.sendMessage({
             message: message,
         });
+
+         if (!reply.text) {
+            throw new Error("Invalid AI response");
+        }
 
         // Update local history and persist to cookies
         this.pushMessage("user", message);
@@ -189,6 +194,12 @@ export default class ChatService {
         this.blogConfig(matchSchema)
 
         const response = await this.AI.models.generateContent(this.config);
+
+
+        if (!response.text) {
+            throw new Error("Invalid AI response");
+        }
+
         const blog = matchSchema.parse(JSON.parse(response.text));
 
         return blog;
