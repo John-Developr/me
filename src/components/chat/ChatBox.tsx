@@ -22,7 +22,7 @@ export default function ChatBox() {
                 <div className={Styles.john}>
                     <div className={Styles["profile-msg"]}>
                         <Image
-                            src="/images/avatar.png"
+                            src="/images/Avatar.png"
                             width={30}
                             height={30}
                             alt="Avatar"

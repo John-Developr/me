@@ -52,7 +52,7 @@ export default function ExperienceSection() {
                 <li className={styles["has-sub"]}>
                     <div className={styles["ex-name-date-profile"]}>
                         <Image
-                            src="/images/company/Fdci.png"
+                            src="/images/company/Forty.png"
                             width={25}
                             height={25}
                             alt="Company Logo" />
