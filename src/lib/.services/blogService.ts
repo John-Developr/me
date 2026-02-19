@@ -16,9 +16,19 @@ export default class BlogService {
         const chat: ChatService = new ChatService(instruction);
         const content: AIBlogResponse = await chat.blogMain();
 
+        const contentWithoutExtras = {
+            title: content.title,
+            slug: content.slug,
+            category: content.category,
+            content: content.content,
+            excerpt: content.excerpt,
+            tags: content.tags,
+            reading: content.reading,
+        };
+
         const { error } = await this.server
             .from(this.table)
-            .upsert(content, { onConflict: "slug" });
+            .upsert(contentWithoutExtras, { onConflict: "slug" });
 
         if (error) {
             throw new Error("Failed to upsert blog content.");
