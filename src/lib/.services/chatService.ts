@@ -179,7 +179,7 @@ export default class ChatService {
      */
     async blogMain(): Promise<AIBlogResponse> {
         const matchSchema = z.object({
-            id: z.number(),
+            id: z.number().optional().default(0),
             title: z.string(),
             slug: z.string(),
             category: z.enum(["technology","study","future","life"]),
@@ -187,14 +187,13 @@ export default class ChatService {
             excerpt: z.string(),
             tags: z.array(z.string()),
             reading: z.number(),
-            views: z.number(),
-            generated_at: z.string(),
+            views: z.number().optional().default(0),
+            generated_at: z.string().optional().default(new Date().toISOString())
         });
 
         this.blogConfig(matchSchema)
 
         const response = await this.AI.models.generateContent(this.config);
-
 
         if (!response.text) {
             throw new Error("Invalid AI response");
