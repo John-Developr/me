@@ -1,8 +1,5 @@
-'use client';
-
 import { HomeIcons } from "@/components/icons";
 import styles from "@/styles/pages/page.module.css";
-import { useApp } from "@/lib/.context/AppContext";
 
 export default function AboutSection() {
   return (
