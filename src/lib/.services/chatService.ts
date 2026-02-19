@@ -23,7 +23,7 @@ export default class ChatService {
 
         // Initialize AI instance with API key
         this.AI = new GoogleGenAI({
-            apiKey: process.env.NEXT_PUBLIC_GEMINI_API_KEY,
+            apiKey: process.env.NEXT_SECRET_GEMINI_API_KEY!,
         });
 
         // Default chat configuration
