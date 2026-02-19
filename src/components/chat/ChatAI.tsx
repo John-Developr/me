@@ -6,7 +6,7 @@ import ChatButton from "./ChatButton";
 import ChatBox from "./ChatBox";
 
 import Image from "next/image";
-import Styles from "@/styles/general/chatAI.module.css"
+import Styles from "@/styles/general/component.module.css"
 
 export default function ChatAI() {
     const [isAnimating, setIsAnimating] = useState<boolean>(false);

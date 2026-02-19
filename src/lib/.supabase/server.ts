@@ -1,0 +1,9 @@
+// lib/supabaseClient.ts (browser)
+import { createClient } from "@supabase/supabase-js";
+
+const supabaseServer = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.NEXT_SECRET_SUPABASE_ROLE_KEY!
+);
+
+export default supabaseServer;

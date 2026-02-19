@@ -1,4 +1,4 @@
-import Styles from "@/styles/general/chatAI.module.css"
+import Styles from "@/styles/general/component.module.css"
 
 // SVG
 import XMark from "../icons/XMark";

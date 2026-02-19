@@ -13,7 +13,7 @@ import ProjectSection from "./project-section/ProjectSection";
 import ConnectionSection from "./connect-section/ConnectSection";
 import BlogSection from "./blog-section/BlogSection";
 
-import { useApp } from "@/lib/context/AppContext";
+import { useApp } from "@/lib/.context/AppContext";
 
 export default function HomePage() {
     const { isMobile } = useApp();

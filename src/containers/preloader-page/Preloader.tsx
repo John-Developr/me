@@ -2,7 +2,7 @@
 
 import React from "react";
 import { useEffect, useState, ReactNode, useRef, useCallback } from "react";
-import { useApp } from "@/lib/context/AppContext";
+import { useApp } from "@/lib/.context/AppContext";
 import { WelcomeOverlay, SpinnerOverlay } from "./Overlays";
 
 type PreloaderProps = {

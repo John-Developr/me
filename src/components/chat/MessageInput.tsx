@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Styles from "@/styles/general/chatAI.module.css";
+import Styles from "@/styles/general/component.module.css";
 import ArrowUp from "../icons/ArrowUp";
 import { Role } from "@/config/assistantConfig";
 
@@ -9,7 +9,7 @@ type Props = {
 };
 
 export default function MessageInput({ onSend, lastContentRole }: Props) {
-    const isLastMessageUserRole = lastContentRole === "user" || lastContentRole === "responding";
+    const isLastMessageUserRole = lastContentRole === "user" || lastContentRole === "responding" || lastContentRole === "limit";
     const [inputValue, setInputValue] = useState<string>("")
 
     const handleOnInput = (e: React.FormEvent<HTMLInputElement>) => {
