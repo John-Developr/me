@@ -5,28 +5,25 @@ import Image from "next/image";
 import { HomeIcons } from "@/components/icons";
 import styles from "@/styles/pages/page.module.css";
 
-import { me } from "@/config/personalConfig"
-import { useApp } from "@/lib/context/AppContext";
+import { useApp } from "@/lib/.context/AppContext";
 import SkeletonImage from "@/components/custom/SkeletonImage";
 
 
 export default function DetailSection(){
-    const { user } = useApp();
-
     return (
         <>
           <div className={styles.detail}>
               <p className={styles.name}>
-                {`${user?.fname} ${me.name.mid.charAt(0)}. ${user?.lname}`}
+                John Carlo A. Ylanan
               </p>
               <h2 className={styles.role}>
-                {me.role}
+                Web and Mobile Developer
               </h2>
               <p className={styles.location}>
                   <HomeIcons.Location 
                     width={18} 
                     height={18} />
-                  {`${user?.city}, ${user?.province}, ${user?.country}`}
+                    Cebu City, Cebu, Philippines, 6000
                   <Image
                     src="/images/Ph-Flag.png"
                     width={12}
@@ -54,7 +51,7 @@ export default function DetailSection(){
           </div>
           <div className={styles.profile}>
             <SkeletonImage 
-              path={user?.profile} 
+              path="/images/Avatar.png" 
               className={styles.avatar} 
               width={75} 
               height={75} 

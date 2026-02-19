@@ -17,6 +17,31 @@ export const useChatAssistant = () => {
     callback?.();
   };
 
+  const handleNewConversation = async (callback?: () => void) => {
+    try {
+      // Delete the conversation server-side
+      const response = await fetch("/api/chat", { method: "DELETE" });
+
+      if (!response.ok) {
+        console.error("Failed to delete conversation:", response.statusText);
+        return;
+      }
+
+      // Call the callback if provided
+      if (response.ok) {
+        await new Promise(resolve => setTimeout(resolve, 1500));
+
+        // Clear local assistant contents
+        assistantConfig.clearContents();
+        setAssistant({ ...assistantConfig });
+
+        callback?.();
+      }
+    } catch (error) {
+      console.error("Error starting new conversation:", error);
+    }
+  };
+
   const updateAssistant = (role: Role, message: string) => {
     setTimeout(() => {
       assistant.popLastContent(); // remove "responding"
@@ -50,6 +75,11 @@ export const useChatAssistant = () => {
         const data = await res.json();
 
         if (data.reply) {
+          if (data.reply === "limit") {
+            updateAssistant(data.reply, "");
+            return
+          }
+
           updateAssistant("model", data.reply);
         } else {
           updateAssistant(
@@ -71,5 +101,6 @@ export const useChatAssistant = () => {
   return {
     assistant,
     handleSendMessage,
+    handleNewConversation,
   };
 };

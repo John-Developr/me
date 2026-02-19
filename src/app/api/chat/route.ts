@@ -1,6 +1,14 @@
+import fs from "fs";
+import path from "path";
+
 import { NextResponse } from "next/server";
-import { generateContent } from "@/lib/gemini";
-import { assistantConfig, filteredRoles, Role } from "@/config/assistantConfig";
+import ChatService from "@/lib/.services/chatService";
+
+// Load system instruction server-side
+const instruction = fs.readFileSync(
+    path.join(process.cwd(), "src/docs/system-instruction.md"),
+    "utf-8"
+);
 
 export async function POST(req: Request) {
   try {
@@ -13,37 +21,26 @@ export async function POST(req: Request) {
       );
     }
 
-    // Clone base config (server-only)
-    const assistant = { ...assistantConfig };
-
-    // Push user message
-    assistant.pushContent("user", message);
-
-    // Filter roles (same logic you had)
-    const filteredAssistant = {
-      ...assistant,
-      contents: assistant.contents.filter(
-        ({ role }: { role: Role }) =>
-          !filteredRoles("user", "model").includes(role)
-      ),
-    };
-
-    // 🔒 Gemini call (hidden)
-    const response = await generateContent(filteredAssistant);
-
-    const reply = response?.candidates?.[0]?.content?.parts?.[0]?.text;
-
+    const assistant = new ChatService(instruction);
     return NextResponse.json({
-      reply:
-        reply ||
-        "Sorry, I'm not able to provide a reply at the moment.",
+      reply: await assistant.index(message) 
     });
   } catch (error) {
-    console.error("Assistant error:", error);
-
     return NextResponse.json(
-      { error: "Assistant failed to respond" },
+      { error: error instanceof Error ? error.message : "An unknown error occurred" },
       { status: 500 }
     );
   }
+}
+
+export async function DELETE() {
+  try {
+      await ChatService.clearChatCookie();
+      return NextResponse.json({ status: true });
+  } catch (error) {
+      return NextResponse.json(
+        { error: error instanceof Error ? error.message : "An unknown error occurred" },
+        { status: 500 }
+      );
+  }     
 }

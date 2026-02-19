@@ -2,7 +2,7 @@ import Image from "next/image";
 
 import { HomeIcons } from "@/components/icons";
 import styles from "@/styles/pages/page.module.css";
-import { useApp } from "@/lib/context/AppContext";
+import { useApp } from "@/lib/.context/AppContext";
 
 
 export default function ProjectSection() {
