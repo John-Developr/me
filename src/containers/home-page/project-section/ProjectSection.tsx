@@ -49,10 +49,10 @@ function ProjectDetail({ isMobile } : { isMobile: boolean }) {
             {isMobile && (
                 <section className={styles["recent-image"]}>
                     <Image
-                    src="/images/featured.png"
+                    src="/images/Featured.png"
                     width={250}
                     height={220}
-                    alt="Avatar"
+                    alt="Featured Project"
                     className={styles.avatar}/>
                 </section>
             )}
@@ -71,7 +71,7 @@ function ProjectDetail({ isMobile } : { isMobile: boolean }) {
                             src="/images/tech/next.png"
                             width={14}
                             height={14}
-                            alt="Avatar"
+                            alt="Next JS"
                             className={styles.avatar}/>
                             Next JS
                     </li>
@@ -80,7 +80,7 @@ function ProjectDetail({ isMobile } : { isMobile: boolean }) {
                             src="/images/tech/typescript.png"
                             width={14}
                             height={14}
-                            alt="Avatar"
+                            alt="TypeScript"
                             className={styles.avatar}/>
                         TypeScript
                     </li>
@@ -89,7 +89,7 @@ function ProjectDetail({ isMobile } : { isMobile: boolean }) {
                             src="/images/tech/node.png"
                             width={14}
                             height={14}
-                            alt="Avatar"
+                            alt="Node JS"
                             className={styles.avatar}/>
                         Node JS
                     </li>
@@ -106,10 +106,10 @@ function ProjectImage({ isMobile } : { isMobile: boolean }) {
     return (
         <div className={styles["recent-image"]}>
             <Image
-                src="/images/featured.png"
+                src="/images/Featured.png"
                 width={250}
                 height={220}
-                alt="Avatar"
+                alt="Featured Project"
                 className={styles.avatar}/>
             {!isMobile && (
                <Action />

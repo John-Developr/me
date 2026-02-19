@@ -21,7 +21,7 @@ export default function StackSection() {
                      src="/images/tech/react.png"
                      width={25}
                      height={25}
-                     alt="Avatar"
+                     alt="React / React Native"
                      className={styles["tech-image"]} />
                     <div className={styles["tech-detail"]}> 
                     <h5>React / React Native</h5>
@@ -33,7 +33,7 @@ export default function StackSection() {
                         src="/images/tech/next.png"
                         width={25}
                         height={25}
-                        alt="Avatar"
+                        alt="Next JS"
                         className={styles["tech-image"]}/>
                     <div className={styles["tech-detail"]}> 
                         <h5>Next JS</h5>
@@ -45,7 +45,7 @@ export default function StackSection() {
                      src="/images/tech/figma.png"
                      width={25}
                      height={25}
-                     alt="Avatar"
+                     alt="Figma"
                      className={styles["tech-image"]} />
                     <div className={styles["tech-detail"]}> 
                         <h5>Figma</h5>
@@ -57,7 +57,7 @@ export default function StackSection() {
                      src="/images/tech/chatgpt.png"
                      width={25}
                      height={25}
-                     alt="Avatar"
+                     alt="ChatGPT"
                      className={styles["tech-image"]} />
                     <div className={styles["tech-detail"]}> 
                         <h5>ChatGPT</h5>
@@ -69,7 +69,7 @@ export default function StackSection() {
                      src="/images/tech/node.png"
                      width={25}
                      height={25}
-                     alt="Avatar"
+                     alt="Node JS"
                      className={styles["tech-image"]} />
                     <div className={styles["tech-detail"]}> 
                         <h5>Node JS</h5>
@@ -81,7 +81,7 @@ export default function StackSection() {
                      src="/images/tech/supabase.png"
                      width={25}
                      height={25}
-                     alt="Avatar"
+                     alt="Supabase"
                      className={styles["tech-image"]} />
                     <div className={styles["tech-detail"]}> 
                         <h5>Supabase</h5>

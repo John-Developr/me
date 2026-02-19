@@ -52,7 +52,7 @@ export default function ChatAI() {
                 <div className={Styles.mg}>
                     <div className={Styles.profile}>
                         <Image
-                            src="/images/avatar.png"
+                            src="/images/Avatar.png"
                             width={40}
                             height={40}
                             alt="Avatar"
