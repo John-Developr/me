@@ -1,3 +1,4 @@
+import { ContentListUnion } from "@google/genai/node";
 import { zodToJsonSchema } from "zod-to-json-schema";
 
 // =====================
@@ -64,6 +65,6 @@ export interface AssistantConfigOptions {
 export interface AssistantConfig {
   model: string;                        // model name/version to use
   config: AssistantConfigOptions;       // nested configuration options
-  history?: Message[];                   // previous messages for context
-  contents?: string;                     // current content to process
+  history?: Message[];                  // previous messages for context
+  contents: ContentListUnion;           // current content to process
 }

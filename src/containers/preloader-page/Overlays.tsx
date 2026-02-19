@@ -1,7 +1,7 @@
 'use client'
 
 // components/Preloader/Overlays.tsx
-import React, { useEffect, useRef, RefObject } from "react";
+import React, { useRef } from "react";
 import Image from "next/image";
 import styles from "@/styles/pages/welcome.module.css";
 import { useFadeOutRemove } from "@/hooks/useFadeOutRemove";

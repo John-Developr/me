@@ -1,12 +1,8 @@
-'use client'
-
 import Image from "next/image";
+import styles from "@/styles/pages/page.module.css";
+import SkeletonImage from "@/components/custom/SkeletonImage";
 
 import { HomeIcons } from "@/components/icons";
-import styles from "@/styles/pages/page.module.css";
-
-import { useApp } from "@/lib/.context/AppContext";
-import SkeletonImage from "@/components/custom/SkeletonImage";
 
 
 export default function DetailSection(){

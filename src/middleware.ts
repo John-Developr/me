@@ -1,7 +1,7 @@
-import { NextResponse, type NextRequest } from "next/server"
+import { NextResponse } from "next/server"
 import ChatService from "./lib/.services/chatService";
 
-export async function middleware(request: NextRequest) {
+export async function middleware() {
     await ChatService.clearChatCookie();
     return NextResponse.next();
 }

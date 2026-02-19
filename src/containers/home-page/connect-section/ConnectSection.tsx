@@ -24,7 +24,7 @@ export default function ConnectionSection() {
                 </h5>
             </section>
             <section className={styles.sched}>
-                <p className={styles.title}>Let's Talk</p>
+                <p className={styles.title}>Let&#39;s Talk</p>
                 <h5 className={styles.pointer}>
                     Schedule a Call in Calendar
                     <span className={styles.icon}>
