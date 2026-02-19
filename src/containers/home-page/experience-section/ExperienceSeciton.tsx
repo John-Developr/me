@@ -52,7 +52,7 @@ export default function ExperienceSection() {
                 <li className={styles["has-sub"]}>
                     <div className={styles["ex-name-date-profile"]}>
                         <Image
-                            src="/images/company/fdci.png"
+                            src="/images/company/Fdci.png"
                             width={25}
                             height={25}
                             alt="Company Logo" />
@@ -75,7 +75,7 @@ export default function ExperienceSection() {
                 <li className={styles["no-sub"]}>
                     <div className={styles["ex-name-date-profile"]}>
                         <Image
-                            src="/images/company/proweaver.png"
+                            src="/images/company/Proweaver.png"
                             width={25}
                             height={25}
                             alt="Company Logo" />
@@ -103,7 +103,7 @@ export default function ExperienceSection() {
                 <li className={styles["no-sub"]}>
                     <div className={styles["ex-name-date-profile"]}>
                         <Image
-                            src="/images/company/codeTag.png"
+                            src="/images/company/CodeTag.png"
                             width={25}
                             height={25}
                             alt="Company Logo" />
