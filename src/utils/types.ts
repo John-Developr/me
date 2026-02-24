@@ -14,13 +14,13 @@ export type BlogCategory = "technology" | "study" | "life" | "future";
 export interface AIBlogResponse {
   id: number;                     // unique identifier for the blog post
   title: string;                  // blog title (8–12 words recommended)
-  slug: string;                   // SEO-friendly URL slug
-  category: BlogCategory;         // category of the blog
-  content: string;                // full blog content (300–400+ words)
+  slug?: string;                   // SEO-friendly URL slug
+  category?: BlogCategory;         // category of the blog
+  content?: string;                // full blog content (300–400+ words)
   excerpt: string;                // summary/excerpt (30–50 words)
   tags: string[];                 // relevant tags (3–5 recommended)
   reading: number;                // estimated reading time
-  views: number;                  // number of views (default 0)
+  views?: number;                  // number of views (default 0)
   generated_at: string;           // timestamp of when the blog was generated
 }
 

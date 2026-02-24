@@ -1,12 +1,16 @@
+import React from "react";
+import Link from "next/link";
+
 import styles from "@/styles/pages/page.module.css";
 
 import { HomeIcons } from "@/components/icons";
 import { useApp } from "@/lib/.context/AppContext";
+import { useRouter } from "next/dist/client/components/navigation";
+import { formatDate } from "@/utils/general/stringHelpers";
 
 export default function BlogSection() {
+    const router = useRouter();
     const { blogs } = useApp();
-
-    console.log(blogs)
 
     return (
         <section className={styles.blog}>
@@ -17,17 +21,16 @@ export default function BlogSection() {
                 <h3>Recent Blog post.</h3>
             </div>
             <div className={styles["card-container"]}>
-                {blogs.length > 0 && 
-                    blogs.map((blog, index) => (
-                    <>
-                        <div className={styles.card} key={blog.id}>
+                {blogs && blogs.recent.length > 0 && 
+                    blogs.recent.map((blog, index) => (
+                     <React.Fragment key={index}>
+                        <div 
+                            key={blog.id}
+                            className={styles.card} 
+                            onClick={() => router.push(`/blog/${blog.slug}`)}>
                             <h3 className={styles.title}>{blog.title}</h3>
                             <div className={styles["date-time"]}>
-                               {new Date(blog.generated_at).toLocaleDateString("en-US", {
-                                    year: "numeric",
-                                    month: "long",
-                                    day: "numeric",
-                                })}
+                               {formatDate(blog.generated_at)}
                                 <span>•</span>
                                 {blog.reading} min read
                             </div>
@@ -38,19 +41,19 @@ export default function BlogSection() {
                                 ))}
                             </ul>
                         </div>
-                        {index !== blogs.length - 1 && (
+                        {index !== (blogs.recent.length - 1) && (
                             <hr className={styles["card-divider"]} />
                         )}
-                    </>
+                    </React.Fragment>
                 ))}
             </div>
             <div className={styles["see-more"]}>
-                <a href="#">
-                <HomeIcons.ArrowTopRightCircle 
-                 width={15} 
-                 height={15} />
-                See More                            
-                </a>
+                <Link href="/blog">
+                    <HomeIcons.ArrowTopRightCircle 
+                    width={15} 
+                    height={15} />
+                    See More                            
+                </Link>
             </div>
         </section> 
     )

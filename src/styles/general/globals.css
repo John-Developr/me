@@ -45,12 +45,48 @@ button, a {
   display: flex;
 }
 
+.header .logo img {
+  cursor: pointer;
+}
+
 .header .linkend {
   color: #4646ee !important;
   cursor: pointer;
 }
 /* ================================== 
         HEADER SECTION END 
+===================================== */
+
+/* ================================== 
+        OTHER PAGE START 
+===================================== */
+
+.other-page {
+  margin-top: 70px;
+}
+
+.other-page .page-title h3 {
+  color: #DBDBDB;
+  text-transform: uppercase;
+  font-size: 25px;
+}
+
+.other-page .page-title h1 {
+  text-transform: uppercase;
+  font-weight: 800;
+  font-size: 45px;
+}
+
+.other-page .page-intro {
+  margin: 30px 0px;
+}
+
+.other-page .page-intro p {
+  color: #828282;
+}
+
+/* ================================== 
+        OTHER PAGE END 
 ===================================== */
 
 /* ================================== 

@@ -2,11 +2,12 @@
 
 import { useState } from "react";
 
-import ChatButton from "./ChatButton";
-import ChatBox from "./ChatBox";
-
 import Image from "next/image";
+
 import Styles from "@/styles/general/component.module.css"
+import ChatButton from "@/components/chat/ChatButton";
+import ChatBox from "@/components/chat/ChatBox";
+import SkeletonImage from "@/components/custom/SkeletonImage";
 
 export default function ChatAI() {
     const [isAnimating, setIsAnimating] = useState<boolean>(false);
@@ -51,8 +52,9 @@ export default function ChatAI() {
             <div className={`${Styles["chat-container"]} ${styleChatContainer[0]}`}>
                 <div className={Styles.mg}>
                     <div className={Styles.profile}>
-                        <Image
-                            src="/images/Avatar.png"
+                        <SkeletonImage
+                            className={Styles.avatar}
+                            path="/images/Avatar.png"
                             width={40}
                             height={40}
                             alt="Avatar"

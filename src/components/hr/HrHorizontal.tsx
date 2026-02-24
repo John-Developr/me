@@ -1,21 +1,23 @@
 interface HrHorizontalProps {
   thickness?: number
   color?: string
-  spacing?: number
+  spacingH?: number
+  spacingV?: number
 }
 
 export default function HrHorizontal({
   thickness = 1,
   color = "#e1e1e1",
-  spacing = 24,
+  spacingH = 24,
+  spacingV = 0,
 }: HrHorizontalProps) {
   return (
     <div
       style={{
         height: thickness,
         backgroundColor: color,
-        margin: `${spacing}px 0`,
-        width: "100%",
+        margin: `${spacingV}px ${spacingH}px`,
+        width: `calc(100% - ${2 * spacingH}px)`,
       }}
     />
   )

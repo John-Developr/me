@@ -13,7 +13,7 @@ import useMediaQuery from "@/hooks/useMediaQuery";
 type AppContextType = {
   loading: boolean;
   
-  blogs: AIBlogResponse[];
+  blogs: SetBlogsType | undefined;
 
   showModal: boolean;
   setShowModal: (value: boolean) => void;
@@ -21,28 +21,37 @@ type AppContextType = {
   isMobile: boolean;
 };
 
+interface SetBlogsType {
+  recent: AIBlogResponse[];
+  all: AIBlogResponse[];
+}
+
 const AppContext = createContext<AppContextType | undefined>(undefined);
 
 export function AppProvider({ children }: { children: React.ReactNode }) {
   const isMobile = useMediaQuery(850);
-
-  const [loading, setLoading] = useState<boolean>(true);
   
-  const [blogs, setBlogs] = useState<AIBlogResponse[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [blogs, setBlogs] = useState<SetBlogsType>();
   const [showModal, setShowModal] = useState<boolean>(false);
-
+  
   // init app
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
-        const response = await fetch("/api/blog");
+        const response = await fetch(`/api/blog`);
 
         if (!response.ok) {
           throw new Error("Failed to fetch blogs.");
         }
 
         const { blogs } = await response.json();
-        setBlogs(blogs);
+
+        setBlogs({
+          recent: (blogs || []).slice(0, 2),
+          all: blogs || [],
+        });
+
       } catch (error) {
         console.error(error);
       } finally {
@@ -56,8 +65,9 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
   return (
     <AppContext.Provider value={{ 
         loading,
+
         blogs,
-        
+
         showModal, 
         setShowModal,
 

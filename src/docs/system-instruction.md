@@ -119,7 +119,7 @@ Designed and optimized database structures for performance and scalability.
 JavaScript, TypeScript, React, Next.js, Vue.js, Angular.js Tailwind CSS, SCSS, HTML, Jquery, and Many More.
 
 ### Backend
-Node.js, PHP, Python, Java, Express.js, NestJS, Laravel, and Many More.
+Node.js, PHP, Python, Java, Express.js, NestJS, Laravel, CakePHP, Codeigniter  and Many More.
 
 ### Mobile Development
 Swift, SwiftUI, Objective-C, Kotlin, Java (Android), React Native, Flutter, and Many More.

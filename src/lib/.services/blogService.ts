@@ -37,12 +37,18 @@ export default class BlogService {
         return true;
     }
 
-    async getBlogs(): Promise<AIBlogResponse[]> {
+    async getBlogs(params: URLSearchParams): Promise<AIBlogResponse[]> {
+        let selectQuery = "*";
+        let range = {
+            from: 0,
+            to: 9,
+        };
+
         const { data, error } = await this.server
             .from(this.table)
-            .select("*")
+            .select<string, AIBlogResponse>(selectQuery)
             .order("generated_at", { ascending: false })
-            .limit(2)
+            .range(range.from, range.to);
 
         if (error) {
             console.error(error);
@@ -50,5 +56,5 @@ export default class BlogService {
         }
 
         return data ?? [];  
-    }      
+    }
 }

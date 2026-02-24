@@ -1,0 +1,233 @@
+.filter-sort {
+    display: flex;
+    margin-bottom: 20px;
+    column-gap: 5px;
+    align-items: center;
+}
+
+
+.filter-sort section {
+    display: flex;
+    column-gap: 5px;
+}
+
+.filter-sort section button {
+    padding: 0px 10px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    background-color: transparent;
+    font-size: 15px;
+    transition: 0.2s;
+    height: 28px;
+}
+
+.filter-sort section button.active {
+    background-color: var(--bg-primary);
+    color: #fff;
+    padding: 0px 20px;
+    font-weight: bold;
+}
+
+.filter-sort .sort {
+    margin-left: auto;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #e5e7eb;
+    cursor: pointer;
+}
+
+.card {
+    display: flex;
+    column-gap: 20px;
+    padding: 40px 30px;
+    border-radius: 10px;
+    border: 1px solid #ffffff00;
+    transition: .3s;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--box-shadow-default);
+  border: 1px solid #e5e7eb !important;
+  border-radius: 10px;
+}
+
+
+.avatar {
+    border-radius: 100%;
+}
+
+.card section:last-child {
+    display: flex;
+    flex-direction: column;
+    row-gap: 5px;
+}
+
+.card section:last-child h3 {
+    font-size: 1.50rem;
+    font-weight: 600;
+}
+
+.card section:last-child .date-time {
+    font-size: .80rem;
+    color: gray;
+    display: flex;
+}  
+
+.card section:last-child .date-time span {
+    display: block;
+    margin: 0px 5px;
+}
+
+.card section:last-child .group {
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+    list-style: none;
+    display: flex;
+}
+
+.card section:last-child .group li {
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 3px 7px;
+    display: block;
+}
+
+.card section:last-child .read-more {
+    margin-top: 10px;
+    display: inline-flex;
+    align-items: center;
+    column-gap: 5px;
+    color: var(--bg-primary);
+    color: rgb(44, 44, 52);
+    font-size: 0.88rem;
+}
+
+.card section:last-child .views {
+    color: #828282;
+    font-size: 0.88rem;
+}
+
+.blogDetail {
+    margin-top: 60px;
+}
+
+.blogDetail .back-to-blogs {
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+    margin-bottom: 30px;
+    color: rgb(155, 154, 154);
+    transition: 0.2s;
+}
+
+.blogDetail .back-to-blogs span {
+    width: 30px;
+    height: 30px;
+    border-radius: 100%;
+    border: 1px solid rgb(155, 154, 154);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 10px;
+    transition: 0.2s;
+    cursor: pointer;
+    color: rgb(155, 154, 154);
+}
+
+
+.blogDetail .back-to-blogs:hover {
+    color: rgb(105, 105, 105);
+}
+
+.blogDetail .back-to-blogs:hover span {
+    color: rgb(105, 105, 105);
+    border-color: rgb(105, 105, 105);
+}
+
+.blogDetail .author-info {
+    display: flex;
+    column-gap: 15px;
+}
+
+.blogDetail .author-name-date p {
+    display: block;
+    color: #828282;
+    font-size: 0.88rem;
+
+    margin-bottom: 30px;
+}
+
+.blogDetail .author-name-date p span:first-child::after {
+    content: "•";
+    display: inline-block;
+    margin: 0px 10px;
+}
+
+.blogDetail .excerpt {
+    font-size: 1rem;
+    color: rgb(82, 82, 82);
+    margin-top: 20px;
+}
+
+.blogDetail .content {
+    margin-top: 30px;
+    line-height: 1.5;
+    font-size: 1.10rem;
+    white-space: pre-line;
+}
+
+.blogDetail .group {
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+    list-style: none;
+    display: flex;
+    margin: 30px 0px;
+}
+
+.blogDetail .group li {
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 5px 12px;
+    display: block;
+}
+
+.blogDetail .share-with p {
+    font-size: 0.78rem;
+    color: #828282;
+}
+
+.blogDetail .share-with ul {
+    margin-top: 20px;
+
+    display: flex;
+    align-items: center;
+    column-gap: 10px;
+    list-style: none;
+}
+
+.blogDetail .share-with li {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #e5e7eb;
+    border-radius: 100%;
+    height: 35px;
+    width: 35px;
+
+    cursor: pointer;
+}
+
+.blogDetail .share-with li:first-child {
+   color: rgb(10, 102, 194);
+}
+
+.blogDetail .share-with li:nth-child(2) {
+    color: rgb(10, 102, 194);
+}

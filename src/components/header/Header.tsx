@@ -1,14 +1,17 @@
 'use client';
 
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
-import Linkedin from "../icons/Linkedin";
+import { Linkedin } from "../icons/Linkedin";
 import MenuKebabHorizontalCircle from "../icons/MenuKebabHorizontalCircle";
 import Call from "../icons/Call";
 
 import { networkDefine } from "@/config/networkDefine";
 
 export default function Header() {
+  const router = useRouter();
+
   return (
     <section className="header"> 
       <div className="logo">
@@ -17,6 +20,7 @@ export default function Header() {
           width={75}
           height={17}
           alt="Avatar"
+          onClick={() => router.push("/")}
         />
       </div>
       <nav className="nav">
@@ -30,13 +34,13 @@ export default function Header() {
           <li className="linkend"
             onClick={() => window.open(networkDefine.LINKEDIN_URL, "_blank")}>
             <Linkedin 
-            width={17.5} 
-            height={17.5} />
+              width={17.5} 
+              height={17.5} />
           </li>
           <li className="menu">
             <MenuKebabHorizontalCircle 
-            width={20.5} 
-            height={20.5} />
+              width={20.5} 
+              height={20.5} />
           </li>
         </ul>
       </nav>
