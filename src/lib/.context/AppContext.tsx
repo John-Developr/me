@@ -9,7 +9,7 @@ import {
 
 import { usePathname } from 'next/navigation';
 import useMediaQuery from "@/hooks/useMediaQuery";
-import { AppPagesEnum, AIBlogResponse } from "@/utils/types";
+import { AIBlogResponse } from "@/utils/types";
 
 type AppContextType = {
   pageLoading: boolean;

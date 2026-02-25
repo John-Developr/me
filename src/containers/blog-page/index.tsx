@@ -76,7 +76,7 @@ export default function BlogPage() {
                 console.error("Error fetching blogs:", error);
             }
         },
-        [setBlogs]
+        [setBlogs, blogs?.recent]
     );
 
     const handleCategoryChange = (category: BlogCategoryEnum | "All") => {

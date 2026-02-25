@@ -34,9 +34,13 @@ export function generateRandomDigits(length: number = 10): string {
 }
 
 
-export function debounce<Func extends (...args: any[]) => void>(func: Func, wait = 300) {
+export function debounce<Args extends unknown[]>(
+  func: (...args: Args) => void,
+  wait = 300
+) {
   let timeout: ReturnType<typeof setTimeout>;
-  return (...args: Parameters<Func>) => {
+
+  return (...args: Args) => {
     clearTimeout(timeout);
     timeout = setTimeout(() => func(...args), wait);
   };
