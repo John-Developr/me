@@ -32,3 +32,16 @@ export function generateRandomDigits(length: number = 10): string {
     Math.floor(Math.random() * 10) // Random number between 0 and 9
   ).join(''); // Join all digits into a single string
 }
+
+
+export function debounce<Args extends unknown[]>(
+  func: (...args: Args) => void,
+  wait = 300
+) {
+  let timeout: ReturnType<typeof setTimeout>;
+
+  return (...args: Args) => {
+    clearTimeout(timeout);
+    timeout = setTimeout(() => func(...args), wait);
+  };
+}

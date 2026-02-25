@@ -26,7 +26,7 @@ const MainContent = React.memo(({ children }: { children: ReactNode }) => {
 MainContent.displayName = "MainContent";
 
 export default function Preloader({  children }: PreloaderProps) {
-  const { loading } = useApp();
+  const { pageLoading } = useApp();
   const [overlay, setOverlay] = useState<OverlayState | null>(null)
 
   const updateOverlay = useCallback((value: OverlayState | null) => {
@@ -66,7 +66,7 @@ export default function Preloader({  children }: PreloaderProps) {
           overlay.visible && 
           overlay.type == OverlayType.preloader) && (
           <SpinnerOverlay 
-            isLoading={loading}
+            isLoading={pageLoading}
             onUpdateOverlay={updateOverlay} />
       )}
 
@@ -75,12 +75,12 @@ export default function Preloader({  children }: PreloaderProps) {
           overlay.visible && 
           overlay.type == OverlayType.welcome) && (
           <WelcomeOverlay 
-            isLoading={loading} 
+            isLoading={pageLoading} 
             onUpdateOverlay={updateOverlay} />
       )}
 
       {/* Main Content */}
-      {!loading && <MainContent>{children}</MainContent>}
+      {!pageLoading && <MainContent>{children}</MainContent>}
     </>
   );
 }

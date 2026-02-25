@@ -11,8 +11,10 @@ const instruction = fs.readFileSync(
 );
 
 export async function GET(req: Request) {
-    if (req.headers.get('Authorization') !== `Bearer ${process.env.CRON_SECRET}`) {
-        return new Response('Unauthorized', { status: 401 });
+    const bearerToken = `Bearer ${process.env.CRON_SECRET}`;
+    
+    if (req.headers.get("Authorization") !== bearerToken) {
+        return new Response("Unauthorized", { status: 401 });
     }
 
     try {

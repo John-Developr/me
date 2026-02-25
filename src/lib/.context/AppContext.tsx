@@ -7,13 +7,15 @@ import {
   useState,
 } from "react";
 
-import { AIBlogResponse } from "@/utils/types";
+import { usePathname } from 'next/navigation';
 import useMediaQuery from "@/hooks/useMediaQuery";
+import { AIBlogResponse } from "@/utils/types";
 
 type AppContextType = {
-  loading: boolean;
+  pageLoading: boolean;
   
-  blogs: AIBlogResponse[];
+  blogs: SetBlogsType | undefined;
+  setBlogs: (value: SetBlogsType | undefined) => void;
 
   showModal: boolean;
   setShowModal: (value: boolean) => void;
@@ -21,43 +23,54 @@ type AppContextType = {
   isMobile: boolean;
 };
 
+interface SetBlogsType {
+  recent: AIBlogResponse[];
+  all: AIBlogResponse[];
+}
+
 const AppContext = createContext<AppContextType | undefined>(undefined);
 
 export function AppProvider({ children }: { children: React.ReactNode }) {
+  const pathname = usePathname();
   const isMobile = useMediaQuery(850);
-
-  const [loading, setLoading] = useState<boolean>(true);
   
-  const [blogs, setBlogs] = useState<AIBlogResponse[]>([]);
+  const [pageLoading, setPageLoading] = useState<boolean>(true);
+  const [blogs, setBlogs] = useState<SetBlogsType | undefined>();
   const [showModal, setShowModal] = useState<boolean>(false);
-
+  
   // init app
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
         const response = await fetch("/api/blog");
-
         if (!response.ok) {
           throw new Error("Failed to fetch blogs.");
         }
 
         const { blogs } = await response.json();
-        setBlogs(blogs);
+
+        setBlogs({
+          recent: (blogs || []).slice(0, 2),
+          all: blogs || [],
+        });
+
       } catch (error) {
         console.error(error);
       } finally {
-        setLoading(false);
+        setPageLoading(false);
       }
     };
 
     fetchBlogs();
-  }, []);
+  }, [pathname]);
 
   return (
     <AppContext.Provider value={{ 
-        loading,
+        pageLoading: pageLoading,
+
         blogs,
-        
+        setBlogs,
+
         showModal, 
         setShowModal,
 

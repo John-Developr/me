@@ -37,18 +37,28 @@ export default class BlogService {
         return true;
     }
 
-    async getBlogs(): Promise<AIBlogResponse[]> {
-        const { data, error } = await this.server
+    async getBlogs(params: URLSearchParams): Promise<AIBlogResponse[]> {
+        const selectQuery = "*";
+        const category = params.get("category");
+        const sort = params.get("sort") || "desc";
+
+        let query = this.server
             .from(this.table)
-            .select("*")
-            .order("generated_at", { ascending: false })
-            .limit(2)
+            .select<string, AIBlogResponse>(selectQuery);
+
+        if (category && category !== "All") {
+            query = query.eq("category", category);
+        }
+
+        query = query.order("generated_at", { ascending: sort === "asc" });
+
+        const { data, error } = await query;
 
         if (error) {
             console.error(error);
             throw new Error("Failed to fetch blogs.");
         }
 
-        return data ?? [];  
-    }      
+        return data ?? [];
+    }
 }

@@ -1,8 +1,8 @@
 // SVG
-import Facebook from "../icons/Facebook";
+import { Facebook } from "../icons/Facebook";
 import Instagram from "../icons/Instagram";
 import Twitter from "../icons/Twitter";
-import Linkedin from "../icons/Linkedin";
+import { Linkedin } from "../icons/Linkedin";
 import Github from "../icons/Github";
 
 export default function Footer() {

@@ -2,10 +2,20 @@ import { ContentListUnion } from "@google/genai/node";
 import { zodToJsonSchema } from "zod-to-json-schema";
 
 // =====================
+// BlogCategory Enum
+// =====================
+export enum BlogCategoryEnum {
+  Tech = "technology",
+  Study = "study",
+  Life = "life",
+  Future = "future",
+}
+
+// =====================
 // BlogCategory Type
 // =====================
-// Enum-like union type for AI-generated blog categories
-export type BlogCategory = "technology" | "study" | "life" | "future";
+// Union type of all enum values
+export type BlogCategory = BlogCategoryEnum[keyof BlogCategoryEnum];
 
 // =====================
 // AIBlogResponse Interface
@@ -14,13 +24,13 @@ export type BlogCategory = "technology" | "study" | "life" | "future";
 export interface AIBlogResponse {
   id: number;                     // unique identifier for the blog post
   title: string;                  // blog title (8–12 words recommended)
-  slug: string;                   // SEO-friendly URL slug
-  category: BlogCategory;         // category of the blog
-  content: string;                // full blog content (300–400+ words)
+  slug?: string;                   // SEO-friendly URL slug
+  category?: BlogCategory;         // category of the blog
+  content?: string;                // full blog content (300–400+ words)
   excerpt: string;                // summary/excerpt (30–50 words)
   tags: string[];                 // relevant tags (3–5 recommended)
   reading: number;                // estimated reading time
-  views: number;                  // number of views (default 0)
+  views?: number;                  // number of views (default 0)
   generated_at: string;           // timestamp of when the blog was generated
 }
 
@@ -67,4 +77,13 @@ export interface AssistantConfig {
   config: AssistantConfigOptions;       // nested configuration options
   history?: Message[];                  // previous messages for context
   contents: ContentListUnion;           // current content to process
+}
+
+// =====================
+// AppPages Enum
+// =====================
+export enum AppPagesEnum {
+  Home = "/",
+  Blog = "/blog",
+  BlogDetail = "/blog/[slug]",
 }

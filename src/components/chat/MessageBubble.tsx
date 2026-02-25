@@ -1,9 +1,9 @@
-import Image from "next/image";
 import Styles from "@/styles/general/component.module.css";
 import { Message, filteredRoles } from "@/config/assistantConfig";
 
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import SkeletonImage from "@/components/custom/SkeletonImage";
 
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { dracula } from "react-syntax-highlighter/dist/esm/styles/prism";
@@ -36,8 +36,9 @@ export default function MessageBubble({ message, handleNewConversation }: Messag
         <div className={filteredRoles("user").includes(role) ? Styles.john : Styles.user}>
             {(filteredRoles("user").includes(role)) && (
                 <div className={Styles["profile-msg"]}>
-                    <Image
-                        src="/images/Avatar.png"
+                    <SkeletonImage
+                        path="/images/Avatar.png"
+                        className={Styles.avatar}
                         width={30}
                         height={30}
                         alt="Avatar"

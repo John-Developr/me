@@ -9,6 +9,8 @@
   --delete-color: rgb(189, 71, 71);
   --border-line-theme: 1px solid #eee;
   --border-input-field: 1px solid #e1e1e1;
+
+  --primary-hover-color: #363636;
 }
 
 * {
@@ -45,12 +47,48 @@ button, a {
   display: flex;
 }
 
+.header .logo img {
+  cursor: pointer;
+}
+
 .header .linkend {
   color: #4646ee !important;
   cursor: pointer;
 }
 /* ================================== 
         HEADER SECTION END 
+===================================== */
+
+/* ================================== 
+        OTHER PAGE START 
+===================================== */
+
+.other-page {
+  margin-top: 70px;
+}
+
+.other-page .page-title h3 {
+  color: #DBDBDB;
+  text-transform: uppercase;
+  font-size: 25px;
+}
+
+.other-page .page-title h1 {
+  text-transform: uppercase;
+  font-weight: 800;
+  font-size: 45px;
+}
+
+.other-page .page-intro {
+  margin: 30px 0px;
+}
+
+.other-page .page-intro p {
+  color: #828282;
+}
+
+/* ================================== 
+        OTHER PAGE END 
 ===================================== */
 
 /* ================================== 
@@ -111,7 +149,7 @@ button, a {
     width: 180px;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 850px) {
   .section {
     flex-direction: column-reverse;
     row-gap: 30px;

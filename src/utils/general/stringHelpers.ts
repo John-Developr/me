@@ -21,3 +21,27 @@ export function formatMessageBubbleString(input: string): string {
     return result;
 }
 
+/**
+ * Formats a date string into a readable format (e.g., "February 24, 2026").
+ *
+ * @param dateString - The date string to format (ISO string or valid date format).
+ * @returns A formatted date string in "Month Day, Year" format.
+ *          Returns an empty string if the input is undefined or invalid.
+ */
+export function formatDate(dateString?: string): string {
+  // Return empty string if no date is provided
+  if (!dateString) return "";
+
+  // Convert the string into a Date object
+  const date = new Date(dateString);
+
+  // Check if the date is invalid
+  if (isNaN(date.getTime())) return "";
+
+  // Format and return the date in "Month Day, Year" format
+  return date.toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+}

@@ -12,5 +12,22 @@ const Facebook = (props: React.SVGProps<SVGSVGElement>) => (
         />    
     </svg>
 );    
+
+const FacebookV2 = (props: React.SVGProps<SVGSVGElement>) => (
+    <svg
+        id={FacebookV2.name}
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        {...props}
+    >
+        <path 
+            d="M16.2792 13.125L16.8496 9.86742H13.2831V7.75348C13.2831 6.86227 13.7813 5.99355 15.3786 5.99355H17V3.22008C17 3.22008 15.5286 3 14.1218 3C11.1847 3 9.26486 4.56023 9.26486 7.38469V9.86742H6V13.125H9.26486V21H13.2831V13.125H16.2792Z" 
+            fill="currentColor"/>   
+    </svg>
+);
   
-export default Facebook;  
+export {
+    Facebook,
+    FacebookV2
+};  
