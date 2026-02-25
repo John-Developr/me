@@ -17,7 +17,7 @@ export default function Page404() {
                     <h3>ERROR</h3>
                     <h1>Oops!</h1>
                     <section>
-                        <p>Sorry, the content you're looking for doesn't exist. </p>
+                        <p>Sorry, the content you&#39;re looking for doesn&#39;t exist. </p>
                         <p>Either it was removed, or you mistyped the link. </p>
                     </section>
                     <Link href="/" className={styles.link}>
