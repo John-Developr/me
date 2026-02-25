@@ -18,11 +18,13 @@ import { ArrowRightV2 } from "@/components/icons/ArrowRight";
 import { useApp } from "@/lib/.context/AppContext";
 import { formatDate } from "@/utils/general/stringHelpers";
 
-export default function BlogDetailPage({ params }: { params: { value: string } }) {
+interface BlogDetailPageProps {
+  slug: string;
+}
+
+export default function BlogDetailPage({ slug }: BlogDetailPageProps) {
   const { blogs } = useApp();
-  
-  const getParsedSlugValue = JSON.parse(params.value).slug
-  const blog = blogs?.all.find((b) => b.slug === getParsedSlugValue);
+  const blog = blogs?.all.find((b) => b.slug === slug);
 
   if (!blog) {
     return notFound();
