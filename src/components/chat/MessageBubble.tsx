@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Styles from "@/styles/general/component.module.css";
 import { Message, filteredRoles } from "@/config/assistantConfig";
 

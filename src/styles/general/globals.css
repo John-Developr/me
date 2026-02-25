@@ -9,6 +9,8 @@
   --delete-color: rgb(189, 71, 71);
   --border-line-theme: 1px solid #eee;
   --border-input-field: 1px solid #e1e1e1;
+
+  --primary-hover-color: #363636;
 }
 
 * {
@@ -147,7 +149,7 @@ button, a {
     width: 180px;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 850px) {
   .section {
     flex-direction: column-reverse;
     row-gap: 30px;

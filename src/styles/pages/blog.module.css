@@ -40,6 +40,12 @@
     cursor: pointer;
 }
 
+.filter-sort .active-sort {
+    background-color: var(--bg-primary);
+    color: #fff;
+    border: 1px solid var(--bg-primary);
+}
+
 .card {
     display: flex;
     column-gap: 20px;
@@ -56,6 +62,9 @@
   border-radius: 10px;
 }
 
+.card:hover section:last-child .read-more svg {
+    animation: moveForward .8s linear infinite;
+}
 
 .avatar {
     border-radius: 100%;
@@ -104,8 +113,12 @@
     align-items: center;
     column-gap: 5px;
     color: var(--bg-primary);
-    color: rgb(44, 44, 52);
     font-size: 0.88rem;
+    transition: .5s;
+}
+
+.card section:last-child .read-more:hover {
+    color: var(--primary-hover-color);
 }
 
 .card section:last-child .views {
@@ -230,4 +243,16 @@
 
 .blogDetail .share-with li:nth-child(2) {
     color: rgb(10, 102, 194);
+}
+
+@keyframes moveForward {
+    0% {
+        transform: translateX(0);
+    }
+    50% {
+        transform: translateX(6px);
+    }
+    100% {
+        transform: translateX(0);
+    }
 }

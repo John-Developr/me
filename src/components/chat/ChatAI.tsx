@@ -2,8 +2,6 @@
 
 import { useState } from "react";
 
-import Image from "next/image";
-
 import Styles from "@/styles/general/component.module.css"
 import ChatButton from "@/components/chat/ChatButton";
 import ChatBox from "@/components/chat/ChatBox";

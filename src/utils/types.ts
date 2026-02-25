@@ -2,10 +2,20 @@ import { ContentListUnion } from "@google/genai/node";
 import { zodToJsonSchema } from "zod-to-json-schema";
 
 // =====================
+// BlogCategory Enum
+// =====================
+export enum BlogCategoryEnum {
+  Tech = "technology",
+  Study = "study",
+  Life = "life",
+  Future = "future",
+}
+
+// =====================
 // BlogCategory Type
 // =====================
-// Enum-like union type for AI-generated blog categories
-export type BlogCategory = "technology" | "study" | "life" | "future";
+// Union type of all enum values
+export type BlogCategory = BlogCategoryEnum[keyof BlogCategoryEnum];
 
 // =====================
 // AIBlogResponse Interface
@@ -67,4 +77,13 @@ export interface AssistantConfig {
   config: AssistantConfigOptions;       // nested configuration options
   history?: Message[];                  // previous messages for context
   contents: ContentListUnion;           // current content to process
+}
+
+// =====================
+// AppPages Enum
+// =====================
+export enum AppPagesEnum {
+  Home = "/",
+  Blog = "/blog",
+  BlogDetail = "/blog/[slug]",
 }

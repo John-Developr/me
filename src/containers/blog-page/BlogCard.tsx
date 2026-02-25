@@ -1,5 +1,4 @@
 import React from "react";
-
 import Link from "next/link";
 
 import styles from "@/styles/pages/blog.module.css";
@@ -41,8 +40,8 @@ export default function BlogCard({ all }: { all: AIBlogResponse[] | undefined}) 
                 ))}
               </ul>
               <Link href={`/blog/${blog.slug}`} className={styles["read-more"]}>
-                Read Blog
-                <ArrowRightV2 height={15} width={15} />
+                Read More
+                <ArrowRightV2 height={12} width={12} />
               </Link>
             </section>
           </div>
@@ -58,4 +57,4 @@ export default function BlogCard({ all }: { all: AIBlogResponse[] | undefined}) 
       ))}
     </>
   );
-}
+};
