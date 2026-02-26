@@ -3,7 +3,7 @@ import styles from "@/styles/pages/page.module.css";
 import SkeletonImage from "@/components/custom/SkeletonImage";
 
 import { HomeIcons } from "@/components/icons";
-
+import { networkDefine } from "@/config/networkDefine";
 
 export default function DetailSection(){
     return (
@@ -28,7 +28,10 @@ export default function DetailSection(){
                     className={styles.avatar} />
               </p>
               <div className={styles.action}>
-                  <button>
+                  <a 
+                    href={networkDefine.CALENDLY_URL} 
+                    target="_blank" 
+                    rel="noopener noreferrer">
                       <HomeIcons.Calendar 
                         width={18} 
                         height={18} />
@@ -36,13 +39,13 @@ export default function DetailSection(){
                       <HomeIcons.ArrowRight 
                         width={18} 
                         height={18} />                                                                              
-                  </button>
-                  <button>
+                  </a>
+                  <a href={networkDefine.MAIL_TO}>
                       <HomeIcons.Message 
                         width={18} 
                         height={18} />
                       Send Email
-                  </button>
+                  </a>
               </div>
           </div>
           <div className={styles.profile}>

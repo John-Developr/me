@@ -10,6 +10,7 @@ import {
 import { usePathname } from 'next/navigation';
 import useMediaQuery from "@/hooks/useMediaQuery";
 import { AIBlogResponse } from "@/utils/types";
+import { networkDefine } from "@/config/networkDefine";
 
 type AppContextType = {
   pageLoading: boolean;
@@ -42,7 +43,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
-        const response = await fetch("/api/blog");
+        const response = await fetch(networkDefine.BLOG_API);
         if (!response.ok) {
           throw new Error("Failed to fetch blogs.");
         }

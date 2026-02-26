@@ -33,15 +33,39 @@ export function generateRandomDigits(length: number = 10): string {
   ).join(''); // Join all digits into a single string
 }
 
-
+// ----------------------
+// Debounce utility
+// ----------------------
+/**
+ * Creates a debounced version of a function.
+ *
+ * Debounce delays the execution of `func` until after
+ * `wait` milliseconds have passed since the last time
+ * the returned function was invoked.
+ *
+ * Useful for:
+ * - Search inputs
+ * - Resize/scroll events
+ * - Preventing excessive API calls
+ *
+ * @param func - The function to debounce
+ * @param wait - Delay in milliseconds (default: 300ms)
+ * @returns A new debounced function
+ */
 export function debounce<Args extends unknown[]>(
   func: (...args: Args) => void,
   wait = 300
 ) {
+  // Holds the timeout ID between calls
   let timeout: ReturnType<typeof setTimeout>;
 
   return (...args: Args) => {
+    // Clear any previously scheduled execution
     clearTimeout(timeout);
-    timeout = setTimeout(() => func(...args), wait);
+
+    // Schedule new execution after `wait` time
+    timeout = setTimeout(() => {
+      func(...args);
+    }, wait);
   };
 }

@@ -67,7 +67,7 @@ export default function ExperienceSection() {
                             <p className={styles["ex-date"]}>{calculateDuration("2024-01-01")}</p>
                         </li>
                         <li>
-                            <p className={styles["ex-pos"]}>iOS Developer</p>
+                            <p className={styles["ex-pos"]}>Web Developer</p>
                             <p className={styles["ex-date"]}>For 6 months</p>
                         </li>
                     </ul>

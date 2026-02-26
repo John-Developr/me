@@ -16,6 +16,7 @@ import SortDown from "@/components/icons/SortDown";
 import { useApp } from "@/lib/.context/AppContext";
 import { AIBlogResponse, BlogCategoryEnum } from "@/utils/types";
 import { debounce } from "@/utils/general/helpers";
+import { networkDefine } from "@/config/networkDefine";
 
 enum SortEnum {
     asc = "asc",
@@ -58,7 +59,7 @@ export default function BlogPage() {
             if (params.sort) query.append("sort", params.sort);
 
             try {
-                const response = await fetch(`/api/blog?${query.toString()}`);
+                const response = await fetch(`${networkDefine.BLOG_API}?${query.toString()}`);
                 if (!response.ok) throw new Error("Failed to fetch blogs.");
 
                 const data = await response.json();
