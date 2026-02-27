@@ -20,11 +20,12 @@
     font-size: 15px;
     transition: 0.2s;
     height: 28px;
+    color: black;
 }
 
 .filter-sort section button.active {
     background-color: var(--bg-primary);
-    color: #fff;
+    color: #fff !important;
     padding: 0px 20px;
     font-weight: bold;
 }
@@ -38,6 +39,7 @@
     border-radius: 5px;
     border: 1px solid #e5e7eb;
     cursor: pointer;
+    color: black;
 }
 
 .filter-sort .active-sort {

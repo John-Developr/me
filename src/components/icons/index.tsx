@@ -15,6 +15,7 @@ import Call from "@/components/icons/Call";
 import Download from "@/components/icons/Download";
 import GithubFaceV from "./GithubFaceV";
 import Link from "./Link";
+import Github from "./Github";
 
 export const HomeIcons = {
     ArrowRight,
@@ -33,4 +34,5 @@ export const HomeIcons = {
     Download,
     GithubFaceV,
     Link,
+    Github
 };

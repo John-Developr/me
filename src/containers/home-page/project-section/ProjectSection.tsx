@@ -1,9 +1,11 @@
 import Image from "next/image";
 
-import { HomeIcons } from "@/components/icons";
 import styles from "@/styles/pages/page.module.css";
-import { useApp } from "@/lib/.context/AppContext";
 
+import { HomeIcons } from "@/components/icons";
+import { ArrowRightV2 } from "@/components/icons/ArrowRight";
+import { useApp } from "@/lib/.context/AppContext";
+import { networkDefine } from "@/config/networkDefine";
 
 export default function ProjectSection() {
     const { isMobile } = useApp()
@@ -22,9 +24,12 @@ export default function ProjectSection() {
             </div>
             <div className={styles["recent-content"]}>
                 <ProjectDetail isMobile={isMobile} />
-                {!isMobile && (
-                    <ProjectImage isMobile={isMobile} />
-                )}
+                <div className={styles["recent-image"]}>
+                    {!isMobile && (
+                        <ProjectImage />
+                    )}
+                    <Action />
+                </div>
             </div>
             <br />
             <div className={styles["see-more"]}>
@@ -48,12 +53,7 @@ function ProjectDetail({ isMobile } : { isMobile: boolean }) {
             </section>
             {isMobile && (
                 <section className={styles["recent-image"]}>
-                    <Image
-                    src="/images/Featured.png"
-                    width={250}
-                    height={220}
-                    alt="Featured Project"
-                    className={styles.avatar}/>
+                    <ProjectImage />
                 </section>
             )}
             <section className={styles["about-auth"]}>
@@ -64,7 +64,7 @@ function ProjectDetail({ isMobile } : { isMobile: boolean }) {
                 </p>
             </section>
             <section className={styles["tech-used"]}>
-                <h4>Technologies</h4>
+                <h4>Built With</h4>
                 <ul>
                     <li>
                         <Image
@@ -95,43 +95,52 @@ function ProjectDetail({ isMobile } : { isMobile: boolean }) {
                     </li>
                 </ul>
             </section>
-            {isMobile && (
-               <Action />
-            )}
         </div>
     )
 }
 
-function ProjectImage({ isMobile } : { isMobile: boolean }) {
+function ProjectImage() {
     return (
-        <div className={styles["recent-image"]}>
-            <Image
-                src="/images/Featured.png"
-                width={250}
-                height={220}
-                alt="Featured Project"
-                className={styles.avatar}/>
-            {!isMobile && (
-               <Action />
-            )}
-        </div>
+        <section className={styles["recent-image-content"]}>
+            <div className={styles["recent-bullets"]}>
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <div>
+                <Image
+                    src="/images/Featured.png"
+                    width={250}
+                    height={170}
+                    alt="Featured Project"
+                    className={styles.avatar}/>
+            </div>
+        </section>
     )
 }
 
 function Action() {
     return (
         <div className={styles["recent-action"]}>
-            <button>
-                <HomeIcons.Link 
+            <a 
+                href={networkDefine.GORDON_PROJECTS_URL} 
+                target="_blank" 
+                rel="noopener noreferrer">
+                    Open Live Site
+                <ArrowRightV2 
+                    style={{ transform: "rotate(-46grad)" }}
                     width={18} 
                     height={18} />
-                Open projects
-            </button>
-            <button>
-                <HomeIcons.GithubFaceV 
+            </a>
+            <a 
+                href={networkDefine.GORDON_GITHUB_URL} 
+                target="_blank" 
+                rel="noopener noreferrer">
+                    <HomeIcons.Github 
                     width={21} 
-                    height={16} />
-            </button>
+                    height={18} />
+                    View Source Code
+            </a>
         </div>
     )
 }
