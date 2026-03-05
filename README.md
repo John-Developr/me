@@ -1,36 +1,107 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 👨‍💻 johncarlo — Personal Portfolio
 
-## Getting Started
+A personal developer portfolio built with **Next.js** and **TypeScript**, showcasing my projects, skills, work experience, and blog — deployed on Vercel.
 
-First, run the development server:
+🌐 **Live:** [johncarlo-portfolio.vercel.app](https://johncarlo-portfolio.vercel.app)
+
+---
+
+## ✨ Features
+
+- **Animated sections** — smooth bottom-to-top entrance animations with staggered delays
+- **Responsive layout** — adaptive two-column layout that reflows for mobile viewports
+- **AI-powered blog** — blog posts generated and served via an AI pipeline
+- **Project showcase** — curated list of personal and side projects
+- **Dark/light aware** — clean CSS module architecture for easy theming
+- **Fast & optimised** — built on Next.js App Router with static generation where possible
+
+---
+
+## 🛠 Tech Stack
+
+| Layer | Technology |
+|---|---|
+| Framework | [Next.js 14+](https://nextjs.org) (App Router) |
+| Language | TypeScript |
+| Styling | CSS Modules |
+| Deployment | [Vercel](https://vercel.com) |
+| AI Blog | Gemini API via `/api/chat` |
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+- Node.js `18+`
+- npm / yarn / pnpm
+
+### Installation
+
+```bash
+# Clone the repository
+git clone https://github.com/John-Developr/me.git
+cd me
+
+# Install dependencies
+npm install
+```
+
+### Development
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Build
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run build
+npm run start
+```
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## 📁 Project Structure
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```
+src/
+├── app/                  # Next.js App Router pages
+│   ├── page.tsx          # Home page
+│   └── blog/[slug]/      # Dynamic blog post pages
+├── components/           # Reusable UI components
+│   ├── header/
+│   ├── footer/
+│   ├── icons/
+│   └── custom/
+├── hooks/                # Custom React hooks
+│   ├── useAnimateIn.ts   # Scroll-triggered entrance animation
+│   └── useMediaQuery.ts  # Responsive breakpoint detection
+├── styles/               # CSS Modules
+├── utils/                # Helpers and type definitions
+├── config/               # App-wide configuration
+└── lib/                  # Context providers and shared logic
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## 📝 Environment Variables
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Create a `.env.local` file in the root:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```env
+# Add your environment variables here
+GEMINI_API_KEY=your_key_here
+```
+
+---
+
+## 📄 License
+
+This project is open source and available under the [MIT License](LICENSE).
+
+---
+
+<p align="center">Built and designed by <strong>John Carlo</strong></p>
