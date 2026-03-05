@@ -40,20 +40,6 @@ const AnimatedSection = ({ className, delay, children }: AnimatedSectionProps) =
 export default function HomePage() {
   const { isMobile } = useApp();
 
-  // Left/right column content swaps based on viewport
-  const left  = isMobile
-    ? [
-        <AboutSection />,
-        <ExperienceSection />
-    ] : [
-        <AboutSection />,
-        <StackSection />
-    ];
-
-  const right = isMobile 
-    ? [<StackSection />]
-    : [<ExperienceSection />];
-
   return (
     <>
       <Header />
@@ -63,8 +49,7 @@ export default function HomePage() {
       </AnimatedSection>
 
       <AnimatedSection className={styles.second} delay={150}>
-        <section className={styles["left-content"]}>{left}</section>
-        <section className={styles["right-content"]}>{right}</section>
+        <SecondContent isMobile={isMobile} />
       </AnimatedSection>
 
       <AnimatedSection className={styles.third} delay={220}>
@@ -79,4 +64,34 @@ export default function HomePage() {
       <Footer />
     </>
   );
+}
+
+const SecondContent = ({ isMobile } : {isMobile : boolean}) => {
+    if (isMobile) {
+        return (
+            <>
+                <section className={styles["left-content"]}>
+                    <AboutSection />
+                    <ExperienceSection />
+                </section>
+
+                <section className={styles["right-content"]}>
+                    <StackSection />
+                </section>
+            </>
+        )
+    }
+
+    return (
+        <>
+            <section className={styles["left-content"]}>
+                <AboutSection />
+                <StackSection />
+            </section>
+
+            <section className={styles["right-content"]}>
+                <ExperienceSection />
+            </section>
+        </>
+    )
 }
