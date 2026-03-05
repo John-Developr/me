@@ -17,6 +17,7 @@ import { useApp } from "@/lib/.context/AppContext";
 import { AIBlogResponse, BlogCategoryEnum } from "@/utils/types";
 import { debounce } from "@/utils/general/helpers";
 import { networkDefine } from "@/config/networkDefine";
+import { useAnimateIn } from "@/hooks/useAnimateIn";
 
 enum SortEnum {
     asc = "asc",
@@ -25,6 +26,7 @@ enum SortEnum {
 
 export default function BlogPage() {
     const { blogs, setBlogs } = useApp();
+    const main = useAnimateIn<HTMLDivElement>({ delay: 120, duration: 600 });
 
     const debouncedFetchBlogs = useRef(
         debounce((
@@ -115,11 +117,14 @@ export default function BlogPage() {
                        Here, I share practical tips, thought-provoking ideas, and personal experiences to inspire developers, learners, and curious minds alike. 
                        Whether you're exploring the latest in web & mobile development, seeking study strategies, or reflecting on life and innovation, there's something here for you."
             />
-            <HrHorizontal 
+            <main ref={main.ref} style={main.style}>
+                  <HrHorizontal 
                 spacingH={0} 
                 spacingV={0} 
                 thickness={1} />
-            <main>
+
+                <br />
+
                 <div className={styles["filter-sort"]}>
                     <section>
                         {categories.map((cat) => (
