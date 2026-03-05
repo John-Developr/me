@@ -41,8 +41,18 @@ export default function HomePage() {
   const { isMobile } = useApp();
 
   // Left/right column content swaps based on viewport
-  const left  = isMobile ? [<AboutSection />, <ExperienceSection />] : [<AboutSection />, <StackSection />];
-  const right = isMobile ? [<StackSection />]                        : [<ExperienceSection />];
+  const left  = isMobile
+    ? [
+        <AboutSection />,
+        <ExperienceSection />
+    ] : [
+        <AboutSection />,
+        <StackSection />
+    ];
+
+  const right = isMobile 
+    ? [<StackSection />]
+    : [<ExperienceSection />];
 
   return (
     <>
