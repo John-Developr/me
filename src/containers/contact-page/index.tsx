@@ -58,10 +58,10 @@ export default function ContactPage() {
 
         const form = e.currentTarget;
         const formData = new FormData(form);
-        const jsonData: Record<string, any> = {};
+        const jsonData: Record<string, string> = {};
 
         formData.forEach((value, key) => {
-            jsonData[key] = value;
+            jsonData[key] = value as string;
         });
 
         try {
