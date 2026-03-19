@@ -117,6 +117,7 @@ div.title {
   align-items: center;
   column-gap: 10px;
   text-decoration: none;
+  font-weight: 500;
   transition: 0.5s;
 }
 
@@ -601,6 +602,7 @@ div.title {
   font-size: 14px;
   border-radius: 10px;
   transition: 0.5s;
+  font-weight: 500;
 }
 
 .third .recent-action a:first-child {
@@ -739,6 +741,7 @@ div.title {
   column-gap: 15px;
   font-size: 14px;
   transition: 0.2s;
+  font-weight: 500;
 }
 
 .fourth .connect section.resume a:hover {

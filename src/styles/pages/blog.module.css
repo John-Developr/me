@@ -8,19 +8,19 @@
 
 .filter-sort section {
     display: flex;
-    column-gap: 5px;
+    column-gap: 7px;
 }
 
 .filter-sort section button {
-    padding: 0px 10px;
-    border-radius: 5px;
-    border: none;
+    padding: 5px 12px;
+    border: var(--border-input-field);
+    border-radius: 100px;
     cursor: pointer;
-    background-color: transparent;
     font-size: 15px;
     transition: 0.2s;
-    height: 28px;
     color: black;
+    background: none;
+    text-transform: capitalize;
 }
 
 .filter-sort section button.active {
@@ -55,13 +55,6 @@
     border-radius: 10px;
     border: 1px solid #ffffff00;
     transition: .3s;
-}
-
-.card:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--box-shadow-default);
-  border: 1px solid #e5e7eb !important;
-  border-radius: 10px;
 }
 
 .card:hover section:last-child .read-more svg {

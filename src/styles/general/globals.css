@@ -40,6 +40,10 @@ button, a {
   cursor: pointer;
 }
 
+[data-sileo-header][data-edge="bottom"]{
+  top: -8px !important;
+}
+
 /* ================================== 
         HEADER SECTION START 
 ===================================== */

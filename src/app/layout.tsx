@@ -4,6 +4,8 @@ import type { Metadata } from "next";
 import { Karla } from "next/font/google";
 import { AppProvider } from "@/lib/.context/AppContext";
 
+import { Toaster } from "sileo";
+
 import LayoutProvider from "./LayoutProvider";
 
 const karla = Karla({
@@ -31,6 +33,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={karla.variable}>
+        <Toaster position="top-right" theme="light" />
         <AppProvider>
           <LayoutProvider>
             {children}
