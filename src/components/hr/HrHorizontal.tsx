@@ -1,3 +1,7 @@
+'use client'
+
+import { useApp } from "@/lib/.context/AppContext"
+
 interface HrHorizontalProps {
   thickness?: number
   color?: string
@@ -11,11 +15,13 @@ export default function HrHorizontal({
   spacingH = 24,
   spacingV = 0,
 }: HrHorizontalProps) {
+  const { isDark } = useApp();
+
   return (
     <div
       style={{
         height: thickness,
-        backgroundColor: color,
+        backgroundColor: isDark ? "var(--divider-bottom)" : color,
         margin: `${spacingV}px ${spacingH}px`,
         width: `calc(100% - ${2 * spacingH}px)`,
       }}

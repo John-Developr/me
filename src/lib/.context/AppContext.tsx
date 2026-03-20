@@ -22,6 +22,9 @@ type AppContextType = {
   setShowModal: (value: boolean) => void;
 
   isMobile: boolean;
+  
+  isDark: boolean;
+  toggleTheme: () => void;
 };
 
 interface SetBlogsType {
@@ -38,9 +41,27 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
   const [pageLoading, setPageLoading] = useState<boolean>(true);
   const [blogs, setBlogs] = useState<SetBlogsType | undefined>();
   const [showModal, setShowModal] = useState<boolean>(false);
+  const [isDark, setIsDark] = useState<boolean>(false);
+
+  const toggleTheme = () => {
+    const newTheme = isDark ? "light" : "dark";
+    document.documentElement.classList.toggle("dark");
+    localStorage.setItem("theme", newTheme);
+    setIsDark(!isDark);
+  };
   
   // init app
   useEffect(() => {
+    const savedTheme = localStorage.getItem("theme");
+
+    if (savedTheme === "dark") {
+      document.documentElement.classList.add("dark");
+      setIsDark(true);
+    } else {
+      document.documentElement.classList.remove("dark");
+      setIsDark(false);
+    }
+    
     const fetchBlogs = async () => {
       try {
         const response = await fetch(networkDefine.BLOG_API);
@@ -75,7 +96,10 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
         showModal, 
         setShowModal,
 
-        isMobile
+        isMobile,
+        
+        isDark,
+        toggleTheme
       }}>
       {children}
     </AppContext.Provider>

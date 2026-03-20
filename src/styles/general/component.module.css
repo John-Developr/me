@@ -127,6 +127,7 @@
   padding: 15px 25px;
   border-top: 1px solid rgb(224, 224, 224);
 }
+
 .footer-modal button {
   padding: 9px 20px;
   font-size: 15px;
@@ -144,10 +145,7 @@
   border: 1px solid rgb(226, 226, 226);
   color: white;
 }
-
-
 /* Modal END */
-
 
 /* Chat AI Styles START */
 .chatAI {
@@ -165,38 +163,35 @@
     border-radius: 10px;
     border-bottom-right-radius: 0px;
     box-shadow: var(--box-shadow-default);
-    background-color: white;
-    border: 1px solid #eaeaea;
-}
-
-.chatAI .chat-container::after {
-    content: "";
-    position: absolute;
-    right: 0px;
-    bottom: -20px;
-
-    width: 0;
-    height: 0;
-
-    border-left: 30px solid transparent;
-    border-top: 20px solid #ffffff; 
-
-    border-bottom-right-radius: 30px;
+    background-color: var(--container-bg);
+    border: var(--border-container);
 }
 
 .chatAI .chat-container::before {
-    content: "";
-    position: absolute;
-    right: -1px;
-    bottom: -22px;
+  content: "";
+  position: absolute;
+  bottom: -23px;
+  right: -1px;
 
-    width: 0;
-    height: 0;
+  width: 0;
+  height: 0;
 
-    border-left: 31px solid transparent;
-    border-top: 21px solid #eaeaea; 
+  border-top: 23px solid var(--divider-bottom); /* border color */
+  border-left: 33px solid transparent;
+}
 
-    border-bottom-right-radius: 30px;
+/* INNER (fill) */
+.chatAI .chat-container::after {
+  content: "";
+  position: absolute;
+  bottom: -21px;
+  right: 0;
+
+  width: 0;
+  height: 0;
+
+  border-top: 22px solid var(--container-bg); /* bubble color */
+  border-left: 31px solid transparent;
 }
 
 .chatAI .chat-container .profile {
@@ -206,6 +201,10 @@
     align-items: center;
 }
 
+.chatAI .chat-container .profile h3 {
+    color: var(--text);
+}
+
 .chatAI .chat-container .profile img {
     object-fit: cover;
     border-radius: 100%;
@@ -213,7 +212,7 @@
 
 .chatAI .chat-container .profile section p {
     font-size: 13px;
-    color: #717171;
+    color: var(--text-muted);
 }
 
 .chatAI .chat-container .profile section span.online-icon {
@@ -229,7 +228,7 @@
     height: 1px;
     width: 100%;
     display: block;
-    background-color: #f2f2f2;
+    background-color: var(--divider-bottom);
     box-shadow: var(--box-shadow-default);
     border: none;
 }
@@ -359,7 +358,7 @@
     width: 0;
     height: 0;
     border-top: 15px solid transparent;
-    border-right: 10px solid #f5f5f5;
+    border-right: 10px solid var(--chat-buble-after);
 
     position: absolute;
     left: -8px;
@@ -368,7 +367,7 @@
 
 .chatAI .chat-container .chat-messages .john .message {
     padding: 15px;
-    background-color: #f5f5f5;
+    background-color: var(--chat-buble-bg);
     position: relative;
     font-size: 13px;
     border-radius: 10px;
@@ -376,6 +375,7 @@
     border-top-right-radius: 3px;
     width: fit-content;
     max-width: 250px;
+    color: var(--text);
 }
 
 .chatAI .chat-container .chat-messages .user .message::after {
@@ -430,12 +430,14 @@
     padding: 5px 20px;
     padding-right: 40px;
     outline: none;
-    border: 1px solid #efefef;
+    border: var(--border-container);
     margin: 0px 20px;
+    background: var(--container-bg);
+    color: var(--text);
 }
 
 .chatAI .chat-container .form input:disabled {
-    background-color: #f0f0f0;
+    background-color: var(--disabled-input-bg);
     cursor: not-allowed;
 }
 
@@ -481,6 +483,8 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+
+    box-shadow: var(--primary-btn-box-shadow);
 }
 
 .chatAI a:hover {
@@ -621,17 +625,18 @@
 
 .container-clipoard .copy-button {
   appearance: none;
-  padding: 3px;
+  padding: 6px;
   border: 0;
   outline: 0;
   cursor: pointer;
-  border-radius: 1px;
+  border-radius: 2px;
   background-color: transparent;
   position: relative;
+  transition: 0.3s;
 }
 
 .container-clipoard .copy-button:hover {
-    background-color: rgb(235, 235, 235);
+    background-color: var(--clip-hover);
 }
 
 .container-clipoard .did-animate:hover {
@@ -659,7 +664,7 @@
 
 /* Clippy default and animation */
 .container-clipoard .clippy {
-  color: black;
+  color: var(--text);
 }
 .container-clipoard .clippy-copied {
   stroke-dashoffset: -50;

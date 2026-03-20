@@ -18,6 +18,8 @@ export function useFadeOutRemove(
     if (!fadeOutTrigger) 
       return;
 
+     document.body.style.overflow = "hidden";
+
     const timer = setTimeout(() => {
       const el = ref.current;
       if (!el) 
@@ -26,6 +28,7 @@ export function useFadeOutRemove(
       el.classList.add(fadeOutClass);
 
       const handleAnimationEnd = () => {
+        document.body.style.overflow = "";
         options.callback?.();
       };
 
@@ -40,6 +43,8 @@ export function useFadeOutRemove(
           'animationend', 
           handleAnimationEnd
         );
+        
+        document.body.style.overflow = "";
       };
     }, delay);
 

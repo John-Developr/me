@@ -21,8 +21,7 @@ export default function chatButton({
             <a 
                 href="#" 
                 onClick={handleClickChat} 
-                className={Styles.isClick}
-            >
+                className={Styles.isClick}>
                 <span className={Styles.icon}>
                     <XMark width="18" height="18" />
                 </span>

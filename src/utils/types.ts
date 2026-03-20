@@ -87,3 +87,29 @@ export enum AppPagesEnum {
   Blog = "/blog",
   BlogDetail = "/blog/[slug]",
 }
+
+// =====================
+// InquiryType Enum
+// =====================
+// Defines the type of inquiry submitted by the user
+export enum InquiryType {
+  JobOpportunity = "Job Opportunity",      // job hiring or career-related inquiries
+  FreelanceProject = "Freelance Project",  // project collaboration or freelance work
+  GeneralInquiry = "General Inquiry",      // general questions or messages
+}
+
+// =====================
+// ContactFormData Interface
+// =====================
+// Represents the structure of data submitted from the contact form
+export interface ContactFormData {
+  fname: string;     // user's first name
+  lname: string;     // user's last name
+  email: string;     // user's email address
+  subject: string;   // subject/title of the message
+  type: InquiryType; // selected inquiry type
+  budget?: string;   // optional budget (only for freelance projects)
+  message: string;   // main message content
+
+  // NOTE: No additional fields yet (extendable in the future if needed)
+}

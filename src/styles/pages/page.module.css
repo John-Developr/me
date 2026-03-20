@@ -13,6 +13,9 @@
   border: var(--border-container);
   border-radius: 12px;
   position: relative;
+
+  background: var(--container-bg) !important; 
+  backdrop-filter: var(--container-back-drop-filter);
 }
 
 div.title {
@@ -26,6 +29,7 @@ div.title {
   position: relative;
   top: -2px;
   font-size: 15px;
+  color: var(--text-header);
 }
 
 .connect .title h3,
@@ -117,6 +121,7 @@ div.title {
   align-items: center;
   column-gap: 10px;
   text-decoration: none;
+  font-weight: 500;
   transition: 0.5s;
 }
 
@@ -124,6 +129,7 @@ div.title {
   background-color: var(--bg-primary);
   border: none;
   color: white;
+  box-shadow: var(--primary-btn-box-shadow);
 }
 
 .first .action a:first-child:hover {
@@ -131,13 +137,13 @@ div.title {
 }
 
 .first .action a:last-child {
-  background-color: white;
+  background-color: var(--bg-secondary);
   border: 1px solid rgb(225, 225, 225);
-  color: black;
+  color: var(--text-secondary);
 }
 
 .first .action a:last-child:hover {
-  background-color: #eeeeee;
+  background-color: var(--bg-secondary);
 }
 
 .first .profile {
@@ -282,10 +288,12 @@ div.title {
   display: flex;
   column-gap: 15px;
   align-items: center;
-  border: 1px solid #ececec;
+  border: var(--badges-border);
+  background: var(--badges-bg);
+  color: var(--text-header);
   padding: 10px 15px;
   border-radius: 8px;
-  width: calc(100% - 30px)
+  width: calc(100% - 30px);
 }
 
 .second .tech-stack li.tech-list div.tech-detail {
@@ -298,7 +306,7 @@ div.title {
 
 .second .tech-stack li.tech-list div.tech-detail p {
   font-size: 10px;
-  color: rgb(158, 158, 158);
+  color: var(--text-sub);
 
   display: -webkit-box;
   -webkit-line-clamp: 1;
@@ -340,6 +348,10 @@ div.title {
   column-gap: 10px;
 }
 
+.second .list-exp h4 {
+  color: var(--text-header);
+}
+
 .second .list-exp .ex-name-date-profile img {
   display: block;
   border-radius: 5px;
@@ -368,7 +380,7 @@ div.title {
 .second ul.list-exp li p.ex-date {
   font-size: 11px;
   margin-top: -5px;
-  color: #828282;
+  color: var(--text-sub);
 }
 
 .second ul.list-exp li > p.ex-pos {
@@ -377,7 +389,7 @@ div.title {
 
 .second ul.list-exp > li:not(:last-child)::after {
   content: "";
-  background-color: #f2f2f2;
+  background-color: var(--divider-bottom);
   height: 1px;
   width: 100%;
   display: block;
@@ -417,7 +429,7 @@ div.title {
   top: 7px;
   left: -32px;
   border-radius: 100%;
-  border: 1.5px solid #686868;
+  border: var(--sub-exp-indicator);
 }
 
 .second ul.list-exp li.no-sub::after  {
@@ -485,10 +497,11 @@ div.title {
 .third .recent-detail .name-intro h1 {
   font-size: 30px;
   font-weight: 700;
+  color: var(--text-header)
 }
 
 .third .recent-detail .name-intro h2 {
-  color: #999898; 
+  color: var(--text-sub); 
   font-weight: 500;
   font-size: 19px;
 }
@@ -514,8 +527,9 @@ div.title {
   align-items: center;
   justify-content: center;
   column-gap: 10px;
-  background: transparent;
-  border: 1px solid #e5e7eb;
+  background: var(--badges-bg);
+  border: var(--badges-border);
+  color: var(--badges-text);
   font-size: 17px;
 }
 
@@ -601,12 +615,14 @@ div.title {
   font-size: 14px;
   border-radius: 10px;
   transition: 0.5s;
+  font-weight: 500;
 }
 
 .third .recent-action a:first-child {
   background-color: var(--bg-primary);
   color: white;
   border: none;
+  box-shadow: var(--primary-btn-box-shadow);
 }
 
 .third .recent-action a:first-child:hover {
@@ -615,12 +631,13 @@ div.title {
 
 .third .recent-action a:last-child {
   color: #000;
-  background-color: #fff;
+  background-color: var(--bg-secondary);
   border: 1px solid #e1e1e1;
+  color: var(--text-secondary);
 }
 
 .third .recent-action a:last-child:hover {
-  background-color: #eeeeee;
+  background-color: var(--secondary-hover-color);
 }
 
 @media (max-width: 850px) {
@@ -661,7 +678,7 @@ div.title {
   content: "";
   width: 100%;
   height: 1px;
-  background-color: #f2f2f2;
+  background-color: var(--divider-bottom);
   display: block;
   margin: 19px 0px;
 }
@@ -678,7 +695,7 @@ div.title {
 }
 
 .fourth .connect h5 a {
-  color: black
+  color: var(--text)
 }
 
 .fourth .connect span {
@@ -739,6 +756,8 @@ div.title {
   column-gap: 15px;
   font-size: 14px;
   transition: 0.2s;
+  font-weight: 500;
+  box-shadow: var(--primary-btn-box-shadow);
 }
 
 .fourth .connect section.resume a:hover {
@@ -764,7 +783,7 @@ div.title {
 .fourth .blog .card-container .card:hover {
   transform: translateY(-2px);
   box-shadow: var(--box-shadow-default);
-  border: 1px solid #e5e7eb !important;
+  border: var(--badges-border);
   border-radius: 10px;
 }
 
@@ -772,7 +791,7 @@ div.title {
   height: 1px;
   width: calc(100% - 30px);
   display: block;
-  background-color: #f2f2f2;
+  background-color: var(--divider-bottom);
   margin: 15px 10px;
   box-shadow: var(--box-shadow-default);
   border: none;
@@ -783,11 +802,12 @@ div.title {
   overflow: hidden;
   text-overflow: ellipsis;
   font-size: 18px;
+  color: var(--text-header);
 }
 
 .fourth .blog .card-container .card div.date-time {
   font-size: 11px;
-  color: #717171;
+  color: var(--text-muted);
   display: block;
   margin: 7px 0px;
 }
@@ -817,10 +837,12 @@ div.title {
 
 .fourth .blog .card-container .card ul li {
   padding: 3px 7px;
-  border: 1px solid #e5e7eb;
+  border: var(--badges-border);
   display: block;
   border-radius: 8px;
   font-size: 10px;
+  background: var(--badges-bg);
+  color: var(--badges-text);
 }
 
 @media (max-width: 850px) {

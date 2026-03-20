@@ -1,16 +1,94 @@
 :root {
   --bg-primary: rgb(40, 42, 54);
+  --primary-hover-color: #363636;
+  --primary-btn-box-shadow: 0 2px 10px rgba(0, 0, 0, 0.35);
+
+  --bg-secondary: #ffffff;
+  --secondary-hover-color: #e1e1e1;
+  --text-secondary: black;
+
   /* --bg-primary: #4653FF; */
   /* --bg-primary: #5D72FF; */
   --border-container: 1px solid #eaeaea;
   --box-shadow-default: 0 4px 20px -4px rgba(0,0,0,.08);
 
   --content-based-width: 970px;
-  --delete-color: rgb(189, 71, 71);
   --border-line-theme: 1px solid #eee;
   --border-input-field: 1px solid #e1e1e1;
 
-  --primary-hover-color: #363636;
+  --bg: #fefefe;
+  --text: #000000;
+
+  --container-bg: rgb(255, 255, 255);
+  --container-back-drop-filter: blur(24px) saturate(200%);
+
+  --sub-exp-indicator: 1.5px solid #686868;
+  --divider-bottom: #f2f2f2;
+
+  --badges-border: 1px solid #e5e7eb;
+  --badges-bg: none;
+  --badges-text: #000000;
+
+  --text-header: var(--bg-primary);
+  --text-sub: #999898;
+  --text-muted: #7d8590;
+
+  --clip-hover: rgb(235, 235, 235);
+  --logo-filter: unset;
+
+  --chat-buble-bg: #f2f2f2;
+  --chat-buble-after: #f2f2f2;
+
+  --disabled-input-bg: #f0f0f0;
+}
+
+.dark {
+  /* --bg-primary: #414966; */
+  --bg-primary: #476fff;
+  --primary-hover-color: #476fff86;
+  --primary-btn-box-shadow: 0 4px 16px rgba(79,124,255,0.35);
+
+  --bg-secondary: #f5f5f5;
+  --secondary-hover-color: #e1e1e1;
+  --text-secondary: #6a6a6a;
+
+  /* --bg: #111118; */
+  --bg: #0d1117;
+  --text: #f8fafc;
+
+  --container-bg: #161b22;
+    /* --container-bg: rgba(15, 15, 20, 0.6); */
+  --container-back-drop-filter: unset;
+
+  --border-container: 1px solid #3d404c46;
+  --border-input-field: 1px solid #3d404c46;
+
+  --sub-exp-indicator: 1.5px solid #ffffff;
+  --divider-bottom: #30363d;
+
+  --badges-border: 1px solid #30363d;
+  --badges-bg: none;
+  --badges-text: #7d8590;
+
+  --text-header: #e6edf3;
+  --text-sub: #484f58;
+  --text-muted: #7d8590;
+
+  --clip-hover: #30363d;
+  --logo-filter: 
+    brightness(0) 
+    saturate(100%) 
+    invert(44%) 
+    sepia(92%) 
+    saturate(1840%) 
+    hue-rotate(203deg) 
+    brightness(97%) 
+    contrast(101%);
+
+  --chat-buble-bg: #27272742;
+  --chat-buble-after: #1a1e23;
+
+  --disabled-input-bg: #3d404c46;
 }
 
 * {
@@ -19,6 +97,12 @@
 
   font-family: "Karla", sans-serif;
   font-optical-sizing: auto;
+}
+
+body {
+  color: var(--text);
+  background: var(--bg);
+  transition: background 0.3s ease, color 0.3s ease; /* ✅ smooth switch */
 }
 
 .wrapper {
@@ -40,6 +124,10 @@ button, a {
   cursor: pointer;
 }
 
+[data-sileo-header][data-edge="bottom"]{
+  top: -8px !important;
+}
+
 /* ================================== 
         HEADER SECTION START 
 ===================================== */
@@ -49,12 +137,134 @@ button, a {
 
 .header .logo img {
   cursor: pointer;
+  filter: var(--logo-filter)
 }
 
 .header .linkend {
-  color: #4646ee !important;
+  color: #476fff !important;
   cursor: pointer;
 }
+
+.header .nav {
+  margin-left: auto;
+}
+
+.header .nav > ul {
+  display: flex;
+}
+
+.header .nav > ul > li {
+  display: flex;
+  align-items: center;
+  list-style: none;
+  margin: 0px 10px;
+}
+
+.header .nav > ul li.phone-no {
+  display: flex;
+  align-items: center;
+  column-gap: 5px;
+}
+
+.header .nav > ul li.linkend {
+  color: var(--bg-primary);
+} 
+
+.header .nav > ul li.menu {
+  cursor: pointer;
+}
+
+.menu-dropdown {
+  position: absolute;
+  top: 22px;
+  right: 17px;
+  width: 200px;
+  border-radius: 12px;
+  z-index: 1000;
+
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  
+  background: rgba(15, 15, 20, 0.6); 
+  backdrop-filter: blur(24px) saturate(200%);
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.4),
+    0 2px 8px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+
+  color: white;
+
+  animation: dropdownOpen 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  transform-origin: top right;
+}
+
+@keyframes dropdownOpen {
+  from {
+    opacity: 0;
+    transform: scale(0.92) translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.menu-dropdown nav ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+}
+
+.menu-dropdown nav ul li {
+  display: flex;
+  align-items: center;
+  column-gap: 8px;
+  padding: 10px;
+  transition: background 0.15s ease;
+}
+
+.menu-dropdown nav ul li:first-child {
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+}
+
+.menu-dropdown nav ul li:last-child {
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+}
+
+.menu-dropdown nav ul li:hover {
+  background: rgba(255, 255, 255, 0.08); 
+}
+
+.menu-dropdown nav ul li:active {
+  background: rgba(255, 255, 255, 0.14);
+}
+
+.menu-dropdown nav ul li:not(:last-child) {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.menu-dropdown nav ul li.active {
+  background: rgba(255, 255, 255, 0.12);
+  color: #e3e3e3;
+  font-weight: 500;
+}
+
+.menu-dropdown nav ul li.active svg path {
+  stroke-width: 2.5px;
+}
+
+.menu-dropdown .dark-mode svg {
+  color: rgb(254, 221, 36);
+}
+
+.menu-dropdown .light-mode svg {
+  color: rgb(41, 137, 255);
+}
+
 /* ================================== 
         HEADER SECTION END 
 ===================================== */
@@ -84,7 +294,7 @@ button, a {
 }
 
 .other-page .page-intro p {
-  color: #828282;
+  color: var(--text-sub);
 }
 
 /* ================================== 
@@ -94,34 +304,9 @@ button, a {
 /* ================================== 
         FOOTER SECTION START 
 ===================================== */
-.nav {
-  margin-left: auto;
-}
-
-.nav ul {
-  display: flex;
-}
-
-.nav ul li {
-  display: flex;
-  align-items: center;
-  list-style: none;
-  margin: 0px 10px;
-}
-
-.nav ul li.phone-no {
-  display: flex;
-  align-items: center;
-  column-gap: 5px;
-}
-
-.nav ul li.linkend {
-  color: var(--bg-primary);
-} 
-
 .hr-horizontal {
     border: none;
-    border-top: 1px solid rgb(225, 225, 225) !important;
+    border-top: 1px solid var(--divider-bottom) !important;
     margin: 40px 0px;
     margin-bottom: 20px;
 }
@@ -136,7 +321,7 @@ button, a {
 }
   
 .section p {
-    color: #828282;
+    color: var(--text-muted);
 }
   
 .section section.socials ul {
@@ -145,7 +330,7 @@ button, a {
     list-style: none;
     justify-content: space-between;
     padding: 0px 20px;
-    color: #a4a4a4;
+    color: var(--text-muted);
     width: 180px;
 }
 

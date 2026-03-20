@@ -25,12 +25,13 @@
     font-size: 25px;
     color: var(--text-secondary);
     position: relative;
+    color: var(--text-sub);
 }
 
 .detail h3::after {
     content: "404";
     display: inline-block;
-    color: rgb(152, 152, 152);
+    color: var(--text-sub);
     font-weight: 900;
     margin-left: 10px;
 }
@@ -38,11 +39,12 @@
 .detail h1 {
     font-weight: 900;
     font-size: 80px;
+    color: var(--text-header);
 }
 
 .detail section p {
     white-space: nowrap;
-    color: gray;
+    color: var(--text-muted);
 }
 
 .shape {
@@ -53,7 +55,7 @@
 .link {
     text-decoration: none;
     color: white;
-    background-color: black;
+    background-color: var(--bg-primary);
     padding: 8px 20px;
     border-radius: 5px;
     width: fit-content; 
@@ -62,6 +64,8 @@
     column-gap: 10px;
     align-items: center;
     transition: 0.5s;
+
+    box-shadow: var(--primary-btn-box-shadow);
 }
 
 .link:hover {
