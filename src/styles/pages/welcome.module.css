@@ -59,11 +59,11 @@
     border-right: 0.10em solid gray; 
     white-space: nowrap;
     animation:   
-        typing 1.8s steps(30, end) forwards 0.7s, /* 1.5s delay before typing starts */
-        blink 0.75s step-end forwards 2s;       /* same delay for blinking */
+        nameTyping 1.8s steps(30, end) forwards 0.7s, /* 1.5s delay before typing starts */
+        nameBlink 0.75s step-end forwards 2s;       /* same delay for blinking */
 }
 
-@keyframes blink {
+@keyframes nameBlink {
     0%, 50% { 
         border-color: gray; 
     }
@@ -72,7 +72,7 @@
     }
 }
 
-@keyframes typing {
+@keyframes nameTyping {
     0% {
         width: 0%;
         opacity: 0;
@@ -110,11 +110,20 @@
     border-right: 0.15em solid gray; 
     white-space: nowrap;
     animation:   
-        typing2 1.3s steps(30, end) forwards 2.8s, /* 1.5s delay before typing starts */
-        blink 0.75s step-end forwards 1s;     /* same delay for blinking */
+        titleTyping 1.3s steps(30, end) forwards 2.8s, /* 1.5s delay before typing starts */
+        titleBlink 0.75s step-end forwards 1s;     /* same delay for blinking */
 }
 
-@keyframes typing2 {
+@keyframes titleBlink {
+    0%, 50% { 
+        border-color: gray; 
+    }
+    100% { 
+        border-color: white; 
+    }    
+}
+
+@keyframes titleTyping {
     0% {
         width: 0;
         opacity: 0;
