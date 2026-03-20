@@ -1,7 +1,7 @@
 'use client'
 
 import React from "react";
-import { useEffect, useState, ReactNode, useRef, useCallback } from "react";
+import { useEffect, useState, ReactNode, useCallback } from "react";
 import { useApp } from "@/lib/.context/AppContext";
 import { WelcomeOverlay, SpinnerOverlay } from "./Overlays";
 
@@ -34,7 +34,7 @@ export default function Preloader({  children }: PreloaderProps) {
   }, []);
 
   // For (DEV) purposes only
-  const renderCount = useRef(0);
+  // const renderCount = useRef(0);
   // renderCount.current += 1;
   // console.log("Preloader render count:", renderCount.current);
 
