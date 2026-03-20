@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useRef } from "react";
 
 import Image from "next/image";
 import Link from "next/link";
+import { sileo } from "sileo";
 
 import { HomeIcons } from "@/components/icons";
 import styles from "@/styles/pages/page.module.css";
@@ -9,6 +10,58 @@ import { networkDefine } from "@/config/networkDefine";
 import CopyClipboard from "@/components/clipoard";
 
 export default function ConnectionSection() {
+    const isDownloading = useRef(false);
+
+    const downloadResume = (e: React.MouseEvent<HTMLAnchorElement>) => {
+        e.preventDefault();
+
+        if (isDownloading.current) return;
+        isDownloading.current = true;
+
+        const fakeDownload = new Promise((resolve) => {
+            setTimeout(() => resolve(true), 1500);
+        });
+
+        sileo.promise(
+            fakeDownload.then(async () => {
+                const res = await fetch(networkDefine.RESUME_URL, {
+                    method: "GET",
+                    headers: {
+                    "Content-Type": "application/pdf",
+                    },
+                });
+
+                if (!res.ok) throw new Error("Download failed");
+
+                const blob = await res.blob();
+                const pdfBlob = new Blob([blob], { type: 'application/pdf' });
+                const url = window.URL.createObjectURL(pdfBlob);
+
+                const link = document.createElement("a");
+                link.href = url;
+                link.setAttribute("download", "JohnCarlo_Ylanan_Resume.pdf");
+                document.body.appendChild(link);
+
+                setTimeout(() => {
+                    link.dispatchEvent(new MouseEvent('click', {
+                    bubbles: true,
+                    cancelable: true,
+                    view: window,
+                    }));
+                    document.body.removeChild(link);
+                    window.URL.revokeObjectURL(url);
+                }, 100);
+            }),
+            {
+                loading: { title: "Downloading resume..." },
+                success: { title: "Successfully Downloaded John Carlo's Resume" },
+                error: { title: "Failed to download John Carlo's Resume" },
+            }
+        ).finally(() => {
+            isDownloading.current = false;
+        });
+    };
+
     return (
         <section className={styles.connect}>
             <div className={styles.title}>
@@ -75,10 +128,9 @@ export default function ConnectionSection() {
             </section>
             <section className={styles.resume}>
                 <a 
-                    href={networkDefine.RESUME_URL}
-                    target="_blank" 
-                    rel="noopener noreferrer" 
-                    className={styles.pointer} download>
+                    href={"#"}
+                    className={styles.pointer} 
+                    onClick={downloadResume}>
                     Download Resume
                     <span className={styles.icon}>
                         <HomeIcons.Download 

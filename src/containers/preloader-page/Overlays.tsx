@@ -17,9 +17,9 @@ export const WelcomeOverlay = ({
     const wrapperRef = useRef<HTMLDivElement>(null);
     
     // For (DEV) purposes only
-    const renderCount = useRef(0);
-    renderCount.current += 1;
-    console.log("Welcome render count:", renderCount.current);
+    // const renderCount = useRef(0);
+    // renderCount.current += 1;
+    // console.log("Welcome render count:", renderCount.current);
 
     useFadeOutRemove(wrapperRef, !isLoading, {
         delay: 5000,
@@ -59,9 +59,9 @@ export const SpinnerOverlay =  ({
     const wrapperRef = useRef<HTMLDivElement>(null);
       
     // For (DEV) purposes only
-    const renderCount = useRef(0);
-    renderCount.current += 1;
-    console.log("SpinnerOverlay render count:", renderCount.current);
+    // const renderCount = useRef(0);
+    // renderCount.current += 1;
+    // console.log("SpinnerOverlay render count:", renderCount.current);
 
     useFadeOutRemove(wrapperRef, !isLoading, {
         delay: 300,

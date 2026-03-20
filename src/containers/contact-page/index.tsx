@@ -34,37 +34,35 @@ const inquiryOptions = [
     description: "Ask me anything or general questions",
     icon: "💬",
   },
-];
+] as const;
 
 const budgetOptions = [
-    { label: "Small Task", range: "Less than $100" },
-    { label: "Basic Project", range: "$100 \u2013 $300" },
+    { label: "Small Task",       range: "Less than $100" },
+    { label: "Basic Project",    range: "$100 \u2013 $300" },
     { label: "Standard Project", range: "$300 \u2013 $700" },
     { label: "Advanced Project", range: "$700 \u2013 $1,500" },
-    { label: "Large Project", range: "$1,500+" },
-];
+    { label: "Large Project",    range: "$1,500+" },
+] as const;
 
 export default function ContactPage() {
     const form = useAnimateIn<HTMLDivElement>({ delay: 200, duration: 600 });
     
     const [selectedType, setSelectedType] = useState<InquiryType>(InquiryType.GeneralInquiry);
-    const [selectedBudget, setSelectedBudget] = useState<string>(budgetOptions[0].label);
-    const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [selectedBudget, setSelectedBudget] = useState<typeof budgetOptions[number]["label"]>(budgetOptions[0].label);
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        setIsLoading(true);
         sileo.clear();
 
         const form = e.currentTarget;
         const formData = new FormData(form);
         const jsonData: Record<string, string> = {};
-
+        
         formData.forEach((value, key) => {
             jsonData[key] = value as string;
         });
 
-        try {
+        const handleRequest = async () => {
             const response = await fetch(networkDefine.CONTACT_FORM_API, {
                 method: "POST",
                 headers: {
@@ -72,34 +70,27 @@ export default function ContactPage() {
                 },
                 body: JSON.stringify(jsonData),
             });
-            
+
             const data = await response.json();
 
             if (!data.result) {
-                sileo.error({
-                    title: data.message,
-                    description: "Sorry, I'm not able to process your request at the moment.",
-                    styles: {
-                        description: "text-white"
-                    },
-                });
-
-                return
+                throw new Error(data.message);
             }
 
-            sileo.success({ 
-                title: "Form submitted successfully",
-                description: "Thank you for contacting me! I will get back to you within 24 hours."
-            });
-        } catch (err) {
-            console.error("Error submitting form:", err);
-            sileo.error({
-                title: "500 Something went wrong",
-                description: "Please try again later."
-            });
-        } finally {
-            setIsLoading(false);
-        }
+            return data;
+        };
+
+        sileo.promise(handleRequest(), {
+            loading: { title: "Reaching out to John..." },
+            success: {
+                title: "Message sent!",
+                description: "Thank you for contacting me! I will get back to you within 24 hours.",
+            },
+            error: (err) => ({
+                title: (err as Error).message ?? "Failed to submit form",
+                description: "Unable to process your request, please try again.",
+            }),
+        });
     };
 
     return (
@@ -126,11 +117,19 @@ export default function ContactPage() {
                         <div className={styles["form-row"]}>
                             <div className={styles["form-group"]}>
                                 <label htmlFor="fname">First Name</label>
-                                <input type="text" placeholder="Enter your first name" className={styles["form-control"]} name="fname" />
+                                <input 
+                                    type="text" 
+                                    placeholder="Enter your first name" 
+                                    className={styles["form-control"]} 
+                                    name="fname" />
                             </div>
                             <div className={styles["form-group"]}>
                                 <label htmlFor="lname">Last Name</label>
-                                <input type="text" placeholder="Enter your last name" className={styles["form-control"]} name="lname" />
+                                <input 
+                                    type="text" 
+                                    placeholder="Enter your last name" 
+                                    className={styles["form-control"]} 
+                                    name="lname" />
                             </div>
                         </div>
                         <div className={`${styles["form-group"]} ${styles["with-icon"]}`}>
@@ -138,14 +137,22 @@ export default function ContactPage() {
                             <span className={styles["input-icon-wrapper"]}>
                                 <Message width={20} height={20} />
                             </span>
-                            <input type="email" placeholder="Enter your e-mail" className={styles["form-control"]} name="email" />
+                            <input 
+                                type="email" 
+                                placeholder="Enter your e-mail" 
+                                className={styles["form-control"]} 
+                                name="email" />
                         </div>
                         <div className={`${styles["form-group"]} ${styles["with-icon"]}`}>
                             <label htmlFor="subject">Subject</label>
                             <span className={styles["input-icon-wrapper"]}>
                                 <Document width={20} height={20} />
                             </span>
-                            <input type="text" placeholder="Enter the subject" className={styles["form-control"]} name="subject" />
+                            <input 
+                                type="text" 
+                                placeholder="Enter the subject" 
+                                className={styles["form-control"]} 
+                                name="subject" />
                         </div>
                         <div className={styles["form-group"]}>
                             <p className={styles["custom-title"]}>Select Inquiry</p>
@@ -193,21 +200,14 @@ export default function ContactPage() {
                         )}
                         <div className={styles["form-group"]}>
                             <label htmlFor="message">Message</label>
-                            <textarea className={styles["form-control"]} name="message" placeholder="Enter your message" rows={6}></textarea>
+                            <textarea 
+                                className={styles["form-control"]} 
+                                name="message" 
+                                placeholder="Enter your message" rows={6} />
                         </div>
                         <button type="submit" className={styles.btn}>
-                            {isLoading ? (
-                                <span className={styles.dots}>
-                                    <span></span>
-                                    <span></span>
-                                    <span></span>
-                                </span>
-                            ) : (
-                                <>
-                                    Start the Conversation 
-                                    <Send width={20} height={20} />
-                                </>
-                            )}
+                            Start the Conversation 
+                            <Send width={20} height={20} />
                         </button>
                     </form>
                 </div>
