@@ -14,7 +14,7 @@ export default function Footer() {
         <hr className="hr-horizontal" />
         <footer className="section">
             <p>
-                © {startYear} {startYear !== currentYear && `\u2013${currentYear}`} 
+                © {startYear} {startYear !== currentYear && `\u2013 ${currentYear} `} 
                 John Carlo. All rights reserved.
             </p>
             <section className="socials">
