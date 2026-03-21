@@ -59,7 +59,7 @@
     border-right: 0.10em solid gray; 
     white-space: nowrap;
     animation:   
-        nameTyping 1.8s steps(30, end) forwards 0.7s, /* 1.5s delay before typing starts */
+        nameTyping 1.8s steps(20, end) forwards 0.7s, /* 1.5s delay before typing starts */
         nameBlink 0.75s step-end forwards 2s;       /* same delay for blinking */
 }
 
@@ -110,7 +110,7 @@
     border-right: 0.15em solid gray; 
     white-space: nowrap;
     animation:   
-        titleTyping 1.3s steps(30, end) forwards 2.8s, /* 1.5s delay before typing starts */
+        titleTyping 1.3s steps(9, end) forwards 2.8s, /* 1.5s delay before typing starts */
         titleBlink 0.75s step-end forwards 1s;     /* same delay for blinking */
 }
 
@@ -125,19 +125,19 @@
 
 @keyframes titleTyping {
     0% {
-        width: 0;
+        width: 0px;
         opacity: 0;
         border-right: 0.15em solid gray;
     }
 
     99% {
-        width: 99;
+        width: 99px;
         opacity: 1;
-        border-right: 0.15em solid gray; /* still visible */
+        border-right: 0.15em solid gray;
     }
 
     100% {
-        width: 100;
+        width: 100px;
         opacity: 1;
     }
 }
