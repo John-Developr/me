@@ -30,6 +30,8 @@ export const networkDefine = {
 
     // Own API Routes
     CONTACT_FORM_API: "/api/contact",
-    BLOG_API: "/api/blog"
-};
+    BLOG_API: "/api/blog",
+    BLOG_RECENT_API: "/api/blog/recent",
+    BLOG_DETAIL_API: (slug: string) => "/api/blog/" + slug,
+} as const;
   

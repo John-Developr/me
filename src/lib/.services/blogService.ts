@@ -13,7 +13,7 @@ export default class BlogService {
     }
 
     async index(instruction: string): Promise<boolean> {
-        const chat: ChatService = new ChatService(instruction);
+        const chat: ChatService       = new ChatService(instruction);
         const content: AIBlogResponse = await chat.blogMain();
 
         const contentWithoutExtras = {
@@ -39,8 +39,8 @@ export default class BlogService {
 
     async getBlogs(params: URLSearchParams): Promise<AIBlogResponse[]> {
         const selectQuery = "*";
-        const category = params.get("category");
-        const sort = params.get("sort") || "desc";
+        const category: string | null  = params.get("category");
+        const sort: string | null       = params.get("sort") || "desc";
 
         let query = this.server
             .from(this.table)
@@ -57,6 +57,46 @@ export default class BlogService {
         if (error) {
             console.error(error);
             throw new Error("Failed to fetch blogs.");
+        }
+
+        return data ?? [];
+    }
+
+    async findBySlug(slug: string): Promise<AIBlogResponse[]> {
+        const { data, error } = await this.server
+            .from(this.table)
+            .select("*")
+            .eq("slug", slug)
+            .single();
+
+        if (error) {
+            console.error(error);
+            throw new Error("Failed to fetch blog by slug.");
+        }
+
+        const { error: updateError } = await this.server
+            .from(this.table)
+            .update({ views: (data.views ?? 0) + 1 })
+            .eq("slug", slug);
+
+        if (updateError) {
+            console.error("Failed to increment views:", updateError);
+        }
+
+        return data ?? [];
+    }
+
+    async getRecentBlogs(): Promise<AIBlogResponse[]> {
+        let query = this.server
+            .from(this.table)
+            .select("*")
+            .order("generated_at", { ascending: false }).limit(2);
+
+        const { data, error } = await query;
+
+        if (error) {
+            console.error(error);
+            throw new Error("Failed to fetch recent blogs.");
         }
 
         return data ?? [];

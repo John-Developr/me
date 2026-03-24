@@ -1,12 +1,12 @@
 import { NextResponse } from "next/server";
 import BlogService from "@/lib/.services/blogService";
+
 import { AIBlogResponse } from "@/utils/types";
 
-export async function GET(req: Request) {
-    try {
-        const { searchParams } = new URL(req.url);     
+export async function GET() {
+    try {  
         const service = new BlogService();
-        const blogs: AIBlogResponse[] = await service.getBlogs(searchParams)
+        const blogs: AIBlogResponse[] = await service.getRecentBlogs();
         return NextResponse.json({ blogs });
     } catch (error) {
         return NextResponse.json(
@@ -15,4 +15,3 @@ export async function GET(req: Request) {
         );
     }
 }
-

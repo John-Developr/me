@@ -5,7 +5,8 @@ import { GoogleGenAI } from "@google/genai";
 import { z, ZodObject, ZodRawShape } from "zod";
 import { zodToJsonSchema } from "zod-to-json-schema";
 
-import { AssistantConfig, Message, Role, AIBlogResponse } from "@/utils/types";
+import { AssistantConfig, Message, role, AIBlogResponse, BlogCategoryEnum } from "@/utils/types";
+import { storageKeys } from "@/config/storageKeys";
 
 /**
  * ChatService handles interactions with the GoogleGenAI API,
@@ -75,7 +76,7 @@ export default class ChatService {
     private async setChatCookie(convo: Message[]) {
         const cookieStore = await cookies();
 
-        cookieStore.set("convo", JSON.stringify(convo), {
+        cookieStore.set(storageKeys.cookie.convo, JSON.stringify(convo), {
             httpOnly: true,
             secure: process.env.NODE_ENV === "production",
             path: "/",
@@ -89,7 +90,7 @@ export default class ChatService {
      */
    private async getChatCookie(): Promise<Message[]> {
         const cookieStore = await cookies();
-        const raw = cookieStore.get("convo")?.value;
+        const raw = cookieStore.get(storageKeys.cookie.convo)?.value;
 
         if (!raw) 
             return [];
@@ -100,7 +101,7 @@ export default class ChatService {
     /**
      * Adds a new message to the local conversation history.
      */
-    private pushMessage(role: Role, text: string) {
+    private pushMessage(role: role, text: string) {
         this.getContents().push({ role, parts: [{ text }] });
     }
 
@@ -124,7 +125,7 @@ export default class ChatService {
     static async clearChatCookie(): Promise<boolean> {
         try {
             const cookieStore = await cookies();
-            cookieStore.delete("convo"); 
+            cookieStore.delete(storageKeys.cookie.convo); 
             return true;
         } catch (error) {
             console.error("Failed to clear chat cookie:", error);
@@ -182,7 +183,11 @@ export default class ChatService {
             id: z.number().optional().default(0),
             title: z.string(),
             slug: z.string(),
-            category: z.enum(["technology","study","future","life"]),
+            category: z.enum([
+                BlogCategoryEnum.Tech, 
+                BlogCategoryEnum.Study, 
+                BlogCategoryEnum.Future, 
+                BlogCategoryEnum.Life]),
             content: z.string(),
             excerpt: z.string(),
             tags: z.array(z.string()),
@@ -200,7 +205,6 @@ export default class ChatService {
         }
 
         const blog = matchSchema.parse(JSON.parse(response.text));
-
         return blog;
     }
 }

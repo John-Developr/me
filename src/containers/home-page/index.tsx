@@ -49,7 +49,7 @@ export default function HomePage() {
       </AnimatedSection>
 
       <AnimatedSection className={styles.second} delay={150}>
-        <SecondContent isMobile={isMobile} />
+        <SecondContentSections isMobile={isMobile} />
       </AnimatedSection>
 
       <AnimatedSection className={styles.third} delay={220}>
@@ -66,32 +66,32 @@ export default function HomePage() {
   );
 }
 
-const SecondContent = ({ isMobile } : {isMobile : boolean}) => {
+const SecondContentSections = ({ isMobile } : {isMobile : boolean}) => {
     if (isMobile) {
         return (
-            <>
-                <section className={styles["left-content"]}>
-                    <AboutSection />
-                    <ExperienceSection />
-                </section>
+          <>
+              <section className={styles["left-content"]}>
+                  <AboutSection />
+                  <ExperienceSection />
+              </section>
 
-                <section className={styles["right-content"]}>
-                    <StackSection />
-                </section>
-            </>
+              <section className={styles["right-content"]}>
+                  <StackSection />
+              </section>
+          </>
         )
     }
 
     return (
-        <>
-            <section className={styles["left-content"]}>
-                <AboutSection />
-                <StackSection />
-            </section>
+      <>
+          <section className={styles["left-content"]}>
+              <AboutSection />
+              <StackSection />
+          </section>
 
-            <section className={styles["right-content"]}>
-                <ExperienceSection />
-            </section>
-        </>
+          <section className={styles["right-content"]}>
+              <ExperienceSection />
+          </section>
+      </>
     )
 }
