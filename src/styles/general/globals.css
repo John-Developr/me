@@ -40,6 +40,11 @@
   --chat-buble-after: #f2f2f2;
 
   --disabled-input-bg: #f0f0f0;
+
+  --skeleton-base:    #f1f1f1;
+  --skeleton-shine:   #e4e4e4;
+
+  --experience-box-shadow: 0 1px 6px -3px rgba(0,0,0,0.93);
 }
 
 .dark {
@@ -89,6 +94,11 @@
   --chat-buble-after: #1a1e23;
 
   --disabled-input-bg: #3d404c46;
+
+  --skeleton-base:    #1e2330;
+  --skeleton-shine:   #252b3b;
+
+  --experience-box-shadow: 0 1px 6px -3px rgba(255, 255, 255, 0.93);
 }
 
 * {
@@ -102,7 +112,7 @@
 body {
   color: var(--text);
   background: var(--bg);
-  transition: background 0.3s ease, color 0.3s ease; /* ✅ smooth switch */
+  transition: background 0.2s ease, color 0.3s ease; /* ✅ smooth switch */
 }
 
 .wrapper {

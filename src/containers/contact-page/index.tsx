@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { sileo } from "sileo";
 import { useAnimateIn } from "@/hooks/useAnimateIn";
 
@@ -45,10 +45,17 @@ const budgetOptions = [
 ] as const;
 
 export default function ContactPage() {
-    const form = useAnimateIn<HTMLDivElement>({ delay: 200, duration: 600 });
+    const form      = useAnimateIn<HTMLDivElement>({ delay: 200, duration: 600 });
+    const formRef   = useRef<HTMLFormElement>(null);
     
-    const [selectedType, setSelectedType] = useState<InquiryType>(InquiryType.GeneralInquiry);
+    const [selectedType, setSelectedType]     = useState<InquiryType>(InquiryType.GeneralInquiry);
     const [selectedBudget, setSelectedBudget] = useState<typeof budgetOptions[number]["label"]>(budgetOptions[0].label);
+
+    const resetForm = () => {
+        formRef.current?.reset();
+        setSelectedType(InquiryType.GeneralInquiry);
+        setSelectedBudget(budgetOptions[0].label);   
+    };
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -59,7 +66,7 @@ export default function ContactPage() {
         const jsonData: Record<string, string> = {};
         
         formData.forEach((value, key) => {
-            jsonData[key] = value as string;
+            jsonData[key] = (value as string).trim();
         });
 
         const handleRequest = async () => {
@@ -90,6 +97,8 @@ export default function ContactPage() {
                 title: (err as Error).message ?? "Failed to submit form",
                 description: "Unable to process your request, please try again.",
             }),
+        }).then((result) => {
+            if (result) resetForm();
         });
     };
 
@@ -106,14 +115,19 @@ export default function ContactPage() {
                 } />
                 <div className={styles.contactContainer} ref={form.ref} style={form.style}>
                     <HrHorizontal 
-                    spacingH={0} 
-                    spacingV={0} 
-                    thickness={1} />
+                        spacingH={0} 
+                        spacingV={0} 
+                        thickness={1} />
     
                     <br />
                     <br />
-                    <form className={styles.contactForm} onSubmit={handleSubmit}>
+
+                    <form 
+                        className={styles.contactForm} 
+                        onSubmit={handleSubmit} 
+                        ref={formRef}>
                         <p className={styles["custom-title"]}>Personal Details</p>
+
                         <div className={styles["form-row"]}>
                             <div className={styles["form-group"]}>
                                 <label htmlFor="fname">First Name</label>
@@ -132,6 +146,7 @@ export default function ContactPage() {
                                     name="lname" />
                             </div>
                         </div>
+
                         <div className={`${styles["form-group"]} ${styles["with-icon"]}`}>
                             <label htmlFor="email">Email</label>
                             <span className={styles["input-icon-wrapper"]}>
@@ -143,6 +158,7 @@ export default function ContactPage() {
                                 className={styles["form-control"]} 
                                 name="email" />
                         </div>
+
                         <div className={`${styles["form-group"]} ${styles["with-icon"]}`}>
                             <label htmlFor="subject">Subject</label>
                             <span className={styles["input-icon-wrapper"]}>
@@ -154,6 +170,7 @@ export default function ContactPage() {
                                 className={styles["form-control"]} 
                                 name="subject" />
                         </div>
+
                         <div className={styles["form-group"]}>
                             <p className={styles["custom-title"]}>Select Inquiry</p>
                             <div className={styles["card-container-type"]}>
@@ -175,6 +192,7 @@ export default function ContactPage() {
                             </div>
                             <input type="hidden" name="type" value={selectedType} />
                         </div>
+
                         {selectedType === InquiryType.FreelanceProject && (
                             <div className={styles["form-group"]}>
                                 <p className={styles["custom-title"]}>Select Budget</p>
@@ -198,6 +216,7 @@ export default function ContactPage() {
                                 <input type="hidden" name="budget" value={selectedBudget} />
                             </div>
                         )}
+
                         <div className={styles["form-group"]}>
                             <label htmlFor="message">Message</label>
                             <textarea 
@@ -205,6 +224,7 @@ export default function ContactPage() {
                                 name="message" 
                                 placeholder="Enter your message" rows={6} />
                         </div>
+                        
                         <button type="submit" className={styles.btn}>
                             Start the Conversation 
                             <Send width={20} height={20} />

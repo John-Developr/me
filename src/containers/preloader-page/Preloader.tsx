@@ -2,30 +2,20 @@
 
 import React from "react";
 import { useEffect, useState, ReactNode, useCallback } from "react";
+
 import { useApp } from "@/lib/.context/AppContext";
-import { WelcomeOverlay, SpinnerOverlay } from "./Overlays";
+import { storageKeys } from "@/config/storageKeys";
+import { OverlayType } from "@/utils/types";
 
-type PreloaderProps = {
-  children: ReactNode;
-};
-
-export enum OverlayType {
-  welcome = "welcome",
-  preloader = "preloader"
-}
+import SpinnerOverlay from "./SpinnerOverlay";
+import WelcomeOverlay from "./WelcomeOverlay";
 
 export type OverlayState = {
   type: OverlayType;
   visible: boolean;
 };
 
-const MainContent = React.memo(({ children }: { children: ReactNode }) => {
-  return <>{children}</>;
-});
-
-MainContent.displayName = "MainContent";
-
-export default function Preloader({  children }: PreloaderProps) {
+export default function Preloader({ children }: { children: ReactNode }) {
   const { pageLoading } = useApp();
   const [overlay, setOverlay] = useState<OverlayState | null>(null)
 
@@ -33,54 +23,40 @@ export default function Preloader({  children }: PreloaderProps) {
     setOverlay(value)
   }, []);
 
-  // For (DEV) purposes only
-  // const renderCount = useRef(0);
-  // renderCount.current += 1;
-  // console.log("Preloader render count:", renderCount.current);
-
-  // decide if welcome should show (once per day)
   useEffect(() => {
-    if (typeof window === 'undefined') 
-      return;
-
-    const lastShown = localStorage.getItem('welcomeLastShown');
-    const today = new Date().toDateString();
+    const lastShown: string | null = localStorage.getItem(storageKeys.local.welcome);
+    const today: string = new Date().toDateString();
 
     if (lastShown !== today) {
-      setOverlay({
-        type: OverlayType.welcome, 
-        visible: true 
-      })
+      setOverlay({ type: OverlayType.welcome,   visible: true });
     } else {
-      setOverlay({
-        type: OverlayType.preloader, 
-        visible: true
-      })
+      setOverlay({ type: OverlayType.preloader, visible: true });
     }
   }, []);
+
+  const showPreloader: boolean | undefined = overlay?.visible && overlay.type === OverlayType.preloader;
+  const showWelcome: boolean | undefined   = overlay?.visible && overlay.type === OverlayType.welcome;
   
   return (
     <>
       {/* Pre loader Overlay */}
-      {(overlay && 
-          overlay.visible && 
-          overlay.type == OverlayType.preloader) && (
-          <SpinnerOverlay 
-            isLoading={pageLoading}
-            onUpdateOverlay={updateOverlay} />
+      {showPreloader && (
+        <SpinnerOverlay
+          isLoading={pageLoading}
+          onUpdateOverlay={updateOverlay}
+        />
       )}
 
       {/* Welcome Overlay */}
-      {(overlay && 
-          overlay.visible && 
-          overlay.type == OverlayType.welcome) && (
-          <WelcomeOverlay 
-            isLoading={pageLoading} 
-            onUpdateOverlay={updateOverlay} />
+      {showWelcome && (
+        <WelcomeOverlay
+          isLoading={pageLoading}
+          onUpdateOverlay={updateOverlay}
+        />
       )}
 
       {/* Main Content */}
-      {!pageLoading && <MainContent>{children}</MainContent>}
+      {!pageLoading && <>{children}</>}
     </>
   );
 }

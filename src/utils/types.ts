@@ -1,115 +1,141 @@
 import { ContentListUnion } from "@google/genai/node";
 import { zodToJsonSchema } from "zod-to-json-schema";
 
-// =====================
-// BlogCategory Enum
-// =====================
+// ============================================================
+// BLOG
+// ============================================================
+
 export enum BlogCategoryEnum {
-  Tech = "technology",
-  Study = "study",
-  Life = "life",
+  All    = "All",
+  Tech   = "technology",
+  Study  = "study",
+  Life   = "life",
   Future = "future",
 }
 
-// =====================
-// BlogCategory Type
-// =====================
-// Union type of all enum values
-export type BlogCategory = BlogCategoryEnum[keyof BlogCategoryEnum];
+export enum BlogSortEnum {
+  asc  = "asc",
+  desc = "desc",
+}
 
-// =====================
-// AIBlogResponse Interface
-// =====================
-// Response returned by the AI blog generator
+export type blogCategory = BlogCategoryEnum[keyof BlogCategoryEnum];
+
+export interface BlogCategoryItem {
+  name:   BlogCategoryEnum;
+  active: boolean;
+}
+
 export interface AIBlogResponse {
-  id: number;                     // unique identifier for the blog post
-  title: string;                  // blog title (8–12 words recommended)
-  slug?: string;                   // SEO-friendly URL slug
-  category?: BlogCategory;         // category of the blog
-  content?: string;                // full blog content (300–400+ words)
-  excerpt: string;                // summary/excerpt (30–50 words)
-  tags: string[];                 // relevant tags (3–5 recommended)
-  reading: number;                // estimated reading time
-  views?: number;                  // number of views (default 0)
-  generated_at: string;           // timestamp of when the blog was generated
+  id:           number;    // unique identifier
+  title:        string;    // blog title (8–12 words recommended)
+  slug?:        string;    // SEO-friendly URL slug
+  category?:    blogCategory; // category of the blog
+  content?:     string;    // full blog content (300–400+ words)
+  excerpt:      string;    // summary/excerpt (30–50 words)
+  tags:         string[];  // relevant tags (3–5 recommended)
+  reading:      number;    // estimated reading time in minutes
+  views?:       number;    // number of views (default 0)
+  generated_at: string;    // timestamp of when blog was generated
 }
 
-// =====================
-// Role Type
-// =====================
-// Represents the role of a message sender
-export type Role = "user" | "model";
+// ============================================================
+// FETCH STATE
+// ============================================================
 
-// =====================
-// MessagePart Interface
-// =====================
-// Represents a single text part in a message
-export interface MessagePart {
-  text: string;  // actual message content
+export enum FetchStateEnum {
+  idle    = "idle",
+  loading = "loading",
+  error   = "error",
+  success = "success",
 }
 
-// =====================
-// Message Interface
-// =====================
-// Represents a complete message sent by a user or model
-export interface Message {
-  role: Role;           // sender's role (user or AI model)
-  parts: MessagePart[]; // array of text parts (can support multiple segments)
+export type fetchState = keyof typeof FetchStateEnum;
+
+// ============================================================
+// THEME
+// ============================================================
+
+export enum ThemeEnum {
+  light = "light",
+  dark  = "dark",
 }
 
-// =====================
-// AssistantConfigOptions Interface
-// =====================
-// Optional configuration for the AI assistant
-export interface AssistantConfigOptions {
-  responseModalities?: string[];          // preferred response types (text, audio, etc.)
-  responseMimeType?: string;              // desired MIME type of the response
-  systemInstruction?: string;             // instructions to guide AI behavior
-  responseJsonSchema?: ReturnType<typeof zodToJsonSchema>; // optional JSON schema for structured output
+export type theme = keyof typeof ThemeEnum;
+
+// ============================================================
+// OVERLAY
+// ============================================================
+
+export enum OverlayType {
+  welcome   = "welcome",
+  preloader = "preloader",
 }
 
-// =====================
-// AssistantConfig Interface
-// =====================
-// Main configuration object for the AI assistant
-export interface AssistantConfig {
-  model: string;                        // model name/version to use
-  config: AssistantConfigOptions;       // nested configuration options
-  history?: Message[];                  // previous messages for context
-  contents: ContentListUnion;           // current content to process
-}
+export interface OverlayState {
+  type:    OverlayType;
+  visible: boolean;
+};
 
-// =====================
-// AppPages Enum
-// =====================
+// ============================================================
+// NAVIGATION
+// ============================================================
+
 export enum AppPagesEnum {
-  Home = "/",
-  Blog = "/blog",
+  Home       = "/",
+  Blog       = "/blog",
   BlogDetail = "/blog/[slug]",
 }
 
-// =====================
-// InquiryType Enum
-// =====================
-// Defines the type of inquiry submitted by the user
+// ============================================================
+// CONTACT FORM
+// ============================================================
+
 export enum InquiryType {
-  JobOpportunity = "Job Opportunity",      // job hiring or career-related inquiries
-  FreelanceProject = "Freelance Project",  // project collaboration or freelance work
-  GeneralInquiry = "General Inquiry",      // general questions or messages
+  JobOpportunity   = "Job Opportunity",
+  FreelanceProject = "Freelance Project",
+  GeneralInquiry   = "General Inquiry",
 }
 
-// =====================
-// ContactFormData Interface
-// =====================
-// Represents the structure of data submitted from the contact form
 export interface ContactFormData {
-  fname: string;     // user's first name
-  lname: string;     // user's last name
-  email: string;     // user's email address
-  subject: string;   // subject/title of the message
-  type: InquiryType; // selected inquiry type
-  budget?: string;   // optional budget (only for freelance projects)
-  message: string;   // main message content
+  fname:    string;      // first name
+  lname:    string;      // last name
+  email:    string;      // email address
+  subject:  string;      // message subject
+  type:     InquiryType; // inquiry type
+  budget?:  string;      // optional budget (freelance only)
+  message:  string;      // main message
+}
 
-  // NOTE: No additional fields yet (extendable in the future if needed)
+// ============================================================
+// AI ASSISTANT / CHAT
+// ============================================================
+
+export enum RoleEnum {
+  user  = "user",
+  model = "model",
+}
+
+export type role = keyof typeof RoleEnum;
+
+export interface MessagePart {
+  text: string; // actual message content
+}
+
+export interface Message {
+  role:  role;          // sender role (user or model)
+  parts: MessagePart[]; // array of text parts
+}
+
+export interface AssistantConfigOptions {
+  responseModalities?: string[];
+  responseMimeType?:   string;
+  systemInstruction?:  string;
+  responseJsonSchema?: ReturnType<typeof zodToJsonSchema>;
+}
+
+export interface AssistantConfig {
+  model:    string;
+  config:   AssistantConfigOptions;
+  history?: Message[];
+  contents: ContentListUnion;
 }
