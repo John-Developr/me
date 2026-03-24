@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import styles from "@/styles/pages/page.module.css";
 
 import { networkDefine } from "@/config/networkDefine";
-import { AIBlogResponse, BlogCategoryEnum, fetchState, FetchStateEnum } from "@/utils/types";
+import { AIBlogResponse, fetchState, FetchStateEnum } from "@/utils/types";
 
 import BlogSectionCard from "./BlogSectionCard";
 import BlogSectionSkeleton from "./BlogSectionSkeleton";

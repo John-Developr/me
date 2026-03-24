@@ -18,7 +18,7 @@ export enum BlogSortEnum {
   desc = "desc",
 }
 
-export type BlogCategory = BlogCategoryEnum[keyof BlogCategoryEnum];
+export type blogCategory = BlogCategoryEnum[keyof BlogCategoryEnum];
 
 export interface BlogCategoryItem {
   name:   BlogCategoryEnum;
@@ -29,7 +29,7 @@ export interface AIBlogResponse {
   id:           number;    // unique identifier
   title:        string;    // blog title (8–12 words recommended)
   slug?:        string;    // SEO-friendly URL slug
-  category?:    BlogCategory; // category of the blog
+  category?:    blogCategory; // category of the blog
   content?:     string;    // full blog content (300–400+ words)
   excerpt:      string;    // summary/excerpt (30–50 words)
   tags:         string[];  // relevant tags (3–5 recommended)
@@ -49,7 +49,7 @@ export enum FetchStateEnum {
   success = "success",
 }
 
-export type FetchState = keyof typeof FetchStateEnum;
+export type fetchState = keyof typeof FetchStateEnum;
 
 // ============================================================
 // THEME
@@ -60,7 +60,7 @@ export enum ThemeEnum {
   dark  = "dark",
 }
 
-export type Theme = keyof typeof ThemeEnum;
+export type theme = keyof typeof ThemeEnum;
 
 // ============================================================
 // OVERLAY
@@ -71,7 +71,7 @@ export enum OverlayType {
   preloader = "preloader",
 }
 
-export type OverlayState = {
+export interface OverlayState {
   type:    OverlayType;
   visible: boolean;
 };
@@ -115,14 +115,14 @@ export enum RoleEnum {
   model = "model",
 }
 
-export type Role = keyof typeof RoleEnum;
+export type role = keyof typeof RoleEnum;
 
 export interface MessagePart {
   text: string; // actual message content
 }
 
 export interface Message {
-  role:  Role;          // sender role (user or model)
+  role:  role;          // sender role (user or model)
   parts: MessagePart[]; // array of text parts
 }
 

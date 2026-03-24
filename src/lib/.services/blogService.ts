@@ -87,7 +87,7 @@ export default class BlogService {
     }
 
     async getRecentBlogs(): Promise<AIBlogResponse[]> {
-        let query = this.server
+        const query = this.server
             .from(this.table)
             .select("*")
             .order("generated_at", { ascending: false }).limit(2);

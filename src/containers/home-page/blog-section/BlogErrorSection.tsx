@@ -14,7 +14,7 @@ const BlogErrorSection = () => {
                 </div>
 
                 <h2 className={styles["title"]}>Something went wrong</h2>
-                <p className={styles["description"]}>We couldn't load the blog posts. This might be a server issue.</p>
+                <p className={styles["description"]}>We couldn&#39;t load the blog posts. This might be a server issue.</p>
                 <p className={styles["hint"]}>Please try again later or refresh the page.</p>
             </div>
         </div>
