@@ -1,9 +1,14 @@
 import "@/styles/general/globals.css";
+
 import type { Metadata } from "next";
 import { Karla } from "next/font/google";
+
 import { AppProvider } from "@/lib/.context/AppContext";
-import LayoutProvider from "./LayoutProvider";
 import { ThemeEnum } from "@/utils/types";
+import { storageKeys } from "@/config/storageKeys";
+
+import LayoutProvider from "./LayoutProvider";
+
 
 const karla = Karla({
   variable: "--font-geist-sans",
@@ -25,7 +30,7 @@ export const metadata: Metadata = {
 const themeScript = `
   (function() {
     try {
-      var saved   = localStorage.getItem("theme");
+      var saved   = localStorage.getItem("${storageKeys.local.theme}");
       var prefers = window.matchMedia("(prefers-color-scheme: dark)").matches;
       if (saved === "${ThemeEnum.dark}" || (!saved && prefers)) {
         document.documentElement.classList.add("${ThemeEnum.dark}");
@@ -44,7 +49,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        {/* ✅ dangerouslySetInnerHTML bypasses React hydration for this script */}
+        {/* dangerouslySetInnerHTML bypasses React hydration for this script */}
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
       <body className={karla.variable}>
