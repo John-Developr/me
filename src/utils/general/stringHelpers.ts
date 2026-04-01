@@ -45,3 +45,35 @@ export function formatDate(dateString?: string): string {
     day: "numeric",
   });
 }
+
+
+/**
+ * Sanitizes a string to prevent HTML injection attacks.
+ * Escapes special HTML characters before injecting into the email template.
+ *
+ * @param str - The string to sanitize (defaults to empty string)
+ * @returns   - Sanitized string safe for HTML injection
+ *
+ * @example
+ * sanitize('<script>alert("xss")</script>')
+ * // → "&lt;script&gt;alert(&quot;xss&quot;)&lt;/script&gt;"
+ */
+export const sanitize = (str: string = ""): string => str
+  .replace(/&/g,  "&amp;")
+  .replace(/</g,  "&lt;")
+  .replace(/>/g,  "&gt;")
+  .replace(/"/g,  "&quot;")
+  .replace(/'/g,  "&#039;");
+
+/**
+ * Validates an email address format using a simple regex pattern.
+ *
+ * @param email - The email address to validate
+ * @returns     - True if the email format is valid, false otherwise
+ *
+ * @example
+ * isValidEmail("john@example.com") // → true
+ * isValidEmail("not-an-email")     // → false
+ */
+export const isValidEmail = (email: string): boolean =>
+  /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);

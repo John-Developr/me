@@ -2,8 +2,8 @@ export const storageKeys = {
 
   // localStorage — persists across sessions
   local: {
-    theme:  "theme_preference",
-    welcome:   "welcome_last_shown",
+    theme:    "theme_preference",
+    welcome:  "welcome_last_shown",
   },
 
   // sessionStorage — clears when tab closes
