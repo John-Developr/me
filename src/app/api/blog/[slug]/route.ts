@@ -5,6 +5,8 @@ import { AIBlogResponse } from "@/utils/types";
 export async function GET(req: Request, { params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
 
+  console.log("Received request for blog slug:", slug);
+
   try {
     const blogService = new BlogService();
     const blog: AIBlogResponse[]  = await blogService.findBySlug(slug);

@@ -217,7 +217,14 @@ export const useChatAssistant = (): UseChatAssistantReturn => {
         // Network error or unexpected exception.
         updateAssistant(
           "error",
-          "Oops! Something went wrong. Please try again later."
+          `Oops! I'm taking a short break 🤖☕ and can't respond right now.
+          
+          While you wait, feel free to:
+          - Browse other pages
+          - Check the latest updates  
+          - Come back and say hi again!
+
+          Thanks for your patience and understanding 🙏`
         );
       }
     };

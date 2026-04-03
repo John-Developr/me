@@ -9,7 +9,13 @@ type Props = {
 };
 
 export default function MessageInput({ onSend, lastContentRole }: Props) {
-    const isLastMessageUserRole = lastContentRole === "user" || lastContentRole === "responding" || lastContentRole === "limit";
+    const isLastMessageUserRole = (
+        lastContentRole === "user"       ||
+        lastContentRole === "responding" ||
+        lastContentRole === "limit"      ||
+        lastContentRole === "error"
+    );
+                                    
     const [inputValue, setInputValue] = useState<string>("")
 
     const handleOnInput = (e: React.FormEvent<HTMLInputElement>) => {
