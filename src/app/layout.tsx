@@ -20,10 +20,12 @@ export const metadata: Metadata = {
     default:  "John Carlo Ylanan | Web & Mobile Developer",
     template: "%s | John Carlo Ylanan",
   },
-  description: "Portfolio of John Carlo Ylanan, Web and Mobile Developer specializing in modern web technologies and mobile development.",
   icons: {
     icon: "/favicon.ico",
   },
+  verification: {
+    google: "googlec34b432acc53a5cc",
+  }
 };
 
 // No flash

@@ -1,26 +1,28 @@
 import { MetadataRoute } from "next";
 
 const sitemap = (): MetadataRoute.Sitemap => {
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL!;
+
     return [
         {
-            url: process.env.NEXT_PUBLIC_BASE_URL!,
+            url: baseUrl,
             lastModified: new Date(),
             changeFrequency: "weekly",
             priority: 1,
         },
         {
-            url: process.env.NEXT_PUBLIC_BASE_URL! + "/blog",
+            url: `${baseUrl}/blog`,
             lastModified: new Date(),
             changeFrequency: "weekly",
             priority: 0.8,
         },
         {
-            url: process.env.NEXT_PUBLIC_BASE_URL! + "/contact",
+            url: `${baseUrl}/contact`,
             lastModified: new Date(),
             changeFrequency: "weekly",
             priority: 0.5,
         },
-    ]
-}
+    ];
+};
 
-export default sitemap
+export default sitemap;
