@@ -208,6 +208,11 @@
     white-space: pre-line;
 }
 
+.blogDetail .content ol,
+.blogDetail .content ul {
+    padding-left: 20px;
+}
+
 .blogDetail .group {
     flex-wrap: wrap;
     gap: 10px;
