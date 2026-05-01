@@ -5,6 +5,8 @@ import { GoogleGenAI } from "@google/genai";
 import { z, ZodObject, ZodRawShape } from "zod";
 import { zodToJsonSchema } from "zod-to-json-schema";
 
+import BlogService from "./blogService";
+
 import { AssistantConfig, Message, role, AIBlogResponse, BlogCategoryEnum } from "@/utils/types";
 import { storageKeys } from "@/config/storageKeys";
 
@@ -151,7 +153,7 @@ export default class ChatService {
         
         if (totalBytes > 4000) {
             console.warn("⚠️ Warning: Cookie is reaching the 4KB limit!");
-            return true
+            return true;
         }
         
         return false;
@@ -160,19 +162,53 @@ export default class ChatService {
     /**
      * Prepares blog generation configuration using a Zod schema.
      */
-    private blogConfig(schema: ZodObject<ZodRawShape>) {
+    private async blogConfig(schema: ZodObject<ZodRawShape>): Promise<AssistantConfig> {
+        const BlogServiceInstance = new BlogService();
+        let category = await BlogServiceInstance.getLeastInsertedCategory();
+
+        if (!category) {
+            const categories = [
+                BlogCategoryEnum.Tech,
+                BlogCategoryEnum.Study,
+                BlogCategoryEnum.Life,
+                BlogCategoryEnum.Future,
+            ];
+            
+            category = categories[Math.floor(Math.random() * categories.length)];
+        }
+
         const prompt: string = `
-            Write a new blog post based on the instruction, 
-            use a different category and stay align with my instruction.
+            Generate a blog post for the following category: "${category}"
+
+            ## Category Assignment
+            - Category: "${category}"
+            - This is your ONLY topic — do not write about anything else
+            - Do not change or override the category under any circumstance
+
+            ## Category Context
+            - "technology"  → software, development, tools, programming, dev culture
+            - "study"       → learning strategies, skill building, self-education
+            - "life"        → daily habits, mindset, work-life balance, personal growth
+            - "future"      → future of tech, industry predictions, trends worth watching
+
+            ## Reminder
+            - category field in JSON MUST be exactly: "${category}"
+            - Slug: 3-5 lowercase words, hyphens only, max 40 chars
+            - Return ONLY raw JSON — starts with { ends with }
         `;
+
+        console.log("Blog generation prompt:", category);
 
         this.config.config = {
             responseMimeType: "application/json",
             systemInstruction: this.instruction,
             responseJsonSchema: zodToJsonSchema(schema)
         };
-        
+
+        this.config.history  = [];
         this.config.contents = prompt;
+
+        return this.config;
     }
 
     /**
@@ -187,7 +223,8 @@ export default class ChatService {
                 BlogCategoryEnum.Tech, 
                 BlogCategoryEnum.Study, 
                 BlogCategoryEnum.Future, 
-                BlogCategoryEnum.Life]),
+                BlogCategoryEnum.Life
+            ]),
             content: z.string(),
             excerpt: z.string(),
             tags: z.array(z.string()),
@@ -196,15 +233,22 @@ export default class ChatService {
             generated_at: z.string().optional().default(new Date().toISOString())
         });
 
-        this.blogConfig(matchSchema)
-
+        await this.blogConfig(matchSchema);
         const response = await this.AI.models.generateContent(this.config);
 
-        if (!response.text) {
-            throw new Error("Invalid AI response");
-        }
+        const rawText = response.text as string;
+        const cleaned = rawText
+            .replace(/^```json\s*/i, "") // remove opening ```json
+            .replace(/^```\s*/i,    "") // remove opening ``` (without json)
+            .replace(/```\s*$/,     "") // remove closing ```
+            .trim();
 
-        const blog = matchSchema.parse(JSON.parse(response.text));
-        return blog;
+        try {
+            const blog = matchSchema.parse(JSON.parse(cleaned));
+            return blog;
+        } catch (error) {
+            console.error("Failed to parse AI response:", cleaned, error);
+            throw new Error("AI returned invalid JSON structure.");
+        }
     }
 }

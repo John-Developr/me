@@ -1,19 +1,19 @@
 import { SupabaseClient } from "@supabase/supabase-js";
-import supabaseServer from "../.supabase/server";
+import supabaseServer, { RPC, Table } from "../.supabase/server";
 
 import { AIBlogResponse } from "@/utils/types";
 import ChatService from "./chatService";
 
 export default class BlogService {
-    private table: string = "ai_blogs";
+    private table: string = Table.aiBlog;
     private server: SupabaseClient;
 
     constructor() {
         this.server = supabaseServer;
     }
 
-    async index(instruction: string): Promise<boolean> {
-        const chat: ChatService       = new ChatService(instruction);
+    async index(path: string): Promise<boolean> {
+        const chat: ChatService       = new ChatService(path);
         const content: AIBlogResponse = await chat.blogMain();
 
         const contentWithoutExtras = {
@@ -100,5 +100,16 @@ export default class BlogService {
         }
 
         return data ?? [];
+    }
+
+    async getLeastInsertedCategory(): Promise<string | null> {
+        const { data, error } = await this.server.rpc(RPC.getLeastInsertedCategory);
+
+        if (error) {
+            console.error(error);
+            throw new Error("Failed to fetch least inserted category.");
+        }
+
+        return data ?? null;
     }
 }

@@ -37,7 +37,7 @@ export default function Header() {
     <section className="header"> 
       <div className="logo">
         <Image
-          src="/Logo.png"
+          src="/images/Logo.png"
           width={75}
           height={17}
           alt="Avatar"
