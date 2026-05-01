@@ -2,6 +2,10 @@
 import BlogDetailPage from "@/containers/blog-detail-page";
 // import { networkDefine } from "@/config/networkDefine";
 
+type Props = {
+  params: Promise<{ slug: string }>;
+};
+
 // async function getBlog(slug: string) {
 //   const res = await fetch(networkDefine.BLOG_DETAIL_API(slug), {
 //     next: { revalidate: 60 },
@@ -58,10 +62,7 @@ import BlogDetailPage from "@/containers/blog-detail-page";
 //   };
 // }
 
-export default async function BlogDetail({
-  params,
-}: {
-  params: { slug: string };
-}) {
-  return <BlogDetailPage slug={params.slug} />;
+export default async function BlogDetail({ params }: Props) {
+  const { slug } = await params;
+  return <BlogDetailPage slug={slug} />;
 }
