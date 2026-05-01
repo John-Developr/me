@@ -27,7 +27,7 @@ export default function ProjectsPage() {
                 intro="Each of these projects shows how I solve problems, write code, and use technologies, frameworks, and tools to make applications that work well and can handle a lot of users."
             />
             <main className={styles.main}>
-                <HrHorizontal 
+                {/* <HrHorizontal 
                     spacingH={0} 
                     spacingV={0} 
                     thickness={1} />
@@ -50,7 +50,7 @@ export default function ProjectsPage() {
                             Card {index + 1}
                         </div>
                     ))}
-                </div>
+                </div> */}
             </main>
             <Footer />
         </>
