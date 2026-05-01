@@ -1,22 +1,15 @@
 'use client'
 
-import React, { useMemo } from "react";
+import React from "react";
 
 import styles from "@/styles/pages/techStack.module.css";
+
 import Header from "@/components/header/Header";
 import Footer from "@/components/footer/Footer";
 import HrHorizontal from "@/components/hr/HrHorizontal";
 import PageIntro from "@/components/header/PageIntro";
 
 export default function TechStackPage() {
-
-     const heights = useMemo(() => {
-        return Array.from({ length: 10 }).map(
-            () => Math.floor(Math.random() * 201) + 350
-            // 350–550 (inclusive)
-        );
-    }, []);
-
     return (
         <>
             <Header />  

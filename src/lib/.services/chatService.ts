@@ -247,7 +247,7 @@ export default class ChatService {
             const blog = matchSchema.parse(JSON.parse(cleaned));
             return blog;
         } catch (error) {
-            console.error("Failed to parse AI response:", cleaned);
+            console.error("Failed to parse AI response:", cleaned, error);
             throw new Error("AI returned invalid JSON structure.");
         }
     }
