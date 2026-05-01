@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useMemo } from "react";
+import React, { useMemo } from "react";
 
 import styles from "@/styles/pages/techStack.module.css";
 import Header from "@/components/header/Header";
@@ -10,23 +10,29 @@ import PageIntro from "@/components/header/PageIntro";
 
 export default function TechStackPage() {
 
+     const heights = useMemo(() => {
+        return Array.from({ length: 10 }).map(
+            () => Math.floor(Math.random() * 201) + 350
+            // 350–550 (inclusive)
+        );
+    }, []);
+
     return (
         <>
             <Header />  
             <PageIntro 
-                subtitle="My Tech Stack" 
-                title="Tools & Technologies I Use" 
+                subtitle="Technologies & Tools" 
+                title="stack" 
                 intro="A curated collection of tools, frameworks, and technologies I use to build modern, scalable, and high-performing applications. 
                     From frontend to backend, mobile to web, each piece of this stack reflects my approach to writing clean, efficient, and maintainable code."
             />
-            <main>
+            <main className={styles.main}>
                 <HrHorizontal 
                     spacingH={0} 
                     spacingV={0} 
                     thickness={1} />
 
                 <br />
-                
             </main>
             <Footer />
         </>
