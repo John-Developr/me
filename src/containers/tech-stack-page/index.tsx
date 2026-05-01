@@ -33,6 +33,7 @@ export default function TechStackPage() {
                     thickness={1} />
 
                 <br />
+                <i>This content is currently being updated. Please check back soon.</i>
             </main>
             <Footer />
         </>

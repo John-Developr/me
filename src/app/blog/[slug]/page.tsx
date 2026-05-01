@@ -1,6 +1,6 @@
-import type { Metadata } from "next";
+// import type { Metadata } from "next";
 import BlogDetailPage from "@/containers/blog-detail-page";
-import { networkDefine } from "@/config/networkDefine";
+// import { networkDefine } from "@/config/networkDefine";
 
 // async function getBlog(slug: string) {
 //   const res = await fetch(networkDefine.BLOG_DETAIL_API(slug), {
