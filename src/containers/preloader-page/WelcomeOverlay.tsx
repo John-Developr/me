@@ -36,7 +36,7 @@ const WelcomeOverlay = ({
     return (
         <div ref={wrapperRef} className={styles.wrapper}>
             <div className={`${styles.logo} ${styles.fadeInText}`}>
-                <Image src="/Logo.png" width={75} height={17} alt="Logo" priority />
+                <Image src="/images/Logo.png" width={75} height={17} alt="Logo" priority />
             </div>
             <main className={styles.main}>
                 <p className={styles.fadeInText}>Powered by</p>
