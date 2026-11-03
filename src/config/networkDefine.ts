@@ -21,7 +21,7 @@ export const networkDefine = {
     RESUME_URL: "/documents/resume.pdf",
 
     // PROJECTS URL
-    GORDON_PROJECTS_URL: "https://www.gordonbostic.com/",
+    GORDON_PROJECTS_URL: "https://gordon-bostic.vercel.app",
     GORDON_GITHUB_URL: "https://github.com/John-Developr/gordon-bostic",
 
     // My Socials Links

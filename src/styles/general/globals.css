@@ -16,14 +16,14 @@
   --border-line-theme: 1px solid #eee;
   --border-input-field: 1px solid #e1e1e1;
 
-  --bg: #fefefe;
+  --bg: #f2f2f2;
   --text: #000000;
 
   --container-bg: rgb(255, 255, 255);
   --container-back-drop-filter: blur(24px) saturate(200%);
 
   --sub-exp-indicator: 1.5px solid #686868;
-  --divider-bottom: #f2f2f2;
+  --divider-bottom: rgb(225, 225, 225);
 
   --badges-border: 1px solid #e5e7eb;
   --badges-bg: none;
@@ -55,7 +55,7 @@
 
   --bg-secondary: #f5f5f5;
   --secondary-hover-color: #e1e1e1;
-  --text-secondary: #6a6a6a;
+  --text-secondary: #e8e7e7;
 
   /* --bg: #111118; */
   --bg: #0d1117;
@@ -138,6 +138,77 @@ button, a {
   top: -8px !important;
 }
 
+.liquid_glass {
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  backdrop-filter: blur(50px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  box-shadow:
+    inset 0 1px 1px rgba(255, 255, 255, 0.35),
+    inset 0 -1px 1px rgba(255, 255, 255, 0.08),
+    0 4px 12px rgba(0, 0, 0, 0.12);
+
+  cursor: pointer;
+  transition:
+    transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+    background 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.liquid_glass:hover,
+.liquid_glass:hover {
+  background: rgba(255, 255, 255, 0.24);
+  border-color: rgba(255, 255, 255, 0.45);
+
+  box-shadow:
+    inset 0 1px 2px rgba(255, 255, 255, 0.45),
+    0 6px 18px rgba(0, 0, 0, 0.16);
+
+  transform: scale(1.28);
+}
+
+.liquid_glass:active,
+.liquid_glass:active {
+  transform: scale(1);
+  background: rgba(255, 255, 255, 0.3);
+}
+
+
+.liquid_glass_btn {
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  box-shadow:
+    inset 0 1px 1px rgba(255, 255, 255, 0.35),
+    inset 0 -1px 1px rgba(255, 255, 255, 0.08),
+    0 4px 12px rgba(0, 0, 0, 0.12);
+
+  cursor: pointer;
+  transition:
+    transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+    background 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.liquid_glass_btn:hover,
+.liquid_glass_btn:hover {
+  background: rgba(255, 255, 255, 0.24);
+  border-color: rgba(255, 255, 255, 0.45);
+
+  box-shadow:
+    inset 0 1px 2px rgba(255, 255, 255, 0.45),
+    0 6px 18px rgba(0, 0, 0, 0.16);
+
+  transform: scale(1.1);
+}
+
+.liquid_glass_btn:active,
+.liquid_glass_btn:active {
+  transform: scale(1);
+  background: rgba(255, 255, 255, 0.3);
+}
+
 /* ================================== 
         HEADER SECTION START 
 ===================================== */
@@ -167,13 +238,14 @@ button, a {
   display: flex;
   align-items: center;
   list-style: none;
-  margin: 0px 10px;
+  margin: 0px 5px;
 }
 
 .header .nav > ul li.phone-no {
   display: flex;
   align-items: center;
   column-gap: 5px;
+  margin-right: 20px;
 }
 
 .header .nav > ul li.linkend {
@@ -182,6 +254,16 @@ button, a {
 
 .header .nav > ul li.menu {
   cursor: pointer;
+}
+
+.header .nav > ul li.linkend,
+.header .nav > ul li.menu {
+  height: 35px;
+  width: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
 }
 
 .menu-dropdown {

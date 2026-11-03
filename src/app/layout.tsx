@@ -1,3 +1,4 @@
+// @ts-ignore CSS side-effect imports are handled by Next.js.
 import "@/styles/general/globals.css";
 
 import type { Metadata } from "next";

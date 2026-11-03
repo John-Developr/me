@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import { Linkedin } from "../icons/Linkedin";
 import MenuKebabHorizontalCircle from "../icons/MenuKebabHorizontalCircle";
 import Call from "../icons/Call";
+import ThreeDotsHorizontal from "../icons/ThreeDotsHorizontal";
 
 import { networkDefine } from "@/config/networkDefine";
 import MenuItems from "./MenuItems";
@@ -52,14 +53,14 @@ export default function Header() {
             height={17.5} />
             PH, (+632) 9293-1982
           </li>
-          <li className="linkend"
+          <li className="linkend liquid_glass"
             onClick={() => window.open(networkDefine.LINKEDIN_URL, "_blank")}>
             <Linkedin 
               width={17.5} 
               height={17.5} />
           </li>
-          <li className="menu" ref={menuRef} onClick={showMenu}>
-            <MenuKebabHorizontalCircle 
+          <li className="menu liquid_glass" ref={menuRef} onClick={showMenu}>
+            <ThreeDotsHorizontal 
               width={20.5} 
               height={20.5} />
               {isMenuOpen && (

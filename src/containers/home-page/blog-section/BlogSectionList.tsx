@@ -30,7 +30,7 @@ const BlogSectionList = () => {
                 if (!response.ok) throw new Error("Failed to fetch blogs.");
         
                 const data: { blogs: AIBlogResponse[] } = await response.json();
-                const newBlogs: AIBlogResponse[]         = data.blogs || [];
+                const newBlogs: AIBlogResponse[]        = data.blogs || [];
 
                 setBlogsRecent({ blogList: newBlogs, state: FetchStateEnum.success });
             } catch (error) {

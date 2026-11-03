@@ -6,39 +6,39 @@ import styles from "@/styles/pages/page.module.css";
 import Image from "next/image";
 
 export default function ExperienceSection() {
-    const calculateDuration = React.useMemo(() => (dateString: string): string => {
-        const start: Date = new Date(dateString);
-        const now: Date = new Date();
+    // const calculateDuration = React.useMemo(() => (dateString: string): string => {
+    //     const start: Date = new Date(dateString);
+    //     const now: Date = new Date();
 
-        // Total difference in milliseconds
-        const diffMs: number = now.getTime() - start.getTime();
-        const diffDays: number = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+    //     // Total difference in milliseconds
+    //     const diffMs: number = now.getTime() - start.getTime();
+    //     const diffDays: number = Math.floor(diffMs / (1000 * 60 * 60 * 24));
 
-        // Less than a month → show days
-        if (diffDays < 30)
-            return `For ${diffDays} day${diffDays !== 1 ? "s" : ""}`;
+    //     // Less than a month → show days
+    //     if (diffDays < 30)
+    //         return `For ${diffDays} day${diffDays !== 1 ? "s" : ""}`;
 
-        // Calculate years and months
-        let years: number = now.getFullYear() - start.getFullYear();
-        let months: number = now.getMonth() - start.getMonth();
+    //     // Calculate years and months
+    //     let years: number = now.getFullYear() - start.getFullYear();
+    //     let months: number = now.getMonth() - start.getMonth();
 
-        // Adjust months if current day < start day
-        if (now.getDate() < start.getDate()) {
-            months--;
-        }
+    //     // Adjust months if current day < start day
+    //     if (now.getDate() < start.getDate()) {
+    //         months--;
+    //     }
 
-        if (months < 0) {
-            years--;
-            months += 12;
-        }
+    //     if (months < 0) {
+    //         years--;
+    //         months += 12;
+    //     }
 
-        // Less than 1 year → show months
-        if (years <= 0)
-            return `For ${months} month${months !== 1 ? "s" : ""} now`;
+    //     // Less than 1 year → show months
+    //     if (years <= 0)
+    //         return `For ${months} month${months !== 1 ? "s" : ""} now`;
 
-        // 1 year or more → show years
-        return `For ${years} year${years !== 1 ? "s" : ""} now`;
-    }, []);
+    //     // 1 year or more → show years
+    //     return `For ${years} year${years !== 1 ? "s" : ""} now`;
+    // }, []);
 
     return (
         <section className={styles.experience}>
@@ -63,12 +63,16 @@ export default function ExperienceSection() {
                     </div>
                     <ul>
                         <li>
+                            <p className={styles["ex-pos"]}>AI Engineer</p>
+                            <p className={styles["ex-date"]}>For 9 Months</p>
+                        </li>
+                        <li>
                             <p className={styles["ex-pos"]}>iOS Developer</p>
-                            <p className={styles["ex-date"]}>{calculateDuration("2024-01-01")}</p>
+                            <p className={styles["ex-date"]}>For 2 Years and 10 Months</p>
                         </li>
                         <li>
                             <p className={styles["ex-pos"]}>Web Developer</p>
-                            <p className={styles["ex-date"]}>For 6 months</p>
+                            <p className={styles["ex-date"]}>For 6 Months</p>
                         </li>
                     </ul>
                 </li>

@@ -129,7 +129,7 @@ export default function ConnectionSection() {
             <section className={styles.resume}>
                 <a 
                     href={"#"}
-                    className={styles.pointer} 
+                    className={`${styles.pointer} liquid_glass_btn`}
                     onClick={downloadResume}>
                     Download Resume
                     <span className={styles.icon}>

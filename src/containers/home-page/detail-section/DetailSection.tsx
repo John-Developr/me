@@ -13,7 +13,7 @@ export default function DetailSection(){
                 John Carlo A. Ylanan
               </p>
               <h2 className={styles.role}>
-                Web and Mobile Developer
+                Full Stack Developer
               </h2>
               <p className={styles.location}>
                   <HomeIcons.Location 
@@ -31,6 +31,7 @@ export default function DetailSection(){
                   <a 
                     href={networkDefine.CALENDLY_URL} 
                     target="_blank" 
+                    className="liquid_glass_btn"
                     rel="noopener noreferrer">
                       <HomeIcons.Calendar 
                         width={18} 
@@ -40,7 +41,9 @@ export default function DetailSection(){
                         width={18} 
                         height={18} />                                                                              
                   </a>
-                  <a href={networkDefine.MAIL_TO}>
+                  <a 
+                    href={networkDefine.MAIL_TO}
+                    className="liquid_glass_btn">
                       <HomeIcons.Message 
                         width={18} 
                         height={18} />

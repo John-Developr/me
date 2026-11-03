@@ -60,8 +60,8 @@ export default function StackSection() {
                      alt="ChatGPT"
                      className={styles["tech-image"]} />
                     <div className={styles["tech-detail"]}> 
-                        <h5>ChatGPT</h5>
-                        <p>An AI chatbot for assistant.</p>
+                        <h5>OpenAI</h5>
+                        <p>An AI chatbot/Code for assistant.</p>
                     </div>  
                 </li>
                 <li className={styles["tech-list"]}>
@@ -86,6 +86,30 @@ export default function StackSection() {
                     <div className={styles["tech-detail"]}> 
                         <h5>Supabase</h5>
                         <p>Backend platform with database and auth.</p>
+                    </div>  
+                </li>
+                <li className={styles["tech-list"]}>
+                    <Image
+                     src="/images/tech/firebase.png"
+                     width={25}
+                     height={25}
+                     alt="Firebase"
+                     className={styles["tech-image"]} />
+                    <div className={styles["tech-detail"]}> 
+                        <h5>Firebase</h5>
+                        <p>Backend platform with database and auth.</p>
+                    </div>  
+                </li>
+                <li className={styles["tech-list"]}>
+                    <Image
+                     src="/images/tech/xcode.png"
+                     width={25}
+                     height={25}
+                     alt="Xcode"
+                     className={styles["tech-image"]} />
+                    <div className={styles["tech-detail"]}> 
+                        <h5>Xcode</h5>
+                        <p>Apple's integrated development environment.</p>
                     </div>  
                 </li>
             </ul>
