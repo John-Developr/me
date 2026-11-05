@@ -1,5 +1,4 @@
 import { ContentListUnion } from "@google/genai/node";
-import { zodToJsonSchema } from "zod-to-json-schema";
 
 // ============================================================
 // BLOG
@@ -145,7 +144,7 @@ export interface AssistantConfigOptions {
   responseModalities?: string[];
   responseMimeType?:   string;
   systemInstruction?:  string;
-  responseJsonSchema?: ReturnType<typeof zodToJsonSchema>;
+  responseJsonSchema?: Record<string, unknown>; // JSON Schema (from z.toJSONSchema)
 }
 
 export interface AssistantConfig {

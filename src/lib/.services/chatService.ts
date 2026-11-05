@@ -3,7 +3,6 @@ import { cookies } from "next/headers";
 import { GoogleGenAI } from "@google/genai";
 
 import { z, ZodObject, ZodRawShape } from "zod";
-import { zodToJsonSchema } from "zod-to-json-schema";
 
 import BlogService from "./blogService";
 
@@ -198,7 +197,7 @@ export default class ChatService {
         this.config.config = {
             responseMimeType: "application/json",
             systemInstruction: this.instruction,
-            responseJsonSchema: zodToJsonSchema(schema)
+            responseJsonSchema: z.toJSONSchema(schema)
         };
 
         this.config.history  = [];

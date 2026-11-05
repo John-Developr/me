@@ -33,6 +33,13 @@ Work in progress on the `liquid-glass` branch.
 - Share images: the missing `og-home.png` / `og-contact.png` references are replaced by generated `opengraph-image` routes. `metadataBase` is added so image URLs are absolute.
 - `zod` and `zod-to-json-schema` are now declared in `package.json` instead of relying on transitive installs.
 
+### Security
+- Upgraded `next` 15.3.8 → 15.5.29 (fixes 30+ advisories incl. critical RCE in the Image Optimization API), `nodemailer` 8 → 10.3.1, `@google/genai` 0.13 → 2.32, `zod` 3 → 4.6.7, `react-syntax-highlighter` 15 → 16.1.2; `npm audit fix` for transitive packages. Remaining: `postcss` bundled inside Next.js (build-time only; fixed in Next 16).
+- Removed the unused `GEMINI_GENERATE_CONTENT_URL` entry, which would inline `NEXT_PUBLIC_GEMINI_API_KEY` into client JavaScript if that variable were set.
+- Replaced `zod-to-json-schema` with zod 4's built-in `z.toJSONSchema`.
+- Blog generation retries now back off (3s, 6s) instead of retrying immediately.
+- `next.config.ts` pins `outputFileTracingRoot` so a stray parent-folder lockfile doesn't change the inferred workspace root.
+
 ### Documentation
 - Added `AGENTS.md`, `CLAUDE.md`, `.env.example`, and `docs/` (`PROJECT_OVERVIEW.md`, `DESIGN_SYSTEM.md`, `CONTRIBUTING.md`, `CHANGELOG.md`); rewrote `README.md`.
 

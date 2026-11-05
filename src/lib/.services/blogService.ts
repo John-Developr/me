@@ -77,6 +77,11 @@ export default class BlogService {
             } catch (error) {
                 lastError = error;
                 console.error(`Blog generation attempt ${attempt}/${MAX_ATTEMPTS} failed:`, error);
+
+                // Back off before retrying (3s, then 6s) — Gemini overloads (503) are usually brief.
+                if (attempt < MAX_ATTEMPTS) {
+                    await new Promise((resolve) => setTimeout(resolve, attempt * 3000));
+                }
             }
         }
 
