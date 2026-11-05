@@ -32,6 +32,7 @@
   --text-header: var(--bg-primary);
   --text-sub: #999898;
   --text-muted: #7d8590;
+  --text-muted-hover: rgb(105, 105, 105); /* muted links on hover: darker in light mode */
 
   --clip-hover: rgb(235, 235, 235);
   --logo-filter: unset;
@@ -78,6 +79,7 @@
   --text-header: #e6edf3;
   --text-sub: #484f58;
   --text-muted: #7d8590;
+  --text-muted-hover: var(--text-header); /* ...brighter in dark mode */
 
   --clip-hover: #30363d;
   --logo-filter: 
@@ -155,9 +157,12 @@ button, a {
     box-shadow 0.3s ease;
 }
 
-/* .is-active holds the hover state, e.g. while the header menu is open */
+/* .is-active holds the hover state, e.g. while the header menu is open.
+   .liquid_glass_group on a parent applies it when hovering anywhere in that parent
+   (e.g. a link whose text sits next to its glass icon). */
 .liquid_glass:hover,
-.liquid_glass.is-active {
+.liquid_glass.is-active,
+.liquid_glass_group:hover .liquid_glass {
   background: rgba(255, 255, 255, 0.24);
   border-color: rgba(255, 255, 255, 0.45);
 
@@ -324,6 +329,7 @@ button, a {
   align-items: center;
   column-gap: 8px;
   padding: 10px;
+  cursor: pointer;
   transition: background 0.15s ease;
 }
 

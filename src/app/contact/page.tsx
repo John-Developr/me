@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import ContactPage from "@/containers/contact-page";
+import { BASE_URL } from "@/config/siteUrl";
 
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL ?? "https://johncarlo-portfolio.vercel.app";
 
 export const metadata: Metadata = {
   // Concise + keyword-rich — under 60 chars (Google truncates at 60)

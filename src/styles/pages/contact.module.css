@@ -193,14 +193,22 @@
     display: flex;
     align-items: center;
     gap: 8px;
-    transition: background-color 0.2s ease;
+    /* Same timing as .liquid_glass_btn so its hover zoom animates */
+    transition:
+        transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+        background-color 0.3s ease,
+        box-shadow 0.3s ease;
     width: 330px;
     font-weight: 500;
     
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: var(--primary-btn-box-shadow);
+}
+
+/* Keep the primary fill on hover (like Download Resume) instead of the glass tint */
+button.btn:hover {
+    background-color: var(--primary-hover-color);
 }
 
 @keyframes bounce {

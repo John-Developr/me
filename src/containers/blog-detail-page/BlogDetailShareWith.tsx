@@ -24,8 +24,8 @@ const BlogDetailShareWith = () => {
         {Object.entries(platforms).map(([name, link]) => (
           <li
             key={name}
+            className="liquid_glass"
             onClick={() => window.open(link, "_blank", "noopener,noreferrer")}
-            style={{ cursor: "pointer" }}
             aria-label={`Share on ${name}`}
           >
             {name === "facebook"

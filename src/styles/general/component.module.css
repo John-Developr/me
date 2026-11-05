@@ -451,12 +451,17 @@
     color: white;
     background: var(--bg-primary);
     top: 26px;
-    transition: .5s;
+    /* Same timing as .liquid_glass_btn so its hover zoom animates */
+    transition:
+        transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+        background-color 0.3s ease,
+        box-shadow 0.3s ease;
     cursor: pointer;
 }
 
+/* Keep the primary fill on hover (like the "Chat with John" button) */
 .chatAI .chat-container .form button:hover {
-    background: rgb(102, 102, 102);
+    background: var(--primary-hover-color);
 }
 
 .chatAI .chat-container .form button svg {
@@ -626,14 +631,14 @@
 /* Chat AI Styles END */
 
 /* Clipoard Styles START */
-.container-clipoard {
+.container-clipboard {
   min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.container-clipoard .copy-button {
+.container-clipboard .copy-button {
   appearance: none;
   padding: 6px;
   border: 0;
@@ -645,23 +650,23 @@
   transition: 0.3s;
 }
 
-.container-clipoard .copy-button:hover {
+.container-clipboard .copy-button:hover {
     background-color: var(--clip-hover);
 }
 
-.container-clipoard .did-animate:hover {
+.container-clipboard .did-animate:hover {
     background-color: transparent !important;
 }
 
 /* Wrapper for overlapping icons */
-.container-clipoard .icon-wrapper {
+.container-clipboard .icon-wrapper {
   position: relative;
   width: 16px;
   height: 16px;
 }
 
 /* Base icon styles */
-.container-clipoard .icon {
+.container-clipboard .icon {
   position: absolute;
   top: 0;
   left: 0;
@@ -673,20 +678,20 @@
 }
 
 /* Clippy default and animation */
-.container-clipoard .clippy {
+.container-clipboard .clippy {
   color: var(--text);
 }
-.container-clipoard .clippy-copied {
+.container-clipboard .clippy-copied {
   stroke-dashoffset: -50;
 }
 
 /* Check icon color and animation */
-.container-clipoard .check {
+.container-clipboard .check {
   color: rgb(41, 132, 41);
   stroke-dashoffset: -50; /* initially hidden */
 }
 
-.container-clipoard .check-visible {
+.container-clipboard .check-visible {
   stroke-dashoffset: 0; /* slide in when copied */
 }
 /* CLipoard Styles END */

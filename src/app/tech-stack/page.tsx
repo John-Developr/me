@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import TechStackPage from "@/containers/tech-stack-page";
+import { BASE_URL } from "@/config/siteUrl";
 
 export const metadata: Metadata = {
-  title: "Tech Stack | John Carlo Ylanan",
+  title: "Tech Stack",
   description:
     "Explore the technologies, tools, and frameworks I use as an iOS and web developer. From Swift and React to modern backend solutions, discover how I build scalable and high-performance applications.",
   keywords: [
@@ -20,7 +21,7 @@ export const metadata: Metadata = {
     title: "Tech Stack | John Carlo Ylanan",
     description:
       "A look into my development stack including Swift, React, Next.js, and more. See how I build modern apps across web and mobile.",
-    url: `${process.env.NEXT_PUBLIC_BASE_URL}/tech-stack`,
+    url: `${BASE_URL}/tech-stack`,
     siteName: "John Carlo Portfolio",
     type: "website",
   },

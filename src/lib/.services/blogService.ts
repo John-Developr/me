@@ -77,6 +77,11 @@ export default class BlogService {
             } catch (error) {
                 lastError = error;
                 console.error(`Blog generation attempt ${attempt}/${MAX_ATTEMPTS} failed:`, error);
+
+                // Back off before retrying (3s, then 6s) — Gemini overloads (503) are usually brief.
+                if (attempt < MAX_ATTEMPTS) {
+                    await new Promise((resolve) => setTimeout(resolve, attempt * 3000));
+                }
             }
         }
 
@@ -195,6 +200,45 @@ export default class BlogService {
         if (error) {
             console.error("Failed to increment views:", error);
         }
+    }
+
+    /**
+     * Fetches one post by slug for server rendering (page, metadata, share image).
+     * Does not count a view — that happens in the API route.
+     *
+     * @returns The post, or null if no post has this slug
+     * @throws  On database errors
+     */
+    async getBySlug(slug: string): Promise<AIBlogResponse | null> {
+        const { data, error } = await this.server
+            .from(this.table)
+            .select("*")
+            .eq("slug", slug)
+            .maybeSingle<AIBlogResponse>();
+
+        if (error) {
+            console.error(error);
+            throw new Error("Failed to fetch blog by slug.");
+        }
+
+        return data;
+    }
+
+    /**
+     * Slugs and dates of all posts, for sitemap.xml.
+     */
+    async getSitemapEntries(): Promise<Pick<AIBlogResponse, "slug" | "generated_at">[]> {
+        const { data, error } = await this.server
+            .from(this.table)
+            .select("slug, generated_at")
+            .order("generated_at", { ascending: false });
+
+        if (error) {
+            console.error(error);
+            throw new Error("Failed to fetch sitemap entries.");
+        }
+
+        return data ?? [];
     }
 
     async getRecentBlogs(): Promise<AIBlogResponse[]> {

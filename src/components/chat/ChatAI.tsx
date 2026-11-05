@@ -52,7 +52,7 @@ export default function ChatAI() {
                     <div className={Styles.profile}>
                         <SkeletonImage
                             className={Styles.avatar}
-                            path="/images/Avatar.png"
+                            path="/images/Avatar.jpg"
                             width={40}
                             height={40}
                             alt="Avatar"

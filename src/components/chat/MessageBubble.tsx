@@ -37,7 +37,7 @@ export default function MessageBubble({ message, handleNewConversation }: Messag
             {(filteredRoles("user").includes(role)) && (
                 <div className={Styles["profile-msg"]}>
                     <SkeletonImage
-                        path="/images/Avatar.png"
+                        path="/images/Avatar.jpg"
                         className={Styles.avatar}
                         width={30}
                         height={30}

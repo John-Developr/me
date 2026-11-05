@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import HomePage from "@/containers/home-page";
+import { BASE_URL } from "@/config/siteUrl";
 
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL ?? "https://johncarlo-portfolio.vercel.app";
 
 export const metadata: Metadata = {
 

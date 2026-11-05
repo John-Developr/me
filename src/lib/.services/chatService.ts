@@ -1,14 +1,87 @@
 // src/config/AssistantService.ts
 import { cookies } from "next/headers";
-import { GoogleGenAI } from "@google/genai";
+import { GoogleGenAI, ApiError } from "@google/genai";
 
 import { z, ZodObject, ZodRawShape } from "zod";
-import { zodToJsonSchema } from "zod-to-json-schema";
 
 import BlogService from "./blogService";
 
 import { AssistantConfig, Message, role, BlogCategoryEnum, GeneratedBlogPost } from "@/utils/types";
 import { storageKeys } from "@/config/storageKeys";
+
+// ============================================================
+// GEMINI MODEL & API KEYS
+// ============================================================
+
+/** Gemini model for the chat assistant and blog generation (pinned, not an alias). */
+const GEMINI_MODEL = "gemini-3.6-flash";
+
+/** API keys in priority order; empty ones are skipped. */
+const GEMINI_API_KEYS: string[] = [
+    process.env.NEXT_SECRET_GEMINI_API_KEY,
+    process.env.NEXT_SECRET_GEMINI_API_KEY2,
+].filter((key): key is string => !!key);
+
+/** One client per key, created lazily and reused across requests. */
+const geminiClients = new Map<string, GoogleGenAI>();
+
+/**
+ * Index of the key that last worked. After a key hits its limit, later
+ * requests start with the other key instead of failing on the first one again.
+ */
+let activeKeyIndex = 0;
+
+/**
+ * Whether an error is specific to the API key (so another key may succeed):
+ * rate/quota limits, invalid or disabled keys, and service unavailability.
+ */
+function isKeyFallbackError(error: unknown): boolean {
+    if (!(error instanceof ApiError)) return false;
+    if ([401, 403, 429, 500, 503].includes(error.status)) return true;
+    return error.status === 400 && /API_KEY_INVALID|API key/i.test(error.message);
+}
+
+/**
+ * Runs a Gemini call with automatic key fallback: tries the active key first,
+ * and on a key-specific error retries with the next key.
+ *
+ * @param call - Receives a client for the key being tried
+ * @throws The last error if every key fails, or immediately for non-key errors
+ */
+async function withGeminiKeyFallback<T>(call: (ai: GoogleGenAI) => Promise<T>): Promise<T> {
+    if (GEMINI_API_KEYS.length === 0) {
+        throw new Error("No Gemini API key configured.");
+    }
+
+    let lastError: unknown;
+
+    for (let offset = 0; offset < GEMINI_API_KEYS.length; offset++) {
+        const index = (activeKeyIndex + offset) % GEMINI_API_KEYS.length;
+        const key   = GEMINI_API_KEYS[index];
+
+        let client = geminiClients.get(key);
+        if (!client) {
+            client = new GoogleGenAI({ apiKey: key });
+            geminiClients.set(key, client);
+        }
+
+        try {
+            const result   = await call(client);
+            activeKeyIndex = index;
+            return result;
+        } catch (error) {
+            lastError = error;
+
+            if (!isKeyFallbackError(error)) throw error;
+
+            // Log which key slot failed (never the key itself).
+            const status = error instanceof ApiError ? error.status : "unknown";
+            console.warn(`[Gemini] key #${index + 1} failed with ${status}; trying the next key.`);
+        }
+    }
+
+    throw lastError;
+}
 
 /**
  * ChatService handles interactions with the GoogleGenAI API,
@@ -17,21 +90,15 @@ import { storageKeys } from "@/config/storageKeys";
  */
 
 export default class ChatService {
-    private AI: GoogleGenAI; // GoogleGenAI instance
     private config: AssistantConfig; // Configuration for AI chat
     private instruction: string; // System instruction for AI
 
     constructor(instruction: string) {
         this.instruction = instruction;
 
-        // Initialize AI instance with API key
-        this.AI = new GoogleGenAI({
-            apiKey: process.env.NEXT_SECRET_GEMINI_API_KEY!,
-        });
-
         // Default chat configuration
         this.config = {
-            model: "gemini-2.5-flash",
+            model: GEMINI_MODEL,
             config: {
                 responseModalities: ["text"],
                 systemInstruction: this.instruction
@@ -55,9 +122,9 @@ export default class ChatService {
         }
 
         // Create chat session and send message
-        const chat = await this.AI.chats.create(this.config);
-        const reply = await chat.sendMessage({
-            message: message,
+        const reply = await withGeminiKeyFallback(async (ai) => {
+            const chat = ai.chats.create(this.config);
+            return chat.sendMessage({ message });
         });
 
          if (!reply.text) {
@@ -149,8 +216,6 @@ export default class ChatService {
         const serializedConvo: string = JSON.stringify(convo);
         const totalBytes: number = new TextEncoder().encode("convo" + "=" + serializedConvo).length;
         
-        console.log(`Current size: ${totalBytes} bytes`);
-        
         if (totalBytes > 4000) {
             console.warn("⚠️ Warning: Cookie is reaching the 4KB limit!");
             return true;
@@ -198,7 +263,7 @@ export default class ChatService {
         this.config.config = {
             responseMimeType: "application/json",
             systemInstruction: this.instruction,
-            responseJsonSchema: zodToJsonSchema(schema)
+            responseJsonSchema: z.toJSONSchema(schema)
         };
 
         this.config.history  = [];
@@ -231,7 +296,7 @@ export default class ChatService {
         });
 
         await this.blogConfig(matchSchema, recentTitles);
-        const response = await this.AI.models.generateContent(this.config);
+        const response = await withGeminiKeyFallback((ai) => ai.models.generateContent(this.config));
 
         if (!response.text) {
             throw new Error("AI returned an empty response.");

@@ -55,8 +55,11 @@ export default function Preloader({ children }: { children: ReactNode }) {
         />
       )}
 
-      {/* Main Content */}
-      {!pageLoading && <>{children}</>}
+      {/* Main Content — always rendered so the server HTML contains the page
+          (search engines, link previews); kept invisible until the client is ready. */}
+      <div style={{ display: "contents", visibility: pageLoading ? "hidden" : undefined }}>
+        {children}
+      </div>
     </>
   );
 }

@@ -47,15 +47,14 @@ All content outside the blog (profile, about, stack, experience, featured projec
 │   ├── documents/        resume.pdf, email-template.html (contact email)
 │   ├── images/           Avatar, Logo, Featured, Ph-Flag, NativeCamp
 │   │   ├── company/      experience logos (Forty, Proweaver, UC, CodeTag)
-│   │   ├── tech/         tech-stack logos (react, next, node, supabase, firebase, …)
-│   │   └── other/        404.png
+│   │   └── tech/         tech-stack logos (react, next, node, supabase, firebase, …)
 │   └── favicon.ico
 ├── src/
 │   ├── app/              App Router: routes, API handlers, layout, sitemap
 │   ├── auto/             generate-icons.sh (icon barrel generator script)
 │   ├── components/       Shared UI
 │   │   ├── chat/         ChatAI, ChatBox, ChatButton, MessageBubble, MessageInput
-│   │   ├── clipoard/     CopyClipboard (email copy button)
+│   │   ├── clipboard/    CopyClipboard (email copy button)
 │   │   ├── custom/       SkeletonImage
 │   │   ├── footer/       Footer
 │   │   ├── header/       Header, MenuItems, PageIntro
@@ -157,7 +156,7 @@ Each row is an `AnimatedSection` (uses `useAnimateIn`, staggered delays 50 / 150
 | Profile / role / location | `home-page/detail-section/DetailSection.tsx` (JSX) | Static |
 | About | `home-page/about-section/AboutSection.tsx` | Static |
 | Tech stack | `home-page/stack-section/StackSection.tsx` — `<li className="tech-list">` per tech, logo in `public/images/tech/` | Static, 2-col grid (1-col mobile) |
-| Experience | `home-page/experience-section/ExperienceSeciton.tsx` — `<li>` per company, `has-sub` for multi-role, logo in `public/images/company/` | Static timeline |
+| Experience | `home-page/experience-section/ExperienceSection.tsx` — `<li>` per company, `has-sub` for multi-role, logo in `public/images/company/` | Static timeline |
 | Featured project | `home-page/project-section/ProjectSection.tsx`; URLs in `networkDefine` | Static |
 | Contact details / socials | `networkDefine.ts`, `ConnectSection.tsx`, `Header.tsx`, `Footer.tsx` | Static |
 | Blog posts | Supabase `ai_blogs` (shape = `AIBlogResponse` in `utils/types.ts`) | Client fetch → API → Supabase |

@@ -14,7 +14,6 @@
 
 export const networkDefine = {
     // External URL
-    GEMINI_GENERATE_CONTENT_URL: `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${process.env.NEXT_PUBLIC_GEMINI_API_KEY}`,
     CALENDLY_URL: "https://calendly.com/johncarlo-fullstackdev/30min",
 
     MAIL_TO: "mailto:johncarlo.fullstackdev@gmail.com",

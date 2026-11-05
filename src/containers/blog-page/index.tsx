@@ -112,7 +112,7 @@ export default function BlogPage() {
                         {blogsStates.categories.map((cat) => (
                             <button
                                 key={cat.name}
-                                className={cat.active ? styles.active : ""}
+                                className={`liquid_glass_btn ${cat.active ? styles.active : ""}`}
                                 onClick={() => handleCategoryChange(cat.name)}>
                                 {cat.name}
                             </button>
@@ -120,9 +120,11 @@ export default function BlogPage() {
                     </section>
                     <button 
                         className={`
+                            liquid_glass_btn
                             ${styles.sort} 
                             ${blogsStates.sort === BlogSortEnum.asc ? styles["active-sort"] : ""}
                         `} 
+                        aria-label={blogsStates.sort === BlogSortEnum.asc ? "Sort newest first" : "Sort oldest first"}
                         onClick={handleSortToggle}>
                         {blogsStates.sort === BlogSortEnum.asc ? 
                         <SortUp width={20} height={20} /> : 

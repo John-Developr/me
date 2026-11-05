@@ -34,6 +34,7 @@ export default function MessageInput({ onSend, lastContentRole }: Props) {
         <div className={Styles.form}>
             <input
                 type="text"
+                maxLength={1000}
                 value={inputValue}
                 placeholder="Text message  •  ( John )"
                 onInput={handleOnInput}
@@ -48,7 +49,8 @@ export default function MessageInput({ onSend, lastContentRole }: Props) {
                 disabled={isLastMessageUserRole}
             />
             <button 
-                className={inputValue.trim() !== "" ? "unset" : Styles.none} 
+                className={`liquid_glass_btn ${inputValue.trim() !== "" ? "" : Styles.none}`} 
+                aria-label="Send message"
                 onClick={handleSendMessage}
             >
                 <ArrowUp width="19" height="19" />

@@ -10,10 +10,12 @@ const supabaseClient = createClient(
 // export RPC object
 export const RPC = {
   getLeastInsertedCategory: "get_least_inserted_category",
+  checkRateLimit: "check_rate_limit",
 } as const;
 
 export const Table = {
   aiBlog: "ai_blogs",
+  rateLimits: "rate_limits",
 } as const;
 
 // default export the client
