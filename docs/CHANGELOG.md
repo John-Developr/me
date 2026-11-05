@@ -40,6 +40,10 @@ Work in progress on the `liquid-glass` branch.
 - Share images: the missing `og-home.png` / `og-contact.png` references are replaced by generated `opengraph-image` routes. `metadataBase` is added so image URLs are absolute.
 - `zod` and `zod-to-json-schema` are now declared in `package.json` instead of relying on transitive installs.
 
+### AI
+- Gemini model upgraded from `gemini-2.5-flash` to `gemini-3.6-flash` (3.7 and 3.8 were returning 503 overloads at the time) (chat assistant and blog generation), defined once as `GEMINI_MODEL` in `chatService.ts`.
+- Gemini API key fallback: if `NEXT_SECRET_GEMINI_API_KEY` hits a rate/quota limit (429), is invalid/disabled (400/401/403), or the service is unavailable (500/503), the request is retried with the optional `NEXT_SECRET_GEMINI_API_KEY2`, and later requests start with the key that last worked.
+
 ### SEO
 - Page content is now in the server-rendered HTML: `Preloader` keeps children mounted (invisible until hydrated) instead of not rendering them, so crawlers and link previews see real content.
 - Blog posts render on the server with their own `<title>`, description, keywords, article Open Graph tags, canonical URL, and a generated share image (`blog/[slug]/opengraph-image.tsx`). Unknown slugs show the 404 page (`noindex`).
