@@ -77,3 +77,38 @@ export const sanitize = (str: string = ""): string => str
  */
 export const isValidEmail = (email: string): boolean =>
   /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+/**
+ * Turns any string into a URL slug: lowercase a–z/0–9 words joined by
+ * hyphens, trimmed to at most `maxLength` characters on a word boundary.
+ *
+ * @param input     - Raw text (e.g. a model-suggested slug or a title)
+ * @param maxLength - Maximum slug length (default 40)
+ * @returns         - The slug, or "" if nothing usable remains
+ *
+ * @example
+ * slugify("Why I Stopped Using ORMs!") // → "why-i-stopped-using-orms"
+ */
+export const slugify = (input: string = "", maxLength: number = 40): string => {
+  const slug = input
+    .toLowerCase()
+    .normalize("NFKD")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+
+  if (slug.length <= maxLength) return slug;
+
+  const cut = slug.slice(0, maxLength);
+  return cut.includes("-") ? cut.slice(0, cut.lastIndexOf("-")) : cut;
+};
+
+/**
+ * Estimates reading time at ~200 words per minute (minimum 1 minute).
+ *
+ * @param text - Post content (markdown is fine)
+ * @returns    - Whole minutes
+ *
+ * @example
+ * getReadingTime("word ".repeat(450)) // → 3
+ */
+export const getReadingTime = (text: string = ""): number =>
+  Math.max(1, Math.ceil(text.trim().split(/\s+/).filter(Boolean).length / 200));

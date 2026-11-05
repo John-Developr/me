@@ -64,7 +64,7 @@ export default function ExperienceSection() {
                     <ul>
                         <li>
                             <p className={styles["ex-pos"]}>AI Engineer</p>
-                            <p className={styles["ex-date"]}>For 9 Months</p>
+                            <p className={styles["ex-date"]}>For 11 Months</p>
                         </li>
                         <li>
                             <p className={styles["ex-pos"]}>iOS Developer</p>

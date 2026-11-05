@@ -21,7 +21,7 @@ export default function chatButton({
             <a 
                 href="#" 
                 onClick={handleClickChat} 
-                className={Styles.isClick}>
+                className={`${Styles.isClick} liquid_glass_btn`}>
                 <span className={Styles.icon}>
                     <XMark width="18" height="18" />
                 </span>
@@ -33,7 +33,7 @@ export default function chatButton({
         <a
             href="#"
             onClick={handleClickChat}
-            className={styleChatContainer[1]}
+            className={`${styleChatContainer[1]} liquid_glass_btn`}
         >
             <span className={Styles.icon}>
                 <MessageSquare width="17.5" height="17.5" />

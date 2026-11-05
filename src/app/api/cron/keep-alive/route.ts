@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import BlogService from "@/lib/.services/blogService";
+import { isCronAuthorized } from "@/utils/general/helpers";
 
 // Always hit the database; never serve a cached response.
 export const dynamic = "force-dynamic";
@@ -10,9 +11,7 @@ export const dynamic = "force-dynamic";
  * is never paused for inactivity.
  */
 export async function GET(req: Request) {
-    const bearerToken = `Bearer ${process.env.CRON_SECRET}`;
-
-    if (req.headers.get("Authorization") !== bearerToken) {
+    if (!isCronAuthorized(req)) {
         return new Response("Unauthorized", { status: 401 });
     }
 

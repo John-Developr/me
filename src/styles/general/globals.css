@@ -155,8 +155,9 @@ button, a {
     box-shadow 0.3s ease;
 }
 
+/* .is-active holds the hover state, e.g. while the header menu is open */
 .liquid_glass:hover,
-.liquid_glass:hover {
+.liquid_glass.is-active {
   background: rgba(255, 255, 255, 0.24);
   border-color: rgba(255, 255, 255, 0.45);
 
@@ -252,12 +253,21 @@ button, a {
   color: var(--bg-primary);
 } 
 
+/* The dropdown is anchored to the li, while only the trigger
+   carries .liquid_glass — so its hover zoom never scales the dropdown. */
 .header .nav > ul li.menu {
-  cursor: pointer;
+  position: relative;
+}
+
+.header .nav > ul li.menu .menu-trigger {
+  padding: 0;
+  color: inherit;
+  font: inherit;
 }
 
 .header .nav > ul li.linkend,
-.header .nav > ul li.menu {
+.header .nav > ul li.menu,
+.header .nav > ul li.menu .menu-trigger {
   height: 35px;
   width: 35px;
   display: flex;

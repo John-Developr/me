@@ -69,3 +69,23 @@ export function debounce<Args extends unknown[]>(
     }, wait);
   };
 }
+// ----------------------
+// Cron request authorization (server-side)
+// ----------------------
+/**
+ * Checks that a request comes from Vercel Cron (or someone holding the secret).
+ * Fails closed: if CRON_SECRET is not configured, every request is rejected —
+ * otherwise "Bearer undefined" would be accepted.
+ *
+ * @param req - Incoming route handler request
+ * @returns true only when CRON_SECRET is set and the bearer token matches
+ */
+export function isCronAuthorized(req: Request): boolean {
+    const secret = process.env.CRON_SECRET;
+
+    if (!secret) {
+        return false;
+    }
+
+    return req.headers.get("Authorization") === `Bearer ${secret}`;
+}

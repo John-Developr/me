@@ -1,17 +1,24 @@
 import styles from "@/styles/pages/page.module.css";
 
-import { useRouter } from "next/dist/client/components/navigation";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 import { formatDate } from "@/utils/general/stringHelpers";
 import { AIBlogResponse } from "@/utils/types";
 
 const BlogSectionCard = ({ blog }: { blog: AIBlogResponse }) => {
     const router = useRouter();
+    const href = `/blog/${blog.slug}`;
+
+    // Cards navigate via router.push, which doesn't prefetch like <Link>.
+    useEffect(() => {
+        router.prefetch(href);
+    }, [router, href]);
 
     return (
         <div
             className={styles.card} 
-            onClick={() => router.push(`/blog/${blog.slug}`)}>
+            onClick={() => router.push(href)}>
             <h3 className={styles.title}>{blog.title}</h3>
             <div className={styles["date-time"]}>
                 {formatDate(blog.generated_at)}

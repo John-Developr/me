@@ -12,14 +12,23 @@ import Page404 from "@/containers/404-page";
 
 import { networkDefine } from "@/config/networkDefine";
 import { AIBlogResponse } from "@/utils/types";
+import { fetchJsonCached, getCached } from "@/utils/general/fetchCache";
+
+interface BlogDetailResponse {
+  blog:    AIBlogResponse;
+  result?: boolean;
+}
 
 interface BlogDetailPageProps {
   slug: string;
 }
 
 export default function BlogDetailPage({ slug }: BlogDetailPageProps) {
-    const [blog,       setBlog]       = useState<AIBlogResponse | null>(null);
-    const [isLoading,  setIsLoading]  = useState(true);
+    // A previously opened article renders instantly from the in-memory cache.
+    const cached = getCached<BlogDetailResponse>(networkDefine.BLOG_DETAIL_API(slug));
+
+    const [blog,       setBlog]       = useState<AIBlogResponse | null>(cached?.blog ?? null);
+    const [isLoading,  setIsLoading]  = useState(!cached);
 
     useEffect(() => {
         if (!slug) {
@@ -28,8 +37,7 @@ export default function BlogDetailPage({ slug }: BlogDetailPageProps) {
 
         const fetchBlog = async () => {
             try {
-                const response  = await fetch(networkDefine.BLOG_DETAIL_API(slug));
-                const { blog, result }: { blog: AIBlogResponse, result: boolean } = await response.json();
+                const { blog, result } = await fetchJsonCached<BlogDetailResponse>(networkDefine.BLOG_DETAIL_API(slug));
 
                 if (result === false) {
                     setBlog(null);
