@@ -18,7 +18,6 @@ Work in progress on the `liquid-glass` branch.
 - Experience section: Forty Degrees Celsius roles listed as AI Engineer, iOS Developer, Web Developer.
 - Experience section: AI Engineer duration updated to 11 months.
 - Blog post "Share with" buttons (Facebook, LinkedIn) and the "View All Blogs" back link use the same `liquid_glass` style and hover as the header buttons. New `.liquid_glass_group` parent class applies the glass hover when hovering anywhere in the parent.
-- `.liquid_glass` / `.liquid_glass_btn` set `will-change: transform` to reduce icon jitter during the hover zoom.
 - "View All Blogs" hover brightens in dark mode instead of dimming, via a new `--text-muted-hover` token (defined in `:root` and `.dark`).
 - Header menu button and "Chat with John" button share the `liquid_glass_btn` hover; the menu button stays highlighted while the menu is open (new `.liquid_glass.is-active` modifier).
 - Blog generation instructions rewritten: Markdown with `##` subheadings, 450–650 words, no invented personal stories, employers or statistics, stricter cliché bans. Recent titles are passed to the prompt to avoid repeated topics.
@@ -26,7 +25,7 @@ Work in progress on the `liquid-glass` branch.
 - Faster blog navigation: in-memory client cache for blog API responses, CDN caching on the blog list APIs, view counting moved after the response (`after()`), no 500ms debounce on the first blog list load, a `loading.tsx` skeleton for blog articles, and prefetching for header menu routes and home blog cards.
 
 ### Fixed
-- Header menu dropdown no longer zooms with the menu button on hover, and clicking a menu item no longer re-toggles the menu.
+- Header menu dropdown no longer zooms with the menu button on hover, and clicking a menu item no longer re-toggles the menu. Menu items show the pointer cursor.
 - Security: cron routes now reject requests when `CRON_SECRET` is unset (previously `Authorization: Bearer undefined` was accepted).
 - Blog generation no longer overwrites an existing post when Gemini repeats a slug; a numeric suffix is added instead (`insert` instead of `upsert`).
 - Blog cron sets `maxDuration = 60` so Gemini generation isn't cut off by the function timeout.

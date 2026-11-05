@@ -155,9 +155,6 @@ button, a {
     transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
     background 0.3s ease,
     box-shadow 0.3s ease;
-  /* Scale on the GPU as one layer: without this, icons are re-rasterized and
-     pixel-snapped every frame of the hover zoom, which makes them jitter. */
-  will-change: transform;
 }
 
 /* .is-active holds the hover state, e.g. while the header menu is open.
@@ -198,9 +195,6 @@ button, a {
     transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
     background 0.3s ease,
     box-shadow 0.3s ease;
-  /* Scale on the GPU as one layer: without this, icons are re-rasterized and
-     pixel-snapped every frame of the hover zoom, which makes them jitter. */
-  will-change: transform;
 }
 
 .liquid_glass_btn:hover,
@@ -335,6 +329,7 @@ button, a {
   align-items: center;
   column-gap: 8px;
   padding: 10px;
+  cursor: pointer;
   transition: background 0.15s ease;
 }
 
