@@ -45,6 +45,9 @@ export function renderOgImage({ eyebrow, title, subtitle }: OgImageProps): Image
   const avatar = fs.readFileSync(path.join(process.cwd(), "public/images/Avatar.png"));
   const avatarSrc = `data:image/png;base64,${avatar.toString("base64")}`;
 
+  // Long titles (e.g. blog posts) shrink so the card never overflows the image.
+  const titleSize = title.length > 60 ? 44 : title.length > 36 ? 54 : 64;
+
   return new ImageResponse(
     (
       <div
@@ -82,7 +85,7 @@ export function renderOgImage({ eyebrow, title, subtitle }: OgImageProps): Image
             <div
               style={{
                 marginTop: 18,
-                fontSize: 64,
+                fontSize: titleSize,
                 fontWeight: 700,
                 lineHeight: 1.1,
                 color: colors.textHeader,

@@ -20,21 +20,26 @@ interface BlogDetailResponse {
 }
 
 interface BlogDetailPageProps {
-  slug: string;
+  slug:         string;
+  /** Post rendered on the server; undefined if the server lookup failed. */
+  initialBlog?: AIBlogResponse;
 }
 
-export default function BlogDetailPage({ slug }: BlogDetailPageProps) {
-    // A previously opened article renders instantly from the in-memory cache.
-    const cached = getCached<BlogDetailResponse>(networkDefine.BLOG_DETAIL_API(slug));
+export default function BlogDetailPage({ slug, initialBlog }: BlogDetailPageProps) {
+    // Server-rendered post first; otherwise a previously opened article from the in-memory cache.
+    const cached  = getCached<BlogDetailResponse>(networkDefine.BLOG_DETAIL_API(slug));
+    const initial = initialBlog ?? cached?.blog ?? null;
 
-    const [blog,       setBlog]       = useState<AIBlogResponse | null>(cached?.blog ?? null);
-    const [isLoading,  setIsLoading]  = useState(!cached);
+    const [blog,       setBlog]       = useState<AIBlogResponse | null>(initial);
+    const [isLoading,  setIsLoading]  = useState(!initial);
 
     useEffect(() => {
         if (!slug) {
             return
         }
 
+        // Always hit the API once per article per tab: it counts the view,
+        // and loads the post if the server couldn't.
         const fetchBlog = async () => {
             try {
                 const { blog, result } = await fetchJsonCached<BlogDetailResponse>(networkDefine.BLOG_DETAIL_API(slug));
@@ -47,14 +52,15 @@ export default function BlogDetailPage({ slug }: BlogDetailPageProps) {
                 setBlog(blog);
             } catch (error) {
                 console.error("Error fetching blog:", error);
-                setBlog(null);
+                // Keep the server-rendered post if the view-count request fails.
+                if (!initialBlog) setBlog(null);
             } finally {
                 setIsLoading(false);
             }
         };
 
         fetchBlog();
-    }, [slug]);
+    }, [slug, initialBlog]);
 
     if (!isLoading && !blog) {
         return <Page404 />;

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import ProjectsPage from "@/containers/projects-page";
+import { BASE_URL } from "@/config/siteUrl";
 
 export const metadata: Metadata = {
   title: "Projects",
@@ -20,7 +21,7 @@ export const metadata: Metadata = {
     title: "Projects | John Carlo Ylanan",
     description:
       "A showcase of web and mobile projects — built with React, Next.js, Swift, and Node.js.",
-    url: `${process.env.NEXT_PUBLIC_BASE_URL}/projects`,
+    url: `${BASE_URL}/projects`,
     siteName: "John Carlo Portfolio",
     type: "website",
   },
@@ -31,7 +32,7 @@ export const metadata: Metadata = {
       "A showcase of web and mobile projects built with modern frameworks and tools.",
   },
   alternates: {
-    canonical: `${process.env.NEXT_PUBLIC_BASE_URL}/projects`,
+    canonical: `${BASE_URL}/projects`,
   },
 };
 

@@ -8,6 +8,7 @@ import { ThemeEnum } from "@/utils/types";
 import { storageKeys } from "@/config/storageKeys";
 
 import LayoutProvider from "./LayoutProvider";
+import { BASE_URL } from "@/config/siteUrl";
 
 
 const karla = Karla({
@@ -17,7 +18,7 @@ const karla = Karla({
 
 export const metadata: Metadata = {
   // Resolves relative metadata URLs (e.g. generated opengraph-image) to absolute ones
-  metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL ?? "https://johncarlo-portfolio.vercel.app"),
+  metadataBase: new URL(BASE_URL),
   title: {
     default:  "John Carlo Ylanan | Web & Mobile Developer",
     template: "%s | John Carlo Ylanan",

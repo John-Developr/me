@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import BlogPage from "@/containers/blog-page";
+import { BASE_URL } from "@/config/siteUrl";
 
 export const metadata: Metadata = {
   title: "Blog | John Carlo Ylanan",
@@ -19,7 +20,7 @@ export const metadata: Metadata = {
     title: "Blog | John Carlo Ylanan",
     description:
       "Read articles on coding, technology, and growth. Discover insights on React, Swift, and modern software development.",
-    url: `${process.env.NEXT_PUBLIC_BASE_URL}/blog`,
+    url: `${BASE_URL}/blog`,
     siteName: "John Carlo Portfolio",
     type: "website",
   },
@@ -30,7 +31,7 @@ export const metadata: Metadata = {
       "Insights on web & mobile development, tech trends, and personal growth.",
   },
   alternates: {
-    canonical: `${process.env.NEXT_PUBLIC_BASE_URL}/blog`,
+    canonical: `${BASE_URL}/blog`,
   },
 };
 

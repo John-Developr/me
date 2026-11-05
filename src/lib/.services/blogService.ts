@@ -202,6 +202,45 @@ export default class BlogService {
         }
     }
 
+    /**
+     * Fetches one post by slug for server rendering (page, metadata, share image).
+     * Does not count a view — that happens in the API route.
+     *
+     * @returns The post, or null if no post has this slug
+     * @throws  On database errors
+     */
+    async getBySlug(slug: string): Promise<AIBlogResponse | null> {
+        const { data, error } = await this.server
+            .from(this.table)
+            .select("*")
+            .eq("slug", slug)
+            .maybeSingle<AIBlogResponse>();
+
+        if (error) {
+            console.error(error);
+            throw new Error("Failed to fetch blog by slug.");
+        }
+
+        return data;
+    }
+
+    /**
+     * Slugs and dates of all posts, for sitemap.xml.
+     */
+    async getSitemapEntries(): Promise<Pick<AIBlogResponse, "slug" | "generated_at">[]> {
+        const { data, error } = await this.server
+            .from(this.table)
+            .select("slug, generated_at")
+            .order("generated_at", { ascending: false });
+
+        if (error) {
+            console.error(error);
+            throw new Error("Failed to fetch sitemap entries.");
+        }
+
+        return data ?? [];
+    }
+
     async getRecentBlogs(): Promise<AIBlogResponse[]> {
         const query = this.server
             .from(this.table)

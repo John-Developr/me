@@ -33,6 +33,13 @@ Work in progress on the `liquid-glass` branch.
 - Share images: the missing `og-home.png` / `og-contact.png` references are replaced by generated `opengraph-image` routes. `metadataBase` is added so image URLs are absolute.
 - `zod` and `zod-to-json-schema` are now declared in `package.json` instead of relying on transitive installs.
 
+### SEO
+- Page content is now in the server-rendered HTML: `Preloader` keeps children mounted (invisible until hydrated) instead of not rendering them, so crawlers and link previews see real content.
+- Blog posts render on the server with their own `<title>`, description, keywords, article Open Graph tags, canonical URL, and a generated share image (`blog/[slug]/opengraph-image.tsx`). Unknown slugs show the 404 page (`noindex`).
+- `sitemap.xml` lists `/projects`, `/tech-stack`, and every blog post (revalidated hourly).
+- Fixed `//` in sitemap and canonical URLs when `NEXT_PUBLIC_BASE_URL` ends with a slash: the origin now comes from one place, `src/config/siteUrl.ts`.
+- Share images shrink long titles so they fit the card.
+
 ### Security
 - Upgraded `next` 15.3.8 → 15.5.29 (fixes 30+ advisories incl. critical RCE in the Image Optimization API), `nodemailer` 8 → 10.3.1, `@google/genai` 0.13 → 2.32, `zod` 3 → 4.6.7, `react-syntax-highlighter` 15 → 16.1.2; `npm audit fix` for transitive packages. Remaining: `postcss` bundled inside Next.js (build-time only; fixed in Next 16).
 - Removed the unused `GEMINI_GENERATE_CONTENT_URL` entry, which would inline `NEXT_PUBLIC_GEMINI_API_KEY` into client JavaScript if that variable were set.

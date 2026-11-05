@@ -1,68 +1,57 @@
-// import type { Metadata } from "next";
+import type { Metadata } from "next";
+import { notFound } from "next/navigation";
+
 import BlogDetailPage from "@/containers/blog-detail-page";
-// import { networkDefine } from "@/config/networkDefine";
+import { getBlog } from "./getBlog";
+import { BASE_URL } from "@/config/siteUrl";
 
 type Props = {
   params: Promise<{ slug: string }>;
 };
 
-// async function getBlog(slug: string) {
-//   const res = await fetch(networkDefine.BLOG_DETAIL_API(slug), {
-//     next: { revalidate: 60 },
-//   });
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { slug } = await params;
+  const blog     = await getBlog(slug);
 
-//   if (!res.ok) return null;
-//   return res.json();
-// }
+  if (!blog) {
+    return { title: "Blog" };
+  }
 
-// export async function generateMetadata(
-//   { params }: { params: { slug: string } }
-// ): Promise<Metadata> {
-//   const blog = await getBlog(params.slug);
+  const url         = `${BASE_URL}/blog/${slug}`;
+  const description = blog.excerpt || blog.content?.slice(0, 160);
 
-//   if (!blog) {
-//     return {
-//       title: "Blog Not Found | John Carlo Ylanan",
-//     };
-//   }
-
-//   return {
-//     title: `${blog.title} | John Carlo Ylanan`,
-//     description: blog.excerpt || blog.content.slice(0, 150),
-//     keywords: [
-//       blog.title,
-//       "John Carlo Blog",
-//       "Web Development",
-//       "iOS Development",
-//       "Programming",
-//     ],
-//     openGraph: {
-//       title: blog.title,
-//       description: blog.excerpt,
-//       url: `${process.env.NEXT_PUBLIC_BASE_URL}/blog/${params.slug}`,
-//       siteName: "John Carlo Portfolio",
-//       images: [
-//         {
-//           url: `${process.env.NEXT_PUBLIC_BASE_URL}/default-og.png`,
-//           width: 1200,
-//           height: 630,
-//         },
-//       ],
-//       type: "article",
-//     },
-//     // twitter: {
-//     //   card: "summary_large_image",
-//     //   title: blog.title,
-//     //   description: blog.excerpt,
-//     //   images: [blog.coverImage || "/default-og.png"],
-//     // },
-//     alternates: {
-//       canonical: `${process.env.NEXT_PUBLIC_BASE_URL}/blog/${params.slug}`,
-//     },
-//   };
-// }
+  return {
+    title: blog.title,
+    description,
+    keywords: blog.tags,
+    openGraph: {
+      title: blog.title,
+      description,
+      url,
+      siteName: "John Carlo Portfolio",
+      type: "article",
+      publishedTime: blog.generated_at,
+      authors: ["John Carlo A. Ylanan"],
+      tags: blog.tags,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: blog.title,
+      description,
+    },
+    alternates: {
+      canonical: url,
+    },
+  };
+}
 
 export default async function BlogDetail({ params }: Props) {
   const { slug } = await params;
-  return <BlogDetailPage slug={slug} />;
+  const blog     = await getBlog(slug);
+
+  if (blog === null) {
+    notFound();
+  }
+
+  return <BlogDetailPage slug={slug} initialBlog={blog} />;
 }
