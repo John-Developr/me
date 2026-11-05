@@ -230,7 +230,7 @@ export default function ContactPage() {
                                 placeholder="Enter your message" rows={6} />
                         </div>
                         
-                        <button type="submit" className={styles.btn}>
+                        <button type="submit" className={`${styles.btn} liquid_glass_btn`}>
                             Start the Conversation 
                             <Send width={20} height={20} />
                         </button>
