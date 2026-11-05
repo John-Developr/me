@@ -17,6 +17,9 @@ Work in progress on the `liquid-glass` branch.
 ### Changed
 - Experience section: Forty Degrees Celsius roles listed as AI Engineer, iOS Developer, Web Developer.
 - Experience section: AI Engineer duration updated to 11 months.
+- Blog post "Share with" buttons (Facebook, LinkedIn) and the "View All Blogs" back link use the same `liquid_glass` style and hover as the header buttons. New `.liquid_glass_group` parent class applies the glass hover when hovering anywhere in the parent.
+- `.liquid_glass` / `.liquid_glass_btn` set `will-change: transform` to reduce icon jitter during the hover zoom.
+- "View All Blogs" hover brightens in dark mode instead of dimming, via a new `--text-muted-hover` token (defined in `:root` and `.dark`).
 - Header menu button and "Chat with John" button share the `liquid_glass_btn` hover; the menu button stays highlighted while the menu is open (new `.liquid_glass.is-active` modifier).
 - Blog generation instructions rewritten: Markdown with `##` subheadings, 450–650 words, no invented personal stories, employers or statistics, stricter cliché bans. Recent titles are passed to the prompt to avoid repeated topics.
 - Blog generation retries up to 3 times, rejects cliché titles in code, computes reading time from word count, and only asks Gemini for the fields it writes.

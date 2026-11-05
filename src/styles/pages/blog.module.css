@@ -148,27 +148,24 @@
 }
 
 .blogDetail .back-to-blogs span {
+    /* Fill, border, and hover zoom come from the global .liquid_glass class */
     width: 30px;
     height: 30px;
     border-radius: 100%;
-    border: 1px solid rgb(155, 154, 154);
     display: inline-flex;
     align-items: center;
     justify-content: center;
     margin-right: 10px;
-    transition: 0.2s;
-    cursor: pointer;
     color: rgb(155, 154, 154);
 }
 
 
 .blogDetail .back-to-blogs:hover {
-    color: rgb(105, 105, 105);
+    color: var(--text-muted-hover);
 }
 
 .blogDetail .back-to-blogs:hover span {
-    color: rgb(105, 105, 105);
-    border-color: rgb(105, 105, 105);
+    color: var(--text-muted-hover);
 }
 
 .blogDetail .author-info {
@@ -249,13 +246,10 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    border: var(--badges-border);
-    background: var(--container-bg);
+    /* Fill, border, and hover come from the global .liquid_glass class (same as the header buttons) */
     border-radius: 100%;
     height: 35px;
     width: 35px;
-
-    cursor: pointer;
 }
 
 .blogDetail .share-with li:first-child {

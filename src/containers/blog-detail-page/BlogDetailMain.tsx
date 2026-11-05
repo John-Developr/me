@@ -24,8 +24,8 @@ const BlogDetailMain = ({ blog }: BlogDetailMainProps) => {
     <main className={styles.blogDetail}>
 
       <div className={styles["blog-header"]} ref={blogHeader.ref} style={blogHeader.style}>
-        <Link href="/blog" className={styles["back-to-blogs"]}>
-          <span>
+        <Link href="/blog" className={`${styles["back-to-blogs"]} liquid_glass_group`}>
+          <span className="liquid_glass">
             <ArrowRightV2
               width={15}
               height={15}
