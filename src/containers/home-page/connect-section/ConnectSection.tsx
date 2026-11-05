@@ -7,7 +7,7 @@ import { sileo } from "sileo";
 import { HomeIcons } from "@/components/icons";
 import styles from "@/styles/pages/page.module.css";
 import { networkDefine } from "@/config/networkDefine";
-import CopyClipboard from "@/components/clipoard";
+import CopyClipboard from "@/components/clipboard";
 
 export default function ConnectionSection() {
     const isDownloading = useRef(false);

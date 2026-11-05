@@ -34,7 +34,7 @@ Keep an even number of items so the 2-column grid stays balanced on desktop.
 
 ### 1.2 Add a work-experience entry
 
-File: `src/containers/home-page/experience-section/ExperienceSeciton.tsx` (filename is intentionally unchanged)
+File: `src/containers/home-page/experience-section/ExperienceSection.tsx`
 
 1. Add the company logo to `public/images/company/` (shown at 25×25).
 2. Entries are newest-first. Pick the pattern:
@@ -82,7 +82,7 @@ File: `src/containers/home-page/project-section/ProjectSection.tsx`
 - Name / tagline: `ProjectDetail` → `h1` / `h2`.
 - Description: `.about-auth` → `p`.
 - "Built With" badges: copy an `<li>` with a 14×14 logo from `public/images/tech/`.
-- Screenshot: replace `public/images/Featured.png` (rendered at 250×170 desktop, full-width × 270px mobile).
+- Screenshot: replace `public/images/Featured.jpg` (rendered at 250×170 desktop, full-width × 270px mobile; keep it ~1000px wide JPEG).
 - Links: add `<NAME>_PROJECTS_URL` / `<NAME>_GITHUB_URL` to `src/config/networkDefine.ts` and reference them in `Action()`. Don't inline URLs.
 
 The `/projects` page is currently a placeholder; a project list there should reuse the `projects.module.css` `.list` / `.card` classes.
@@ -109,7 +109,7 @@ To add a post manually, insert a row in Supabase with the fields above. To add a
 
 ### 1.5 Contact details & links
 
-All external URLs and API paths live in `src/config/networkDefine.ts`. Phone number appears in `Header.tsx` and `ConnectSection.tsx`; email in `ConnectSection.tsx` and `components/clipoard/index.tsx`. Resume: replace `public/documents/resume.pdf`.
+All external URLs and API paths live in `src/config/networkDefine.ts`. Phone number appears in `Header.tsx` and `ConnectSection.tsx`; email in `ConnectSection.tsx` and `components/clipboard/index.tsx`. Resume: replace `public/documents/resume.pdf`.
 
 ---
 

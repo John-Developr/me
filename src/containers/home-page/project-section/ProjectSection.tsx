@@ -109,7 +109,7 @@ function ProjectImage() {
             </div>
             <div>
                 <Image
-                    src="/images/Featured.png"
+                    src="/images/Featured.jpg"
                     width={250}
                     height={170}
                     alt="Featured Project"

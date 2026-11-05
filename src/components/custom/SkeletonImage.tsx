@@ -19,7 +19,6 @@ export default function SkeletonImage({
   alt
 }: SkeletonImageProps) {
   if (!path) {
-    console.log("skeleton...")
     return (
       <div
         className={`${styles.skeleton} ${className ?? ""}`}

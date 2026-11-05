@@ -3,7 +3,7 @@ import TechStackPage from "@/containers/tech-stack-page";
 import { BASE_URL } from "@/config/siteUrl";
 
 export const metadata: Metadata = {
-  title: "Tech Stack | John Carlo Ylanan",
+  title: "Tech Stack",
   description:
     "Explore the technologies, tools, and frameworks I use as an iOS and web developer. From Swift and React to modern backend solutions, discover how I build scalable and high-performance applications.",
   keywords: [

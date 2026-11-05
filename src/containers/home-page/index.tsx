@@ -9,7 +9,7 @@ import Footer from "@/components/footer/Footer";
 import DetailSection from "./detail-section/DetailSection";
 import AboutSection from "./about-section/AboutSection";
 import StackSection from "./stack-section/StackSection";
-import ExperienceSection from "./experience-section/ExperienceSeciton";
+import ExperienceSection from "./experience-section/ExperienceSection";
 import ProjectSection from "./project-section/ProjectSection";
 import ConnectionSection from "./connect-section/ConnectSection";
 import BlogSection from "./blog-section/BlogSection";

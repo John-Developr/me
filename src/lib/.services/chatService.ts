@@ -148,8 +148,6 @@ export default class ChatService {
         const serializedConvo: string = JSON.stringify(convo);
         const totalBytes: number = new TextEncoder().encode("convo" + "=" + serializedConvo).length;
         
-        console.log(`Current size: ${totalBytes} bytes`);
-        
         if (totalBytes > 4000) {
             console.warn("⚠️ Warning: Cookie is reaching the 4KB limit!");
             return true;

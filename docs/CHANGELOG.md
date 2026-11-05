@@ -51,6 +51,13 @@ Work in progress on the `liquid-glass` branch.
 - Input caps: chat messages ≤ 1,000 characters; contact fields capped (message ≤ 5,000), enforced server-side and with `maxLength` on the inputs.
 - Chat and contact APIs no longer return raw provider/SMTP error text to visitors (logged server-side instead).
 
+### Cleanup
+- Renamed `ExperienceSeciton.tsx` → `ExperienceSection.tsx` and `components/clipoard/` → `components/clipboard/` (plus the `.container-clipoard` CSS class).
+- `/blog` and `/tech-stack` page titles no longer repeat the ` | John Carlo Ylanan` suffix.
+- `Avatar` and `Featured` converted to resized JPEGs (2.0 MB → 56 KB, 1.4 MB → 89 KB); removed unused `Avatar(2).png`, `other/404.png`, `tech/HTML.png`.
+- Removed the unused `@supabase/ssr` dependency and leftover debug `console.log`s.
+- AGENTS.md: "Known Quirks" replaced by "Conventions & Gotchas" (title suffix rule, `BASE_URL`).
+
 ### Documentation
 - Added `AGENTS.md`, `CLAUDE.md`, `.env.example`, and `docs/` (`PROJECT_OVERVIEW.md`, `DESIGN_SYSTEM.md`, `CONTRIBUTING.md`, `CHANGELOG.md`); rewrote `README.md`.
 

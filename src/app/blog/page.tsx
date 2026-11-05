@@ -3,7 +3,7 @@ import BlogPage from "@/containers/blog-page";
 import { BASE_URL } from "@/config/siteUrl";
 
 export const metadata: Metadata = {
-  title: "Blog | John Carlo Ylanan",
+  title: "Blog",
   description:
     "Explore articles on web development, iOS development, technology trends, and personal growth. Learn from real-world experiences, coding tips, and insights by John Carlo Ylanan.",
   keywords: [

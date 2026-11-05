@@ -38,7 +38,7 @@ const BlogDetailMain = ({ blog }: BlogDetailMainProps) => {
         <section className={styles["author-info"]}>
           <div className={styles["author-profile"]}>
             <SkeletonImage
-              path="/images/Avatar.png"
+              path="/images/Avatar.jpg"
               className={styles.avatar}
               width={50}
               height={50}

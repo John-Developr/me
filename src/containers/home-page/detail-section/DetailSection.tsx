@@ -53,7 +53,7 @@ export default function DetailSection(){
           </div>
           <div className={styles.profile}>
             <SkeletonImage 
-              path="/images/Avatar.png" 
+              path="/images/Avatar.jpg" 
               className={styles.avatar} 
               width={75} 
               height={75} 

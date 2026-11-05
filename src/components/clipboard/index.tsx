@@ -18,7 +18,7 @@ export default function CopyClipboard() {
   };
 
   return (
-    <div className={styles["container-clipoard"]}>
+    <div className={styles["container-clipboard"]}>
       <button 
         title="copy" 
         className={`${styles["copy-button"]} ${copied ? styles["did-animate"] : ""}`}
