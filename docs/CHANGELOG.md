@@ -18,6 +18,9 @@ Work in progress on the `liquid-glass` branch.
 - Experience section: Forty Degrees Celsius roles listed as AI Engineer, iOS Developer, Web Developer.
 - Experience section: AI Engineer duration updated to 11 months.
 - Blog post "Share with" buttons (Facebook, LinkedIn) and the "View All Blogs" back link use the same `liquid_glass` style and hover as the header buttons. New `.liquid_glass_group` parent class applies the glass hover when hovering anywhere in the parent.
+- Blog list sort button uses the `liquid_glass_btn` style (35px circle, gentler 1.1× hover zoom like the other glass buttons); ascending order keeps the primary fill. Fixes the dark-mode version, which showed a light-grey square with a black icon. Added an `aria-label`.
+- Blog category chips (All, Technology, …) use `liquid_glass_btn` too; the selected chip keeps the primary fill.
+- Blog category chips scroll sideways on narrow screens instead of pushing the sort button off-screen and making the page scroll horizontally.
 - "View All Blogs" hover brightens in dark mode instead of dimming, via a new `--text-muted-hover` token (defined in `:root` and `.dark`).
 - Header menu button and "Chat with John" button share the `liquid_glass_btn` hover; the menu button stays highlighted while the menu is open (new `.liquid_glass.is-active` modifier).
 - Blog generation instructions rewritten: Markdown with `##` subheadings, 450–650 words, no invented personal stories, employers or statistics, stricter cliché bans. Recent titles are passed to the prompt to avoid repeated topics.
