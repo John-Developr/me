@@ -135,7 +135,8 @@ export default function ContactPage() {
                                     type="text" 
                                     placeholder="Enter your first name" 
                                     className={styles["form-control"]} 
-                                    name="fname" />
+                                    name="fname"
+                                    maxLength={100} />
                             </div>
                             <div className={styles["form-group"]}>
                                 <label htmlFor="lname">Last Name</label>
@@ -143,7 +144,8 @@ export default function ContactPage() {
                                     type="text" 
                                     placeholder="Enter your last name" 
                                     className={styles["form-control"]} 
-                                    name="lname" />
+                                    name="lname"
+                                    maxLength={100} />
                             </div>
                         </div>
 
@@ -156,7 +158,8 @@ export default function ContactPage() {
                                 type="email" 
                                 placeholder="Enter your e-mail" 
                                 className={styles["form-control"]} 
-                                name="email" />
+                                name="email"
+                                maxLength={254} />
                         </div>
 
                         <div className={`${styles["form-group"]} ${styles["with-icon"]}`}>
@@ -168,7 +171,8 @@ export default function ContactPage() {
                                 type="text" 
                                 placeholder="Enter the subject" 
                                 className={styles["form-control"]} 
-                                name="subject" />
+                                name="subject"
+                                maxLength={200} />
                         </div>
 
                         <div className={styles["form-group"]}>
@@ -222,6 +226,7 @@ export default function ContactPage() {
                             <textarea 
                                 className={styles["form-control"]} 
                                 name="message" 
+                                maxLength={5000}
                                 placeholder="Enter your message" rows={6} />
                         </div>
                         

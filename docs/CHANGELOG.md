@@ -40,6 +40,10 @@ Work in progress on the `liquid-glass` branch.
 - Blog generation retries now back off (3s, 6s) instead of retrying immediately.
 - `next.config.ts` pins `outputFileTracingRoot` so a stray parent-folder lockfile doesn't change the inferred workspace root.
 
+- Rate limiting for `/api/chat` (20 messages / 10 min) and `/api/contact` (3 / hour) per visitor, keyed by a hashed IP in a Supabase `rate_limits` table (`supabase/migrations/20261105_rate_limits.sql`). Fails open if the table is missing. The keep-alive cron prunes day-old counters.
+- Input caps: chat messages ≤ 1,000 characters; contact fields capped (message ≤ 5,000), enforced server-side and with `maxLength` on the inputs.
+- Chat and contact APIs no longer return raw provider/SMTP error text to visitors (logged server-side instead).
+
 ### Documentation
 - Added `AGENTS.md`, `CLAUDE.md`, `.env.example`, and `docs/` (`PROJECT_OVERVIEW.md`, `DESIGN_SYSTEM.md`, `CONTRIBUTING.md`, `CHANGELOG.md`); rewrote `README.md`.
 

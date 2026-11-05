@@ -36,6 +36,32 @@ const templatePath = path.join(process.cwd(), "public/documents/email-template.h
 const htmlTemplate = fs.readFileSync(templatePath, "utf-8");
 
 // ============================================================
+// LIMITS
+// ============================================================
+
+/** Maximum accepted length per form field, in characters. */
+const MAX_FIELD_LENGTHS: Partial<Record<keyof ContactFormData, number>> = {
+  fname:   100,
+  lname:   100,
+  email:   254,
+  subject: 200,
+  type:    100,
+  budget:  100,
+  message: 5000,
+};
+
+/** Human-readable field names for validation messages. */
+const FIELD_LABELS: Record<keyof ContactFormData, string> = {
+  fname:   "First name",
+  lname:   "Last name",
+  email:   "Email",
+  subject: "Subject",
+  type:    "Inquiry type",
+  budget:  "Budget",
+  message: "Message",
+};
+
+// ============================================================
 // SERVICE
 // ============================================================
 
@@ -120,6 +146,15 @@ export default class ContactService {
       return { message: "Please enter a valid email address.", valid: false };
     }
 
+    // Cap field lengths so the form can't be used to send huge emails
+    for (const [key, max] of Object.entries(MAX_FIELD_LENGTHS) as [keyof ContactFormData, number][]) {
+      const value = data[key];
+
+      if (value !== undefined && (typeof value !== "string" || value.length > max)) {
+        return { message: `${FIELD_LABELS[key]} must be under ${max} characters.`, valid: false };
+      }
+    }
+
     return { message: "Validation passed.", valid: true };
   }
 
@@ -169,7 +204,8 @@ export default class ContactService {
     } catch (error) {
       console.error("[ContactService] sendEmail error:", error);
       return {
-        message: error instanceof Error ? error.message : "Unknown error",
+        // Don't expose SMTP/provider details to visitors; they're logged above.
+        message: "Unable to send your message right now.",
         valid:   false,
       };
     }

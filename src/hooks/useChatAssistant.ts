@@ -206,6 +206,9 @@ export const useChatAssistant = (): UseChatAssistantReturn => {
             return;
           }
           updateAssistant("model", data.reply);
+        } else if (data.warning) {
+          // Server-side limit (too many messages / message too long).
+          updateAssistant("warning", data.warning);
         } else {
           // Received a response but with no usable reply payload.
           updateAssistant(

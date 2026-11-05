@@ -34,6 +34,7 @@ export default function MessageInput({ onSend, lastContentRole }: Props) {
         <div className={Styles.form}>
             <input
                 type="text"
+                maxLength={1000}
                 value={inputValue}
                 placeholder="Text message  •  ( John )"
                 onInput={handleOnInput}
