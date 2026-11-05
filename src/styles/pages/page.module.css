@@ -8,9 +8,9 @@
 .connect,
 .blog {
   padding: 30px;
-  /* transform: translateY(-2px); */
-  box-shadow: var(--box-shadow-default);
-  border: var(--border-container);
+  transform: translateY(-2px);
+  /* box-shadow: var(--box-shadow-default);
+  border: var(--border-container); */
   border-radius: 12px;
   position: relative;
 
@@ -110,7 +110,7 @@ div.title {
 
 .first .action {
   display: flex !important;
-  column-gap: 5px;
+  column-gap: 13px;
 }
 
 .first .action a {
@@ -119,17 +119,15 @@ div.title {
   border-radius: 8px;
   display: flex;
   align-items: center;
-  column-gap: 10px;
+  column-gap: 10px; 
   text-decoration: none;
   font-weight: 500;
-  transition: 0.5s;
+  border: none;
 }
 
 .first .action a:first-child {
   background-color: var(--bg-primary);
-  border: none;
   color: white;
-  box-shadow: var(--primary-btn-box-shadow);
 }
 
 .first .action a:first-child:hover {
@@ -137,13 +135,7 @@ div.title {
 }
 
 .first .action a:last-child {
-  background-color: var(--bg-secondary);
-  border: 1px solid rgb(225, 225, 225);
   color: var(--text-secondary);
-}
-
-.first .action a:last-child:hover {
-  background-color: var(--bg-secondary);
 }
 
 .first .profile {
@@ -614,15 +606,14 @@ div.title {
   text-decoration: none;
   font-size: 14px;
   border-radius: 10px;
-  transition: 0.5s;
   font-weight: 500;
+  border: none;
 }
 
 .third .recent-action a:first-child {
   background-color: var(--bg-primary);
   color: white;
   border: none;
-  box-shadow: var(--primary-btn-box-shadow);
 }
 
 .third .recent-action a:first-child:hover {
@@ -630,14 +621,7 @@ div.title {
 }
 
 .third .recent-action a:last-child {
-  color: #000;
-  background-color: var(--bg-secondary);
-  border: 1px solid #e1e1e1;
   color: var(--text-secondary);
-}
-
-.third .recent-action a:last-child:hover {
-  background-color: var(--secondary-hover-color);
 }
 
 @media (max-width: 850px) {
@@ -740,7 +724,7 @@ div.title {
 .fourth .connect section.resume span {
   margin: unset !important;
   position: relative;
-  bottom: -2px;
+  bottom: 0.5px;
 }
 
 .fourth .connect section.resume a {
@@ -757,7 +741,7 @@ div.title {
   font-size: 14px;
   transition: 0.2s;
   font-weight: 500;
-  box-shadow: var(--primary-btn-box-shadow);
+  border: none;
 }
 
 .fourth .connect section.resume a:hover {

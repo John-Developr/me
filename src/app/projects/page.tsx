@@ -2,33 +2,36 @@ import type { Metadata } from "next";
 import ProjectsPage from "@/containers/projects-page";
 
 export const metadata: Metadata = {
-  title: "Tech Stack | John Carlo Ylanan",
+  title: "Projects",
   description:
-    "Explore the technologies, tools, and frameworks I use as an iOS and web developer. From Swift and React to modern backend solutions, discover how I build scalable and high-performance applications.",
+    "Explore web and mobile projects built by John Carlo Ylanan — showcasing how I solve problems, write code, and use modern frameworks and tools to build applications that scale.",
   keywords: [
     "John Carlo Ylanan",
-    "Tech Stack",
-    "iOS Developer",
-    "Swift Developer",
-    "React Developer",
-    "Next.js",
-    "Web Development",
-    "Mobile Development",
+    "Projects",
+    "Portfolio Projects",
+    "Web Development Projects",
+    "Mobile App Projects",
+    "React Projects",
+    "Next.js Projects",
+    "Swift iOS Projects",
     "Software Engineer Portfolio",
   ],
   openGraph: {
-    title: "Tech Stack | John Carlo Ylanan",
+    title: "Projects | John Carlo Ylanan",
     description:
-      "A look into my development stack including Swift, React, Next.js, and more. See how I build modern apps across web and mobile.",
-    url: `${process.env.NEXT_PUBLIC_BASE_URL}/tech-stack`,
+      "A showcase of web and mobile projects — built with React, Next.js, Swift, and Node.js.",
+    url: `${process.env.NEXT_PUBLIC_BASE_URL}/projects`,
     siteName: "John Carlo Portfolio",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Tech Stack | John Carlo Ylanan",
+    title: "Projects | John Carlo Ylanan",
     description:
-      "Discover the tools and technologies I use to build modern, scalable applications.",
+      "A showcase of web and mobile projects built with modern frameworks and tools.",
+  },
+  alternates: {
+    canonical: `${process.env.NEXT_PUBLIC_BASE_URL}/projects`,
   },
 };
 

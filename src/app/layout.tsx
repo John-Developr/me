@@ -11,11 +11,13 @@ import LayoutProvider from "./LayoutProvider";
 
 
 const karla = Karla({
-  variable: "--font-geist-sans",
+  variable: "--font-karla",
   subsets: ["latin"],
 });
 
 export const metadata: Metadata = {
+  // Resolves relative metadata URLs (e.g. generated opengraph-image) to absolute ones
+  metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL ?? "https://johncarlo-portfolio.vercel.app"),
   title: {
     default:  "John Carlo Ylanan | Web & Mobile Developer",
     template: "%s | John Carlo Ylanan",

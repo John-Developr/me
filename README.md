@@ -1,107 +1,92 @@
-# 👨‍💻 johncarlo — Personal Portfolio
+<h1 align="center">John Carlo Ylanan — Portfolio</h1>
 
-A personal developer portfolio built with **Next.js** and **TypeScript**, showcasing my projects, skills, work experience, and blog — deployed on Vercel.
+<p align="center">
+  Personal portfolio of a Web &amp; Mobile Developer based in Cebu, Philippines —<br/>
+  projects, experience, tech stack, an AI-written blog, and an AI chat assistant.
+</p>
 
-🌐 **Live:** [johncarlo-portfolio.vercel.app](https://johncarlo-portfolio.vercel.app)
+<p align="center">
+  <a href="https://johncarlo-portfolio.vercel.app"><img alt="Live" src="https://img.shields.io/badge/live-johncarlo--portfolio.vercel.app-476fff?style=flat-square" /></a>
+  <img alt="Next.js" src="https://img.shields.io/badge/Next.js-15.3-000000?style=flat-square&logo=nextdotjs" />
+  <img alt="React" src="https://img.shields.io/badge/React-19-61DAFB?style=flat-square&logo=react&logoColor=black" />
+  <img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-strict-3178C6?style=flat-square&logo=typescript&logoColor=white" />
+  <img alt="Supabase" src="https://img.shields.io/badge/Supabase-3FCF8E?style=flat-square&logo=supabase&logoColor=white" />
+  <img alt="Gemini" src="https://img.shields.io/badge/Google_Gemini-8E75B2?style=flat-square&logo=googlegemini&logoColor=white" />
+  <img alt="Vercel" src="https://img.shields.io/badge/Vercel-000000?style=flat-square&logo=vercel" />
+</p>
 
 ---
 
-## ✨ Features
+## Features
 
-- **Animated sections** — smooth bottom-to-top entrance animations with staggered delays
-- **Responsive layout** — adaptive two-column layout that reflows for mobile viewports
-- **AI-powered blog** — blog posts generated and served via an AI pipeline
-- **Project showcase** — curated list of personal and side projects
-- **Dark/light aware** — clean CSS module architecture for easy theming
-- **Fast & optimised** — built on Next.js App Router with static generation where possible
+- **Minimal card layout** in light and dark themes, with no flash on load
+- **Staggered, scroll-triggered entrance animations**
+- **AI blog**: a monthly Vercel Cron job has Gemini write a post and stores it in Supabase; readers can filter by category and sort by date
+- **"Chat with John"**: a floating Gemini-powered assistant that renders Markdown and code
+- **Contact form**: inquiry-type and budget pickers, sent through Gmail SMTP
+- **Responsive layout** with a single 850px breakpoint
+- **SEO**: per-page metadata, Open Graph and Twitter cards, and a sitemap
 
----
+## Tech Stack
 
-## 🛠 Tech Stack
-
-| Layer | Technology |
+| | |
 |---|---|
-| Framework | [Next.js 14+](https://nextjs.org) (App Router) |
-| Language | TypeScript |
-| Styling | CSS Modules |
-| Deployment | [Vercel](https://vercel.com) |
-| AI Blog | Gemini API via `/api/chat` |
+| **Framework** | Next.js 15 (App Router, Turbopack dev) · React 19 · TypeScript |
+| **Styling** | Global CSS tokens + CSS Modules · Karla font |
+| **Data** | Supabase (Postgres) |
+| **AI** | Google Gemini via `@google/genai` |
+| **Email** | Nodemailer (Gmail SMTP) |
+| **Other** | react-markdown, remark-gfm, react-syntax-highlighter, sileo toasts |
+| **Hosting** | Vercel + Vercel Cron |
 
----
-
-## 🚀 Getting Started
-
-### Prerequisites
-
-- Node.js `18+`
-- npm / yarn / pnpm
-
-### Installation
+## Quickstart
 
 ```bash
-# Clone the repository
 git clone https://github.com/John-Developr/me.git
 cd me
-
-# Install dependencies
 npm install
+cp .env.example .env   # fill in Supabase, Gemini, Gmail, and cron values
+npm run dev            # http://localhost:3000
 ```
 
-### Development
+| Script | Description |
+|---|---|
+| `npm run dev` | Start the dev server (Turbopack) |
+| `npm run build` | Build for production |
+| `npm run start` | Serve the production build |
+| `npm run lint` | Run ESLint |
 
-```bash
-npm run dev
-```
+Without credentials the static pages still render; the blog, chat, and contact form need their services configured. See [Environment variables](docs/PROJECT_OVERVIEW.md#environment-variables).
 
-Open [http://localhost:3000](http://localhost:3000) in your browser.
-
-### Build
-
-```bash
-npm run build
-npm run start
-```
-
----
-
-## 📁 Project Structure
+## Project Structure
 
 ```
 src/
-├── app/                  # Next.js App Router pages
-│   ├── page.tsx          # Home page
-│   └── blog/[slug]/      # Dynamic blog post pages
-├── components/           # Reusable UI components
-│   ├── header/
-│   ├── footer/
-│   ├── icons/
-│   └── custom/
-├── hooks/                # Custom React hooks
-│   ├── useAnimateIn.ts   # Scroll-triggered entrance animation
-│   └── useMediaQuery.ts  # Responsive breakpoint detection
-├── styles/               # CSS Modules
-├── utils/                # Helpers and type definitions
-├── config/               # App-wide configuration
-└── lib/                  # Context providers and shared logic
+├── app/          routes, API handlers (blog, chat, contact, cron), layout, sitemap
+├── containers/   page-level UI (home-page/*-section, blog-page, contact-page, …)
+├── components/   shared UI (header, footer, chat, icons, …)
+├── lib/          AppContext, services (Blog/Chat/Contact), Supabase client
+├── config/       networkDefine (URLs), storageKeys, assistantConfig
+├── hooks/        useAnimateIn, useMediaQuery, useDebounce, …
+├── styles/       globals.css (design tokens) + CSS Modules
+├── docs/         Gemini system prompts
+└── utils/        shared types and helpers
 ```
 
----
+## Documentation
 
-## 📝 Environment Variables
+| Doc | What's inside |
+|---|---|
+| [PROJECT_OVERVIEW.md](docs/PROJECT_OVERVIEW.md) | Architecture, folder tree, routing, component map, data model, env vars, deployment |
+| [DESIGN_SYSTEM.md](docs/DESIGN_SYSTEM.md) | Color tokens (light/dark), typography, spacing, breakpoints, component specs, motion |
+| [CONTRIBUTING.md](docs/CONTRIBUTING.md) | Adding skills, experience, projects, blog schema, PR checklist |
+| [AGENTS.md](AGENTS.md) | Rules for AI coding assistants (also loaded through `CLAUDE.md`) |
+| [CHANGELOG.md](docs/CHANGELOG.md) | Release history |
 
-Create a `.env.local` file in the root:
+## Deployment
 
-```env
-# Add your environment variables here
-GEMINI_API_KEY=your_key_here
-```
-
----
-
-## 📄 License
-
-This project is open source and available under the [MIT License](LICENSE).
+The site deploys to Vercel from `main`. Add the variables from `.env.example` to the Vercel project. The blog cron in `vercel.json` calls `/api/cron/blog` at 00:00 UTC on the 1st of each month and authenticates with `CRON_SECRET`.
 
 ---
 
-<p align="center">Built and designed by <strong>John Carlo</strong></p>
+<p align="center">Built and designed by <strong>John Carlo A. Ylanan</strong></p>

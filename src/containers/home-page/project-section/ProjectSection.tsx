@@ -123,7 +123,8 @@ function Action() {
     return (
         <div className={styles["recent-action"]}>
             <a 
-                href={networkDefine.GORDON_PROJECTS_URL} 
+                href={networkDefine.GORDON_PROJECTS_URL}
+                className="liquid_glass_btn"
                 target="_blank" 
                 rel="noopener noreferrer">
                     Open Live Site
@@ -134,6 +135,7 @@ function Action() {
             </a>
             <a 
                 href={networkDefine.GORDON_GITHUB_URL} 
+                className="liquid_glass_btn"
                 target="_blank" 
                 rel="noopener noreferrer">
                     <HomeIcons.Github 
