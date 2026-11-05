@@ -451,12 +451,17 @@
     color: white;
     background: var(--bg-primary);
     top: 26px;
-    transition: .5s;
+    /* Same timing as .liquid_glass_btn so its hover zoom animates */
+    transition:
+        transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+        background-color 0.3s ease,
+        box-shadow 0.3s ease;
     cursor: pointer;
 }
 
+/* Keep the primary fill on hover (like the "Chat with John" button) */
 .chatAI .chat-container .form button:hover {
-    background: rgb(102, 102, 102);
+    background: var(--primary-hover-color);
 }
 
 .chatAI .chat-container .form button svg {

@@ -19,6 +19,7 @@ Work in progress on the `liquid-glass` branch.
 - Experience section: AI Engineer duration updated to 11 months.
 - Blog post "Share with" buttons (Facebook, LinkedIn) and the "View All Blogs" back link use the same `liquid_glass` style and hover as the header buttons. New `.liquid_glass_group` parent class applies the glass hover when hovering anywhere in the parent.
 - Blog list sort button uses the `liquid_glass_btn` style (35px circle, gentler 1.1× hover zoom like the other glass buttons); ascending order keeps the primary fill. Fixes the dark-mode version, which showed a light-grey square with a black icon. Added an `aria-label`.
+- Chat send button uses `liquid_glass_btn` (hover zoom; hover color is now `--primary-hover-color` instead of a hard-coded grey) and has an `aria-label`.
 - Contact page "Start the Conversation" button uses `liquid_glass_btn` like Download Resume (hover zoom, primary fill kept); its primary-color glow shadow is removed.
 - Blog category chips (All, Technology, …) use `liquid_glass_btn` too; the selected chip keeps the primary fill.
 - Blog category chips scroll sideways on narrow screens instead of pushing the sort button off-screen and making the page scroll horizontally.

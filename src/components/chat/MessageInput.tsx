@@ -49,7 +49,8 @@ export default function MessageInput({ onSend, lastContentRole }: Props) {
                 disabled={isLastMessageUserRole}
             />
             <button 
-                className={inputValue.trim() !== "" ? "unset" : Styles.none} 
+                className={`liquid_glass_btn ${inputValue.trim() !== "" ? "" : Styles.none}`} 
+                aria-label="Send message"
                 onClick={handleSendMessage}
             >
                 <ArrowUp width="19" height="19" />
