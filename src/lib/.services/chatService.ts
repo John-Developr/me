@@ -7,7 +7,7 @@ import { zodToJsonSchema } from "zod-to-json-schema";
 
 import BlogService from "./blogService";
 
-import { AssistantConfig, Message, role, AIBlogResponse, BlogCategoryEnum } from "@/utils/types";
+import { AssistantConfig, Message, role, BlogCategoryEnum, GeneratedBlogPost } from "@/utils/types";
 import { storageKeys } from "@/config/storageKeys";
 
 /**
@@ -161,8 +161,11 @@ export default class ChatService {
 
     /**
      * Prepares blog generation configuration using a Zod schema.
+     *
+     * @param schema       - Shape the model must return
+     * @param recentTitles - Latest post titles, so topics and title patterns don't repeat
      */
-    private async blogConfig(schema: ZodObject<ZodRawShape>): Promise<AssistantConfig> {
+    private async blogConfig(schema: ZodObject<ZodRawShape>, recentTitles: string[]): Promise<AssistantConfig> {
         const BlogServiceInstance = new BlogService();
         let category = await BlogServiceInstance.getLeastInsertedCategory();
 
@@ -177,27 +180,20 @@ export default class ChatService {
             category = categories[Math.floor(Math.random() * categories.length)];
         }
 
+        const recentList = recentTitles.length
+            ? recentTitles.map((title) => `- ${title}`).join("\n")
+            : "- (none yet)";
+
         const prompt: string = `
-            Generate a blog post for the following category: "${category}"
+            Write a new blog post for the category: "${category}"
 
-            ## Category Assignment
-            - Category: "${category}"
-            - This is your ONLY topic — do not write about anything else
-            - Do not change or override the category under any circumstance
+            ## Category
+            - The "category" field MUST be exactly: "${category}"
+            - Write only about this category — never switch topics
 
-            ## Category Context
-            - "technology"  → software, development, tools, programming, dev culture
-            - "study"       → learning strategies, skill building, self-education
-            - "life"        → daily habits, mindset, work-life balance, personal growth
-            - "future"      → future of tech, industry predictions, trends worth watching
-
-            ## Reminder
-            - category field in JSON MUST be exactly: "${category}"
-            - Slug: 3-5 lowercase words, hyphens only, max 40 chars
-            - Return ONLY raw JSON — starts with { ends with }
+            ## Recent posts — do NOT repeat these topics, angles, or title patterns
+            ${recentList}
         `;
-
-        console.log("Blog generation prompt:", category);
 
         this.config.config = {
             responseMimeType: "application/json",
@@ -213,41 +209,38 @@ export default class ChatService {
 
     /**
      * Generates a blog post based on the instruction and schema.
+     * Only asks the model for the fields it should write; ids, views,
+     * dates, reading time and slug uniqueness are handled in code.
+     *
+     * @param recentTitles - Latest post titles to avoid repeating
+     * @throws When the model returns nothing or an invalid structure
      */
-    async blogMain(): Promise<AIBlogResponse> {
+    async blogMain(recentTitles: string[] = []): Promise<GeneratedBlogPost> {
         const matchSchema = z.object({
-            id: z.number().optional().default(0),
-            title: z.string(),
-            slug: z.string(),
+            title:    z.string().min(1),
+            slug:     z.string(),
             category: z.enum([
                 BlogCategoryEnum.Tech, 
                 BlogCategoryEnum.Study, 
                 BlogCategoryEnum.Future, 
                 BlogCategoryEnum.Life
             ]),
-            content: z.string(),
-            excerpt: z.string(),
-            tags: z.array(z.string()),
-            reading: z.number(),
-            views: z.number().optional().default(0),
-            generated_at: z.string().optional().default(new Date().toISOString())
+            content:  z.string().min(1),
+            excerpt:  z.string().min(1),
+            tags:     z.array(z.string()),
         });
 
-        await this.blogConfig(matchSchema);
+        await this.blogConfig(matchSchema, recentTitles);
         const response = await this.AI.models.generateContent(this.config);
 
-        const rawText = response.text as string;
-        const cleaned = rawText
-            .replace(/^```json\s*/i, "") // remove opening ```json
-            .replace(/^```\s*/i,    "") // remove opening ``` (without json)
-            .replace(/```\s*$/,     "") // remove closing ```
-            .trim();
+        if (!response.text) {
+            throw new Error("AI returned an empty response.");
+        }
 
         try {
-            const blog = matchSchema.parse(JSON.parse(cleaned));
-            return blog;
+            return matchSchema.parse(JSON.parse(response.text));
         } catch (error) {
-            console.error("Failed to parse AI response:", cleaned, error);
+            console.error("Failed to parse AI response:", response.text, error);
             throw new Error("AI returned invalid JSON structure.");
         }
     }

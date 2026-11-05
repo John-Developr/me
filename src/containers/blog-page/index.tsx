@@ -23,7 +23,8 @@ import {
 } from "@/utils/types";
 
 
-import BlogMainList from "./BlogMainList";
+import BlogMainList, { getBlogListUrl } from "./BlogMainList";
+import { getCached } from "@/utils/general/fetchCache";
 
 interface BlogsState {
   blogList:   AIBlogResponse[];
@@ -47,7 +48,12 @@ const initialState: BlogsState = {
 };
 
 export default function BlogPage() {
-    const [blogsStates, setBlogsStates] = useState<BlogsState>(initialState);    
+    // Skip the skeleton when the default list is already cached (e.g. going back).
+    const [blogsStates, setBlogsStates] = useState<BlogsState>(() => (
+        getCached(getBlogListUrl(BlogCategoryEnum.All, initialState.sort))
+            ? { ...initialState, state: FetchStateEnum.success }
+            : initialState
+    ));
     const { ref, style }                = useAnimateIn<HTMLDivElement>({ delay: 120, duration: 600 });
 
 

@@ -475,8 +475,14 @@
     justify-content: center;
     text-decoration: none;
     border-radius: 100px;
+    border: none;
     column-gap: 12px;
-    transition: .5s;
+    /* width animates open/close; the rest matches .liquid_glass_btn */
+    transition:
+        width .5s,
+        transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+        background-color 0.3s ease,
+        box-shadow 0.3s ease;
     font-size: 14px;
     margin-left: auto;
 
@@ -487,10 +493,15 @@
     box-shadow: var(--primary-btn-box-shadow);
 }
 
-.chatAI a:hover {
-    transform: scale(1.12);
+/* Same hover as the Download Resume button */
+.chatAI > a:hover {
+    transform: scale(1.1);
+    background-color: var(--primary-hover-color);
     box-shadow: var(--box-shadow-default);
-    transition: .5s;
+}
+
+.chatAI > a:active {
+    transform: scale(1);
 }
 
 .chatAI a b {
@@ -509,9 +520,8 @@
 
 .chatAI a.isClick {
     width: 40px;
-    transform: scale(1.12);
+    transform: scale(1.1);
     box-shadow: var(--box-shadow-default);
-    transition: .5s;
 }
 
 .chatAI a.isClick span {

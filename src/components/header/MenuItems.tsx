@@ -1,5 +1,6 @@
 'use client'
 
+import { useEffect } from "react";
 import { useRouter, usePathname } from "next/navigation";
 
 import Home from "@/components/icons/Home";
@@ -29,6 +30,11 @@ const MenuItems = ({ onClose }: MenuItemsProps) => {
     const router = useRouter();
 
     const { toggleTheme, isDark } = useApp();
+
+    // Items navigate via router.push, which doesn't prefetch like <Link>.
+    useEffect(() => {
+        menuItems.forEach(({ path }) => router.prefetch(path));
+    }, [router]);
 
     return (
         <>

@@ -38,6 +38,21 @@ export interface AIBlogResponse {
   generated_at: string;    // timestamp of when blog was generated
 }
 
+/** Fields Gemini writes for a new post. Reading time and slug uniqueness are handled in code. */
+export interface GeneratedBlogPost {
+  title:    string;
+  slug:     string;
+  category: BlogCategoryEnum;
+  content:  string;            // markdown
+  excerpt:  string;
+  tags:     string[];
+}
+
+/** A generated post, ready to insert into the blog table. */
+export interface NewBlogRow extends GeneratedBlogPost {
+  reading: number;             // minutes, computed from word count
+}
+
 // ============================================================
 // FETCH STATE
 // ============================================================

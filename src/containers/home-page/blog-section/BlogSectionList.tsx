@@ -4,6 +4,7 @@ import styles from "@/styles/pages/page.module.css";
 
 import { networkDefine } from "@/config/networkDefine";
 import { AIBlogResponse, fetchState, FetchStateEnum } from "@/utils/types";
+import { fetchJsonCached, getCached } from "@/utils/general/fetchCache";
 
 import BlogSectionCard from "./BlogSectionCard";
 import BlogSectionSkeleton from "./BlogSectionSkeleton";
@@ -21,21 +22,28 @@ const initialState: BlogsSectionState = {
 };
 
 const BlogSectionList = () => {
-    const [blogsRecent, setBlogsRecent] = useState<BlogsSectionState>(initialState);
+    // Returning to home shows the cached list instantly, then refreshes quietly.
+    const [blogsRecent, setBlogsRecent] = useState<BlogsSectionState>(() => {
+        const cached = getCached<{ blogs: AIBlogResponse[] }>(networkDefine.BLOG_RECENT_API);
+        return cached ? { blogList: cached.blogs || [], state: FetchStateEnum.success } : initialState;
+    });
     
     useEffect(() => {
         const fetchBlogs = async () => {
+            const hasCache = !!getCached(networkDefine.BLOG_RECENT_API);
+
             try {
-                const response = await fetch(networkDefine.BLOG_RECENT_API);
-                if (!response.ok) throw new Error("Failed to fetch blogs.");
-        
-                const data: { blogs: AIBlogResponse[] } = await response.json();
-                const newBlogs: AIBlogResponse[]        = data.blogs || [];
+                const data = await fetchJsonCached<{ blogs: AIBlogResponse[] }>(
+                    networkDefine.BLOG_RECENT_API, 
+                    { fresh: true }
+                );
+                const newBlogs: AIBlogResponse[] = data.blogs || [];
 
                 setBlogsRecent({ blogList: newBlogs, state: FetchStateEnum.success });
             } catch (error) {
                 console.error("Error fetching recent blogs:", error);
-                setBlogsRecent({ blogList: [], state: FetchStateEnum.error });
+                // Keep showing cached data if the background refresh fails.
+                if (!hasCache) setBlogsRecent({ blogList: [], state: FetchStateEnum.error });
             }
         }
 

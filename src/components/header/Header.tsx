@@ -58,10 +58,17 @@ export default function Header() {
               width={17.5} 
               height={17.5} />
           </li>
-          <li className="menu liquid_glass" ref={menuRef} onClick={showMenu}>
-            <ThreeDotsHorizontal 
-              width={20.5} 
-              height={20.5} />
+          <li className="menu" ref={menuRef}>
+            <button
+              type="button"
+              className={`menu-trigger liquid_glass${isMenuOpen ? " is-active" : ""}`}
+              aria-label="Open menu"
+              aria-expanded={isMenuOpen}
+              onClick={showMenu}>
+              <ThreeDotsHorizontal
+                width={20.5}
+                height={20.5} />
+            </button>
               {isMenuOpen && (
                 <div className="menu-dropdown">
                   <nav>
