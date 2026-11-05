@@ -109,7 +109,7 @@ export default function StackSection() {
                      className={styles["tech-image"]} />
                     <div className={styles["tech-detail"]}> 
                         <h5>Xcode</h5>
-                        <p>Apple's integrated development environment.</p>
+                        <p>Apple&apos;s integrated development environment.</p>
                     </div>  
                 </li>
             </ul>

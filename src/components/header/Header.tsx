@@ -5,7 +5,6 @@ import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 
 import { Linkedin } from "../icons/Linkedin";
-import MenuKebabHorizontalCircle from "../icons/MenuKebabHorizontalCircle";
 import Call from "../icons/Call";
 import ThreeDotsHorizontal from "../icons/ThreeDotsHorizontal";
 

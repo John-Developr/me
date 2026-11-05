@@ -11,6 +11,7 @@ Work in progress on the `liquid-glass` branch.
 - Global `.liquid_glass` and `.liquid_glass_btn` glassmorphism utility classes (`globals.css`), applied to header icon buttons, hero CTAs, project actions, and the resume button.
 - Firebase card in the home Tech Stack section.
 - `ThreeDotsHorizontal` icon for the header menu trigger.
+- Daily `/api/cron/keep-alive` Vercel cron that runs a lightweight Supabase query so the free-tier project isn't paused for inactivity.
 
 ### Changed
 - Experience section: Forty Degrees Celsius roles listed as AI Engineer, iOS Developer, Web Developer.

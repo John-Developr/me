@@ -37,6 +37,23 @@ export default class BlogService {
         return true;
     }
 
+    /**
+     * Lightweight read used by the keep-alive cron so the Supabase
+     * project registers activity and is not paused for inactivity.
+     */
+    async ping(): Promise<number> {
+        const { data, error } = await this.server
+            .from(this.table)
+            .select("slug")
+            .limit(1);
+
+        if (error) {
+            throw new Error("Failed to ping database.");
+        }
+
+        return data?.length ?? 0;
+    }
+
     async getBlogs(params: URLSearchParams): Promise<AIBlogResponse[]> {
         const selectQuery = "*";
         const category: string | null  = params.get("category");
