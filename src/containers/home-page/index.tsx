@@ -13,6 +13,7 @@ import ExperienceSection from "./experience-section/ExperienceSection";
 import ProjectSection from "./project-section/ProjectSection";
 import ConnectionSection from "./connect-section/ConnectSection";
 import BlogSection from "./blog-section/BlogSection";
+import { ProjectItem, PublicProfile, TimelineGroup } from "@/utils/types";
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Animated section wrapper
@@ -37,7 +38,14 @@ const AnimatedSection = ({ className, delay, children }: AnimatedSectionProps) =
 // Page
 // ─────────────────────────────────────────────────────────────────────────────
 
-export default function HomePage() {
+interface HomePageProps {
+  profile:    PublicProfile;
+  experience: TimelineGroup[];
+  /** Featured project for "Recent Projects."; the card is hidden when there is none. */
+  project:    ProjectItem | null;
+}
+
+export default function HomePage({ profile, experience, project }: HomePageProps) {
   const { isMobile } = useApp();
 
   return (
@@ -45,19 +53,21 @@ export default function HomePage() {
       <Header />
 
       <AnimatedSection className={styles.first} delay={50}>
-        <DetailSection />
+        <DetailSection profile={profile} />
       </AnimatedSection>
 
       <AnimatedSection className={styles.second} delay={150}>
-        <SecondContentSections isMobile={isMobile} />
+        <SecondContentSections isMobile={isMobile} bio={profile.bio} experience={experience} />
       </AnimatedSection>
 
-      <AnimatedSection className={styles.third} delay={220}>
-        <ProjectSection />
-      </AnimatedSection>
+      {project && (
+        <AnimatedSection className={styles.third} delay={220}>
+          <ProjectSection project={project} />
+        </AnimatedSection>
+      )}
 
       <AnimatedSection className={styles.fourth} delay={280}>
-        <ConnectionSection />
+        <ConnectionSection profile={profile} />
         <BlogSection />
       </AnimatedSection>
 
@@ -66,13 +76,19 @@ export default function HomePage() {
   );
 }
 
-const SecondContentSections = ({ isMobile } : {isMobile : boolean}) => {
+interface SecondContentProps {
+  isMobile:   boolean;
+  bio:        string[];
+  experience: TimelineGroup[];
+}
+
+const SecondContentSections = ({ isMobile, bio, experience }: SecondContentProps) => {
     if (isMobile) {
         return (
           <>
               <section className={styles["left-content"]}>
-                  <AboutSection />
-                  <ExperienceSection />
+                  <AboutSection bio={bio} />
+                  <ExperienceSection groups={experience} />
               </section>
 
               <section className={styles["right-content"]}>
@@ -85,12 +101,12 @@ const SecondContentSections = ({ isMobile } : {isMobile : boolean}) => {
     return (
       <>
           <section className={styles["left-content"]}>
-              <AboutSection />
+              <AboutSection bio={bio} />
               <StackSection />
           </section>
 
           <section className={styles["right-content"]}>
-              <ExperienceSection />
+              <ExperienceSection groups={experience} />
           </section>
       </>
     )

@@ -13,24 +13,30 @@
  */
 
 export const networkDefine = {
-    // External URL
-    CALENDLY_URL: "https://calendly.com/johncarlo-fullstackdev/30min",
-
-    MAIL_TO: "mailto:johncarlo.fullstackdev@gmail.com",
-    RESUME_URL: "/documents/resume.pdf",
-
-    // PROJECTS URL
-    GORDON_PROJECTS_URL: "https://gordon-bostic.vercel.app",
-    GORDON_GITHUB_URL: "https://github.com/John-Developr/gordon-bostic",
-
-    // My Socials Links
-    LINKEDIN_URL: "https://ph.linkedin.com/in/johncarlo-fullstackdev",
-    FACEBOOK_URL: "https://www.facebook.com/johncarlo.devolpr",
+    // Contact links, social links and project URLs are content now:
+    // edit them in /admin/profile and /admin/projects.
 
     // Own API Routes
     CONTACT_FORM_API: "/api/contact",
     BLOG_API: "/api/blog",
     BLOG_RECENT_API: "/api/blog/recent",
     BLOG_DETAIL_API: (slug: string) => "/api/blog/" + slug,
+    PAGE_VIEW_API: "/api/p",
+
+    // Admin API Routes (require an admin session)
+    ADMIN_LOGIN_API: "/api/admin/auth/login",
+    ADMIN_LOGOUT_API: "/api/admin/auth/logout",
+    ADMIN_TRAFFIC_API: "/api/admin/analytics/traffic",
+    ADMIN_PROJECTS_API: "/api/admin/projects",
+    ADMIN_PROJECT_API: (id: string) => "/api/admin/projects/" + id,
+    ADMIN_PROFILE_API: "/api/admin/profile",
+    ADMIN_MEDIA_API: "/api/admin/media",
+    ADMIN_MEDIA_ITEM_API: (id: string) => "/api/admin/media/" + id,
+    ADMIN_MEDIA_IMPORT_API: "/api/admin/media/import",
+    ADMIN_EXPERIENCES_API: "/api/admin/experiences",
+    ADMIN_EXPERIENCE_API: (id: string) => "/api/admin/experiences/" + id,
+    ADMIN_ACCOUNT_API: "/api/admin/account",
+    ADMIN_PASSWORD_API: "/api/admin/account/password",
+    ADMIN_SIGN_OUT_OTHERS_API: "/api/admin/account/sign-out-others",
 } as const;
   

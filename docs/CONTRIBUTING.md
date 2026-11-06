@@ -32,60 +32,20 @@ File: `src/containers/home-page/stack-section/StackSection.tsx`
 
 Keep an even number of items so the 2-column grid stays balanced on desktop.
 
-### 1.2 Add a work-experience entry
+### 1.2 Profile, projects, experience and images (admin)
 
-File: `src/containers/home-page/experience-section/ExperienceSection.tsx`
+This content lives in Supabase and is edited in the admin at `/admin` (sign in at `/admin/login`). Don't hard-code it.
 
-1. Add the company logo to `public/images/company/` (shown at 25×25).
-2. Entries are newest-first. Pick the pattern:
+| What | Where in the admin | Shown on |
+|---|---|---|
+| Name, headline, location, photo, bio, email, phone, booking link, resume, social links | Personal Profile | Home hero, About Me, Connect, header and footer on every page |
+| Projects (featured, order, published/draft) | Projects | `/projects`, home "Recent Projects." |
+| Work, education and milestones | Work Experience | Home "Experience." (grouping and durations are automatic) |
+| Images and PDFs | Media Library (or the "Library" button on any image field) | Wherever they're picked |
 
-**Single role** (`no-sub`):
-```tsx
-<li className={styles["no-sub"]}>
-    <div className={styles["ex-name-date-profile"]}>
-        <Image src="/images/company/<Logo>.png" width={25} height={25} alt="Company Logo" />
-        <section>
-            <h4><Company, Inc.></h4>
-            <p className={styles["ex-pos"]}><Position></p>
-            <p className={styles["ex-date"]}>MM / YYYY - MM / YYYY</p>
-        </section>
-    </div>
-</li>
-```
+Changes go live when you save. Tech chips show a logo when the name is in `TECH_LOGOS` (`src/config/techLogos.ts`).
 
-**Multiple roles at one company** (`has-sub`):
-```tsx
-<li className={styles["has-sub"]}>
-    <div className={styles["ex-name-date-profile"]}>
-        <Image src="/images/company/<Logo>.png" width={25} height={25} alt="Company Logo" />
-        <section>
-            <h4><Company, Inc.></h4>
-            <p className={styles["ex-date"]}>MM / YYYY - Present</p>
-        </section>
-    </div>
-    <ul>
-        <li>
-            <p className={styles["ex-pos"]}><Most recent role></p>
-            <p className={styles["ex-date"]}>For N Months</p>
-        </li>
-        {/* older roles below */}
-    </ul>
-</li>
-```
-
-Date format: `MM / YYYY` with spaces around the slash; durations as `For N Years and N Months`.
-
-### 1.3 Update the featured project
-
-File: `src/containers/home-page/project-section/ProjectSection.tsx`
-
-- Name / tagline: `ProjectDetail` → `h1` / `h2`.
-- Description: `.about-auth` → `p`.
-- "Built With" badges: copy an `<li>` with a 14×14 logo from `public/images/tech/`.
-- Screenshot: replace `public/images/Featured.jpg` (rendered at 250×170 desktop, full-width × 270px mobile; keep it ~1000px wide JPEG).
-- Links: add `<NAME>_PROJECTS_URL` / `<NAME>_GITHUB_URL` to `src/config/networkDefine.ts` and reference them in `Action()`. Don't inline URLs.
-
-The `/projects` page is currently a placeholder; a project list there should reuse the `projects.module.css` `.list` / `.card` classes.
+To add a tool to `/tech-stack`, add its name to a category's `items` in `src/containers/tech-stack-page/techStackData.ts` (and a logo to `TECH_LOGOS` if one exists). The home "Tech Stack." card is still hard-coded in `containers/home-page/stack-section/StackSection.tsx` until the Skills screen exists.
 
 ### 1.4 Blog posts
 
@@ -109,7 +69,7 @@ To add a post manually, insert a row in Supabase with the fields above. To add a
 
 ### 1.5 Contact details & links
 
-All external URLs and API paths live in `src/config/networkDefine.ts`. Phone number appears in `Header.tsx` and `ConnectSection.tsx`; email in `ConnectSection.tsx` and `components/clipboard/index.tsx`. Resume: replace `public/documents/resume.pdf`.
+Email, phone, booking (Calendly) link, resume and social links are edited in **Admin → Personal Profile**. `src/config/networkDefine.ts` only holds the site's own API paths.
 
 ---
 

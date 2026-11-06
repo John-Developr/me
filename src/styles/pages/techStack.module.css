@@ -1,0 +1,211 @@
+/* ============================================================
+   TECH STACK PAGE
+   Tokens only (see docs/DESIGN_SYSTEM.md). Single breakpoint: 850px.
+   Shared pieces (section title, chips, CTA) live in component.module.css.
+   ============================================================ */
+
+.main {
+    display: flex;
+    flex-direction: column;
+    row-gap: 30px;
+}
+
+.eyebrow {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+}
+
+/* ============================================================
+   RIGHT NOW
+   ============================================================ */
+
+.now {
+    display: flex;
+    flex-direction: column;
+    row-gap: 14px;
+    padding: 30px;
+    border-radius: 12px;
+    background: var(--container-bg);
+    backdrop-filter: var(--container-back-drop-filter);
+}
+
+.now-text {
+    max-width: 720px;
+    font-size: 17px;
+    line-height: 28px;
+    color: var(--text-header);
+}
+
+/* ============================================================
+   CORE STACK — tool cards (same recipe as the home "Tech Stack." list)
+   ============================================================ */
+
+.core-grid {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.tool {
+    display: flex;
+    align-items: center;
+    column-gap: 12px;
+    padding: 14px 16px;
+    border-radius: 12px;
+    background: var(--container-bg);
+    border: 1px solid transparent;
+    transition: box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.tool:hover {
+    box-shadow: var(--box-shadow-default);
+    border: var(--badges-border);
+}
+
+.tool-logo {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    border: var(--badges-border);
+    background: var(--bg);
+}
+
+.tool-detail {
+    min-width: 0;
+}
+
+.tool-detail h3 {
+    font-size: 15px;
+    line-height: 20px;
+    color: var(--text-header);
+}
+
+.tool-detail p {
+    margin-top: 2px;
+    font-size: 12px;
+    line-height: 17px;
+    color: var(--text-muted);
+
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* ============================================================
+   FULL TOOLKIT — category cards
+   ============================================================ */
+
+.toolkit-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+}
+
+.category {
+    display: flex;
+    flex-direction: column;
+    row-gap: 18px;
+    padding: 25px 30px 30px;
+    border-radius: 12px;
+    background: var(--container-bg);
+    backdrop-filter: var(--container-back-drop-filter);
+    border: 1px solid transparent;
+    transition: box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.category:hover {
+    box-shadow: var(--box-shadow-default);
+    border: var(--badges-border);
+}
+
+.category-header {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: start;
+    column-gap: 14px;
+}
+
+.category-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    border: var(--badges-border);
+    background: var(--bg);
+    color: var(--text-header);
+}
+
+.category-heading h3 {
+    font-size: 17px;
+    line-height: 22px;
+    color: var(--text-header);
+}
+
+.category-heading p {
+    margin-top: 3px;
+    font-size: 13px;
+    line-height: 18px;
+    color: var(--text-muted);
+}
+
+.count {
+    padding: 3px 9px;
+    border-radius: 8px;
+    border: var(--badges-border);
+    background: var(--badges-bg);
+    color: var(--badges-text);
+    font-size: 11px;
+    line-height: 16px;
+    white-space: nowrap;
+}
+
+.more-note {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 13px;
+    font-style: italic;
+    color: var(--text-muted);
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+
+@media (max-width: 850px) {
+    .now,
+    .category {
+        padding: 20px;
+    }
+
+    .now-text {
+        font-size: 16px;
+        line-height: 26px;
+    }
+
+    .core-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+    }
+
+    .tool {
+        flex-direction: column;
+        align-items: flex-start;
+        row-gap: 10px;
+        padding: 14px;
+    }
+
+    .toolkit-grid {
+        grid-template-columns: 1fr;
+    }
+}

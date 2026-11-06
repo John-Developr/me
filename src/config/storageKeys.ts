@@ -4,6 +4,7 @@ export const storageKeys = {
   local: {
     theme:    "theme_preference",
     welcome:  "welcome_last_shown",
+    adminSidebarCollapsed: "admin_sidebar_collapsed",
   },
 
   // sessionStorage — clears when tab closes

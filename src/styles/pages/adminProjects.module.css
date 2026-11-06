@@ -1,0 +1,406 @@
+/* ============================================================
+   ADMIN — Projects (list + form)
+   Shared primitives (card, buttons, menu) live in admin.module.css.
+   ============================================================ */
+
+.muted {
+  color: var(--text-muted);
+}
+
+/* ─── Toolbar ─────────────────────────────────────────────── */
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.filters {
+  display: inline-flex;
+  padding: 3px;
+  border-radius: 9px;
+  background: var(--bg);
+  border: var(--border-container);
+}
+
+.filters button {
+  height: 30px;
+  padding: 0 12px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-muted);
+  cursor: pointer;
+}
+
+.filters button:hover {
+  color: var(--text);
+}
+
+.filters button.selected {
+  background: var(--container-bg);
+  color: var(--text);
+  box-shadow: var(--admin-shadow);
+}
+
+.count {
+  margin-left: 4px;
+  font-weight: 500;
+  opacity: 0.7;
+  font-variant-numeric: tabular-nums;
+}
+
+.search {
+  flex: 0 1 280px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 12px;
+  border-radius: 8px;
+  border: var(--border-input-field);
+  background: var(--container-bg);
+  color: var(--text-muted);
+}
+
+.search:focus-within {
+  border-color: var(--admin-accent);
+}
+
+.search input {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  outline: none;
+  background: none;
+  font: inherit;
+  font-size: 14px;
+  color: var(--text);
+}
+
+/* ─── Table ───────────────────────────────────────────────── */
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.table th {
+  padding: 0 12px 10px;
+  text-align: left;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  border-bottom: var(--border-container);
+}
+
+.table td {
+  padding: 12px;
+  vertical-align: middle;
+  border-bottom: var(--border-container);
+}
+
+.table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.table tbody tr:hover {
+  background: var(--clip-hover);
+}
+
+.table tr.pending {
+  opacity: 0.6;
+}
+
+.table th:first-child,
+.table td:first-child {
+  padding-left: 0;
+}
+
+.num {
+  text-align: right !important;
+  font-variant-numeric: tabular-nums;
+  width: 70px;
+}
+
+.project {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.thumb {
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: 8px;
+  background: var(--bg);
+  color: var(--text-muted);
+}
+
+.thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.project-text {
+  min-width: 0;
+}
+
+.project-text p {
+  margin-top: 2px;
+  font-size: 13px;
+  color: var(--text-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 420px;
+}
+
+.title {
+  font-weight: 700;
+}
+
+.title:hover {
+  text-decoration: underline;
+}
+
+.featured {
+  margin-left: 8px;
+  padding: 1px 7px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--admin-accent-ink);
+  background: var(--admin-accent-soft);
+  vertical-align: 1px;
+}
+
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 2px 9px;
+  border-radius: 999px;
+  border: var(--badges-border);
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.status::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.status.published {
+  color: var(--admin-success);
+}
+
+.status.draft {
+  color: var(--text-muted);
+}
+
+.actions-cell {
+  width: 1%;
+  white-space: nowrap;
+}
+
+.row-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 2px;
+}
+
+.row-actions > a {
+  height: 32px;
+  padding: 0 10px;
+}
+
+.row-menu {
+  width: 230px;
+}
+
+/* ─── Form widgets ────────────────────────────────────────── */
+
+/* Highlights list */
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-start;
+}
+
+.list-row {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.list input {
+  width: 100%;
+  min-height: 40px;
+  padding: 9px 12px;
+  border-radius: 8px;
+  border: var(--border-input-field);
+  background: var(--container-bg);
+  color: var(--text);
+  font: inherit;
+  font-size: 14px;
+}
+
+.list input:focus {
+  outline: none;
+  border-color: var(--admin-accent);
+  box-shadow: 0 0 0 3px var(--admin-accent-soft);
+}
+
+.bullet {
+  color: var(--text-muted);
+}
+
+/* Tech chips */
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  min-height: 40px;
+  padding: 5px 8px;
+  border-radius: 8px;
+  border: var(--border-input-field);
+  background: var(--container-bg);
+}
+
+.tags:focus-within {
+  border-color: var(--admin-accent);
+  box-shadow: 0 0 0 3px var(--admin-accent-soft);
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  height: 26px;
+  padding: 0 4px 0 9px;
+  border-radius: 8px;
+  border: var(--badges-border);
+  background: var(--badges-bg);
+  color: var(--text);
+  font-size: 13px;
+}
+
+.tag button {
+  width: 18px;
+  height: 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  color: var(--text-muted);
+  cursor: pointer;
+}
+
+.tag button:hover {
+  background: var(--clip-hover);
+  color: var(--text);
+}
+
+/* Two classes so it beats the generic `.field input` rule in adminForm.module.css. */
+.tags .tag-input,
+.tags .tag-input:focus {
+  flex: 1 0 120px;
+  width: auto;
+  min-height: 26px;
+  padding: 0 4px;
+  border: none;
+  box-shadow: none;
+}
+
+/* ─── ≤850px ──────────────────────────────────────────────── */
+
+@media (max-width: 850px) {
+  .search {
+    flex: 1 1 100%;
+  }
+
+  /* Table rows become cards */
+  .table thead {
+    display: none;
+  }
+
+  .table,
+  .table tbody,
+  .table tr,
+  .table td {
+    display: block;
+    width: 100%;
+  }
+
+  .table tr {
+    position: relative;
+    padding: 12px 0;
+    border-bottom: var(--border-container);
+  }
+
+  .table tbody tr:last-child {
+    border-bottom: none;
+  }
+
+  .table td {
+    padding: 0;
+    border: none;
+  }
+
+  .table td[data-label] {
+    display: inline-flex;
+    width: auto;
+    margin: 8px 12px 0 48px;
+    font-size: 13px;
+  }
+
+  .table td[data-label]:not(:has(.status))::before {
+    content: attr(data-label) ": ";
+    margin-right: 4px;
+    color: var(--text-muted);
+  }
+
+  .num {
+    width: auto;
+  }
+
+  .actions-cell {
+    position: absolute;
+    top: 10px;
+    right: 0;
+    width: auto !important;
+  }
+
+  .edit-label {
+    display: none;
+  }
+
+  .project-text {
+    padding-right: 84px;
+  }
+
+  .project-text p {
+    max-width: none;
+  }
+}

@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import BlogService from "@/lib/.services/blogService";
 import RateLimitService from "@/lib/.services/rateLimitService";
+import AnalyticsService from "@/lib/.services/analyticsService";
 import { isCronAuthorized } from "@/utils/general/helpers";
 
 // Always hit the database; never serve a cached response.
@@ -20,8 +21,9 @@ export async function GET(req: Request) {
         const service = new BlogService();
         const rows = await service.ping();
 
-        // Piggyback: prune day-old rate-limit counters.
+        // Piggyback: prune day-old rate-limit counters and old page views (~13 months kept).
         await new RateLimitService().cleanup();
+        await AnalyticsService.prune(400);
 
         return NextResponse.json({
             status: 200,

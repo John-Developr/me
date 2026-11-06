@@ -1,0 +1,545 @@
+/* ============================================================
+   ADMIN — Media Library (page, picker dialog, storage gauge)
+   ============================================================ */
+
+.muted {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.mono {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 12px;
+  overflow-wrap: anywhere;
+}
+
+/* ─── Storage gauge ───────────────────────────────────────── */
+
+.usage {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 20px;
+  border-radius: 12px;
+  background: var(--container-bg);
+  border: var(--border-container);
+  box-shadow: var(--admin-shadow);
+}
+
+.usage.compact {
+  padding: 12px 14px;
+  gap: 8px;
+  box-shadow: none;
+  background: var(--bg);
+}
+
+.usage-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+}
+
+.usage-head strong {
+  font-size: 18px;
+  font-variant-numeric: tabular-nums;
+}
+
+.usage.compact .usage-head strong {
+  font-size: 15px;
+}
+
+.usage-icon {
+  width: 28px;
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  background: var(--admin-accent-soft);
+  color: var(--admin-accent-ink);
+}
+
+.usage.compact .usage-icon {
+  display: none;
+}
+
+.usage-pct {
+  margin-left: auto;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.bar {
+  height: 8px;
+  border-radius: 999px;
+  background: var(--clip-hover);
+  overflow: hidden;
+}
+
+.bar span {
+  display: block;
+  height: 100%;
+  border-radius: 999px;
+  background: var(--admin-accent);
+  transition: width 0.4s ease;
+}
+
+.bar.warn span {
+  background: var(--admin-warning);
+}
+
+.bar.full span {
+  background: var(--admin-danger);
+}
+
+.usage-meta {
+  font-size: 12.5px;
+  color: var(--text-muted);
+}
+
+.breakdown {
+  display: flex;
+  flex-direction: column;
+  margin-top: auto;   /* sits at the bottom of a stretched card */
+  padding-top: 12px;
+  border-top: var(--border-container);
+  font-size: 13px;
+}
+
+.breakdown div {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 5px 0;
+}
+
+.breakdown dt {
+  color: var(--text-muted);
+}
+
+.breakdown dd {
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+/* ─── Uploader ────────────────────────────────────────────── */
+
+.uploader {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.dropzone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 22px 16px;
+  border-radius: 10px;
+  border: 1.5px dashed var(--divider-bottom);
+  color: var(--text-muted);
+  text-align: center;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.dropzone p {
+  font-size: 14px;
+  color: var(--text);
+}
+
+.dropzone small {
+  font-size: 12px;
+}
+
+.dropzone.dragging {
+  border-color: var(--admin-accent);
+  background: var(--admin-accent-soft);
+}
+
+.queue {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  list-style: none;
+}
+
+.queue li {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(80px, 160px) 36px;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+}
+
+.queue-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.queue-bar {
+  height: 6px;
+  border-radius: 999px;
+  background: var(--clip-hover);
+  overflow: hidden;
+}
+
+.queue-bar span {
+  display: block;
+  height: 100%;
+  background: var(--admin-accent);
+  transition: width 0.2s ease;
+}
+
+.queue-error {
+  grid-column: 2 / 3;
+  font-size: 12px;
+  color: var(--admin-danger);
+}
+
+.queue-status {
+  justify-self: end;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-muted);
+}
+
+.queue .done .queue-status {
+  color: var(--admin-success);
+}
+
+.queue .error .queue-status {
+  color: var(--admin-danger);
+}
+
+.queue li.queue-clear {
+  display: block;
+}
+
+/* ─── Page layout ─────────────────────────────────────────── */
+
+/* Storage and Upload share a row height. */
+.top {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr);
+  gap: 20px;
+  align-items: stretch;
+}
+
+.top > * {
+  min-width: 0;
+}
+
+/* The drop zone fills the Upload card so both cards end together. */
+.top .uploader,
+.top .dropzone {
+  flex: 1;
+  justify-content: center;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 320px;
+  gap: 20px;
+  align-items: start;
+}
+
+.side {
+  position: sticky;
+  top: calc(64px + 20px);
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.filters {
+  display: inline-flex;
+  padding: 3px;
+  border-radius: 9px;
+  background: var(--bg);
+  border: var(--border-container);
+}
+
+.filters button {
+  height: 30px;
+  padding: 0 12px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-muted);
+  cursor: pointer;
+}
+
+.filters button.selectedFilter {
+  background: var(--container-bg);
+  color: var(--text);
+  box-shadow: var(--admin-shadow);
+}
+
+.count {
+  margin-left: 4px;
+  font-weight: 500;
+  opacity: 0.7;
+}
+
+.search {
+  flex: 0 1 260px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 12px;
+  border-radius: 8px;
+  border: var(--border-input-field);
+  background: var(--container-bg);
+  color: var(--text-muted);
+}
+
+.search:focus-within {
+  border-color: var(--admin-accent);
+}
+
+.search input {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  outline: none;
+  background: none;
+  font: inherit;
+  font-size: 14px;
+  color: var(--text);
+}
+
+/* ─── Grid ────────────────────────────────────────────────── */
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 12px;
+  list-style: none;
+}
+
+.tile {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 6px;
+  border-radius: 10px;
+  border: var(--border-container);
+  background: var(--container-bg);
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.tile:hover {
+  border-color: var(--text-muted);
+}
+
+.tile.selected {
+  border-color: var(--admin-accent);
+  box-shadow: 0 0 0 2px var(--admin-accent-soft);
+}
+
+.thumb {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border-radius: 6px;
+  /* Checkerboard so transparent images are visible in both themes */
+  background:
+    repeating-conic-gradient(var(--clip-hover) 0% 25%, var(--bg) 0% 50%) 50% / 16px 16px;
+}
+
+.thumb img {
+  object-fit: contain;
+}
+
+.doc {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-muted);
+  background: var(--bg);
+}
+
+.in-use {
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  padding: 1px 7px;
+  border-radius: 999px;
+  font-size: 10.5px;
+  font-weight: 700;
+  color: white;
+  background: var(--admin-accent);
+}
+
+.tile-name {
+  padding: 0 2px;
+  font-size: 13px;
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.tile-meta {
+  padding: 0 2px 2px;
+  font-size: 11.5px;
+  color: var(--text-muted);
+}
+
+/* ─── Details panel ───────────────────────────────────────── */
+
+.detail-preview {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border-radius: 8px;
+  background:
+    repeating-conic-gradient(var(--clip-hover) 0% 25%, var(--bg) 0% 50%) 50% / 16px 16px;
+}
+
+.detail-preview img {
+  object-fit: contain;
+}
+
+.detail-name {
+  font-weight: 700;
+  font-size: 14px;
+  overflow-wrap: anywhere;
+}
+
+.detail-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.usages {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding-top: 12px;
+  border-top: var(--border-container);
+}
+
+.usages-title {
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.usages ul {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 13px;
+}
+
+.usages a {
+  color: var(--admin-accent-ink);
+  text-decoration: underline;
+}
+
+/* ─── Picker dialog ───────────────────────────────────────── */
+
+.picker {
+  width: min(880px, calc(100vw - 32px));
+  max-height: min(86vh, 900px);
+  margin: auto;
+  padding: 0;
+  display: none;
+  flex-direction: column;
+  border-radius: 12px;
+  border: var(--border-container);
+  background: var(--container-bg);
+  color: var(--text);
+  box-shadow: var(--box-shadow-default);
+}
+
+.picker[open] {
+  display: flex;
+}
+
+.picker::backdrop {
+  background: rgba(0, 0, 0, 0.45);
+}
+
+.picker-head,
+.picker-foot {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 18px;
+}
+
+.picker-head {
+  justify-content: space-between;
+  border-bottom: var(--border-container);
+}
+
+.picker-head h2 {
+  font-size: 16px;
+}
+
+.picker-body {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 16px 18px;
+}
+
+.picker-body .search {
+  flex: none;
+  width: 100%;
+}
+
+.picker-foot {
+  justify-content: flex-end;
+  border-top: var(--border-container);
+}
+
+.picker-foot p {
+  margin-right: auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ─── ≤850px ──────────────────────────────────────────────── */
+
+@media (max-width: 850px) {
+  .top,
+  .layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .side {
+    position: static;
+  }
+
+  .search {
+    flex: 1 1 100%;
+  }
+
+  .grid {
+    grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+  }
+}

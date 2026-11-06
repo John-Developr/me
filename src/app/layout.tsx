@@ -8,6 +8,8 @@ import { ThemeEnum } from "@/utils/types";
 import { storageKeys } from "@/config/storageKeys";
 
 import LayoutProvider from "./LayoutProvider";
+import { getPublicProfile } from "./getPublicProfile";
+import { EMPTY_PROFILE } from "@/config/profileDefaults";
 import { BASE_URL } from "@/config/siteUrl";
 
 
@@ -46,11 +48,15 @@ const themeScript = `
   })();
 `;
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // Header/footer on every page show the owner profile. If it can't load,
+  // they render without personal details rather than breaking every page.
+  const profile = await getPublicProfile().catch(() => EMPTY_PROFILE);
+
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
@@ -59,7 +65,7 @@ export default function RootLayout({
       </head>
       <body className={karla.variable}>
         <AppProvider>
-          <LayoutProvider>
+          <LayoutProvider profile={profile}>
             {children}
           </LayoutProvider>
         </AppProvider>

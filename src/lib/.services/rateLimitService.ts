@@ -9,6 +9,9 @@ import supabaseServer, { RPC, Table } from "../.supabase/server";
 const RATE_LIMITS = {
     chat:    { limit: 20, windowSeconds: 10 * 60 }, // 20 messages per 10 minutes
     contact: { limit: 3,  windowSeconds: 60 * 60 }, // 3 submissions per hour
+    adminLogin: { limit: 5, windowSeconds: 15 * 60 }, // 5 sign-in attempts per 15 minutes
+    adminPassword: { limit: 5, windowSeconds: 15 * 60 }, // 5 password-change attempts per 15 minutes
+    pageView: { limit: 120, windowSeconds: 10 * 60 }, // 120 page views per 10 minutes (stops counter inflation)
 } as const;
 
 export type RateLimitScope = keyof typeof RATE_LIMITS;

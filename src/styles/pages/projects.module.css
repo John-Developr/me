@@ -1,14 +1,307 @@
-.list {
-    column-count: 2;
-    column-gap: 20px;
-    max-width: 100%;
-    margin: 20px auto;
-    margin-top: 50px;
+/* ============================================================
+   PROJECTS PAGE
+   Tokens only (see docs/DESIGN_SYSTEM.md). Single breakpoint: 850px.
+   ============================================================ */
+
+.main {
+    display: flex;
+    flex-direction: column;
+    row-gap: 30px;
+}
+
+/* ============================================================
+   SHARED: description, highlights, built with, actions
+   ============================================================ */
+
+.description {
+    font-size: 15px;
+    line-height: 25px;
+    color: var(--text);
+}
+
+.highlights {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    row-gap: 8px;
+}
+
+.highlights li {
+    position: relative;
+    padding-left: 18px;
+    font-size: 14px;
+    line-height: 22px;
+    color: var(--text);
+}
+
+.highlights li::before {
+    content: "";
+    position: absolute;
+    left: 2px;
+    top: 9px;
+    width: 6px;
+    height: 6px;
+    border-radius: 100%;
+    background: var(--text-muted);
+}
+
+.built-with h4 {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 10px;
+}
+
+.actions {
+    display: flex;
+    flex-direction: column;
+    row-gap: 12px;
+}
+
+.note {
+    display: inline-flex;
+    align-items: center;
+    column-gap: 6px;
+    font-size: 12px;
+    color: var(--text-muted);
+}
+
+.note svg {
+    flex-shrink: 0;
+}
+
+/* ============================================================
+   FEATURED PROJECT
+   ============================================================ */
+
+.featured {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 420px;
+    column-gap: 40px;
+    align-items: center;
+    padding: 30px;
+    border-radius: 12px;
+    background: var(--container-bg);
+    backdrop-filter: var(--container-back-drop-filter);
+}
+
+.featured-body {
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
+}
+
+.eyebrow {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+}
+
+.featured-name {
+    font-size: 30px;
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--text-header);
+}
+
+.featured-tagline {
+    margin-top: 4px;
+    font-size: 17px;
+    font-weight: 500;
+    color: var(--text-muted);
+}
+
+/* Browser-window frame around the screenshot (same idea as the home page) */
+.browser-frame {
+    padding: 2px;
+    border-radius: 10px;
+    border: var(--badges-border);
+    background: var(--bg);
+    box-shadow: var(--box-shadow-default);
+}
+
+.browser-dots {
+    display: flex;
+    column-gap: 5px;
+    padding: 7px;
+}
+
+.browser-dots span {
+    width: 10px;
+    height: 10px;
+    border-radius: 100%;
+}
+
+.browser-dots span:nth-child(1) { background-color: #ff5f56; }
+.browser-dots span:nth-child(2) { background-color: #ffe312; }
+.browser-dots span:nth-child(3) { background-color: #4ed459; }
+
+.browser-image {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 0 0 8px 8px;
+}
+
+/* ============================================================
+   MORE PROJECTS GRID
+   ============================================================ */
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+}
+
+/* Odd number of cards: the last spans the full row so the grid stays balanced */
+.grid > .card:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+}
+
+.grid > .card:last-child:nth-child(odd) .highlights {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 30px;
 }
 
 .card {
-    break-inside: avoid;
-    margin-bottom: 20px;
-    background: blue;
-    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    row-gap: 18px;
+    padding: 30px;
+    border-radius: 12px;
+    background: var(--container-bg);
+    backdrop-filter: var(--container-back-drop-filter);
+    border: 1px solid transparent;
+    transition: box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.card:hover {
+    box-shadow: var(--box-shadow-default);
+    border: var(--badges-border);
+}
+
+.card-header {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: start;
+    column-gap: 14px;
+}
+
+.card-logo {
+    flex-shrink: 0;
+    display: inline-flex;
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    overflow: hidden;
+    background: var(--bg);
+    box-shadow: var(--experience-box-shadow);
+}
+
+.card-logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.card-heading {
+    flex: 1;
+    min-width: 0;
+}
+
+.card-heading h3 {
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.25;
+    color: var(--text-header);
+}
+
+.card-heading p {
+    margin-top: 3px;
+    font-size: 14px;
+    color: var(--text-muted);
+}
+
+.kind {
+    flex-shrink: 0;
+    padding: 3px 9px;
+    border-radius: 8px;
+    border: var(--badges-border);
+    background: var(--badges-bg);
+    color: var(--badges-text);
+    font-size: 11px;
+    line-height: 16px;
+    white-space: nowrap;
+}
+
+.meta {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 18px;
+    font-size: 13px;
+    color: var(--text-muted);
+}
+
+.meta li {
+    display: inline-flex;
+    align-items: center;
+    column-gap: 6px;
+}
+
+.meta svg {
+    flex-shrink: 0;
+}
+
+/* Pinned to the bottom so actions line up across a row */
+.card-footer {
+    margin-top: auto;
+    padding-top: 18px;
+    border-top: 1px solid var(--divider-bottom);
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+
+@media (max-width: 850px) {
+    .featured {
+        grid-template-columns: 1fr;
+        row-gap: 25px;
+        padding: 20px;
+    }
+
+    /* Screenshot first on mobile */
+    .featured-media {
+        order: -1;
+    }
+
+    .featured-name {
+        font-size: 26px;
+    }
+
+    .grid {
+        grid-template-columns: 1fr;
+    }
+
+    .grid > .card:last-child:nth-child(odd) .highlights {
+        display: flex;
+    }
+
+    .card {
+        padding: 20px;
+    }
+
+    /* Badge under the title so the name and tagline keep their width */
+    .kind {
+        grid-column: 2;
+        grid-row: 2;
+        justify-self: start;
+        margin-top: 8px;
+    }
 }

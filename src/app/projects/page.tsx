@@ -1,6 +1,10 @@
 import type { Metadata } from "next";
 import ProjectsPage from "@/containers/projects-page";
 import { BASE_URL } from "@/config/siteUrl";
+import { getPublicProjects } from "./getProjects";
+
+// Admin changes revalidate this page right away; this is only a safety net.
+export const revalidate = 300;
 
 export const metadata: Metadata = {
   title: "Projects",
@@ -36,6 +40,7 @@ export const metadata: Metadata = {
   },
 };
 
-export default function Projects() {
-  return <ProjectsPage />;
+export default async function Projects() {
+  const { featured, projects } = await getPublicProjects();
+  return <ProjectsPage featured={featured} projects={projects} />;
 }

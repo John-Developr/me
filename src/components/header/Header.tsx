@@ -8,11 +8,12 @@ import { Linkedin } from "../icons/Linkedin";
 import Call from "../icons/Call";
 import ThreeDotsHorizontal from "../icons/ThreeDotsHorizontal";
 
-import { networkDefine } from "@/config/networkDefine";
+import { useSiteProfile } from "@/lib/.context/SiteProfileContext";
 import MenuItems from "./MenuItems";
 
 export default function Header() {
-  const router = useRouter();
+  const router  = useRouter();
+  const profile = useSiteProfile();
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const menuRef = useRef<HTMLLIElement>(null);
@@ -46,18 +47,22 @@ export default function Header() {
       </div>
       <nav className="nav">
         <ul className="nav-list">
-          <li className="phone-no">
-            <Call 
-            width={17.5} 
-            height={17.5} />
-            PH, (+632) 9293-1982
-          </li>
-          <li className="linkend liquid_glass"
-            onClick={() => window.open(networkDefine.LINKEDIN_URL, "_blank")}>
-            <Linkedin 
+          {profile.phone && (
+            <li className="phone-no">
+              <Call 
               width={17.5} 
               height={17.5} />
-          </li>
+              PH, {profile.phone}
+            </li>
+          )}
+          {profile.socials.linkedin && (
+            <li className="linkend liquid_glass"
+              onClick={() => window.open(profile.socials.linkedin!, "_blank", "noopener,noreferrer")}>
+              <Linkedin 
+                width={17.5} 
+                height={17.5} />
+            </li>
+          )}
           <li className="menu" ref={menuRef}>
             <button
               type="button"

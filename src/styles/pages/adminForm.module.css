@@ -1,0 +1,340 @@
+/* ============================================================
+   ADMIN — Forms (shared by every edit screen)
+   Fields, two-column grids, publishing panel controls, meta
+   list and the sticky save bar. Use with <FormField />.
+   ============================================================ */
+
+.form {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 300px;
+  gap: 20px;
+  align-items: start;
+}
+
+.form-main,
+.form-side {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-width: 0;
+}
+
+.form-side {
+  position: sticky;
+  top: calc(64px + 20px);
+}
+
+/* Short pages: columns stretch and the last card in each fills the rest,
+   so both columns end on the same line. (Long edit forms keep the sticky side.) */
+.form.balanced {
+  align-items: stretch;
+}
+
+.form.balanced .form-side {
+  position: static;
+}
+
+.form.balanced .form-main > :last-child,
+.form.balanced .form-side > :last-child {
+  flex: 1;
+}
+
+.fields {
+  display: grid;
+  gap: 16px;
+}
+
+.fields.two {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.field-label {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.field-label span {
+  font-weight: 500;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.field-label .over {
+  color: var(--admin-danger);
+}
+
+.field :is(input, select, textarea) {
+  width: 100%;
+  min-height: 40px;
+  padding: 9px 12px;
+  border-radius: 8px;
+  border: var(--border-input-field);
+  background: var(--container-bg);
+  color: var(--text);
+  font: inherit;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.field textarea {
+  resize: vertical;
+  min-height: 110px;
+}
+
+.field :is(input, select, textarea):focus {
+  outline: none;
+  border-color: var(--admin-accent);
+  box-shadow: 0 0 0 3px var(--admin-accent-soft);
+}
+
+.field :is(input, select, textarea):disabled {
+  background: var(--disabled-input-bg);
+  color: var(--text-muted);
+  cursor: not-allowed;
+}
+
+.field.invalid :is(input, select, textarea) {
+  border-color: var(--admin-danger);
+}
+
+.field-hint {
+  font-size: 12.5px;
+  line-height: 1.45;
+  color: var(--text-muted);
+}
+
+.field-error {
+  font-size: 12.5px;
+  color: var(--admin-danger);
+}
+
+/* Publishing panel */
+.radios {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  border: none;
+}
+
+.radios label,
+.checkbox {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: var(--border-container);
+  cursor: pointer;
+}
+
+/* Radios side by side (wraps on narrow screens) */
+.radios.radios-row {
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.radios.radios-row label {
+  flex: 1 1 160px;
+}
+
+.radios label.checked {
+  border-color: var(--admin-accent);
+  background: var(--admin-accent-soft);
+}
+
+.radios input,
+.checkbox input {
+  margin-top: 3px;
+  accent-color: var(--admin-accent);
+}
+
+.radios span,
+.checkbox span {
+  display: flex;
+  flex-direction: column;
+  font-size: 14px;
+}
+
+.radios small,
+.checkbox small {
+  font-size: 12.5px;
+  line-height: 1.4;
+  color: var(--text-muted);
+}
+
+.meta {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding-top: 12px;
+  border-top: var(--border-container);
+  font-size: 13px;
+}
+
+.meta div {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.meta dt {
+  color: var(--text-muted);
+}
+
+/* Sticky save bar */
+.save-bar {
+  grid-column: 1 / -1;
+  position: sticky;
+  bottom: 0;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  margin: 0 -24px -56px;
+  padding: 12px 24px;
+  background: var(--container-bg);
+  border-top: var(--border-container);
+}
+
+.save-status {
+  margin-right: auto;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+/* Image path + preview */
+.image-input {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.preview {
+  position: relative;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: 8px;
+  border: var(--border-input-field);
+  background: var(--bg);
+  color: var(--text-muted);
+}
+
+.preview.square {
+  width: 40px;
+  height: 40px;
+}
+
+.preview.wide {
+  width: 64px;
+  height: 40px;
+}
+
+.preview img {
+  object-fit: cover;
+}
+
+.image-field {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.asset-row {
+  display: flex;
+  gap: 8px;
+}
+
+.asset-row input {
+  flex: 1;
+  min-width: 0;
+}
+
+.asset-source {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.warn {
+  font-size: 12px;
+  color: var(--admin-danger);
+}
+
+/* Checklist of missing items (each jumps to its field) */
+.missing {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  list-style: none;
+}
+
+.missing button {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 8px;
+  border-radius: 6px;
+  font-size: 13px;
+  color: var(--text-muted);
+  text-align: left;
+  cursor: pointer;
+}
+
+.missing button:hover {
+  background: var(--clip-hover);
+  color: var(--text);
+}
+
+/* Password input with show/hide toggle */
+.password {
+  position: relative;
+  display: flex;
+}
+
+.password input {
+  padding-right: 44px;
+}
+
+.password button {
+  position: absolute;
+  top: 50%;
+  right: 4px;
+  transform: translateY(-50%);
+}
+
+/* ─── ≤850px ──────────────────────────────────────────────── */
+
+@media (max-width: 850px) {
+  .form {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .form-side {
+    position: static;
+  }
+
+  .fields.two {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .save-bar {
+    margin: 0 -16px -48px;
+    padding: 12px 16px;
+  }
+}

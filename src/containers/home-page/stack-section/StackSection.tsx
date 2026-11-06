@@ -114,7 +114,7 @@ export default function StackSection() {
                 </li>
             </ul>
             <div className={styles["see-more"]}>
-                <Link href="/projects">
+                <Link href="/tech-stack">
                     <HomeIcons.ArrowTopRightCircle 
                      width={15} 
                      height={15} />

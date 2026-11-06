@@ -695,3 +695,121 @@
   stroke-dashoffset: 0; /* slide in when copied */
 }
 /* CLipoard Styles END */
+/* ============================================================
+   SECTION TITLE (inner pages) — icon + "Title." like the home cards
+   ============================================================ */
+.section-title {
+  display: flex;
+  align-items: center;
+  column-gap: 10px;
+  margin-bottom: 20px;
+  color: var(--text-header);
+}
+
+.section-title h2 {
+  font-size: 15px;
+  color: var(--text-header);
+}
+
+/* ============================================================
+   TECH CHIPS (Projects "Built With", Tech Stack toolkit)
+   ============================================================ */
+.tech-chips {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tech-chips li {
+  display: inline-flex;
+  align-items: center;
+  column-gap: 7px;
+  padding: 4px 11px;
+  border-radius: 8px;
+  border: var(--badges-border);
+  background: var(--badges-bg);
+  color: var(--badges-text);
+  font-size: 13px;
+  line-height: 18px;
+}
+
+/* ============================================================
+   ACTION BUTTONS (inner pages) — layered on the global .liquid_glass_btn
+   ============================================================ */
+.action-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.action-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  column-gap: 8px;
+  height: 35px;
+  padding: 0 18px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.action-button.action-primary {
+  background-color: var(--bg-primary);
+  color: white;
+  border: none;
+}
+
+.action-button.action-primary:hover {
+  background-color: var(--primary-hover-color);
+}
+
+.action-button.action-secondary {
+  color: var(--text-secondary);
+}
+
+/* ============================================================
+   PAGE CTA (closing card on inner pages)
+   ============================================================ */
+.page-cta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  column-gap: 30px;
+  padding: 30px;
+  border-radius: 12px;
+  background: var(--container-bg);
+  backdrop-filter: var(--container-back-drop-filter);
+}
+
+.page-cta h2 {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text-header);
+}
+
+.page-cta p {
+  margin-top: 5px;
+  font-size: 15px;
+  color: var(--text-muted);
+}
+
+.page-cta .action-links {
+  flex-shrink: 0;
+}
+
+@media (max-width: 850px) {
+  .page-cta {
+    flex-direction: column;
+    align-items: stretch;
+    row-gap: 20px;
+    padding: 20px;
+  }
+
+  .action-links .action-button {
+    flex: 1 1 auto;
+  }
+}

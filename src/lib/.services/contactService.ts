@@ -2,6 +2,7 @@ import fs from "fs";
 import path from "path";
 import nodemailer from "nodemailer";
 
+import supabaseServer, { Table } from "../.supabase/server";
 import { ContactFormData } from "@/utils/types";
 import { sanitize, isValidEmail } from "@/utils/general/stringHelpers";
 
@@ -73,6 +74,7 @@ const FIELD_LABELS: Record<keyof ContactFormData, string> = {
  * - Sanitizes user input to prevent HTML injection
  * - Injects sanitized data into the HTML email template
  * - Sends the email via Gmail SMTP using Nodemailer
+ * - Saves the submission to `contact_messages` for the admin dashboard
  *
  * @example
  * const service = new ContactService();
@@ -110,7 +112,36 @@ export default class ContactService {
       .replace("{{message}}", sanitize(body.message))
       .replace("{{budget}}",  sanitize(body.budget || "N/A"));
 
-    return this.sendEmail(html, body);
+    const result = await this.sendEmail(html, body);
+
+    // Only store messages the visitor was told were sent (avoids duplicates on retry).
+    if (result.valid) await this.saveMessage(body);
+
+    return result;
+  }
+
+  /**
+   * Stores the submission in `contact_messages` (service role; RLS lets only
+   * admins read it). Fail-soft: the email already went out, so a database
+   * problem (e.g. migration not applied yet) is logged, not shown to the visitor.
+   * No IP address or user agent is stored.
+   */
+  private async saveMessage(body: ContactFormData): Promise<void> {
+    const { error } = await supabaseServer
+      .from(Table.contactMessages)
+      .insert({
+        first_name:   body.fname?.trim()   || null,
+        last_name:    body.lname?.trim()   || null,
+        email:        body.email.trim(),
+        subject:      body.subject.trim(),
+        inquiry_type: body.type?.trim()    || null,
+        budget:       body.budget?.trim()  || null,
+        message:      body.message.trim(),
+      });
+
+    if (error) {
+      console.error("[ContactService] saveMessage failed:", error.message);
+    }
   }
 
   /**

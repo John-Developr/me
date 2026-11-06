@@ -8,7 +8,7 @@ const Work = (props: React.SVGProps<SVGSVGElement>) => (
     >
         <path 
             d="M11.9612 16.5169V13.8889" 
-            stroke="black" 
+            stroke="currentColor" 
             strokeWidth="1.5" 
             strokeLinecap="round" 
             strokeLinejoin="round"
