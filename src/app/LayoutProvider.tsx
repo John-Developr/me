@@ -8,14 +8,16 @@ import PageViewTracker from "@/components/analytics/PageViewTracker";
 
 import { useApp } from "@/lib/.context/AppContext";
 import { SiteProfileProvider } from "@/lib/.context/SiteProfileContext";
+import { TechLogosProvider } from "@/lib/.context/TechLogosContext";
 import { PublicProfile } from "@/utils/types";
 
 interface LayoutProviderProps {
-  profile:  PublicProfile;
-  children: React.ReactNode;
+  profile:   PublicProfile;
+  techLogos: Record<string, string>;
+  children:  React.ReactNode;
 }
 
-export default function LayoutProvider({ profile, children }: LayoutProviderProps) {
+export default function LayoutProvider({ profile, techLogos, children }: LayoutProviderProps) {
   const { isDark } = useApp();
   const pathname   = usePathname();
 
@@ -24,6 +26,7 @@ export default function LayoutProvider({ profile, children }: LayoutProviderProp
 
   return (
     <SiteProfileProvider profile={profile}>
+    <TechLogosProvider logos={techLogos}>
       <Toaster position="top-right" theme={isDark ? "dark" : "light"} />
       {isAdmin ? children : (
         <Preloader>
@@ -36,6 +39,7 @@ export default function LayoutProvider({ profile, children }: LayoutProviderProp
           <PageViewTracker />
         </Preloader>
       )}
+    </TechLogosProvider>
     </SiteProfileProvider>
   );
 }

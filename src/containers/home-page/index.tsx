@@ -13,7 +13,7 @@ import ExperienceSection from "./experience-section/ExperienceSection";
 import ProjectSection from "./project-section/ProjectSection";
 import ConnectionSection from "./connect-section/ConnectSection";
 import BlogSection from "./blog-section/BlogSection";
-import { ProjectItem, PublicProfile, TimelineGroup } from "@/utils/types";
+import { ProjectItem, PublicProfile, TechTool, TimelineGroup } from "@/utils/types";
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Animated section wrapper
@@ -43,9 +43,11 @@ interface HomePageProps {
   experience: TimelineGroup[];
   /** Featured project for "Recent Projects."; the card is hidden when there is none. */
   project:    ProjectItem | null;
+  /** Core Stack tools for the "Tech Stack." card. */
+  coreTools:  TechTool[];
 }
 
-export default function HomePage({ profile, experience, project }: HomePageProps) {
+export default function HomePage({ profile, experience, project, coreTools }: HomePageProps) {
   const { isMobile } = useApp();
 
   return (
@@ -57,7 +59,7 @@ export default function HomePage({ profile, experience, project }: HomePageProps
       </AnimatedSection>
 
       <AnimatedSection className={styles.second} delay={150}>
-        <SecondContentSections isMobile={isMobile} bio={profile.bio} experience={experience} />
+        <SecondContentSections isMobile={isMobile} bio={profile.bio} experience={experience} coreTools={coreTools} />
       </AnimatedSection>
 
       {project && (
@@ -80,9 +82,10 @@ interface SecondContentProps {
   isMobile:   boolean;
   bio:        string[];
   experience: TimelineGroup[];
+  coreTools:  TechTool[];
 }
 
-const SecondContentSections = ({ isMobile, bio, experience }: SecondContentProps) => {
+const SecondContentSections = ({ isMobile, bio, experience, coreTools }: SecondContentProps) => {
     if (isMobile) {
         return (
           <>
@@ -92,7 +95,7 @@ const SecondContentSections = ({ isMobile, bio, experience }: SecondContentProps
               </section>
 
               <section className={styles["right-content"]}>
-                  <StackSection />
+                  <StackSection tools={coreTools} />
               </section>
           </>
         )
@@ -102,7 +105,7 @@ const SecondContentSections = ({ isMobile, bio, experience }: SecondContentProps
       <>
           <section className={styles["left-content"]}>
               <AboutSection bio={bio} />
-              <StackSection />
+              <StackSection tools={coreTools} />
           </section>
 
           <section className={styles["right-content"]}>

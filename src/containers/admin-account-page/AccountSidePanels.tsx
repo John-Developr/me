@@ -14,7 +14,7 @@ import adminStyles from "@/styles/pages/admin.module.css";
 import formStyles from "@/styles/pages/adminForm.module.css";
 import styles from "@/styles/pages/adminAccount.module.css";
 
-import { sendJson } from "./sendJson";
+import { sendJson } from "@/utils/admin/sendJson";
 
 /** Light/dark choice (same preference as the public site, saved in this browser). */
 export function AppearanceCard() {

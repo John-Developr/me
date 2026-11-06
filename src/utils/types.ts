@@ -1,5 +1,5 @@
-import type { ComponentType, SVGProps } from "react";
 import { ContentListUnion } from "@google/genai/node";
+import type { SkillIconKey } from "@/utils/admin/skillIconKeys";
 
 // ============================================================
 // BLOG
@@ -129,7 +129,7 @@ export interface ProjectItem {
   period?:       string;            // e.g. "2023 – Present"
   description:   string;
   highlights:    string[];          // 0–4 short bullets
-  tech:          string[];          // names; logos come from TECH_LOGOS (config/techLogos.ts)
+  tech:          string[];          // names; logos come from the Skills admin
   logo?:         string;            // /public path to a square logo
   image?:        string;            // /public path to a screenshot (featured)
   links:         ProjectLink[];
@@ -143,17 +143,17 @@ export interface ProjectItem {
 /** A highlighted tool on the /tech-stack page ("Core Stack."). */
 export interface TechTool {
   name:        string;
-  description: string;   // one short line
-  logo:        string;   // /public path
+  description: string;        // one short line
+  logo:        string | null; // Media Library URL or /public path
 }
 
 /** A group of tools on the /tech-stack page ("Full Toolkit."). */
 export interface TechCategory {
   slug:        string;
   title:       string;
-  description: string;   // what the category covers, one line
-  icon:        ComponentType<SVGProps<SVGSVGElement>>;
-  items:       string[]; // tool names; logos come from TECH_LOGOS
+  description: string;        // what the category covers, one line
+  iconKey:     SkillIconKey;  // resolved to an icon on the client (see components/tech/skillIcons)
+  items:       string[];      // tool names; logos come from the Skills admin
 }
 
 // ============================================================
@@ -479,4 +479,46 @@ export interface MediaImportResult {
   reused:     string[];                          // already in the library
   skipped:    { path: string; reason: string }[];
   references: number;                            // content fields repointed
+}
+
+// ============================================================
+// ADMIN — SKILLS & TECHNOLOGIES
+// ============================================================
+
+export type { SkillIconKey } from "@/utils/admin/skillIconKeys";
+
+/** A row of `public.skill_categories`. */
+export interface SkillCategoryRecord {
+  id:          string;
+  slug:        string;
+  name:        string;
+  description: string | null;
+  icon:        SkillIconKey;
+  sort_order:  number;
+  created_at:  string;
+  updated_at:  string;
+}
+
+/** A row of `public.skills`. */
+export interface SkillRecord {
+  id:          string;
+  category_id: string | null;
+  name:        string;
+  logo_url:    string | null;
+  is_core:     boolean;       // "Core Stack." + home "Tech Stack." card
+  description: string | null; // one line, shown for core tools
+  core_order:  number;
+  is_current:  boolean;       // "Right Now" on /tech-stack
+  sort_order:  number;
+  created_at:  string;
+  updated_at:  string;
+}
+
+/** Everything the public tech pages need, built on the server. */
+export interface PublicSkills {
+  core:       TechTool[];
+  categories: TechCategory[];
+  current:    string[];
+  /** Tool name → logo, for tech chips anywhere on the site. */
+  logos:      Record<string, string>;
 }

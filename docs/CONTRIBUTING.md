@@ -8,29 +8,9 @@ How to add content and features to the portfolio without breaking the existing d
 
 ## 1. Adding Content
 
-### 1.1 Add a tech-stack skill
+### 1.1 Skills & Technologies
 
-File: `src/containers/home-page/stack-section/StackSection.tsx`
-
-1. Add a logo PNG to `public/images/tech/` (lowercase filename, square, shown at 25×25).
-2. Copy an existing `<li>` inside `ul.tech-container`:
-
-```tsx
-<li className={styles["tech-list"]}>
-    <Image
-     src="/images/tech/<logo>.png"
-     width={25}
-     height={25}
-     alt="<Tech Name>"
-     className={styles["tech-image"]} />
-    <div className={styles["tech-detail"]}>
-        <h5><Tech Name></h5>
-        <p><one-line description, ~45 chars — it is clamped to 1 line></p>
-    </div>
-</li>
-```
-
-Keep an even number of items so the 2-column grid stays balanced on desktop.
+Edit in **Admin → Skills & Technologies**: add skills to categories, tick **Core Stack** (with a one-line description) to feature a tool on `/tech-stack` and, for the first 8, on the home page; tick **Using right now** for the "Right Now" chips. The logo you set shows on every chip with that tool's name.
 
 ### 1.2 Profile, projects, experience and images (admin)
 
@@ -41,11 +21,10 @@ This content lives in Supabase and is edited in the admin at `/admin` (sign in a
 | Name, headline, location, photo, bio, email, phone, booking link, resume, social links | Personal Profile | Home hero, About Me, Connect, header and footer on every page |
 | Projects (featured, order, published/draft) | Projects | `/projects`, home "Recent Projects." |
 | Work, education and milestones | Work Experience | Home "Experience." (grouping and durations are automatic) |
+| Skills, categories, Core Stack, "Right now", tech logos | Skills & Technologies | `/tech-stack`, home "Tech Stack." (first 8 core tools), logos on tech chips everywhere |
 | Images and PDFs | Media Library (or the "Library" button on any image field) | Wherever they're picked |
 
-Changes go live when you save. Tech chips show a logo when the name is in `TECH_LOGOS` (`src/config/techLogos.ts`).
-
-To add a tool to `/tech-stack`, add its name to a category's `items` in `src/containers/tech-stack-page/techStackData.ts` (and a logo to `TECH_LOGOS` if one exists). The home "Tech Stack." card is still hard-coded in `containers/home-page/stack-section/StackSection.tsx` until the Skills screen exists.
+Changes go live when you save. Tech chips (projects, tech stack) show a logo when a skill with that exact name has one.
 
 ### 1.4 Blog posts
 

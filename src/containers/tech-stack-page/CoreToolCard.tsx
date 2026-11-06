@@ -2,6 +2,7 @@ import Image from "next/image";
 
 import styles from "@/styles/pages/techStack.module.css";
 
+import Star from "@/components/icons/Star";
 import { useAnimateIn } from "@/hooks/useAnimateIn";
 import { TechTool } from "@/utils/types";
 
@@ -21,12 +22,10 @@ export default function CoreToolCard({ tool, index }: CoreToolCardProps) {
 
     return (
         <li ref={ref} style={style} className={styles.tool}>
-            <span className={styles["tool-logo"]}>
-                <Image
-                    src={tool.logo}
-                    width={28}
-                    height={28}
-                    alt="" />
+            <span className={styles["tool-logo"]} aria-hidden="true">
+                {tool.logo
+                    ? <Image src={tool.logo} width={28} height={28} alt="" />
+                    : <Star width={20} height={20} />}
             </span>
             <div className={styles["tool-detail"]}>
                 <h3>{tool.name}</h3>

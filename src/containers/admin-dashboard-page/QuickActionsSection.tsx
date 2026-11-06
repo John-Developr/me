@@ -21,7 +21,7 @@ const ACTIONS: QuickAction[] = [
     { label: "Create Project",        description: "Add a new portfolio project", icon: AdminIcons.Plus, href: "/admin/projects/new" },
     { label: "Edit Profile",          description: "Name, bio, links and resume", icon: AdminIcons.Pencil, href: "/admin/profile" },
     { label: "Add Work Experience",   description: "Record a role or company",    icon: AdminIcons.Briefcase, href: "/admin/experience/new" },
-    { label: "Manage Skills",         description: "Skills and categories",       icon: AdminIcons.Code },
+    { label: "Manage Skills",         description: "Skills and categories",       icon: AdminIcons.Code, href: "/admin/skills" },
     { label: "View Public Portfolio", description: "Opens the live site",         icon: AdminIcons.ExternalLink, href: BASE_URL, external: true },
 ];
 

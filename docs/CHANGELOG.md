@@ -8,6 +8,9 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versio
 Work in progress on the `liquid-glass` branch.
 
 ### Added
+- **Admin — Skills & Technologies** (`/admin/skills`). Core Stack list (numbered; the first 8 marked "Home"), category cards with skills as chips (★ core, ● right now), search, and dialogs to add/edit/delete skills (name, category or none, logo from the Media Library, Core Stack + one-line description + order, "Using right now", order) and categories (name, description, icon, order; delete keeps or removes its skills). API: `POST /api/admin/skills`, `PATCH`/`DELETE /api/admin/skills/[id]`, `POST /api/admin/skill-categories`, `PATCH`/`DELETE /api/admin/skill-categories/[id]`. Reusable `FormDialog`; `sendJson` moved to `utils/admin/`.
+- `/tech-stack` (Right Now, Core Stack, Full Toolkit) and the home "Tech Stack." card read from Supabase; tech chip logos site-wide come from skills (`TechLogosProvider`, loaded in the root layout). Removed `techStackData.ts` and `config/techLogos.ts`. Skill logos count in the Media Library's "Used by" and "Import site images".
+- Migration `20261113000100_skills.sql`: `skill_categories.icon`, `skills.description`, `skills.core_order`, `skills.is_current`, a unique name for uncategorized skills, and a seed of the existing tech stack (10 categories, 71 skills, 8 core, 6 right now).
 - **Home page and site-wide details now come from the admin** (no longer hard-coded):
   - Header phone number and LinkedIn button, and footer name and social icons on every page, read the Personal Profile through a site-wide `SiteProfileProvider` (root layout loads the profile once). Footer icons are now real links; icons without a link are hidden.
   - "Schedule a Call" buttons (home hero, Connect card, Projects page CTA) use the new profile **Booking link**.
