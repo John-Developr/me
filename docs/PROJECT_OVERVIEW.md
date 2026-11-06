@@ -90,7 +90,7 @@ All content outside the blog (profile, about, stack, experience, featured projec
 |---|---|---|---|
 | `/` | `app/page.tsx` | `containers/home-page` | Full SEO metadata, OG, Twitter |
 | `/projects` | `app/projects/page.tsx` | `containers/projects-page` | Featured project, "More Projects." grid, contact CTA — published projects from Supabase (edit in `/admin/projects`) |
-| `/tech-stack` | `app/tech-stack/page.tsx` | `containers/tech-stack-page` | Static: "Right Now", Core Stack, Full Toolkit categories, CTA (data in `techStackData.ts`) |
+| `/tech-stack` | `app/tech-stack/page.tsx` | `containers/tech-stack-page` | "Right Now", Core Stack and Full Toolkit from Supabase (edit in `/admin/skills`) |
 | `/blog` | `app/blog/page.tsx` | `containers/blog-page` | Category filter + sort, fetches `/api/blog` |
 | `/blog/[slug]` | `app/blog/[slug]/page.tsx` | `containers/blog-detail-page` | Fetches `/api/blog/[slug]`, renders Markdown; shows 404 container if missing |
 | `/contact` | `app/contact/page.tsx` | `containers/contact-page` | Inquiry-type + budget cards, POSTs `/api/contact` |
@@ -153,12 +153,12 @@ Each row is an `AnimatedSection` (uses `useAnimateIn`, staggered delays 50 / 150
 
 | Content | Where it lives | How it renders |
 |---|---|---|
-| Profile / role / location | `home-page/detail-section/DetailSection.tsx` (JSX) | Static |
-| About | `home-page/about-section/AboutSection.tsx` | Static |
-| Tech stack | `home-page/stack-section/StackSection.tsx` — `<li className="tech-list">` per tech, logo in `public/images/tech/` | Static, 2-col grid (1-col mobile) |
-| Experience | `home-page/experience-section/ExperienceSection.tsx` — `<li>` per company, `has-sub` for multi-role, logo in `public/images/company/` | Static timeline |
-| Featured project | `home-page/project-section/ProjectSection.tsx`; URLs in `networkDefine` | Static |
-| Contact details / socials | `networkDefine.ts`, `ConnectSection.tsx`, `Header.tsx`, `Footer.tsx` | Static |
+| Profile / role / location | `home-page/detail-section/DetailSection.tsx` | From Supabase (edit in `/admin/profile`) |
+| About | `home-page/about-section/AboutSection.tsx` | From Supabase (edit in `/admin/profile`) |
+| Tech stack | `home-page/stack-section/StackSection.tsx` — the first 8 Core Stack tools | From Supabase (edit in `/admin/skills`), 2-col grid (1-col mobile) |
+| Experience | `home-page/experience-section/ExperienceSection.tsx` — roles grouped by company, durations computed | From Supabase (edit in `/admin/experience`) |
+| Featured project | `home-page/project-section/ProjectSection.tsx` | Featured project from Supabase (edit in `/admin/projects`) |
+| Contact details / socials | `ConnectSection.tsx`, `Header.tsx`, `Footer.tsx` | From Supabase (edit in `/admin/profile`) |
 | Blog posts | Supabase `ai_blogs` (shape = `AIBlogResponse` in `utils/types.ts`) | Client fetch → API → Supabase |
 | Chat persona | `src/docs/system-instruction.md` | Read by `/api/chat` |
 | Blog prompt | `src/docs/blog-instruction.md` + Zod schema in `ChatService.blogMain` | Read by `/api/cron/blog` |

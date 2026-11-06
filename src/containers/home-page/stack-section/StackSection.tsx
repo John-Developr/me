@@ -2,9 +2,16 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { HomeIcons } from "@/components/icons";
+import { TechTool } from "@/utils/types";
 import styles from "@/styles/pages/page.module.css";
 
-export default function StackSection() {
+/** How many core tools the home card shows (the rest are on /tech-stack). */
+const HOME_LIMIT = 8;
+
+/** "Tech Stack." card — the Core Stack tools managed in /admin/skills. */
+export default function StackSection({ tools }: { tools: TechTool[] }) {
+    if (tools.length === 0) return null;
+
     return (
         <section className={styles["tech-stack"]}>
             <div className={styles.title}>
@@ -16,102 +23,22 @@ export default function StackSection() {
                 <h3>Tech Stack.</h3>
             </div>
             <ul className={styles["tech-container"]}>
-                <li className={styles["tech-list"]}>
-                    <Image
-                     src="/images/tech/react.png"
-                     width={25}
-                     height={25}
-                     alt="React / React Native"
-                     className={styles["tech-image"]} />
-                    <div className={styles["tech-detail"]}> 
-                    <h5>React / React Native</h5>
-                    <p>building scalable web and native applications.</p>
-                    </div>  
-                </li>
-                <li className={styles["tech-list"]}>
-                    <Image
-                        src="/images/tech/next.png"
-                        width={25}
-                        height={25}
-                        alt="Next JS"
-                        className={styles["tech-image"]}/>
-                    <div className={styles["tech-detail"]}> 
-                        <h5>Next JS</h5>
-                        <p>React framework for fast, SEO-friendly web.</p>
-                    </div>  
-                </li>
-                <li className={styles["tech-list"]}>
-                    <Image
-                     src="/images/tech/figma.png"
-                     width={25}
-                     height={25}
-                     alt="Figma"
-                     className={styles["tech-image"]} />
-                    <div className={styles["tech-detail"]}> 
-                        <h5>Figma</h5>
-                        <p>A cloud-based design tool for UI/UX.</p>
-                    </div>  
-                </li>
-                <li className={styles["tech-list"]}>
-                    <Image
-                     src="/images/tech/chatgpt.png"
-                     width={25}
-                     height={25}
-                     alt="ChatGPT"
-                     className={styles["tech-image"]} />
-                    <div className={styles["tech-detail"]}> 
-                        <h5>OpenAI</h5>
-                        <p>An AI chatbot/Code for assistant.</p>
-                    </div>  
-                </li>
-                <li className={styles["tech-list"]}>
-                    <Image
-                     src="/images/tech/node.png"
-                     width={25}
-                     height={25}
-                     alt="Node JS"
-                     className={styles["tech-image"]} />
-                    <div className={styles["tech-detail"]}> 
-                        <h5>Node JS</h5>
-                        <p>Used to build APIs, servers, and real-time apps.</p>
-                    </div>  
-                </li>
-                <li className={styles["tech-list"]}>
-                    <Image
-                     src="/images/tech/supabase.png"
-                     width={25}
-                     height={25}
-                     alt="Supabase"
-                     className={styles["tech-image"]} />
-                    <div className={styles["tech-detail"]}> 
-                        <h5>Supabase</h5>
-                        <p>Backend platform with database and auth.</p>
-                    </div>  
-                </li>
-                <li className={styles["tech-list"]}>
-                    <Image
-                     src="/images/tech/firebase.png"
-                     width={25}
-                     height={25}
-                     alt="Firebase"
-                     className={styles["tech-image"]} />
-                    <div className={styles["tech-detail"]}> 
-                        <h5>Firebase</h5>
-                        <p>Backend platform with database and auth.</p>
-                    </div>  
-                </li>
-                <li className={styles["tech-list"]}>
-                    <Image
-                     src="/images/tech/xcode.png"
-                     width={25}
-                     height={25}
-                     alt="Xcode"
-                     className={styles["tech-image"]} />
-                    <div className={styles["tech-detail"]}> 
-                        <h5>Xcode</h5>
-                        <p>Apple&apos;s integrated development environment.</p>
-                    </div>  
-                </li>
+                {tools.slice(0, HOME_LIMIT).map((tool) => (
+                    <li key={tool.name} className={styles["tech-list"]}>
+                        {tool.logo && (
+                            <Image
+                             src={tool.logo}
+                             width={25}
+                             height={25}
+                             alt=""
+                             className={styles["tech-image"]} />
+                        )}
+                        <div className={styles["tech-detail"]}> 
+                            <h5>{tool.name}</h5>
+                            <p>{tool.description}</p>
+                        </div>  
+                    </li>
+                ))}
             </ul>
             <div className={styles["see-more"]}>
                 <Link href="/tech-stack">

@@ -1,6 +1,7 @@
 import styles from "@/styles/pages/techStack.module.css";
 
 import TechChips from "@/components/tech/TechChips";
+import { SKILL_ICONS } from "@/components/tech/skillIcons";
 import { useAnimateIn } from "@/hooks/useAnimateIn";
 import { TechCategory } from "@/utils/types";
 
@@ -18,7 +19,7 @@ export default function CategoryCard({ category, index }: CategoryCardProps) {
         delay:    100 + (index % 2) * 80, // stagger within each row
         duration: 600,
     });
-    const Icon = category.icon;
+    const Icon = (SKILL_ICONS[category.iconKey] ?? SKILL_ICONS.category).Icon;
 
     return (
         <article
@@ -35,7 +36,7 @@ export default function CategoryCard({ category, index }: CategoryCardProps) {
                     <p>{category.description}</p>
                 </div>
                 <span className={styles.count}>
-                    {category.items.length} tools
+                    {category.items.length} {category.items.length === 1 ? "tool" : "tools"}
                 </span>
             </header>
 

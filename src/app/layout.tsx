@@ -9,6 +9,7 @@ import { storageKeys } from "@/config/storageKeys";
 
 import LayoutProvider from "./LayoutProvider";
 import { getPublicProfile } from "./getPublicProfile";
+import { EMPTY_SKILLS, getPublicSkills } from "./getPublicSkills";
 import { EMPTY_PROFILE } from "@/config/profileDefaults";
 import { BASE_URL } from "@/config/siteUrl";
 
@@ -53,9 +54,12 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // Header/footer on every page show the owner profile. If it can't load,
-  // they render without personal details rather than breaking every page.
-  const profile = await getPublicProfile().catch(() => EMPTY_PROFILE);
+  // Site-wide data: the owner profile (header/footer) and tech logos (chips).
+  // If either can't load, pages render without it rather than breaking.
+  const [profile, skills] = await Promise.all([
+    getPublicProfile().catch(() => EMPTY_PROFILE),
+    getPublicSkills().catch(() => EMPTY_SKILLS),
+  ]);
 
   return (
     <html lang="en" suppressHydrationWarning>
@@ -65,7 +69,7 @@ export default async function RootLayout({
       </head>
       <body className={karla.variable}>
         <AppProvider>
-          <LayoutProvider profile={profile}>
+          <LayoutProvider profile={profile} techLogos={skills.logos}>
             {children}
           </LayoutProvider>
         </AppProvider>

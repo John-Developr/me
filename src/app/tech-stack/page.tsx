@@ -1,6 +1,10 @@
 import type { Metadata } from "next";
 import TechStackPage from "@/containers/tech-stack-page";
 import { BASE_URL } from "@/config/siteUrl";
+import { getPublicSkills } from "../getPublicSkills";
+
+// Admin edits revalidate this page right away; this is only a safety net.
+export const revalidate = 300;
 
 export const metadata: Metadata = {
   title: "Tech Stack",
@@ -33,6 +37,7 @@ export const metadata: Metadata = {
   },
 };
 
-export default function TechStack() {
-  return <TechStackPage />;
+export default async function TechStack() {
+  const skills = await getPublicSkills();
+  return <TechStackPage core={skills.core} categories={skills.categories} current={skills.current} />;
 }

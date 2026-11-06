@@ -1,0 +1,314 @@
+/* ============================================================
+   ADMIN — Skills & Technologies
+   ============================================================ */
+
+/* ─── Toolbar ─────────────────────────────────────────────── */
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.summary {
+  font-size: 13.5px;
+  color: var(--text-muted);
+}
+
+.summary strong {
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+}
+
+.legend {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12.5px;
+  color: var(--text-muted);
+}
+
+.search {
+  margin-left: auto;
+  flex: 0 1 240px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 12px;
+  border-radius: 8px;
+  border: var(--border-input-field);
+  background: var(--container-bg);
+  color: var(--text-muted);
+}
+
+.search:focus-within {
+  border-color: var(--admin-accent);
+}
+
+.search input {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  outline: none;
+  background: none;
+  font: inherit;
+  font-size: 14px;
+  color: var(--text);
+}
+
+/* Markers (chips + legend) */
+.core {
+  color: var(--admin-warning);
+  font-size: 11px;
+  line-height: 1;
+}
+
+.current {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--admin-success);
+}
+
+/* ─── Core Stack list ─────────────────────────────────────── */
+
+.core-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.core-item {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: var(--border-container);
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.core-item:hover {
+  background: var(--clip-hover);
+}
+
+.core-rank {
+  width: 20px;
+  flex-shrink: 0;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.core-logo {
+  width: 34px;
+  height: 34px;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  background: var(--bg);
+  color: var(--text-muted);
+}
+
+.core-logo img {
+  object-fit: contain;
+}
+
+.core-text {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.core-text strong {
+  font-size: 14px;
+}
+
+.core-text small {
+  font-size: 12.5px;
+  color: var(--text-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.home-badge {
+  margin-left: auto;
+  flex-shrink: 0;
+  padding: 1px 7px;
+  border-radius: 999px;
+  font-size: 10.5px;
+  font-weight: 700;
+  color: var(--admin-accent-ink);
+  background: var(--admin-accent-soft);
+}
+
+/* ─── Category cards ──────────────────────────────────────── */
+
+/* Two columns; cards in a row share a height. */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+  align-items: stretch;
+}
+
+.category {
+  gap: 14px;
+}
+
+.category-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.category-icon {
+  width: 34px;
+  height: 34px;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9px;
+  background: var(--admin-accent-soft);
+  color: var(--admin-accent-ink);
+}
+
+.category-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.category-text h2 {
+  font-size: 15px;
+}
+
+.category-text p {
+  margin-top: 2px;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.count {
+  flex-shrink: 0;
+  margin-top: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.chip {
+  height: 30px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 10px;
+  border-radius: 8px;
+  border: var(--badges-border);
+  background: var(--badges-bg);
+  color: var(--text);
+  font-size: 13px;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.chip:hover {
+  background: var(--clip-hover);
+}
+
+.chip img {
+  object-fit: contain;
+}
+
+.chip.add {
+  border-style: dashed;
+  color: var(--text-muted);
+}
+
+/* ─── Category dialog: icon picker ────────────────────────── */
+
+.icon-picker {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  border: none;
+}
+
+.icon-picker legend {
+  margin-bottom: 6px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.icon-picker label {
+  width: 40px;
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9px;
+  border: var(--border-container);
+  color: var(--text-muted);
+  cursor: pointer;
+}
+
+.icon-picker label:hover {
+  background: var(--clip-hover);
+}
+
+.icon-picker label.chosen {
+  border-color: var(--admin-accent);
+  background: var(--admin-accent-soft);
+  color: var(--admin-accent-ink);
+}
+
+.icon-picker input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.icon-picker label:has(input:focus-visible) {
+  outline: 2px solid var(--admin-accent);
+  outline-offset: 2px;
+}
+
+.keep-skills {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+  color: var(--text);
+}
+
+/* ─── ≤850px ──────────────────────────────────────────────── */
+
+@media (max-width: 850px) {
+  .grid,
+  .core-list {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .search {
+    margin-left: 0;
+    flex: 1 1 100%;
+  }
+}

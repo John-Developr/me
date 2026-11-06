@@ -38,7 +38,7 @@ export const ADMIN_NAV: AdminNavGroup[] = [
       { key: "profile",        label: "Personal Profile",      icon: AdminIcons.User,          kind: "route", href: "/admin/profile" },
       { key: "projects",       label: "Projects",              icon: AdminIcons.Folder,        kind: "route", href: "/admin/projects" },
       { key: "experience",     label: "Work Experience",       icon: AdminIcons.Briefcase,     kind: "route", href: "/admin/experience" },
-      { key: "skills",         label: "Skills & Technologies", icon: AdminIcons.Code,          kind: "soon" },
+      { key: "skills",         label: "Skills & Technologies", icon: AdminIcons.Code,          kind: "route", href: "/admin/skills" },
       { key: "education",      label: "Education",             icon: AdminIcons.GraduationCap, kind: "soon" },
       { key: "certifications", label: "Certifications",        icon: AdminIcons.Award,         kind: "soon" },
       { key: "services",       label: "Services",              icon: AdminIcons.Layers,        kind: "soon" },

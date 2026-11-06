@@ -19,12 +19,16 @@ import { useAnimateIn } from "@/hooks/useAnimateIn";
 
 import CoreToolCard from "./CoreToolCard";
 import CategoryCard from "./CategoryCard";
-import { coreStack, toolkit } from "./techStackData";
+import { TechCategory, TechTool } from "@/utils/types";
 
-/** Tools used day to day right now (work + this site). */
-const CURRENT_TOOLS = ["Swift", "SwiftUI", "Objective-C", "Next.js", "Supabase", "Google Gemini"];
+interface TechStackPageProps {
+    core:       TechTool[];
+    categories: TechCategory[];
+    /** Tools marked "Right now" in the Skills admin. */
+    current:    string[];
+}
 
-export default function TechStackPage() {
+export default function TechStackPage({ core, categories, current }: TechStackPageProps) {
     const now = useAnimateIn<HTMLElement>({ delay: 80, duration: 600 });
 
     return (
@@ -54,7 +58,7 @@ export default function TechStackPage() {
                         and Objective-C — and web projects like this site with Next.js, Supabase,
                         and Google Gemini.
                     </p>
-                    <TechChips items={CURRENT_TOOLS} ariaLabel="Tools I use right now" />
+                    <TechChips items={current} ariaLabel="Tools I use right now" />
                 </section>
 
                 <section aria-labelledby="core-stack-title">
@@ -63,7 +67,7 @@ export default function TechStackPage() {
                         title="Core Stack."
                         icon={Star} />
                     <ul className={styles["core-grid"]}>
-                        {coreStack.map((tool, index) => (
+                        {core.map((tool, index) => (
                             <CoreToolCard
                                 key={tool.name}
                                 tool={tool}
@@ -78,7 +82,7 @@ export default function TechStackPage() {
                         title="Full Toolkit."
                         icon={Setting} />
                     <div className={styles["toolkit-grid"]}>
-                        {toolkit.map((category, index) => (
+                        {categories.map((category, index) => (
                             <CategoryCard
                                 key={category.slug}
                                 category={category}

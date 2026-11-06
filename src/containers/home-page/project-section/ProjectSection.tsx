@@ -6,7 +6,7 @@ import styles from "@/styles/pages/page.module.css";
 import { HomeIcons } from "@/components/icons";
 import { ArrowRightV2 } from "@/components/icons/ArrowRight";
 import { useApp } from "@/lib/.context/AppContext";
-import { TECH_LOGOS } from "@/config/techLogos";
+import { useTechLogos } from "@/lib/.context/TechLogosContext";
 import { ProjectItem } from "@/utils/types";
 
 /**
@@ -51,6 +51,8 @@ export default function ProjectSection({ project }: { project: ProjectItem }) {
 }
 
 function ProjectDetail({ project, isMobile } : { project: ProjectItem; isMobile: boolean }) {
+    const logos = useTechLogos();
+
     return (
         <div className={styles["recent-detail"]}>
             <section className={styles["name-intro"]}>
@@ -74,9 +76,9 @@ function ProjectDetail({ project, isMobile } : { project: ProjectItem; isMobile:
                     <ul>
                         {project.tech.map((name) => (
                             <li key={name}>
-                                {TECH_LOGOS[name] && (
+                                {logos[name] && (
                                     <Image
-                                        src={TECH_LOGOS[name]}
+                                        src={logos[name]}
                                         width={14}
                                         height={14}
                                         alt=""
