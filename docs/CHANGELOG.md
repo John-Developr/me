@@ -8,6 +8,7 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versio
 Work in progress on the `liquid-glass` branch.
 
 ### Added
+- Chat assistant closes when clicking or tapping outside the chat box, or pressing Escape (`components/chat/ChatAI.tsx`).
 - Global `.liquid_glass` and `.liquid_glass_btn` glassmorphism utility classes (`globals.css`), applied to header icon buttons, hero CTAs, project actions, and the resume button.
 - Firebase card in the home Tech Stack section.
 - `ThreeDotsHorizontal` icon for the header menu trigger.
