@@ -6,10 +6,11 @@ import { sileo } from "sileo";
 
 import { HomeIcons } from "@/components/icons";
 import styles from "@/styles/pages/page.module.css";
-import { networkDefine } from "@/config/networkDefine";
 import CopyClipboard from "@/components/clipboard";
+import { PublicProfile } from "@/utils/types";
 
-export default function ConnectionSection() {
+/** "Connect." card — email, phone and resume come from the admin profile. */
+export default function ConnectionSection({ profile }: { profile: PublicProfile }) {
     const isDownloading = useRef(false);
 
     const downloadResume = (e: React.MouseEvent<HTMLAnchorElement>) => {
@@ -24,12 +25,10 @@ export default function ConnectionSection() {
 
         sileo.promise(
             fakeDownload.then(async () => {
-                const res = await fetch(networkDefine.RESUME_URL, {
-                    method: "GET",
-                    headers: {
-                    "Content-Type": "application/pdf",
-                    },
-                });
+                // Plain GET (no custom headers) so a Media Library resume on
+                // Supabase Storage downloads without a CORS preflight.
+                if (!profile.resumeUrl) throw new Error("No resume set");
+                const res = await fetch(profile.resumeUrl);
 
                 if (!res.ok) throw new Error("Download failed");
 
@@ -70,21 +69,25 @@ export default function ConnectionSection() {
                  height={20} />
                 <h3>Connect.</h3>
             </div>
+            {profile.email && (
             <section className={styles.email}>
                 <p className={styles.title}>Email</p>
                 <h5>
-                    johncarlo.fullstackdev@
+                    {/* Only the part before the domain is shown; the copy button copies all of it. */}
+                    {profile.email.split("@")[0]}@
                     <span 
                         className={styles.icon} >
-                        <CopyClipboard />               
+                        <CopyClipboard text={profile.email} />               
                     </span>
                 </h5>
             </section>
-            <section className={styles.sched}>
+            )}
+{profile.bookingUrl && (
+                        <section className={styles.sched}>
                 <p className={styles.title}>Let&#39;s Talk</p>
                 <h5 className={styles.pointer}>
                     <a 
-                        href={networkDefine.CALENDLY_URL} 
+                        href={profile.bookingUrl} 
                         target="_blank" 
                         rel="noopener noreferrer">
                         Schedule a Call in Calendar
@@ -96,6 +99,7 @@ export default function ConnectionSection() {
                     </a>
                 </h5>
             </section>
+            )}
             <section className={styles.myform}>
                 <p className={styles.title}>contact</p>
                 <h5 className={styles.pointer}>
@@ -109,6 +113,7 @@ export default function ConnectionSection() {
                     </Link>
                 </h5>
             </section>
+            {profile.phone && (
             <section className={styles.phone}>
                 <p className={styles.title}>phone</p>
                 <h5>
@@ -118,7 +123,7 @@ export default function ConnectionSection() {
                         height={12}
                         alt="Avatar"
                         className={styles.avatar} />
-                    PH, (+632) 9293-1982
+                    PH, {profile.phone}
                     <span className={styles.icon}>
                         <HomeIcons.Call 
                          width={18} 
@@ -126,6 +131,8 @@ export default function ConnectionSection() {
                     </span>
                 </h5>
             </section>
+            )}
+            {profile.resumeUrl && (
             <section className={styles.resume}>
                 <a 
                     href={"#"}
@@ -139,6 +146,7 @@ export default function ConnectionSection() {
                     </span>
                 </a>
             </section>
+            )}
         </section>  
     )
 }

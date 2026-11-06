@@ -36,6 +36,7 @@
 
   --clip-hover: rgb(235, 235, 235);
   --logo-filter: unset;
+  --mono-logo-filter: unset; /* black single-color tech logos (e.g. OpenAI) */
 
   --chat-buble-bg: #f2f2f2;
   --chat-buble-after: #f2f2f2;
@@ -46,6 +47,17 @@
   --skeleton-shine:   #e4e4e4;
 
   --experience-box-shadow: 0 1px 6px -3px rgba(0,0,0,0.93);
+
+  /* Admin dashboard — follows the site theme (primary fill, site blue for data) */
+  --admin-accent:       var(--bg-primary);           /* fills (white text on top) */
+  --admin-accent-hover: var(--primary-hover-color);
+  --admin-accent-ink:   var(--bg-primary);           /* accent text/icons on surfaces */
+  --admin-accent-soft:  rgba(40, 42, 54, 0.07);
+  --admin-chart-line:   #476fff;                     /* site blue; near-black reads as text, not data */
+  --admin-success:      #1a7f4b;
+  --admin-danger:       #c2332f;
+  --admin-warning:      #b45309;
+  --admin-shadow:       0 1px 2px rgba(16, 24, 40, 0.04), 0 1px 3px rgba(16, 24, 40, 0.06);
 }
 
 .dark {
@@ -82,6 +94,7 @@
   --text-muted-hover: var(--text-header); /* ...brighter in dark mode */
 
   --clip-hover: #30363d;
+  --mono-logo-filter: invert(1); /* ...turned white so they stay visible */
   --logo-filter: 
     brightness(0) 
     saturate(100%) 
@@ -101,6 +114,16 @@
   --skeleton-shine:   #252b3b;
 
   --experience-box-shadow: 0 1px 6px -3px rgba(255, 255, 255, 0.93);
+
+  --admin-accent:       var(--bg-primary);
+  --admin-accent-hover: var(--primary-hover-color);
+  --admin-accent-ink:   var(--bg-primary);
+  --admin-accent-soft:  rgba(71, 111, 255, 0.14);
+  --admin-chart-line:   var(--bg-primary);
+  --admin-success:      #3fb950;
+  --admin-danger:       #f85149;
+  --admin-warning:      #d29922;
+  --admin-shadow:       0 1px 2px rgba(0, 0, 0, 0.30);
 }
 
 * {
@@ -225,6 +248,12 @@ button, a {
 .header .logo img {
   cursor: pointer;
   filter: var(--logo-filter)
+}
+
+/* Black single-color tech logos would vanish on dark backgrounds.
+   Matches next/image URLs too (the file name is in the src query). */
+img[src*="chatgpt.png"] {
+  filter: var(--mono-logo-filter);
 }
 
 .header .linkend {
@@ -432,6 +461,16 @@ button, a {
     color: var(--text-muted);
 }
   
+.section section.socials a {
+    display: flex;
+    color: inherit;
+    transition: color 0.15s ease;
+}
+
+.section section.socials a:hover {
+    color: var(--text-muted-hover);
+}
+
 .section section.socials ul {
     margin-left: auto;
     display: flex;

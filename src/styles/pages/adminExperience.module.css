@@ -1,0 +1,63 @@
+/* ============================================================
+   ADMIN — Work Experience
+   The list reuses the table/toolbar styles in adminProjects.module.css
+   and the form uses adminForm.module.css.
+   ============================================================ */
+
+.type {
+  display: inline-flex;
+  padding: 2px 9px;
+  border-radius: 999px;
+  border: var(--badges-border);
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+  color: var(--text-muted);
+}
+
+.type.work {
+  color: var(--admin-accent-ink);
+  border-color: var(--admin-accent-ink);
+}
+
+/* Form: live preview of the timeline entry */
+.preview {
+  display: flex;
+  gap: 10px;
+  padding: 12px;
+  border-radius: 10px;
+  background: var(--bg);
+}
+
+.preview-logo {
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: 6px;
+  background: var(--container-bg);
+  color: var(--text-muted);
+}
+
+.preview-logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.preview h4 {
+  font-size: 14px;
+  overflow-wrap: anywhere;
+}
+
+.preview p {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.preview .position {
+  color: var(--text);
+}

@@ -44,7 +44,7 @@ All content outside the blog (profile, about, stack, experience, featured projec
 ├── AGENTS.md / CLAUDE.md  AI-assistant rules (CLAUDE.md imports AGENTS.md)
 ├── docs/             Project docs: overview, design system, contributing, changelog
 ├── public/
-│   ├── documents/        resume.pdf, email-template.html (contact email)
+│   ├── documents/        email-template.html (contact email; the resume is in the Media Library)
 │   ├── images/           Avatar, Logo, Featured, Ph-Flag, NativeCamp
 │   │   ├── company/      experience logos (Forty, Proweaver, UC, CodeTag)
 │   │   └── tech/         tech-stack logos (react, next, node, supabase, firebase, …)
@@ -89,8 +89,8 @@ All content outside the blog (profile, about, stack, experience, featured projec
 | Route | Route file | Container | Notes |
 |---|---|---|---|
 | `/` | `app/page.tsx` | `containers/home-page` | Full SEO metadata, OG, Twitter |
-| `/projects` | `app/projects/page.tsx` | `containers/projects-page` | Placeholder ("currently being updated") |
-| `/tech-stack` | `app/tech-stack/page.tsx` | `containers/tech-stack-page` | Placeholder |
+| `/projects` | `app/projects/page.tsx` | `containers/projects-page` | Featured project, "More Projects." grid, contact CTA — published projects from Supabase (edit in `/admin/projects`) |
+| `/tech-stack` | `app/tech-stack/page.tsx` | `containers/tech-stack-page` | Static: "Right Now", Core Stack, Full Toolkit categories, CTA (data in `techStackData.ts`) |
 | `/blog` | `app/blog/page.tsx` | `containers/blog-page` | Category filter + sort, fetches `/api/blog` |
 | `/blog/[slug]` | `app/blog/[slug]/page.tsx` | `containers/blog-detail-page` | Fetches `/api/blog/[slug]`, renders Markdown; shows 404 container if missing |
 | `/contact` | `app/contact/page.tsx` | `containers/contact-page` | Inquiry-type + budget cards, POSTs `/api/contact` |

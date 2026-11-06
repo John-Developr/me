@@ -1,9 +1,9 @@
 import React from "react";
 import styles from "@/styles/general/component.module.css";
 
-export default function CopyClipboard() {
+/** Copy button; copies `text` (the profile email on the home page). */
+export default function CopyClipboard({ text }: { text: string }) {
   const [copied, setCopied] = React.useState(false);
-  const email = "johncarlo.fullstackdev@gmail.com";
 
   React.useEffect(() => {
     if (!copied) return;
@@ -12,7 +12,7 @@ export default function CopyClipboard() {
   }, [copied]);
 
   const handleCopy = () => {
-    navigator.clipboard.writeText(email).then(() => {
+    navigator.clipboard.writeText(text).then(() => {
       setCopied(true);
     });
   };

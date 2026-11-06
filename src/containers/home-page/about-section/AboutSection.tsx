@@ -1,7 +1,9 @@
+import { Fragment } from "react";
 import { HomeIcons } from "@/components/icons";
 import styles from "@/styles/pages/page.module.css";
 
-export default function AboutSection() {
+/** "About Me." card. `bio` comes from the admin profile (paragraphs). */
+export default function AboutSection({ bio }: { bio: string[] }) {
   return (
     <section className={styles.about}>
       <div className={styles.title}>
@@ -10,20 +12,16 @@ export default function AboutSection() {
         </span>
         <h3>About Me.</h3>
         </div>
-        <p>
-          Hello there, I&#39;m John Carlo, a 25-year-old web and mobile developer based in 
-          Cebu, Philippines. I specialize in building scalable web, software, and mobile 
-          applications that work seamlessly across platforms. With a strong foundation in 
-          JavaScript, PHP, and other modern technologies, I&#39;m passionate about 
-          crafting solutions that are both efficient and impactful. 
-
-          <br/>
-          <br/>
-
-          When I&#39;m not writing code, you&#39;ll find me watching movies, reading, playing 
-          video games, exploring new places, going for rides, traveling, or staying active 
-          through sports.
-        </p>
+        {bio.length > 0 && (
+          <p>
+            {bio.map((paragraph, index) => (
+              <Fragment key={index}>
+                {index > 0 && <><br /><br /></>}
+                {paragraph}
+              </Fragment>
+            ))}
+          </p>
+        )}
     </section>
   );
 }

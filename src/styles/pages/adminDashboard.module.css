@@ -1,0 +1,524 @@
+/* ============================================================
+   ADMIN — Dashboard overview sections
+   Shared primitives (card, stat, buttons) live in admin.module.css.
+   ============================================================ */
+
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.muted {
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
+/* ─── Welcome header ──────────────────────────────────────── */
+
+.welcome {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  animation: dashFadeUp 0.5s ease both;
+}
+
+.welcome h1 {
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+
+.welcome p {
+  margin-top: 4px;
+  font-size: 14.5px;
+  color: var(--text-muted);
+}
+
+.welcome-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+@keyframes dashFadeUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* ─── Stats grid ──────────────────────────────────────────── */
+
+/* 3 × 2 on desktop, 2 × 3 on phones: rows are always full and every
+   card has room for its whole label. */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.stats-error {
+  grid-column: 1 / -1;
+}
+
+.stats > * {
+  animation: dashFadeUp 0.45s ease both;
+}
+
+.stats > *:nth-child(2) { animation-delay: 0.04s; }
+.stats > *:nth-child(3) { animation-delay: 0.08s; }
+.stats > *:nth-child(4) { animation-delay: 0.12s; }
+.stats > *:nth-child(5) { animation-delay: 0.16s; }
+.stats > *:nth-child(6) { animation-delay: 0.20s; }
+
+/* ─── Two-column rows ─────────────────────────────────────── */
+
+/* Each row's cards stretch to the taller one, so edges line up. */
+.row {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(280px, 1fr);
+  gap: 20px;
+  align-items: stretch;
+}
+
+/* ─── Traffic ─────────────────────────────────────────────── */
+
+.range-tabs {
+  display: inline-flex;
+  padding: 3px;
+  border-radius: 9px;
+  background: var(--bg);
+  border: var(--border-container);
+}
+
+.range-tabs button {
+  height: 28px;
+  padding: 0 10px;
+  border-radius: 6px;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--text-muted);
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.range-tabs button:hover {
+  color: var(--text);
+}
+
+.range-tabs button.selected {
+  background: var(--container-bg);
+  color: var(--text);
+  box-shadow: var(--admin-shadow);
+}
+
+.custom-range {
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.custom-range label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.custom-range input {
+  height: 38px;
+  padding: 0 10px;
+  border-radius: 8px;
+  border: var(--border-input-field);
+  background: var(--container-bg);
+  color: var(--text);
+  font: inherit;
+  font-size: 13.5px;
+  color-scheme: light dark;
+}
+
+.form-error {
+  width: 100%;
+  font-size: 13px;
+  color: var(--admin-danger);
+}
+
+.chart-skeleton {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.refetching {
+  opacity: 0.55;
+  transition: opacity 0.2s ease;
+}
+
+.traffic-summary {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 8px;
+}
+
+.traffic-summary strong {
+  font-size: 26px;
+  font-variant-numeric: tabular-nums;
+}
+
+.traffic-summary span {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.traffic-summary .up {
+  color: var(--admin-success);
+  font-weight: 600;
+}
+
+.traffic-summary .down {
+  color: var(--admin-danger);
+  font-weight: 600;
+}
+
+/* ─── Recent activity ─────────────────────────────────────── */
+
+.activity {
+  display: flex;
+  flex-direction: column;
+}
+
+.activity li {
+  display: flex;
+  gap: 12px;
+  padding: 12px 0;
+}
+
+.activity li + li {
+  border-top: var(--border-container);
+}
+
+.activity li:first-child {
+  padding-top: 0;
+}
+
+.activity li:last-child {
+  padding-bottom: 0;
+}
+
+.activity-icon {
+  width: 30px;
+  height: 30px;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  background: var(--bg);
+  color: var(--text-muted);
+}
+
+.activity-body {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.activity-body p {
+  font-size: 14px;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+
+.activity-body small {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.action-badge {
+  padding: 1px 7px;
+  border-radius: 999px;
+  border: var(--badges-border);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--badges-text);
+}
+
+.action-published,
+.action-received {
+  border-color: var(--admin-accent);
+  color: var(--admin-accent-ink);
+}
+
+.action-deleted {
+  border-color: var(--admin-danger);
+  color: var(--admin-danger);
+}
+
+/* Side by side with Quick Actions, the activity card takes the row height
+   set by Quick Actions (height: 0 so it doesn't size the row; min-height
+   100% fills it) and scrolls inside, so both cards end on the same line.
+   Stacked on phones, it keeps its natural height. */
+@media (min-width: 851px) {
+  .activity-card {
+    height: 0;
+    min-height: 100%;
+  }
+
+  .activity-card .activity {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    padding-right: 4px;
+    padding-bottom: 16px;
+    scrollbar-width: thin;
+    /* Soft fade at the bottom edge: there's more to scroll. */
+    mask-image: linear-gradient(to bottom, #000 calc(100% - 28px), transparent);
+  }
+}
+
+/* ─── Content overview ────────────────────────────────────── */
+
+.overview {
+  display: flex;
+  flex-direction: column;
+}
+
+.overview > div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 9px 0;
+  font-size: 14px;
+}
+
+.overview > div + div {
+  border-top: var(--border-container);
+}
+
+.overview dt {
+  color: var(--text-muted);
+}
+
+.overview dd {
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+.completion {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: auto;
+  padding-top: 14px;
+  border-top: var(--border-container);
+}
+
+.completion-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  font-size: 14px;
+}
+
+.completion-head p {
+  font-weight: 600;
+}
+
+.completion-head strong {
+  font-size: 18px;
+  font-variant-numeric: tabular-nums;
+}
+
+.progress {
+  height: 8px;
+  border-radius: 999px;
+  background: var(--bg);
+  overflow: hidden;
+}
+
+.progress span {
+  display: block;
+  height: 100%;
+  border-radius: 999px;
+  background: var(--admin-accent);
+  transition: width 0.4s ease;
+}
+
+.completion-note {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12.5px;
+  line-height: 1.45;
+  color: var(--text-muted);
+}
+
+.completion-details {
+  font-size: 13px;
+}
+
+.completion-details summary {
+  cursor: pointer;
+  color: var(--admin-accent-ink);
+  font-weight: 600;
+}
+
+.completion-details ul {
+  margin-top: 8px;
+  padding-left: 18px;
+  list-style: disc;
+  color: var(--text-muted);
+  line-height: 1.7;
+}
+
+.completion-note a,
+.completion-link {
+  color: var(--admin-accent-ink);
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+.completion-link {
+  display: inline-block;
+  margin-top: 8px;
+}
+
+/* ─── Quick actions ───────────────────────────────────────── */
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.action {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px;
+  border-radius: 10px;
+  border: var(--border-container);
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.action:hover {
+  background: var(--clip-hover);
+}
+
+.action[aria-disabled="true"] {
+  cursor: default;
+}
+
+.action-icon {
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  background: var(--admin-accent-soft);
+  color: var(--admin-accent-ink);
+}
+
+.action-text {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.action-text strong {
+  font-size: 14px;
+}
+
+.action-text small {
+  font-size: 12.5px;
+  color: var(--text-muted);
+}
+
+.soon-pill {
+  margin-left: auto;
+  padding: 1px 7px;
+  border-radius: 999px;
+  border: var(--badges-border);
+  font-size: 10.5px;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+/* ─── Skeletons ───────────────────────────────────────────── */
+
+.skeleton-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.skeleton-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.skeleton-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.skeleton-row > div {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* ─── ≤850px ──────────────────────────────────────────────── */
+
+@media (max-width: 850px) {
+  .row {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .welcome {
+    align-items: flex-start;
+  }
+
+  .welcome h1 {
+    font-size: 22px;
+  }
+
+  .welcome-actions {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .welcome,
+  .stats > * {
+    animation: none;
+  }
+}

@@ -3,23 +3,29 @@ import styles from "@/styles/pages/page.module.css";
 import SkeletonImage from "@/components/custom/SkeletonImage";
 
 import { HomeIcons } from "@/components/icons";
-import { networkDefine } from "@/config/networkDefine";
+import { PublicProfile } from "@/utils/types";
 
-export default function DetailSection(){
+/** Hero: name, headline, location, actions and photo — from the admin profile. */
+export default function DetailSection({ profile }: { profile: PublicProfile }){
     return (
         <>
           <div className={styles.detail}>
-              <p className={styles.name}>
-                John Carlo A. Ylanan
-              </p>
-              <h2 className={styles.role}>
-                Full Stack Developer
-              </h2>
+              {profile.name && (
+                <p className={styles.name}>
+                  {profile.name}
+                </p>
+              )}
+              {profile.headline && (
+                <h2 className={styles.role}>
+                  {profile.headline}
+                </h2>
+              )}
+              {profile.location && (
               <p className={styles.location}>
                   <HomeIcons.Location 
                     width={18} 
                     height={18} />
-                    Cebu City, Cebu, Philippines, 6000
+                    {profile.location}
                   <Image
                     src="/images/Ph-Flag.png"
                     width={12}
@@ -27,9 +33,11 @@ export default function DetailSection(){
                     alt="Avatar"
                     className={styles.avatar} />
               </p>
+              )}
               <div className={styles.action}>
+                  {profile.bookingUrl && (
                   <a 
-                    href={networkDefine.CALENDLY_URL} 
+                    href={profile.bookingUrl} 
                     target="_blank" 
                     className="liquid_glass_btn"
                     rel="noopener noreferrer">
@@ -41,19 +49,22 @@ export default function DetailSection(){
                         width={18} 
                         height={18} />                                                                              
                   </a>
-                  <a 
-                    href={networkDefine.MAIL_TO}
-                    className="liquid_glass_btn">
-                      <HomeIcons.Message 
-                        width={18} 
-                        height={18} />
-                      Send Email
-                  </a>
+                  )}
+                  {profile.email && (
+                    <a 
+                      href={`mailto:${profile.email}`}
+                      className="liquid_glass_btn">
+                        <HomeIcons.Message 
+                          width={18} 
+                          height={18} />
+                        Send Email
+                    </a>
+                  )}
               </div>
           </div>
           <div className={styles.profile}>
             <SkeletonImage 
-              path="/images/Avatar.jpg" 
+              path={profile.avatarUrl} 
               className={styles.avatar} 
               width={75} 
               height={75} 

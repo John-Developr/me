@@ -1,6 +1,12 @@
 import type { Metadata } from "next";
 import HomePage from "@/containers/home-page";
 import { BASE_URL } from "@/config/siteUrl";
+import { getPublicProfile } from "./getPublicProfile";
+import { getPublicExperience } from "./getPublicExperience";
+import { getPublicProjects } from "./projects/getProjects";
+
+// Admin edits revalidate this page right away; this is only a safety net.
+export const revalidate = 300;
 
 
 export const metadata: Metadata = {
@@ -73,6 +79,15 @@ export const metadata: Metadata = {
   },
 };
 
-export default function Home() {
-  return <HomePage />;
+export default async function Home() {
+  const [profile, experience, projects] = await Promise.all([
+    getPublicProfile(),
+    getPublicExperience(),
+    getPublicProjects(),
+  ]);
+
+  // "Recent Projects." shows the featured project, else the first published one.
+  const highlight = projects.featured ?? projects.projects[0] ?? null;
+
+  return <HomePage profile={profile} experience={experience} project={highlight} />;
 }

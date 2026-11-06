@@ -1,0 +1,36 @@
+/* ============================================================
+   ADMIN — Account Settings
+   Fields and panels come from adminForm.module.css.
+   ============================================================ */
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.theme-option {
+  flex-direction: row !important;
+  align-items: center;
+  gap: 8px;
+}
+
+.user-id {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 13px;
+}
+
+.user-id span {
+  color: var(--text-muted);
+}
+
+.user-id code {
+  padding: 6px 8px;
+  border-radius: 6px;
+  background: var(--bg);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 12px;
+  overflow-wrap: anywhere;
+  user-select: all;
+}
