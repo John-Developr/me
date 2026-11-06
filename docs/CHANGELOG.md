@@ -8,6 +8,7 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versio
 Work in progress on the `liquid-glass` branch.
 
 ### Added
+- Chat assistant closes when clicking or tapping outside the chat box, or pressing Escape (`components/chat/ChatAI.tsx`).
 - Global `.liquid_glass` and `.liquid_glass_btn` glassmorphism utility classes (`globals.css`), applied to header icon buttons, hero CTAs, project actions, and the resume button.
 - Firebase card in the home Tech Stack section.
 - `ThreeDotsHorizontal` icon for the header menu trigger.
@@ -15,6 +16,7 @@ Work in progress on the `liquid-glass` branch.
 - Blog cron dry-run mode: `GET /api/cron/blog?dry=1` (with the cron secret) generates and returns a post without saving it.
 
 ### Changed
+- Home "Recent Projects." screenshot frame matches the `/projects` featured frame (theme tokens, soft shadow) and now has a proper dark-mode look instead of a fixed light-grey frame.
 - Experience section: Forty Degrees Celsius roles listed as AI Engineer, iOS Developer, Web Developer.
 - Experience section: AI Engineer duration updated to 11 months.
 - Blog post "Share with" buttons (Facebook, LinkedIn) and the "View All Blogs" back link use the same `liquid_glass` style and hover as the header buttons. New `.liquid_glass_group` parent class applies the glass hover when hovering anywhere in the parent.
