@@ -543,10 +543,12 @@ div.title {
   row-gap: 10px;
 }
 
+/* Browser-window frame — same recipe as .browser-frame on /projects */
 .recent-image-content {
-  background-color: #eee;
+  background: var(--bg);
   border-radius: 10px;
-  border: 1px solid #ececec;
+  border: var(--badges-border);
+  box-shadow: var(--box-shadow-default);
   padding: 2px;
   height: fit-content;
 }
@@ -581,13 +583,8 @@ div.title {
 
 .third .recent-image img {
   display: block;
-  background-color: #eee;
-  border-radius: 10px;
-  border: 1px solid #ececec;
+  border-radius: 0 0 8px 8px;
   object-fit: cover;
-
-  border-top-left-radius: 0px;
-  border-top-right-radius: 0px;
 }
 
 .third .recent-action {
