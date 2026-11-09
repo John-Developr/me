@@ -1,0 +1,243 @@
+/* ============================================================
+   ADMIN — SEO Settings
+   Layout and fields come from adminForm.module.css (same as the
+   Personal Profile editor); this file styles the page tabs and
+   the previews.
+   ============================================================ */
+
+/* ─── Page tabs (segmented) ───────────────────────────────── */
+
+.page-tabs {
+  display: inline-flex;
+  flex-wrap: wrap;
+  padding: 3px;
+  border-radius: 10px;
+  background: var(--bg);
+  border: var(--border-container);
+}
+
+.page-tabs button {
+  position: relative;
+  height: 30px;
+  padding: 0 12px;
+  border: none;
+  border-radius: 7px;
+  background: none;
+  color: var(--text-muted);
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.page-tabs button:hover {
+  color: var(--text);
+}
+
+.page-tabs button.on {
+  background: var(--container-bg);
+  color: var(--text);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08), 0 0 0 1px var(--divider-bottom);
+}
+
+/* Red dot on a tab whose page has an error */
+.page-tabs button.hasError::after {
+  content: "";
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--admin-danger);
+}
+
+.warning {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12.5px;
+  color: var(--admin-warning);
+}
+
+/* ─── Previews ────────────────────────────────────────────── */
+
+/* Off-screen image used only to read the icon's real size. */
+.probe {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.label {
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.hidden {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid var(--admin-warning);
+  color: var(--admin-warning);
+  font-size: 12.5px;
+  font-weight: 600;
+}
+
+/* Google result */
+.google {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px;
+  border-radius: 10px;
+  border: var(--border-container);
+}
+
+.google.dim {
+  opacity: 0.45;
+}
+
+.google-site {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.google-site > span:last-child {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  line-height: 1.25;
+}
+
+.google-site strong {
+  font-size: 13px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.google-site small {
+  font-size: 11.5px;
+  color: var(--text-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.google-icon {
+  width: 26px;
+  height: 26px;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--bg);
+  border: var(--border-container);
+}
+
+.google-icon img,
+.tab img {
+  object-fit: contain;
+}
+
+/* Link blue (the site blue), so the preview reads like a real result. */
+.google-title {
+  margin-top: 4px;
+  font-size: 16px;
+  line-height: 1.3;
+  color: var(--admin-chart-line);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.google-desc {
+  font-size: 12.5px;
+  line-height: 1.45;
+  color: var(--text-muted);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Share card */
+.social {
+  overflow: hidden;
+  border-radius: 10px;
+  border: var(--border-container);
+}
+
+.social-image {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1200 / 630;
+  object-fit: cover;
+  background: var(--bg);
+}
+
+.social-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 10px 12px;
+  background: var(--bg);
+}
+
+.social-text small {
+  font-size: 11px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.social-text strong {
+  font-size: 13.5px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.social-text span {
+  font-size: 12px;
+  color: var(--text-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Browser tab (fixed light browser chrome, independent of the admin theme) */
+.tab {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 34px;
+  padding: 0 10px;
+  border-radius: 9px 9px 0 0;
+  font-size: 12px;
+}
+
+.tab span {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.tab.light {
+  background: #ffffff;
+  color: #1f1f1f;
+  box-shadow: inset 0 0 0 1px #e3e3e3;
+}

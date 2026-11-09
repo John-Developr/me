@@ -27,5 +27,3 @@ export const passwordChangeSchema = z.object({
 })
   .refine((d) => d.newPassword === d.confirmPassword, { path: ["confirmPassword"], message: "Passwords don't match." })
   .refine((d) => d.newPassword !== d.currentPassword, { path: ["newPassword"], message: "Choose a password different from your current one." });
-
-export type PasswordChangeInput = z.output<typeof passwordChangeSchema>;

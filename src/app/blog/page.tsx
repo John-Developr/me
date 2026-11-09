@@ -1,39 +1,11 @@
 import type { Metadata } from "next";
+import { buildPageMetadata } from "../seoMetadata";
 import BlogPage from "@/containers/blog-page";
-import { BASE_URL } from "@/config/siteUrl";
 
-export const metadata: Metadata = {
-  title: "Blog",
-  description:
-    "Explore articles on web development, iOS development, technology trends, and personal growth. Learn from real-world experiences, coding tips, and insights by John Carlo Ylanan.",
-  keywords: [
-    "John Carlo Ylanan Blog",
-    "Web Development Blog",
-    "iOS Development Blog",
-    "React Tips",
-    "Swift Programming",
-    "Software Engineering Articles",
-    "Tech Blog Philippines",
-    "Programming Tutorials",
-  ],
-  openGraph: {
-    title: "Blog | John Carlo Ylanan",
-    description:
-      "Read articles on coding, technology, and growth. Discover insights on React, Swift, and modern software development.",
-    url: `${BASE_URL}/blog`,
-    siteName: "John Carlo Portfolio",
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Blog | John Carlo Ylanan",
-    description:
-      "Insights on web & mobile development, tech trends, and personal growth.",
-  },
-  alternates: {
-    canonical: `${BASE_URL}/blog`,
-  },
-};
+/** Title, description, keywords and social cards come from Admin → SEO Settings. */
+export async function generateMetadata(): Promise<Metadata> {
+  return buildPageMetadata("blog");
+}
 
 export default function Blog() {
   return <BlogPage />;

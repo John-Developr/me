@@ -43,3 +43,71 @@ export function referrerHost(referrer: unknown, ownHost: string | null): string 
     return null;
   }
 }
+
+// ─── Visit details (coarse, non-identifying) ─────────────────
+
+export type DeviceType = "desktop" | "mobile" | "tablet";
+
+export interface VisitDevice {
+  device:  DeviceType;
+  browser: string;   // family name only, e.g. "Chrome" (no version)
+  os:      string;   // family name only, e.g. "iOS"
+}
+
+/** Browser/OS family and device type from a user agent. Order matters (Edge and Opera also say "Chrome"). */
+export function parseUserAgent(ua: string | null | undefined): VisitDevice {
+  const s = ua ?? "";
+
+  const device: DeviceType =
+    /iPad|Tablet|PlayBook|Silk|Kindle|Android(?!.*Mobile)/i.test(s) ? "tablet" :
+    /Mobi|iPhone|iPod|Android.*Mobile|Windows Phone/i.test(s)        ? "mobile" :
+    "desktop";
+
+  const browser =
+    /Edg(e|A|iOS)?\//.test(s)          ? "Edge" :
+    /OPR\/|Opera|OPiOS/.test(s)        ? "Opera" :
+    /SamsungBrowser/.test(s)           ? "Samsung Internet" :
+    /Firefox|FxiOS/.test(s)            ? "Firefox" :
+    /CriOS|Chrome\//.test(s)           ? "Chrome" :
+    /Version\/.*Safari|Safari/.test(s) ? "Safari" :
+    "Other";
+
+  const os =
+    /Windows NT|Windows Phone/.test(s) ? "Windows" :
+    /iPhone|iPod/.test(s)              ? "iOS" :
+    /iPad/.test(s)                     ? "iPadOS" :
+    /Android/.test(s)                  ? "Android" :
+    /CrOS/.test(s)                     ? "ChromeOS" :
+    /Mac OS X|Macintosh/.test(s)       ? "macOS" :
+    /Linux/.test(s)                    ? "Linux" :
+    "Other";
+
+  return { device, browser, os };
+}
+
+export interface VisitLocation {
+  country: string | null;   // ISO 3166-1 alpha-2, e.g. "PH"
+  region:  string | null;   // region code, e.g. "07"
+  city:    string | null;
+}
+
+/** Location from Vercel's request headers (no IP lookup; empty outside Vercel). */
+export function readVercelGeo(get: (name: string) => string | null): VisitLocation {
+  const decode = (v: string | null) => {
+    if (!v) return null;
+    try { return decodeURIComponent(v).trim().slice(0, 120) || null; } catch { return null; }
+  };
+  const country = get("x-vercel-ip-country")?.toUpperCase() ?? null;
+
+  return {
+    country: country && /^[A-Z]{2}$/.test(country) ? country : null,
+    region:  decode(get("x-vercel-ip-country-region"))?.slice(0, 80) ?? null,
+    city:    decode(get("x-vercel-ip-city")),
+  };
+}
+
+/** "PH" → "🇵🇭" (regional indicator letters). */
+export const flagEmoji = (code: string | null | undefined): string =>
+  code && /^[A-Z]{2}$/i.test(code)
+    ? String.fromCodePoint(...[...code.toUpperCase()].map((c) => 0x1f1e6 + c.charCodeAt(0) - 65))
+    : "🌐";

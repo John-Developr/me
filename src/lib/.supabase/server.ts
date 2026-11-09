@@ -16,6 +16,8 @@ export const RPC = {
   recordPageView: "record_page_view",
   trafficDaily: "traffic_daily",
   prunePageViews: "prune_page_views",
+  trafficBreakdown: "traffic_breakdown",
+  recentVisitors: "recent_visitors",
 } as const;
 
 export const Table = {
@@ -30,6 +32,8 @@ export const Table = {
   contactMessages: "contact_messages",
   activityLogs: "activity_logs",
   mediaAssets: "media_assets",
+  siteSettings: "site_settings",
+  seoPages: "seo_pages",
 } as const;
 
 // default export the client

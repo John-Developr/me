@@ -1,13 +1,13 @@
-import { renderOgImage, ogImageSize } from "@/utils/general/ogImage";
+import { ogImageSize } from "@/utils/general/ogImage";
+import { renderPageOgImage } from "../pageOgImage";
 
-export const alt         = "Projects by John Carlo A. Ylanan — Web & Mobile Developer";
+// Content comes from Admin → SEO Settings and the Personal Profile photo.
+// Saving either revalidates it; this is only a safety net.
+export const revalidate  = 300;
+export const alt         = "Projects — link preview";
 export const size        = ogImageSize;
 export const contentType = "image/png";
 
 export default function Image() {
-  return renderOgImage({
-    eyebrow:  "Projects",
-    title:    "My Work",
-    subtitle: "Web and mobile projects — from author websites to large-scale teaching platforms.",
-  });
+  return renderPageOgImage("projects", "Projects");
 }

@@ -114,32 +114,11 @@
   box-shadow: var(--admin-shadow);
 }
 
-.custom-range {
+.traffic-controls {
   display: flex;
-  align-items: flex-end;
-  gap: 10px;
+  align-items: center;
+  gap: 8px;
   flex-wrap: wrap;
-}
-
-.custom-range label {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--text-muted);
-}
-
-.custom-range input {
-  height: 38px;
-  padding: 0 10px;
-  border-radius: 8px;
-  border: var(--border-input-field);
-  background: var(--container-bg);
-  color: var(--text);
-  font: inherit;
-  font-size: 13.5px;
-  color-scheme: light dark;
 }
 
 .form-error {
@@ -175,6 +154,17 @@
 .traffic-summary span {
   font-size: 13px;
   color: var(--text-muted);
+}
+
+.traffic-summary .details-link {
+  margin-left: auto;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--admin-accent-ink);
+}
+
+.traffic-summary .details-link:hover {
+  text-decoration: underline;
 }
 
 .traffic-summary .up {

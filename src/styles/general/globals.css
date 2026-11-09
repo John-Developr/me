@@ -7,8 +7,6 @@
   --secondary-hover-color: #e1e1e1;
   --text-secondary: black;
 
-  /* --bg-primary: #4653FF; */
-  /* --bg-primary: #5D72FF; */
   --border-container: 1px solid #eaeaea;
   --box-shadow-default: 0 4px 20px -4px rgba(0,0,0,.08);
 
@@ -61,7 +59,6 @@
 }
 
 .dark {
-  /* --bg-primary: #414966; */
   --bg-primary: #476fff;
   --primary-hover-color: #476fff86;
   --primary-btn-box-shadow: 0 4px 16px rgba(79,124,255,0.35);
@@ -70,12 +67,10 @@
   --secondary-hover-color: #e1e1e1;
   --text-secondary: #e8e7e7;
 
-  /* --bg: #111118; */
   --bg: #0d1117;
   --text: #f8fafc;
 
   --container-bg: #161b22;
-    /* --container-bg: rgba(15, 15, 20, 0.6); */
   --container-back-drop-filter: unset;
 
   --border-container: 1px solid #3d404c46;

@@ -92,16 +92,6 @@ export interface OverlayState {
 };
 
 // ============================================================
-// NAVIGATION
-// ============================================================
-
-export enum AppPagesEnum {
-  Home       = "/",
-  Blog       = "/blog",
-  BlogDetail = "/blog/[slug]",
-}
-
-// ============================================================
 // PROJECTS
 // ============================================================
 
@@ -219,6 +209,7 @@ export interface AdminUser {
   id:          string;
   email:       string;
   displayName: string | null;   // from the profile or auth metadata; null if unknown
+  avatarUrl:   string | null;   // Personal Profile photo; null shows initials
 }
 
 /** Result of one dashboard query: sections fail independently. */
@@ -521,4 +512,66 @@ export interface PublicSkills {
   current:    string[];
   /** Tool name → logo, for tech chips anywhere on the site. */
   logos:      Record<string, string>;
+}
+
+// ============================================================
+// ADMIN — ANALYTICS DETAILS
+// ============================================================
+
+export const BREAKDOWN_DIMENSIONS = ["country", "city", "device", "browser", "os", "referrer", "path"] as const;
+export type BreakdownDimension = (typeof BREAKDOWN_DIMENSIONS)[number];
+
+/** One row of a "top N" list ("" label = unknown / direct). */
+export interface BreakdownRow {
+  label:    string;
+  visitors: number;
+  views:    number;
+}
+
+export type TrafficBreakdowns = Record<BreakdownDimension, BreakdownRow[]>;
+
+/** One visitor on one day (no identifier is ever exposed). */
+export interface RecentVisitor {
+  day:           string;
+  first_seen:    string;
+  last_seen:     string;
+  page_views:    number;
+  paths:         string[];
+  referrer_host: string | null;
+  country:       string | null;
+  region:        string | null;
+  city:          string | null;
+  device:        string | null;
+  browser:       string | null;
+  os:            string | null;
+}
+
+// ============================================================
+// ADMIN — SITE SETTINGS (SEO Settings screen)
+// ============================================================
+
+/** The single row of `public.site_settings`. Null fields use the defaults in code. */
+export interface SiteSettings {
+  favicon_url:         string | null;
+  site_name:           string | null;
+  twitter_handle:      string | null;
+  google_verification: string | null;
+  allow_indexing:      boolean;
+  updated_at:          string | null;
+}
+
+/** A row of `public.seo_pages`: full title, description and keywords for one public page. */
+export interface SeoPage {
+  key:         import("@/utils/admin/seoPages").SeoPageKey;
+  title:       string;
+  description: string;
+  keywords:    string[];
+  /** Custom link preview image; null = generated card. */
+  share_image_url: string | null;
+  updated_at?: string;
+}
+
+export interface SeoSettingsData {
+  settings: SiteSettings;
+  pages:    SeoPage[];
 }

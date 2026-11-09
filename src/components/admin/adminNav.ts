@@ -54,14 +54,14 @@ export const ADMIN_NAV: AdminNavGroup[] = [
   {
     title: "Insights",
     items: [
-      { key: "analytics", label: "Analytics", icon: AdminIcons.BarChart, kind: "soon" },
+      { key: "analytics", label: "Analytics", icon: AdminIcons.BarChart, kind: "route", href: "/admin/analytics" },
     ],
   },
   {
     title: "System",
     items: [
       { key: "media",    label: "Media Library",    icon: AdminIcons.Image,    kind: "route", href: "/admin/media" },
-      { key: "seo",      label: "SEO Settings",     icon: AdminIcons.Globe,    kind: "soon" },
+      { key: "seo",      label: "SEO Settings",     icon: AdminIcons.Globe,    kind: "route", href: "/admin/seo" },
       { key: "account",  label: "Account Settings", icon: AdminIcons.Settings, kind: "route", href: "/admin/account" },
     ],
   },

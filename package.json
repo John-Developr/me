@@ -16,6 +16,7 @@
     "next": "15.5.29",
     "nodemailer": "^10.3.1",
     "react": "^19.0.0",
+    "react-day-picker": "^10.0.2",
     "react-dom": "^19.0.0",
     "react-markdown": "^10.1.0",
     "react-syntax-highlighter": "^16.1.2",

@@ -151,7 +151,7 @@ export default function SkillDialog({ open, skill, categoryId, defaultCore, cate
                 </div>
 
                 <FormField id="logo_url" label="Logo" error={errors.logo_url} hint="Shown on chips everywhere this tool appears.">
-                    <AssetInput {...text("logo_url")} name="logo_url" shape="square" />
+                    <AssetInput {...text("logo_url")} name="logo_url" shape="square" libraryOnly />
                 </FormField>
 
                 <label className={formStyles.checkbox}>

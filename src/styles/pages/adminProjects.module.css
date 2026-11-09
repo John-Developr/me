@@ -275,64 +275,6 @@
   color: var(--text-muted);
 }
 
-/* Tech chips */
-.tags {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 6px;
-  min-height: 40px;
-  padding: 5px 8px;
-  border-radius: 8px;
-  border: var(--border-input-field);
-  background: var(--container-bg);
-}
-
-.tags:focus-within {
-  border-color: var(--admin-accent);
-  box-shadow: 0 0 0 3px var(--admin-accent-soft);
-}
-
-.tag {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  height: 26px;
-  padding: 0 4px 0 9px;
-  border-radius: 8px;
-  border: var(--badges-border);
-  background: var(--badges-bg);
-  color: var(--text);
-  font-size: 13px;
-}
-
-.tag button {
-  width: 18px;
-  height: 18px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 4px;
-  color: var(--text-muted);
-  cursor: pointer;
-}
-
-.tag button:hover {
-  background: var(--clip-hover);
-  color: var(--text);
-}
-
-/* Two classes so it beats the generic `.field input` rule in adminForm.module.css. */
-.tags .tag-input,
-.tags .tag-input:focus {
-  flex: 1 0 120px;
-  width: auto;
-  min-height: 26px;
-  padding: 0 4px;
-  border: none;
-  box-shadow: none;
-}
-
 /* ─── ≤850px ──────────────────────────────────────────────── */
 
 @media (max-width: 850px) {

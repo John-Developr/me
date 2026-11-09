@@ -3,10 +3,12 @@
 import { KeyboardEvent, useState } from "react";
 
 import { AdminIcons } from "@/components/icons/admin";
-import styles from "@/styles/pages/adminProjects.module.css";
+import styles from "@/styles/pages/adminForm.module.css";
 
 interface TagInputProps {
     id:        string;
+    /** Placeholder when empty, e.g. "e.g. Next.js". */
+    placeholder?: string;
     items:     string[];
     max:       number;
     maxLength: number;
@@ -17,7 +19,7 @@ interface TagInputProps {
  * Chip input: Enter or comma adds, Backspace on an empty field removes the
  * last chip. Duplicates are ignored case-insensitively.
  */
-export default function TagInput({ id, items, max, maxLength, onChange }: TagInputProps) {
+export default function TagInput({ id, items, max, maxLength, onChange, placeholder = "e.g. Next.js" }: TagInputProps) {
     const [draft, setDraft] = useState<string>("");
 
     const add = (raw: string) => {
@@ -56,7 +58,7 @@ export default function TagInput({ id, items, max, maxLength, onChange }: TagInp
                 value={draft}
                 maxLength={maxLength}
                 disabled={items.length >= max}
-                placeholder={items.length >= max ? `Maximum of ${max}` : items.length ? "Add more…" : "e.g. Next.js"}
+                placeholder={items.length >= max ? `Maximum of ${max}` : items.length ? "Add more…" : placeholder}
                 onChange={(e) => setDraft(e.target.value)}
                 onKeyDown={handleKeyDown}
                 onBlur={() => { add(draft); setDraft(""); }} />

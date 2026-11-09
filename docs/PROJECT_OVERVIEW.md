@@ -45,13 +45,10 @@ All content outside the blog (profile, about, stack, experience, featured projec
 ├── docs/             Project docs: overview, design system, contributing, changelog
 ├── public/
 │   ├── documents/        email-template.html (contact email; the resume is in the Media Library)
-│   ├── images/           Avatar, Logo, Featured, Ph-Flag, NativeCamp
-│   │   ├── company/      experience logos (Forty, Proweaver, UC, CodeTag)
-│   │   └── tech/         tech-stack logos (react, next, node, supabase, firebase, …)
+│   ├── images/           Avatar (fallback photo), Logo, Ph-Flag; project, company and skill logos live in the Media Library
 │   └── favicon.ico
 ├── src/
 │   ├── app/              App Router: routes, API handlers, layout, sitemap
-│   ├── auto/             generate-icons.sh (icon barrel generator script)
 │   ├── components/       Shared UI
 │   │   ├── chat/         ChatAI, ChatBox, ChatButton, MessageBubble, MessageInput
 │   │   ├── clipboard/    CopyClipboard (email copy button)
@@ -60,7 +57,6 @@ All content outside the blog (profile, about, stack, experience, featured projec
 │   │   ├── header/       Header, MenuItems, PageIntro
 │   │   ├── hr/           HrHorizontal
 │   │   ├── icons/        ~50 inline-SVG icon components + HomeIcons barrel
-│   │   ├── live/         FloatingTestimonials (currently unused)
 │   │   └── shapes/       Shape404
 │   ├── config/           networkDefine (URLs/endpoints), storageKeys, assistantConfig
 │   ├── containers/       Page-level UI, one folder per page

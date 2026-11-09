@@ -1,13 +1,13 @@
-import { renderOgImage, ogImageSize } from "@/utils/general/ogImage";
+import { ogImageSize } from "@/utils/general/ogImage";
+import { renderPageOgImage } from "../pageOgImage";
 
-export const alt         = "Contact John Carlo A. Ylanan — Web & Mobile Developer";
+// Content comes from Admin → SEO Settings and the Personal Profile photo.
+// Saving either revalidates it; this is only a safety net.
+export const revalidate  = 300;
+export const alt         = "Contact — link preview";
 export const size        = ogImageSize;
 export const contentType = "image/png";
 
 export default function Image() {
-  return renderOgImage({
-    eyebrow:  "Contact",
-    title:    "Let's work together",
-    subtitle: "Open for freelance projects, collaborations, and full-time opportunities.",
-  });
+  return renderPageOgImage("contact", "Contact");
 }

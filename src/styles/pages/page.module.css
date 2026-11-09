@@ -428,42 +428,6 @@ div.title {
   margin-top: 25px;
 }
 
-.second ul.list-exp div.more-info {
-  padding: 10px 20px;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  row-gap: 20px;
-}
-
-.second ul.list-exp div.tech-containers::before {
-  content: "-";
-  position: absolute;
-  top: 10px;
-  left: 3px;
-}
-
-.second ul.list-exp .tech-containers p {
-  font-weight: 600;
-  font-size: 14px;
-  margin-bottom: 10px;
-}
-
-.second ul.list-exp .tools-list {
-  display: flex;
-  flex-wrap: wrap;
-  column-gap: 5px;
-  row-gap: 5px;
-}
-
-.second ul.list-exp .tools-list span {
-  border: 1px solid #e5e7eb;
-  border-radius: 8px;
-  padding: 5px 10px;
-  font-size: 12px;
-  display: block;
-}
-
 /* ===================================
   2nd Section Style End
 =================================== */
@@ -523,18 +487,6 @@ div.title {
   border: var(--badges-border);
   color: var(--badges-text);
   font-size: 17px;
-}
-
-.github-path-section {
-  display: flex;
-  align-items: center;
-  column-gap: 5px;
-  font-size: 14px;
-}
-
-.github-path-section,
-.github-path-section a {
-  color: rgb(41, 41, 134) !important;
 }
 
 .recent-image {

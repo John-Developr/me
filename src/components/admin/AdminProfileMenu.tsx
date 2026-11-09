@@ -1,6 +1,7 @@
 'use client'
 
 import { useCallback, useId, useRef, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { sileo } from "sileo";
@@ -18,6 +19,20 @@ const getInitials = (admin: AdminUser): string => {
     if (parts.length) return parts.slice(0, 2).map((p) => p[0]).join("").toUpperCase();
     return (admin.email[0] ?? "A").toUpperCase();
 };
+
+/** Profile photo from Personal Profile, or initials when there's none (or it fails to load). */
+function Avatar({ admin, size }: { admin: AdminUser; size: number }) {
+    const [failed, setFailed] = useState<boolean>(false);
+    const showPhoto = !!admin.avatarUrl && !failed;
+
+    return (
+        <span className={styles.avatar} style={{ width: size, height: size }} aria-hidden="true">
+            {showPhoto
+                ? <Image src={admin.avatarUrl!} alt="" width={size * 2} height={size * 2} onError={() => setFailed(true)} />
+                : getInitials(admin)}
+        </span>
+    );
+}
 
 export default function AdminProfileMenu({ admin }: { admin: AdminUser }) {
     const router                  = useRouter();
@@ -51,19 +66,19 @@ export default function AdminProfileMenu({ admin }: { admin: AdminUser }) {
             <button
                 type="button"
                 className={styles["profile-trigger"]}
-                aria-label="Account menu"
+                aria-label={`Account menu for ${admin.displayName ?? admin.email}`}
                 aria-haspopup="menu"
                 aria-expanded={open}
                 aria-controls={menuId}
                 onClick={() => setOpen((v) => !v)}>
-                <span className={styles.avatar} aria-hidden="true">{getInitials(admin)}</span>
+                <Avatar admin={admin} size={30} />
                 <AdminIcons.ChevronDown width={14} height={14} className={styles["profile-chevron"]} />
             </button>
 
             {open && (
                 <div id={menuId} className={`${styles["popover-panel"]} ${styles["profile-panel"]}`} role="menu">
                     <div className={styles["profile-head"]}>
-                        <span className={styles.avatar} aria-hidden="true">{getInitials(admin)}</span>
+                        <Avatar admin={admin} size={40} />
                         <div>
                             <p>{admin.displayName ?? "Administrator"}</p>
                             <small title={admin.email}>{admin.email}</small>
@@ -74,6 +89,15 @@ export default function AdminProfileMenu({ admin }: { admin: AdminUser }) {
                         {isDark ? <AdminIcons.Sun width={16} height={16} /> : <AdminIcons.Moon width={16} height={16} />}
                         {isDark ? "Light mode" : "Dark mode"}
                     </button>
+
+                    <Link
+                        href="/admin/profile"
+                        role="menuitem"
+                        className={styles["menu-item"]}
+                        onClick={close}>
+                        <AdminIcons.User width={16} height={16} />
+                        Personal profile
+                    </Link>
 
                     <Link
                         href="/admin/account"

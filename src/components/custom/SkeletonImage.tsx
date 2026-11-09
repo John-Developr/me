@@ -29,7 +29,7 @@ export default function SkeletonImage({
 
   return (
     <Image
-      src={`${path}?t=${Date.now()}`}
+      src={path}
       width={width}
       height={height}
       className={`${className} ${styles.skeleton}`}
