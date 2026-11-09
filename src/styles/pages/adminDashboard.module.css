@@ -114,6 +114,13 @@
   box-shadow: var(--admin-shadow);
 }
 
+.traffic-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
 .custom-range {
   display: flex;
   align-items: flex-end;

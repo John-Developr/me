@@ -1,0 +1,145 @@
+/* ============================================================
+   ADMIN — SEO Settings
+   ============================================================ */
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.warning {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12.5px;
+  color: var(--admin-warning);
+}
+
+.meta {
+  font-size: 12.5px;
+  color: var(--text-muted);
+}
+
+/* Off-screen image used only to read the icon's real size. */
+.probe {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.label {
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+/* Browser tabs (fixed light and dark chrome, like real browsers) */
+.tabs {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.tab {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 34px;
+  padding: 0 10px;
+  border-radius: 9px 9px 0 0;
+  font-size: 12px;
+}
+
+.tab span {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.tab img,
+.search img,
+.home img {
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+/* Real browser chrome colors, independent of the admin theme. */
+.tab.light {
+  background: #ffffff;
+  color: #1f1f1f;
+  box-shadow: inset 0 0 0 1px #e3e3e3;
+}
+
+.tab.dark {
+  background: #35363a;
+  color: #e8eaed;
+}
+
+/* Search result */
+.search {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: var(--border-container);
+}
+
+.search-icon {
+  width: 28px;
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--bg);
+  border: var(--border-container);
+}
+
+.search-text {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  line-height: 1.3;
+}
+
+.search-text strong {
+  font-size: 13.5px;
+}
+
+.search-text small {
+  font-size: 12px;
+  color: var(--text-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Home screen icon */
+.home {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  width: 84px;
+  padding: 12px 0;
+  border-radius: 14px;
+  background: var(--bg);
+}
+
+.home img {
+  border-radius: 13px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.home small {
+  font-size: 11px;
+  color: var(--text);
+}

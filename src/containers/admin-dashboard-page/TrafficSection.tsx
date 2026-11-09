@@ -1,9 +1,10 @@
 'use client'
 
-import { FormEvent, useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 
 import DashboardCard from "@/components/admin/DashboardCard";
+import DateRangePicker from "@/components/admin/DateRangePicker";
 import EmptyState from "@/components/admin/EmptyState";
 import ErrorState from "@/components/admin/ErrorState";
 import LineChart from "@/components/admin/LineChart";
@@ -16,7 +17,6 @@ import { parseRangeParams, presetToRange, TRAFFIC_PRESETS } from "@/utils/admin/
 import { formatLongDay, formatNumber, percentChange } from "@/utils/admin/format";
 import { FetchStateEnum, TrafficRangePreset, TrafficResult } from "@/utils/types";
 import styles from "@/styles/pages/adminDashboard.module.css";
-import adminStyles from "@/styles/pages/admin.module.css";
 
 type Selection = TrafficRangePreset | "custom";
 
@@ -33,12 +33,9 @@ export default function TrafficSection() {
     const [state,     setState]     = useState<FetchStateEnum>(FetchStateEnum.loading);
     const [result,    setResult]    = useState<TrafficResult | null>(null);
     const [error,     setError]     = useState<string>("");
+    const [rangeError, setRangeError] = useState<string>("");
 
-    // Custom range form (defaults to the last 30 days).
     const today = presetToRange("7d").to;
-    const [customFrom, setCustomFrom] = useState<string>(presetToRange("30d").from);
-    const [customTo,   setCustomTo]   = useState<string>(today);
-    const [formError,  setFormError]  = useState<string>("");
 
     const abortRef = useRef<AbortController | null>(null);
 
@@ -72,28 +69,31 @@ export default function TrafficSection() {
 
     const selectPreset = (preset: TrafficRangePreset) => {
         setSelection(preset);
-        setFormError("");
+        setRangeError("");
         setQuery({ range: preset });
     };
 
-    const applyCustom = (e: FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        const parsed = parseRangeParams({ from: customFrom, to: customTo });
+    const applyCustom = (from: string, to: string) => {
+        const parsed = parseRangeParams({ from, to });
 
         if (!parsed.ok) {
-            setFormError(parsed.error);
+            setRangeError(parsed.error);
             return;
         }
 
-        setFormError("");
+        setRangeError("");
+        setSelection("custom");
         setQuery(parsed.range);
     };
+
+    /** The range the picker shows: the custom one, or the active preset's dates. */
+    const shownRange = "from" in query ? query : presetToRange(query.range);
 
     const isLoading = state === FetchStateEnum.loading;
     const available = result?.available ? result : null;
     const change    = available ? percentChange(available.total, available.previousTotal) : null;
 
-    const controls = (
+    const presets = (
         <div className={styles["range-tabs"]} role="group" aria-label="Date range">
             {(Object.keys(TRAFFIC_PRESETS) as TrafficRangePreset[]).map((preset) => (
                 <button
@@ -105,13 +105,19 @@ export default function TrafficSection() {
                     {PRESET_LABELS[preset]}
                 </button>
             ))}
-            <button
-                type="button"
-                aria-pressed={selection === "custom"}
-                className={selection === "custom" ? styles.selected : ""}
-                onClick={() => setSelection("custom")}>
-                Custom
-            </button>
+        </div>
+    );
+
+    const controls = (
+        <div className={styles["traffic-controls"]}>
+            {presets}
+            <DateRangePicker
+                from={shownRange.from}
+                to={shownRange.to}
+                max={today}
+                active={selection === "custom"}
+                busy={isLoading}
+                onApply={applyCustom} />
         </div>
     );
 
@@ -123,20 +129,7 @@ export default function TrafficSection() {
             actions={controls}
             className={styles.traffic}>
 
-            {selection === "custom" && (
-                <form className={styles["custom-range"]} onSubmit={applyCustom} noValidate>
-                    <label>
-                        <span>From</span>
-                        <input type="date" value={customFrom} max={customTo || today} onChange={(e) => setCustomFrom(e.target.value)} required />
-                    </label>
-                    <label>
-                        <span>To</span>
-                        <input type="date" value={customTo} min={customFrom} max={today} onChange={(e) => setCustomTo(e.target.value)} required />
-                    </label>
-                    <button type="submit" className={`liquid_glass_btn ${adminStyles["btn-secondary"]}`}>Apply</button>
-                    {formError && <p className={styles["form-error"]} role="alert">{formError}</p>}
-                </form>
-            )}
+            {rangeError && <p className={styles["form-error"]} role="alert">{rangeError}</p>}
 
             {state === FetchStateEnum.error ? (
                 <ErrorState message={error} onRetry={() => load(query)} />

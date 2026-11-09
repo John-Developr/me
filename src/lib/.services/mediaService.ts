@@ -22,6 +22,7 @@ const REFERENCES = [
   { table: Table.profiles,    column: "resume_url", label: () => "Profile · resume",                        href: () => "/admin/profile" },
   { table: Table.experiences, column: "logo_url",   label: (r: Ref) => `Experience “${r.position}” · logo`, href: (r: Ref) => `/admin/experience/${r.id}/edit` },
   { table: Table.skills,      column: "logo_url",   label: (r: Ref) => `Skill “${r.title}” · logo`,         href: () => "/admin/skills" },
+  { table: Table.siteSettings, column: "favicon_url", label: () => "Site icon (favicon)",                  href: () => "/admin/seo" },
 ] as const;
 
 interface Ref {
@@ -282,11 +283,12 @@ export default class MediaService {
 
   /** Every content field that references a file, with a label and admin link. */
   private async collectRefs(): Promise<(Ref & { label: string; href: string })[]> {
-    const [projects, profiles, experiences, skills] = await Promise.all([
+    const [projects, profiles, experiences, skills, settings] = await Promise.all([
       this.client.from(Table.projects).select("id, title, logo_url, image_url"),
       this.client.from(Table.profiles).select("id, avatar_url, resume_url"),
       this.client.from(Table.experiences).select("id, position, logo_url"),
       this.client.from(Table.skills).select("id, title:name, logo_url"),
+      this.client.from(Table.siteSettings).select("id, favicon_url"),
     ]);
 
     for (const r of [projects, profiles, experiences, skills]) {
@@ -298,6 +300,8 @@ export default class MediaService {
       [Table.profiles]:    profiles.data ?? [],
       [Table.experiences]: experiences.data ?? [],
       [Table.skills]:      skills.data ?? [],
+      // Optional: a missing settings table (migration not run) just means no usage.
+      [Table.siteSettings]: settings.error ? [] : (settings.data ?? []),
     };
 
     return REFERENCES.flatMap((ref) =>

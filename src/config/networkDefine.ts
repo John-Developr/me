@@ -30,6 +30,7 @@ export const networkDefine = {
     ADMIN_PROJECTS_API: "/api/admin/projects",
     ADMIN_PROJECT_API: (id: string) => "/api/admin/projects/" + id,
     ADMIN_PROFILE_API: "/api/admin/profile",
+    ADMIN_SITE_SETTINGS_API: "/api/admin/site-settings",
     ADMIN_SKILLS_API: "/api/admin/skills",
     ADMIN_SKILL_API: (id: string) => "/api/admin/skills/" + id,
     ADMIN_SKILL_CATEGORIES_API: "/api/admin/skill-categories",

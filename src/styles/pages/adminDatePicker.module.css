@@ -1,0 +1,390 @@
+/* ============================================================
+   ADMIN — Date range picker (react-day-picker, unstyled)
+   All colors are theme tokens, so light and dark mode follow
+   the site. The library's own stylesheet is not used.
+   ============================================================ */
+
+.root {
+  position: relative;
+}
+
+/* ─── Trigger ─────────────────────────────────────────────── */
+
+.trigger {
+  height: 38px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 12px;
+  border-radius: 10px;
+  border: var(--border-input-field);
+  background: var(--container-bg);
+  color: var(--text);
+  font: inherit;
+  font-size: 13.5px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
+}
+
+.trigger:hover {
+  background: var(--clip-hover);
+}
+
+.trigger[aria-expanded="true"],
+.trigger.active {
+  border-color: var(--admin-accent);
+  box-shadow: 0 0 0 3px var(--admin-accent-soft);
+}
+
+.trigger:disabled {
+  opacity: 0.6;
+  cursor: progress;
+}
+
+.trigger svg:first-child {
+  color: var(--text-muted);
+}
+
+.chevron {
+  color: var(--text-muted);
+  transition: transform 0.15s ease;
+}
+
+.trigger[aria-expanded="true"] .chevron {
+  transform: rotate(180deg);
+}
+
+/* ─── Panel ───────────────────────────────────────────────── */
+
+.panel {
+  position: absolute;
+  top: calc(100% + 8px);
+  z-index: 60;
+  display: flex;
+  border-radius: 14px;
+  background: var(--container-bg);
+  border: var(--border-container);
+  box-shadow: var(--box-shadow-default), var(--admin-shadow);
+  overflow: hidden;
+  animation: pickerIn 0.16s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.panel.end   { right: 0; transform-origin: top right; }
+.panel.start { left: 0;  transform-origin: top left; }
+
+@keyframes pickerIn {
+  from { opacity: 0; transform: translateY(-4px) scale(0.98); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* Quick picks */
+.picks {
+  width: 156px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 10px;
+  border-right: var(--border-container);
+  background: var(--bg);
+}
+
+.picks button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  height: 34px;
+  padding: 0 10px;
+  border: none;
+  border-radius: 8px;
+  background: none;
+  color: var(--text-muted);
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+}
+
+.picks button:hover {
+  background: var(--clip-hover);
+  color: var(--text);
+}
+
+.picks button.picked {
+  background: var(--container-bg);
+  color: var(--text);
+  box-shadow: 0 0 0 1px var(--divider-bottom);
+}
+
+.picks button.picked svg {
+  color: var(--admin-accent-ink);
+}
+
+/* ─── Calendar ────────────────────────────────────────────── */
+
+.calendar {
+  display: flex;
+  flex-direction: column;
+}
+
+.dp {
+  position: relative;
+  padding: 14px 16px 6px;
+}
+
+.months {
+  display: flex;
+  gap: 28px;
+}
+
+.month {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.caption {
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.caption-label {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+/* Prev / next sit at the two outer edges of the months row. */
+.nav {
+  position: absolute;
+  top: 14px;
+  left: 12px;
+  right: 12px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  pointer-events: none;
+}
+
+.nav-btn {
+  width: 32px;
+  height: 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 8px;
+  background: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+.nav-btn:hover:not(:disabled) {
+  background: var(--clip-hover);
+  color: var(--text);
+}
+
+.nav-btn:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+.nav-icon {
+  width: 16px;
+  height: 16px;
+  fill: currentColor;
+}
+
+.grid {
+  border-collapse: separate;
+  border-spacing: 0 3px;
+}
+
+.weekday {
+  width: 38px;
+  height: 28px;
+  font-size: 11.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.day {
+  padding: 0;
+  text-align: center;
+}
+
+.day-btn {
+  position: relative;
+  width: 38px;
+  height: 36px;
+  border: none;
+  border-radius: 9px;
+  background: none;
+  color: var(--text);
+  font: inherit;
+  font-size: 13.5px;
+  font-variant-numeric: tabular-nums;
+  cursor: pointer;
+  transition: background 0.12s ease;
+}
+
+.day-btn:hover:not(:disabled) {
+  background: var(--clip-hover);
+}
+
+.day-btn:focus-visible {
+  outline: 2px solid var(--admin-accent);
+  outline-offset: 1px;
+}
+
+/* Today: small dot under the number. */
+.today .day-btn::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 5px;
+  width: 4px;
+  height: 4px;
+  margin-left: -2px;
+  border-radius: 50%;
+  background: var(--admin-accent-ink);
+}
+
+.disabled .day-btn {
+  color: var(--text-muted);
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.outside .day-btn {
+  color: var(--text-muted);
+}
+
+.hidden {
+  visibility: hidden;
+}
+
+/* Range: a soft band through the middle, solid ends. */
+.range-middle {
+  background: var(--admin-accent-soft);
+}
+
+.range-middle .day-btn {
+  border-radius: 0;
+  color: var(--text);
+}
+
+.range-start {
+  background: linear-gradient(to right, transparent 50%, var(--admin-accent-soft) 50%);
+}
+
+.range-end {
+  background: linear-gradient(to left, transparent 50%, var(--admin-accent-soft) 50%);
+}
+
+.range-start.range-end {
+  background: none;
+}
+
+.range-start .day-btn,
+.range-end .day-btn,
+.selected:not(.range-middle) .day-btn {
+  background: var(--admin-accent);
+  color: white;
+  font-weight: 700;
+}
+
+.range-start .day-btn::after,
+.range-end .day-btn::after {
+  background: white;
+}
+
+/* Rounded band ends at the edges of each week row. */
+.range-middle:first-child { border-radius: 9px 0 0 9px; }
+.range-middle:last-child  { border-radius: 0 9px 9px 0; }
+
+/* ─── Footer ──────────────────────────────────────────────── */
+
+.footer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  border-top: var(--border-container);
+}
+
+.footer p {
+  margin-right: auto;
+  font-size: 13px;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.footer p.warn {
+  color: var(--admin-danger);
+}
+
+.footer button {
+  height: 34px;
+}
+
+/* ─── ≤850px: one month, quick picks on top ──────────────── */
+
+@media (max-width: 850px) {
+  .root,
+  .trigger {
+    width: 100%;
+  }
+
+  .trigger span {
+    flex: 1;
+    text-align: left;
+  }
+
+  .panel {
+    position: fixed;
+    top: auto;
+    bottom: 12px;
+    left: 12px !important;
+    right: 12px !important;
+    flex-direction: column;
+    max-height: calc(100vh - 24px);
+    overflow-y: auto;
+  }
+
+  .picks {
+    width: auto;
+    flex-direction: row;
+    flex-wrap: wrap;
+    border-right: none;
+    border-bottom: var(--border-container);
+  }
+
+  .picks button {
+    height: 30px;
+    border: var(--badges-border);
+  }
+
+  .dp {
+    display: flex;
+    justify-content: center;
+  }
+
+  .footer {
+    flex-wrap: wrap;
+  }
+
+  .footer p {
+    width: 100%;
+  }
+}

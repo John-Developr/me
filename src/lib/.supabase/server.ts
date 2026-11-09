@@ -32,6 +32,7 @@ export const Table = {
   contactMessages: "contact_messages",
   activityLogs: "activity_logs",
   mediaAssets: "media_assets",
+  siteSettings: "site_settings",
 } as const;
 
 // default export the client

@@ -1,12 +1,11 @@
 'use client'
 
-import { FormEvent, ReactNode, useState, useTransition } from "react";
+import { ReactNode, useState, useTransition } from "react";
 import { usePathname, useRouter } from "next/navigation";
 
-import { AdminIcons } from "@/components/icons/admin";
+import DateRangePicker from "@/components/admin/DateRangePicker";
 import { parseRangeParams, TRAFFIC_PRESETS } from "@/utils/admin/dateRange";
 import { TrafficRangePreset } from "@/utils/types";
-import adminStyles from "@/styles/pages/admin.module.css";
 import styles from "@/styles/pages/adminAnalytics.module.css";
 
 interface AnalyticsFrameProps {
@@ -28,8 +27,6 @@ export default function AnalyticsFrame({ preset, from, to, today, children }: An
     const pathname = usePathname();
     const [isPending, startTransition] = useTransition();
 
-    const [fromValue, setFromValue] = useState<string>(from);
-    const [toValue,   setToValue]   = useState<string>(to);
     const [error,     setError]     = useState<string>("");
     const [pendingTo, setPendingTo] = useState<string | null>(null);
 
@@ -39,14 +36,13 @@ export default function AnalyticsFrame({ preset, from, to, today, children }: An
         startTransition(() => router.push(`${pathname}?${query}`, { scroll: false }));
     };
 
-    const applyCustom = (e: FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        const parsed = parseRangeParams({ from: fromValue, to: toValue });
+    const applyCustom = (nextFrom: string, nextTo: string) => {
+        const parsed = parseRangeParams({ from: nextFrom, to: nextTo });
         if (!parsed.ok) {
             setError(parsed.error);
             return;
         }
-        go(new URLSearchParams({ from: fromValue, to: toValue }).toString(), "custom");
+        go(new URLSearchParams({ from: nextFrom, to: nextTo }).toString(), "custom");
     };
 
     const isCustom = !preset;
@@ -72,21 +68,13 @@ export default function AnalyticsFrame({ preset, from, to, today, children }: An
                     </span>
                 </nav>
 
-                <form className={`${styles.range} ${isCustom ? styles.active : ""} ${error ? styles.invalid : ""}`} onSubmit={applyCustom} aria-label="Custom date range" noValidate>
-                    <AdminIcons.Clock width={16} height={16} aria-hidden="true" />
-                    <label>
-                        <span className={adminStyles["sr-only"]}>From</span>
-                        <input type="date" value={fromValue} max={toValue || today} onChange={(e) => { setFromValue(e.target.value); setError(""); }} />
-                    </label>
-                    <span className={styles.arrow} aria-hidden="true">→</span>
-                    <label>
-                        <span className={adminStyles["sr-only"]}>To</span>
-                        <input type="date" value={toValue} min={fromValue} max={today} onChange={(e) => { setToValue(e.target.value); setError(""); }} />
-                    </label>
-                    <button type="submit" className={styles.apply} disabled={isPending}>
-                        {busy("custom") ? "Loading…" : "Apply"}
-                    </button>
-                </form>
+                <DateRangePicker
+                    from={from}
+                    to={to}
+                    max={today}
+                    active={isCustom}
+                    busy={isPending}
+                    onApply={applyCustom} />
             </div>
 
             {error && <p className={styles["range-error"]} role="alert">{error}</p>}

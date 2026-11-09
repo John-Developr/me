@@ -10,6 +10,8 @@ import { storageKeys } from "@/config/storageKeys";
 import LayoutProvider from "./LayoutProvider";
 import { getPublicProfile } from "./getPublicProfile";
 import { EMPTY_SKILLS, getPublicSkills } from "./getPublicSkills";
+import { getSiteSettings } from "./getSiteSettings";
+import { DEFAULT_FAVICON } from "@/utils/admin/siteSettingsSchema";
 import { EMPTY_PROFILE } from "@/config/profileDefaults";
 import { BASE_URL } from "@/config/siteUrl";
 
@@ -19,20 +21,25 @@ const karla = Karla({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  // Resolves relative metadata URLs (e.g. generated opengraph-image) to absolute ones
-  metadataBase: new URL(BASE_URL),
-  title: {
-    default:  "John Carlo Ylanan | Web & Mobile Developer",
-    template: "%s | John Carlo Ylanan",
-  },
-  icons: {
-    icon: "/favicon.ico",
-  },
-  verification: {
-    google: "googlec34b432acc53a5cc",
-  }
-};
+export async function generateMetadata(): Promise<Metadata> {
+  // Site icon is set in Admin → SEO Settings; /favicon.ico when none is set.
+  const { favicon_url } = await getSiteSettings();
+
+  return {
+    // Resolves relative metadata URLs (e.g. generated opengraph-image) to absolute ones
+    metadataBase: new URL(BASE_URL),
+    title: {
+      default:  "John Carlo Ylanan | Web & Mobile Developer",
+      template: "%s | John Carlo Ylanan",
+    },
+    icons: favicon_url
+      ? { icon: [{ url: favicon_url }], apple: [{ url: favicon_url }] }
+      : { icon: DEFAULT_FAVICON },
+    verification: {
+      google: "googlec34b432acc53a5cc",
+    },
+  };
+}
 
 // No flash
 const themeScript = `

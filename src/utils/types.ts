@@ -555,3 +555,13 @@ export interface RecentVisitor {
   browser:       string | null;
   os:            string | null;
 }
+
+// ============================================================
+// ADMIN — SITE SETTINGS (SEO Settings screen)
+// ============================================================
+
+/** The single row of `public.site_settings`. Null fields use the defaults in code. */
+export interface SiteSettings {
+  favicon_url: string | null;
+  updated_at:  string | null;
+}
