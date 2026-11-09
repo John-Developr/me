@@ -10,7 +10,7 @@ import { storageKeys } from "@/config/storageKeys";
 import LayoutProvider from "./LayoutProvider";
 import { getPublicProfile } from "./getPublicProfile";
 import { EMPTY_SKILLS, getPublicSkills } from "./getPublicSkills";
-import { getSiteSettings } from "./getSiteSettings";
+import { getSeoSettingsSafe } from "./getSiteSettings";
 import { DEFAULT_FAVICON } from "@/utils/admin/siteSettingsSchema";
 import { EMPTY_PROFILE } from "@/config/profileDefaults";
 import { BASE_URL } from "@/config/siteUrl";
@@ -22,22 +22,27 @@ const karla = Karla({
 });
 
 export async function generateMetadata(): Promise<Metadata> {
-  // Site icon is set in Admin → SEO Settings; /favicon.ico when none is set.
-  const { favicon_url } = await getSiteSettings();
+  // Site-wide SEO from Admin → SEO Settings (defaults if it can't be loaded).
+  const { settings, pages } = await getSeoSettingsSafe();
+  const siteName = settings.site_name ?? "Portfolio";
+  const home     = pages.find((p) => p.key === "home");
 
   return {
     // Resolves relative metadata URLs (e.g. generated opengraph-image) to absolute ones
     metadataBase: new URL(BASE_URL),
     title: {
-      default:  "John Carlo Ylanan | Web & Mobile Developer",
-      template: "%s | John Carlo Ylanan",
+      default:  home?.title ?? siteName,
+      template: `%s | ${siteName}`,
     },
-    icons: favicon_url
-      ? { icon: [{ url: favicon_url }], apple: [{ url: favicon_url }] }
+    description: home?.description,
+    icons: settings.favicon_url
+      ? { icon: [{ url: settings.favicon_url }], apple: [{ url: settings.favicon_url }] }
       : { icon: DEFAULT_FAVICON },
-    verification: {
-      google: "googlec34b432acc53a5cc",
-    },
+    // "Allow search engines" off → noindex on every page.
+    robots: settings.allow_indexing
+      ? { index: true, follow: true, googleBot: { index: true, follow: true, "max-snippet": -1, "max-image-preview": "large" } }
+      : { index: false, follow: false },
+    verification: settings.google_verification ? { google: settings.google_verification } : undefined,
   };
 }
 

@@ -121,34 +121,6 @@
   flex-wrap: wrap;
 }
 
-.custom-range {
-  display: flex;
-  align-items: flex-end;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-
-.custom-range label {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--text-muted);
-}
-
-.custom-range input {
-  height: 38px;
-  padding: 0 10px;
-  border-radius: 8px;
-  border: var(--border-input-field);
-  background: var(--container-bg);
-  color: var(--text);
-  font: inherit;
-  font-size: 13.5px;
-  color-scheme: light dark;
-}
-
 .form-error {
   width: 100%;
   font-size: 13px;

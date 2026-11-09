@@ -48,7 +48,6 @@ export const projectInputSchema = z.object({
 });
 
 export type ProjectInput = z.output<typeof projectInputSchema>;
-export type ProjectFormValues = z.input<typeof projectInputSchema>;
 
 const projectPatchSchema = projectInputSchema.partial();
 

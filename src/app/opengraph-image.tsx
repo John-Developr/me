@@ -1,13 +1,13 @@
-import { renderOgImage, ogImageSize } from "@/utils/general/ogImage";
+import { ogImageSize } from "@/utils/general/ogImage";
+import { renderPageOgImage } from "./pageOgImage";
 
-export const alt         = "John Carlo A. Ylanan — Web & Mobile Developer Portfolio";
+// Content comes from Admin → SEO Settings and the Personal Profile photo.
+// Saving either revalidates it; this is only a safety net.
+export const revalidate  = 300;
+export const alt         = "Portfolio — link preview";
 export const size        = ogImageSize;
 export const contentType = "image/png";
 
 export default function Image() {
-  return renderOgImage({
-    eyebrow:  "Portfolio",
-    title:    "John Carlo A. Ylanan",
-    subtitle: "Web & Mobile Developer based in Cebu, Philippines. React, Next.js, Swift, and Node.js.",
-  });
+  return renderPageOgImage("home", "Portfolio");
 }

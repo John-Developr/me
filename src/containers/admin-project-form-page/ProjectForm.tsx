@@ -20,7 +20,7 @@ import adminStyles from "@/styles/pages/admin.module.css";
 import formStyles from "@/styles/pages/adminForm.module.css";
 
 import HighlightsInput from "./HighlightsInput";
-import TagInput from "./TagInput";
+import TagInput from "@/components/admin/TagInput";
 
 // ─── Form state ──────────────────────────────────────────────
 

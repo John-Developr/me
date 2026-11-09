@@ -4,18 +4,18 @@ import { DashboardRefreshProvider } from "@/components/admin/DashboardRefresh";
 import AdminAuthService from "@/lib/.services/adminAuthService";
 import SiteSettingsService from "@/lib/.services/siteSettingsService";
 import { ServiceError } from "@/lib/.services/serviceError";
-import { SiteSettings } from "@/utils/types";
+import { SeoSettingsData } from "@/utils/types";
 import adminStyles from "@/styles/pages/admin.module.css";
 
-import SiteIconForm from "./SiteIconForm";
+import SeoSettingsForm from "./SeoSettingsForm";
 
-async function load(): Promise<{ ok: true; data: SiteSettings } | { ok: false; message: string }> {
+async function load(): Promise<{ ok: true; data: SeoSettingsData } | { ok: false; message: string }> {
     try {
         const session = await AdminAuthService.getSession();
         if (session.status !== "admin") return { ok: false, message: "Not authorized." };
         return { ok: true, data: await new SiteSettingsService(session.client).get() };
     } catch (error) {
-        return { ok: false, message: error instanceof ServiceError ? error.message : "Couldn't load settings." };
+        return { ok: false, message: error instanceof ServiceError ? error.message : "Couldn't load SEO settings." };
     }
 }
 
@@ -27,10 +27,10 @@ export default async function AdminSeoPage() {
             <div className={adminStyles.page}>
                 <PageHeader
                     title="SEO Settings"
-                    description="How your site appears in browser tabs and search results." />
+                    description="How your site appears in Google, social shares and browser tabs." />
 
                 {settings.ok
-                    ? <SiteIconForm faviconUrl={settings.data.favicon_url} updatedAt={settings.data.updated_at} />
+                    ? <SeoSettingsForm data={settings.data} />
                     : <ErrorState message={settings.message} />}
             </div>
         </DashboardRefreshProvider>

@@ -1,12 +1,12 @@
 import { cache } from "react";
 
-import SiteSettingsService from "@/lib/.services/siteSettingsService";
-import { SiteSettings } from "@/utils/types";
+import SiteSettingsService, { EMPTY_SETTINGS } from "@/lib/.services/siteSettingsService";
+import { SeoSettingsData } from "@/utils/types";
 
-/**
- * Site settings for metadata (favicon), loaded once per request.
- * Never throws: if they can't be loaded, defaults in code are used.
- */
-export const getSiteSettings = cache(async (): Promise<SiteSettings> =>
-  SiteSettingsService.getPublic().catch(() => ({ favicon_url: null, updated_at: null }))
+/** SEO settings for metadata, loaded once per request. Throws on database errors. */
+export const getSeoSettings = cache(async (): Promise<SeoSettingsData> => SiteSettingsService.getPublic());
+
+/** Same, but never throws (used by the root layout, which also serves the admin). */
+export const getSeoSettingsSafe = cache(async (): Promise<SeoSettingsData> =>
+  getSeoSettings().catch(() => ({ settings: EMPTY_SETTINGS, pages: [] }))
 );

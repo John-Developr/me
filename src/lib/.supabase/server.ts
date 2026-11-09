@@ -33,6 +33,7 @@ export const Table = {
   activityLogs: "activity_logs",
   mediaAssets: "media_assets",
   siteSettings: "site_settings",
+  seoPages: "seo_pages",
 } as const;
 
 // default export the client

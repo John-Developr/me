@@ -51,7 +51,6 @@ All content outside the blog (profile, about, stack, experience, featured projec
 │   └── favicon.ico
 ├── src/
 │   ├── app/              App Router: routes, API handlers, layout, sitemap
-│   ├── auto/             generate-icons.sh (icon barrel generator script)
 │   ├── components/       Shared UI
 │   │   ├── chat/         ChatAI, ChatBox, ChatButton, MessageBubble, MessageInput
 │   │   ├── clipboard/    CopyClipboard (email copy button)
@@ -60,7 +59,6 @@ All content outside the blog (profile, about, stack, experience, featured projec
 │   │   ├── header/       Header, MenuItems, PageIntro
 │   │   ├── hr/           HrHorizontal
 │   │   ├── icons/        ~50 inline-SVG icon components + HomeIcons barrel
-│   │   ├── live/         FloatingTestimonials (currently unused)
 │   │   └── shapes/       Shape404
 │   ├── config/           networkDefine (URLs/endpoints), storageKeys, assistantConfig
 │   ├── containers/       Page-level UI, one folder per page

@@ -92,16 +92,6 @@ export interface OverlayState {
 };
 
 // ============================================================
-// NAVIGATION
-// ============================================================
-
-export enum AppPagesEnum {
-  Home       = "/",
-  Blog       = "/blog",
-  BlogDetail = "/blog/[slug]",
-}
-
-// ============================================================
 // PROJECTS
 // ============================================================
 
@@ -562,6 +552,26 @@ export interface RecentVisitor {
 
 /** The single row of `public.site_settings`. Null fields use the defaults in code. */
 export interface SiteSettings {
-  favicon_url: string | null;
-  updated_at:  string | null;
+  favicon_url:         string | null;
+  site_name:           string | null;
+  twitter_handle:      string | null;
+  google_verification: string | null;
+  allow_indexing:      boolean;
+  updated_at:          string | null;
+}
+
+/** A row of `public.seo_pages`: full title, description and keywords for one public page. */
+export interface SeoPage {
+  key:         import("@/utils/admin/seoPages").SeoPageKey;
+  title:       string;
+  description: string;
+  keywords:    string[];
+  /** Custom link preview image; null = generated card. */
+  share_image_url: string | null;
+  updated_at?: string;
+}
+
+export interface SeoSettingsData {
+  settings: SiteSettings;
+  pages:    SeoPage[];
 }
