@@ -219,6 +219,7 @@ export interface AdminUser {
   id:          string;
   email:       string;
   displayName: string | null;   // from the profile or auth metadata; null if unknown
+  avatarUrl:   string | null;   // Personal Profile photo; null shows initials
 }
 
 /** Result of one dashboard query: sections fail independently. */
@@ -521,4 +522,36 @@ export interface PublicSkills {
   current:    string[];
   /** Tool name → logo, for tech chips anywhere on the site. */
   logos:      Record<string, string>;
+}
+
+// ============================================================
+// ADMIN — ANALYTICS DETAILS
+// ============================================================
+
+export const BREAKDOWN_DIMENSIONS = ["country", "city", "device", "browser", "os", "referrer", "path"] as const;
+export type BreakdownDimension = (typeof BREAKDOWN_DIMENSIONS)[number];
+
+/** One row of a "top N" list ("" label = unknown / direct). */
+export interface BreakdownRow {
+  label:    string;
+  visitors: number;
+  views:    number;
+}
+
+export type TrafficBreakdowns = Record<BreakdownDimension, BreakdownRow[]>;
+
+/** One visitor on one day (no identifier is ever exposed). */
+export interface RecentVisitor {
+  day:           string;
+  first_seen:    string;
+  last_seen:     string;
+  page_views:    number;
+  paths:         string[];
+  referrer_host: string | null;
+  country:       string | null;
+  region:        string | null;
+  city:          string | null;
+  device:        string | null;
+  browser:       string | null;
+  os:            string | null;
 }

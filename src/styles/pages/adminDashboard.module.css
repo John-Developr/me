@@ -177,6 +177,17 @@
   color: var(--text-muted);
 }
 
+.traffic-summary .details-link {
+  margin-left: auto;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--admin-accent-ink);
+}
+
+.traffic-summary .details-link:hover {
+  text-decoration: underline;
+}
+
 .traffic-summary .up {
   color: var(--admin-success);
   font-weight: 600;

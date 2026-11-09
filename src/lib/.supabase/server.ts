@@ -16,6 +16,8 @@ export const RPC = {
   recordPageView: "record_page_view",
   trafficDaily: "traffic_daily",
   prunePageViews: "prune_page_views",
+  trafficBreakdown: "traffic_breakdown",
+  recentVisitors: "recent_visitors",
 } as const;
 
 export const Table = {

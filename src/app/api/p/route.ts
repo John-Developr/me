@@ -4,7 +4,7 @@ import { cookies } from "next/headers";
 
 import AnalyticsService from "@/lib/.services/analyticsService";
 import RateLimitService from "@/lib/.services/rateLimitService";
-import { hasOptedOut, isLikelyBot, normalizePath, referrerHost } from "@/utils/analytics";
+import { hasOptedOut, isLikelyBot, normalizePath, parseUserAgent, readVercelGeo, referrerHost } from "@/utils/analytics";
 
 export const dynamic = "force-dynamic";
 
@@ -15,6 +15,9 @@ const NO_CONTENT = () => new Response(null, { status: 204, headers: { "Cache-Con
  * First-party page view collector (sent by PageViewTracker with sendBeacon).
  * Body: `{ path, referrer }`. Short, neutral path so content blockers don't
  * break the site.
+ *
+ * Stored per view: day, path, referrer host, country/region/city (Vercel
+ * geolocation headers), device type and browser/OS family. Never the IP.
  *
  * Not recorded: bots, Do Not Track / Global Privacy Control, admin/API paths,
  * visits from a browser signed in to the admin, and local development
@@ -49,8 +52,11 @@ export async function POST(req: Request) {
     const visitorKey = createHash("sha256").update(`${ip}|${userAgent}|${own}`).digest("hex");
     const referrer   = referrerHost(body?.referrer, own);
 
+    // Coarse details only: location from Vercel's headers, browser/OS family names.
+    const details = { ...readVercelGeo((name) => req.headers.get(name)), ...parseUserAgent(userAgent) };
+
     // Respond immediately; write after the response is sent.
-    after(() => AnalyticsService.recordPageView(path, visitorKey, referrer));
+    after(() => AnalyticsService.recordPageView(path, visitorKey, referrer, details));
 
     return NO_CONTENT();
   } catch {

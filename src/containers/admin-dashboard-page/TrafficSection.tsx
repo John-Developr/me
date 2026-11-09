@@ -1,6 +1,7 @@
 'use client'
 
 import { FormEvent, useCallback, useEffect, useRef, useState } from "react";
+import Link from "next/link";
 
 import DashboardCard from "@/components/admin/DashboardCard";
 import EmptyState from "@/components/admin/EmptyState";
@@ -159,6 +160,7 @@ export default function TrafficSection() {
                                 {change > 0 ? "+" : ""}{change}% vs previous period
                             </span>
                         )}
+                        <Link href="/admin/analytics" className={styles["details-link"]}>Visitor details →</Link>
                     </div>
 
                     {available.total === 0 && (

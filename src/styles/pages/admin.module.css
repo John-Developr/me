@@ -721,11 +721,19 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
   border-radius: 50%;
   background: var(--admin-accent-soft);
   color: var(--admin-accent-ink);
   font-size: 12px;
   font-weight: 700;
+  box-shadow: 0 0 0 1px var(--divider-bottom);
+}
+
+.avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .profile-panel {
@@ -892,6 +900,13 @@
   font-weight: 700;
   line-height: 1;
   font-variant-numeric: tabular-nums;
+}
+
+.stat-value.stat-text {
+  font-size: 22px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .stat-value.unavailable {

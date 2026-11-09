@@ -2,7 +2,11 @@ import { SupabaseClient } from "@supabase/supabase-js";
 
 import supabaseServer, { RPC } from "../.supabase/server";
 import { ServiceError } from "./serviceError";
-import { TrafficPoint, TrafficRange, TrafficResult } from "@/utils/types";
+import {
+  BREAKDOWN_DIMENSIONS, BreakdownRow, RecentVisitor, TrafficBreakdowns,
+  TrafficPoint, TrafficRange, TrafficResult,
+} from "@/utils/types";
+import { VisitDevice, VisitLocation } from "@/utils/analytics";
 import { enumerateDays, previousRange } from "@/utils/admin/dateRange";
 
 // ============================================================
@@ -68,7 +72,7 @@ class SupabaseAnalyticsProvider implements AnalyticsProvider {
 export default class AnalyticsService {
   private provider: AnalyticsProvider | null;
 
-  constructor(client: SupabaseClient) {
+  constructor(private client: SupabaseClient) {
     this.provider = process.env.ANALYTICS_DISABLED === "1" ? null : new SupabaseAnalyticsProvider(client);
   }
 
@@ -111,14 +115,54 @@ export default class AnalyticsService {
    *
    * @param visitorKey - Server-side hash of IP + user agent (salted again in the database)
    */
-  static async recordPageView(path: string, visitorKey: string, referrerHost: string | null): Promise<void> {
+  static async recordPageView(
+    path: string,
+    visitorKey: string,
+    referrerHost: string | null,
+    details?: VisitLocation & VisitDevice,
+  ): Promise<void> {
     const { error } = await supabaseServer.rpc(RPC.recordPageView, {
       p_path:          path,
       p_visitor_key:   visitorKey,
       p_referrer_host: referrerHost,
+      p_country:       details?.country ?? null,
+      p_region:        details?.region ?? null,
+      p_city:          details?.city ?? null,
+      p_device:        details?.device ?? null,
+      p_browser:       details?.browser ?? null,
+      p_os:            details?.os ?? null,
     });
 
     if (error) console.error("[AnalyticsService] record_page_view failed:", error.message);
+  }
+
+  /** Top countries, cities, devices, browsers, OS, referrers and pages for the range (admins only). */
+  async getBreakdowns(range: TrafficRange, limit = 8): Promise<TrafficBreakdowns> {
+    const results = await Promise.all(
+      BREAKDOWN_DIMENSIONS.map(async (dimension) => {
+        const { data, error } = await this.client.rpc(RPC.trafficBreakdown, {
+          p_from: range.from, p_to: range.to, p_dimension: dimension, p_limit: limit,
+        });
+        if (error) throw AnalyticsService.readError("traffic_breakdown", error.message);
+        const rows = ((data ?? []) as BreakdownRow[]).map((r) => ({ label: r.label, visitors: Number(r.visitors), views: Number(r.views) }));
+        return [dimension, rows] as const;
+      }),
+    );
+    return Object.fromEntries(results) as TrafficBreakdowns;
+  }
+
+  /** Latest visitors (one row per visitor per day), newest first (admins only). */
+  async getRecentVisitors(limit = 50): Promise<RecentVisitor[]> {
+    const { data, error } = await this.client.rpc(RPC.recentVisitors, { p_limit: limit });
+    if (error) throw AnalyticsService.readError("recent_visitors", error.message);
+    return ((data ?? []) as RecentVisitor[]).map((v) => ({ ...v, page_views: Number(v.page_views), paths: v.paths ?? [] }));
+  }
+
+  private static readError(fn: string, message: string): ServiceError {
+    console.error(`[AnalyticsService] ${fn} failed:`, message);
+    return /could not find the function|does not exist/i.test(message)
+      ? new ServiceError("Visitor details aren't set up yet. Run supabase/migrations/20261114000100_analytics_details.sql.", 503)
+      : new ServiceError("Couldn't load visitor details.", 500);
   }
 
   /** Deletes page views older than `keepDays` (daily keep-alive cron). */

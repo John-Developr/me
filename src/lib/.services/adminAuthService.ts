@@ -69,7 +69,7 @@ export default class AdminAuthService {
 
     return {
       status: "admin",
-      admin:  { id: user.id, email: user.email ?? "", displayName: await AdminAuthService.getDisplayName(client, user) },
+      admin:  { id: user.id, email: user.email ?? "", ...(await AdminAuthService.getIdentity(client, user)) },
       client,
     };
   });
@@ -130,21 +130,22 @@ export default class AdminAuthService {
   }
 
   /**
-   * Name to greet the admin with: the account's display name (auth
-   * metadata), else the portfolio profile's full name, else null.
+   * How the admin appears in the admin UI:
+   * - name: the account's display name (auth metadata), else the portfolio
+   *   profile's full name, else null
+   * - photo: the Personal Profile photo, else null (initials are shown)
    */
-  private static async getDisplayName(client: SupabaseClient, user: User): Promise<string | null> {
+  private static async getIdentity(client: SupabaseClient, user: User): Promise<{ displayName: string | null; avatarUrl: string | null }> {
     const { data } = await client
       .from(Table.profiles)
-      .select("full_name")
+      .select("full_name, avatar_url")
       .order("created_at", { ascending: true })
       .limit(1)
-      .maybeSingle<{ full_name: string | null }>();
+      .maybeSingle<{ full_name: string | null; avatar_url: string | null }>();
 
     const fromMetadata = user.user_metadata?.full_name ?? user.user_metadata?.name;
-    // The account's own name (Account Settings) wins; the portfolio profile name is the fallback.
     const name         = (typeof fromMetadata === "string" ? fromMetadata.trim() : "") || data?.full_name?.trim() || "";
 
-    return name || null;
+    return { displayName: name || null, avatarUrl: data?.avatar_url?.trim() || null };
   }
 }

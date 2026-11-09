@@ -54,7 +54,7 @@ export const ADMIN_NAV: AdminNavGroup[] = [
   {
     title: "Insights",
     items: [
-      { key: "analytics", label: "Analytics", icon: AdminIcons.BarChart, kind: "soon" },
+      { key: "analytics", label: "Analytics", icon: AdminIcons.BarChart, kind: "route", href: "/admin/analytics" },
     ],
   },
   {
