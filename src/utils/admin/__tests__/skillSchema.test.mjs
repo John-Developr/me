@@ -2,7 +2,9 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 
-import { categoryInputSchema, categorySlug, skillInputSchema } from "../skillSchema.ts";
+process.env.NEXT_PUBLIC_SUPABASE_URL ??= "https://demo.supabase.co";
+const { categoryInputSchema, categorySlug, skillInputSchema } = await import("../skillSchema.ts");
+const MEDIA = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/media/`;
 
 const UUID = "11111111-1111-4111-8111-111111111111";
 
@@ -22,9 +24,13 @@ test("core tools need a description (max 160)", () => {
   assert.equal(skillInputSchema.safeParse({ name: "Next.js", category_id: null, is_core: true, description: "React framework." }).success, true);
 });
 
-test("logos must be Media Library files or site paths", () => {
-  assert.equal(skillInputSchema.safeParse({ name: "X", category_id: null, logo_url: "https://evil.com/x.png" }).success, false);
-  assert.equal(skillInputSchema.safeParse({ name: "X", category_id: null, logo_url: "/images/tech/next.png" }).success, true);
+test("logos must come from the Media Library (no local /public paths)", () => {
+  const logo = (logo_url) => skillInputSchema.safeParse({ name: "X", category_id: null, logo_url }).success;
+  assert.equal(logo(`${MEDIA}2026/11/next.png`), true);
+  assert.equal(logo(""), true); // no logo
+  assert.equal(logo("/images/tech/next.png"), false);
+  assert.equal(logo("https://evil.com/x.png"), false);
+  assert.equal(logo(`${MEDIA}../secret.png`), false);
 });
 
 test("category slugs and icons", () => {

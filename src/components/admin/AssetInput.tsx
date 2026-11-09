@@ -6,6 +6,7 @@ import Image from "next/image";
 import { AdminIcons } from "@/components/icons/admin";
 import MediaPickerDialog, { MediaKind } from "@/components/admin/media/MediaPickerDialog";
 import { isAssetRef } from "@/utils/admin/fieldSchemas";
+import { isMediaUrl } from "@/utils/media";
 import adminStyles from "@/styles/pages/admin.module.css";
 import styles from "@/styles/pages/adminForm.module.css";
 
@@ -17,20 +18,22 @@ interface AssetInputProps {
     /** "image" shows a preview; "document" is for PDFs (e.g. the resume). */
     kind?:               MediaKind;
     shape?:              "square" | "wide";
+    /** Only Media Library files: no typing a /public path (e.g. skill logos). */
+    libraryOnly?:        boolean;
     "aria-invalid"?:     boolean;
     "aria-describedby"?: string;
 }
 
 /**
  * Field for an image or PDF: pick from the Media Library (or upload there),
- * or type a /public path. Shows a live preview for images.
+ * or type a /public path (unless `libraryOnly`). Shows a live preview for images.
  */
-export default function AssetInput({ kind = "image", shape = "square", onChange, ...input }: AssetInputProps) {
+export default function AssetInput({ kind = "image", shape = "square", libraryOnly = false, onChange, ...input }: AssetInputProps) {
     const [pickerOpen, setPickerOpen] = useState<boolean>(false);
     const [failedSrc,  setFailedSrc]  = useState<string | null>(null);
 
     const src     = input.value.trim();
-    const valid   = isAssetRef(src);
+    const valid   = libraryOnly ? isMediaUrl(src) : isAssetRef(src);
     const broken  = valid && failedSrc === src;
     const fromLib = valid && !src.startsWith("/");
 
@@ -53,8 +56,22 @@ export default function AssetInput({ kind = "image", shape = "square", onChange,
                     <input
                         {...input}
                         spellCheck={false}
-                        placeholder={kind === "image" ? "Choose from library or /images/…" : "Choose a PDF or /documents/…"}
+                        readOnly={libraryOnly}
+                        placeholder={libraryOnly
+                            ? "Choose from the Media Library"
+                            : kind === "image" ? "Choose from library or /images/…" : "Choose a PDF or /documents/…"}
+                        onClick={libraryOnly ? () => setPickerOpen(true) : undefined}
                         onChange={(e) => onChange({ target: { value: e.target.value } })} />
+                    {libraryOnly && src && (
+                        <button
+                            type="button"
+                            className={`liquid_glass_btn ${adminStyles["btn-secondary"]}`}
+                            aria-label="Remove"
+                            title="Remove"
+                            onClick={() => onChange({ target: { value: "" } })}>
+                            <AdminIcons.Close width={14} height={14} />
+                        </button>
+                    )}
                     <button
                         type="button"
                         className={`liquid_glass_btn ${adminStyles["btn-secondary"]}`}
@@ -64,6 +81,7 @@ export default function AssetInput({ kind = "image", shape = "square", onChange,
                     </button>
                 </div>
                 {broken && <small className={styles.warn}>No file found at this address.</small>}
+                {libraryOnly && src && !valid && <small className={styles.warn}>Not a Media Library file. Choose one from the library.</small>}
                 {valid && !broken && (
                     <small className={styles["asset-source"]}>{fromLib ? "From Media Library" : "File in /public (import it in Media Library)"}</small>
                 )}

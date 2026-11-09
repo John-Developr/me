@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { optionalAssetRef, optionalText } from "./fieldSchemas";
+import { optionalMediaRef, optionalText } from "./fieldSchemas";
 import { SKILL_ICON_KEYS } from "./skillIconKeys";
 
 /* ============================================================
@@ -15,7 +15,7 @@ const order = z.coerce.number().int("Use a whole number.").min(0).max(9999).defa
 export const skillInputSchema = z.object({
   name:        z.string().trim().min(1, "Name is required.").max(80, "Use 80 characters or fewer."),
   category_id: z.preprocess((v) => (v === "" ? null : v), z.uuid("Choose a category.").nullable()),
-  logo_url:    optionalAssetRef("Logo"),
+  logo_url:    optionalMediaRef("Logo"),
   is_core:     z.boolean().default(false),
   description: optionalText(160, "Description"),
   core_order:  order,

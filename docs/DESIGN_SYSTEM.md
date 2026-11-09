@@ -231,4 +231,4 @@ Inputs: radius `15px`, `var(--border-input-field)`, 16px text, `--bg` background
 - Icons: `src/components/icons/*.tsx`, 24×24 viewBox (some 25), `stroke="currentColor"`, `strokeWidth 1.5`, rounded caps/joins. Sizes: 15 (menu, see-more), 17.5 (header/footer), 18 (buttons), 20 (section titles).
 - Logo: `public/images/Logo.png` at 75×17; tinted blue in dark mode via `--logo-filter`.
 - Avatar: 75×75, radius 20px, `box-shadow: 1px 1px 20px -3px #000000bf`.
-- Tech logos 25×25 (cards) / 14×14 (badges) in `public/images/tech/`; company logos 25×25 in `public/images/company/`.
+- Tech logos 25×25 (cards) / 14×14 (badges) and company logos 25×25 come from the Media Library (Supabase Storage), set in Admin → Skills / Experience.

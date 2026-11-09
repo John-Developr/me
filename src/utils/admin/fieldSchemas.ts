@@ -40,6 +40,13 @@ export const optionalAssetRef = (label: string) =>
     `${label} must be a Media Library file or a path on this site, like /images/logo.png.`,
   );
 
+/** A Media Library file only (no /public paths), e.g. skill logos. */
+export const optionalMediaRef = (label: string) =>
+  optionalText(2048, label).refine(
+    (v) => v === null || isMediaUrl(v),
+    `${label} must be a file from the Media Library.`,
+  );
+
 export const textList = (maxItems: number, maxLength: number, label: string) =>
   z.array(z.string().trim().max(maxLength, `Each ${label} must be ${maxLength} characters or fewer.`))
     .max(maxItems, `Up to ${maxItems} ${label}s.`)
