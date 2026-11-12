@@ -2,7 +2,7 @@ import { redirect } from "next/navigation";
 
 import AdminShell from "@/components/admin/AdminShell";
 import AdminAuthService from "@/lib/.services/adminAuthService";
-import { loadNewMessageCount } from "@/containers/admin-dashboard-page/dashboardData";
+import { loadMessageNotifications } from "@/containers/admin-dashboard-page/dashboardData";
 
 // Per-user, per-request data: never statically rendered or cached.
 export const dynamic = "force-dynamic";
@@ -17,10 +17,10 @@ export default async function AdminDashboardLayout({ children }: { children: Rea
   if (session.status === "signed-out") redirect("/admin/login");
   if (session.status !== "admin")      redirect(`/admin/login?error=${session.status}`);
 
-  const newMessages = await loadNewMessageCount();
+  const notifications = await loadMessageNotifications();
 
   return (
-    <AdminShell admin={session.admin} newMessages={newMessages.ok ? newMessages.data : null}>
+    <AdminShell admin={session.admin} notifications={notifications.ok ? notifications.data : null}>
       {children}
     </AdminShell>
   );

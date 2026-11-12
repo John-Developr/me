@@ -3,10 +3,11 @@ import { cache } from "react";
 import AdminAuthService from "@/lib/.services/adminAuthService";
 import AnalyticsService from "@/lib/.services/analyticsService";
 import DashboardService from "@/lib/.services/dashboardService";
+import MessageService from "@/lib/.services/messageService";
 
 import { getProfileCompletion } from "@/utils/admin/profileCompletion";
 import { presetToRange } from "@/utils/admin/dateRange";
-import { ActivityLog, ContentStats, DashboardResult, ProfileCompletion, TrafficResult } from "@/utils/types";
+import { ActivityLog, ContentStats, DashboardResult, MessageNotifications, ProfileCompletion, TrafficResult } from "@/utils/types";
 
 /* ============================================================
    DASHBOARD DATA (server only)
@@ -45,8 +46,13 @@ export const loadProfileCompletion = cache((): Promise<DashboardResult<ProfileCo
   settle(async () => getProfileCompletion(await (await getDashboardService()).getProfile()), "Couldn't load the profile.")
 );
 
-export const loadNewMessageCount = cache((): Promise<DashboardResult<number>> =>
-  settle(async () => (await getDashboardService()).countNewMessages(), "Couldn't load new messages.")
+/** Unread contact messages for the notification bell: the count and the latest few. */
+export const loadMessageNotifications = cache((): Promise<DashboardResult<MessageNotifications>> =>
+  settle(async () => {
+    const session = await AdminAuthService.getSession();
+    if (session.status !== "admin") throw new Error("Not authorized.");
+    return new MessageService(session.client).getNotifications();
+  }, "Couldn't load new messages.")
 );
 
 /** Page views and visitors over the last 30 days (first-party analytics). */

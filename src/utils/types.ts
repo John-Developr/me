@@ -575,3 +575,34 @@ export interface SeoSettingsData {
   settings: SiteSettings;
   pages:    SeoPage[];
 }
+
+// ============================================================
+// ADMIN — CONTACT MESSAGES
+// ============================================================
+
+/** new = unread (counted by the bell), read, archived (out of the inbox). */
+export type MessageStatus = "new" | "read" | "archived";
+
+/** A row of `public.contact_messages` (saved by the contact form). */
+export interface ContactMessage {
+  id:           string;
+  first_name:   string | null;
+  last_name:    string | null;
+  email:        string;
+  subject:      string;
+  inquiry_type: string | null;
+  budget:       string | null;
+  message:      string;
+  status:       MessageStatus;
+  read_at:      string | null;
+  created_at:   string;
+}
+
+/** An unread message as listed in the notification bell. */
+export type MessagePreview = Pick<ContactMessage, "id" | "first_name" | "last_name" | "email" | "subject" | "created_at">;
+
+/** What the bell shows: the unread count and the latest unread messages. */
+export interface MessageNotifications {
+  count:  number;
+  latest: MessagePreview[];
+}

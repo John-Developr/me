@@ -8,14 +8,14 @@ import AdminTopbar from "./AdminTopbar";
 
 import { useApp } from "@/lib/.context/AppContext";
 import { storageKeys } from "@/config/storageKeys";
-import { AdminUser } from "@/utils/types";
+import { AdminUser, MessageNotifications } from "@/utils/types";
 import styles from "@/styles/pages/admin.module.css";
 
 interface AdminShellProps {
-    admin:       AdminUser;
-    /** Unread contact messages for the bell; null if the count couldn't be loaded. */
-    newMessages: number | null;
-    children:    ReactNode;
+    admin:         AdminUser;
+    /** Unread contact messages for the bell; null if they couldn't be loaded. */
+    notifications: MessageNotifications | null;
+    children:      ReactNode;
 }
 
 /**
@@ -23,7 +23,7 @@ interface AdminShellProps {
  * Desktop: the sidebar collapses to icons (remembered per browser).
  * ≤850px: the sidebar becomes an off-canvas drawer.
  */
-export default function AdminShell({ admin, newMessages, children }: AdminShellProps) {
+export default function AdminShell({ admin, notifications, children }: AdminShellProps) {
     const { isMobile } = useApp();
     const pathname     = usePathname();
 
@@ -82,7 +82,7 @@ export default function AdminShell({ admin, newMessages, children }: AdminShellP
             <div className={styles.main}>
                 <AdminTopbar
                     admin={admin}
-                    newMessages={newMessages}
+                    notifications={notifications}
                     onOpenMenu={() => setMobileOpen(true)} />
 
                 <main id="admin-content" className={styles.content}>

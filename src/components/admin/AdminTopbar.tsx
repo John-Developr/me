@@ -9,16 +9,16 @@ import { getBreadcrumbs } from "./adminNav";
 
 import { AdminIcons } from "@/components/icons/admin";
 import { BASE_URL } from "@/config/siteUrl";
-import { AdminUser } from "@/utils/types";
+import { AdminUser, MessageNotifications } from "@/utils/types";
 import styles from "@/styles/pages/admin.module.css";
 
 interface AdminTopbarProps {
-    admin:       AdminUser;
-    newMessages: number | null;
-    onOpenMenu:  () => void;
+    admin:         AdminUser;
+    notifications: MessageNotifications | null;
+    onOpenMenu:    () => void;
 }
 
-export default function AdminTopbar({ admin, newMessages, onOpenMenu }: AdminTopbarProps) {
+export default function AdminTopbar({ admin, notifications, onOpenMenu }: AdminTopbarProps) {
     const pathname = usePathname();
     const crumbs   = getBreadcrumbs(pathname);
 
@@ -53,7 +53,7 @@ export default function AdminTopbar({ admin, newMessages, onOpenMenu }: AdminTop
             </div>
 
             <div className={styles["topbar-actions"]}>
-                <AdminNotifications newMessages={newMessages} />
+                <AdminNotifications notifications={notifications} />
 
                 <a
                     href={BASE_URL}
