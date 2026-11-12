@@ -1,5 +1,6 @@
 'use client'
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -75,8 +76,14 @@ export default function AdminSidebar({ collapsed, mobileOpen, onCloseMobile, onT
             <div className={styles.brand}>
                 <Link href={ADMIN_HOME} className={styles["brand-link"]} title="Admin overview">
                     <span className={styles["brand-text"]}>
-                        <strong>Portfolio CMS</strong>
-                        <small>Admin</small>
+                        <Image
+                            src="/images/Logo.png"
+                            width={53}
+                            height={12}
+                            alt="Logo"
+                            className={styles["brand-logo"]}
+                            priority />
+                        <small>Admin - Portfolio CMS</small>
                     </span>
                 </Link>
 

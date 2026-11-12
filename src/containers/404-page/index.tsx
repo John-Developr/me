@@ -6,10 +6,11 @@ import Footer from "@/components/footer/Footer";
 
 import Home from "@/components/icons/Home";
 import Shape404 from "@/components/shapes/Shape404";
+import NotFoundFrame from "./NotFoundFrame";
 
 export default function Page404() {
   return (
-    <>
+    <NotFoundFrame>
         <Header />
         <div className={styles.container}>
             <section>
@@ -30,6 +31,6 @@ export default function Page404() {
             </section>
         </div>
         <Footer />
-    </>
+    </NotFoundFrame>
   );
 }
