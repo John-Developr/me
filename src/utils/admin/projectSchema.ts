@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { optionalAssetRef, optionalText, optionalUrl, textList } from "./fieldSchemas";
+import { optionalAssetRef, optionalText, optionalUrl, parsePatch, type PatchParseResult, textList } from "./fieldSchemas";
 
 /* ============================================================
    PROJECT VALIDATION
@@ -49,29 +49,11 @@ export const projectInputSchema = z.object({
 
 export type ProjectInput = z.output<typeof projectInputSchema>;
 
-const projectPatchSchema = projectInputSchema.partial();
-
 export type ProjectPatch = Partial<ProjectInput>;
-
-export type PatchParseResult =
-  | { success: true;  data: ProjectPatch }
-  | { success: false; error: z.ZodError };
 
 /**
  * Validates a PATCH body (any subset of fields, e.g. just `{ status }`).
- *
- * Only keys present in the body are returned: zod applies `.default()`
- * values even inside `.partial()`, which would otherwise reset fields
- * like `highlights` or `is_featured` that weren't sent.
+ * Only keys present in the body are returned (see `parsePatch`).
  */
-export function parseProjectPatch(body: unknown): PatchParseResult {
-  const parsed = projectPatchSchema.safeParse(body);
-  if (!parsed.success) return parsed;
-
-  const sent = new Set(body && typeof body === "object" ? Object.keys(body) : []);
-  const data = Object.fromEntries(
-    Object.entries(parsed.data).filter(([key]) => sent.has(key)),
-  ) as ProjectPatch;
-
-  return { success: true, data };
-}
+export const parseProjectPatch = (body: unknown): PatchParseResult<ProjectInput> =>
+  parsePatch(projectInputSchema, body);

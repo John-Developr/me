@@ -265,6 +265,143 @@
   min-width: 0;
 }
 
+/* ─── Markdown editor (toolbar + textarea / preview in one box) ─── */
+
+.md-editor {
+  border: var(--border-input-field);
+  border-radius: 8px;
+  background: var(--container-bg);
+  overflow: hidden;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.md-editor:focus-within {
+  border-color: var(--admin-accent);
+  box-shadow: 0 0 0 3px var(--admin-accent-soft);
+}
+
+.field.invalid .md-editor {
+  border-color: var(--admin-danger);
+}
+
+.md-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 4px 6px;
+  border-bottom: var(--border-container);
+  background: var(--bg);
+}
+
+.md-tools {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 2px;
+  min-width: 0;
+}
+
+.md-tools button {
+  width: 32px;
+  height: 32px;
+}
+
+.md-tools button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.md-tools button:disabled:hover {
+  background: none;
+  color: var(--text-muted);
+}
+
+/* Divider after the last button of each group */
+.md-group-end {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.md-group-end::after {
+  content: "";
+  width: 1px;
+  height: 18px;
+  margin: 0 4px;
+  background: var(--text-muted);
+  opacity: 0.3;
+}
+
+.md-tabs {
+  flex-shrink: 0;
+  display: inline-flex;
+  padding: 2px;
+  border-radius: 8px;
+  border: var(--border-container);
+  background: var(--container-bg);
+}
+
+.md-tabs button {
+  height: 28px;
+  padding: 0 10px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-muted);
+  cursor: pointer;
+}
+
+.md-tabs button:hover {
+  color: var(--text);
+}
+
+.md-tabs button.selected {
+  background: var(--bg);
+  color: var(--text);
+  box-shadow: var(--admin-shadow);
+}
+
+/* The box draws the border and focus ring, not the textarea. */
+.field .md-editor textarea {
+  display: block;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  min-height: 320px;
+  padding: 12px 14px;
+  line-height: 1.6;
+}
+
+.md-disabled {
+  background: var(--disabled-input-bg);
+}
+
+/* Typography comes from BlogMarkdown (.prose in blog.module.css). */
+.md-preview {
+  min-height: 320px;
+  max-height: 640px;
+  overflow-y: auto;
+  padding: 16px 18px;
+}
+
+/* Control + button on one row (e.g. blog "Generate with AI": category + Generate) */
+.inline-action {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.inline-action > :is(input, select) {
+  flex: 1;
+  min-width: 0;
+}
+
+.inline-action > button {
+  flex-shrink: 0;
+  height: 40px;   /* match the 40px field height */
+}
+
 .asset-source {
   font-size: 12px;
   color: var(--text-muted);
@@ -389,6 +526,17 @@
 
   .fields.two {
     grid-template-columns: minmax(0, 1fr);
+  }
+
+  /* Editor toolbar: tools wrap, Write/Preview on its own row */
+  .md-toolbar {
+    flex-wrap: wrap;
+  }
+
+  /* Full-width button under the control */
+  .inline-action {
+    flex-direction: column;
+    align-items: stretch;
   }
 
   .save-bar {

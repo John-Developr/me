@@ -1,8 +1,7 @@
 import Link from "next/link";
-import ReactMarkdown from "react-markdown";
-
 import styles from "@/styles/pages/blog.module.css";
 
+import BlogMarkdown from "@/components/blog/BlogMarkdown";
 import HrHorizontal from "@/components/hr/HrHorizontal";
 import SkeletonImage from "@/components/custom/SkeletonImage";
 import BlogDetailShareWith from "./BlogDetailShareWith";
@@ -64,7 +63,7 @@ const BlogDetailMain = ({ blog }: BlogDetailMainProps) => {
         <HrHorizontal spacingH={0} spacingV={30} thickness={1} />
 
         <section className={styles.content}>
-          <ReactMarkdown>{blog.content || ""}</ReactMarkdown>
+          <BlogMarkdown content={blog.content || ""} />
         </section>
 
         <section>

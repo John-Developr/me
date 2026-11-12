@@ -157,7 +157,7 @@ Each row is an `AnimatedSection` (uses `useAnimateIn`, staggered delays 50 / 150
 | Contact details / socials | `ConnectSection.tsx`, `Header.tsx`, `Footer.tsx` | From Supabase (edit in `/admin/profile`) |
 | Blog posts | Supabase `ai_blogs` (shape = `AIBlogResponse` in `utils/types.ts`) | Client fetch → API → Supabase |
 | Chat persona | `src/docs/system-instruction.md` | Read by `/api/chat` |
-| Blog prompt | `src/docs/blog-instruction.md` + Zod schema in `ChatService.blogMain` | Read by `/api/cron/blog` |
+| Blog prompt | `src/docs/blog-instruction.md` + Zod schema in `ChatService.blogMain` | Read by `/api/cron/blog` and `/api/admin/blogs/generate` (admin "Generate post") |
 
 ### Blog record (`ai_blogs`)
 ```ts
@@ -171,10 +171,12 @@ interface AIBlogResponse {
   tags: string[];
   reading: number;        // minutes
   views?: number;         // incremented on detail fetch
-  generated_at: string;   // ISO timestamp (DB default)
+  generated_at: string;   // ISO timestamp (DB default); reset to now when a draft is published
 }
 ```
 The cron picks the category via RPC `get_least_inserted_category` (falls back to random) so categories stay balanced.
+
+Since `20261119000100_blog_admin.sql` the table also has `status` (`draft` | `published`), `source` (`ai` | `personal`) and `updated_at`; the admin type is `BlogRecord`. Public reads (`BlogService`) return published posts only. Admin CRUD is `AdminBlogService` (session client, RLS) behind `/api/admin/blogs`, `/api/admin/blogs/[id]` and `/api/admin/blogs/generate` (Gemini draft for a chosen category, not saved).
 
 ---
 

@@ -13,12 +13,12 @@ Companion docs: [PROJECT_OVERVIEW.md](docs/PROJECT_OVERVIEW.md) · [DESIGN_SYSTE
 This is **John Carlo A. Ylanan's personal portfolio** — a Next.js 15 (App Router) + React 19 + TypeScript site with plain **CSS Modules + global CSS** (no Tailwind, no CSS-in-JS, no UI kit). It has two halves:
 
 **Public site**: home (profile, about, tech stack, experience, featured project, connect, recent blog), `/projects`, `/tech-stack`, `/blog`, `/blog/[slug]`, `/contact`, plus:
-- An AI-generated blog (Gemini → Supabase `ai_blogs`, written by a monthly Vercel cron)
+- A blog (Supabase `ai_blogs`): a monthly Vercel cron writes a post with Gemini; the admin can also write posts by hand or generate one per category. Only `status = 'published'` posts are public.
 - A floating AI chat assistant ("Chat with John", Gemini)
 - A contact form that sends email via Nodemailer/Gmail SMTP and saves to `contact_messages`
 - First-party, privacy-friendly analytics (`PageViewTracker` → `POST /api/p`)
 
-**Admin CMS** (`/admin`, private, Supabase Auth): dashboard, Projects, Personal Profile, Work Experience, Skills & Technologies, Contact Messages (+ notification bell), Media Library, Analytics, SEO Settings, Account.
+**Admin CMS** (`/admin`, private, Supabase Auth): dashboard, Projects, Personal Profile, Work Experience, Skills & Technologies, Blog, Contact Messages (+ notification bell), Media Library, Analytics, SEO Settings, Account.
 
 **All portfolio content lives in Supabase and is edited in the admin.** Nothing is hard-coded in components anymore, and there are no code fallbacks (see §4.1).
 
@@ -41,7 +41,7 @@ Your job is to extend and maintain this codebase **without changing its visual i
 8. **Font:** Karla, loaded by `next/font/google` in `src/app/layout.tsx` as the CSS variable `--font-karla` and applied with `font-family: var(--font-karla), sans-serif` on `*`. Don't add fonts or hard-code the family name.
 9. **Icons:** inline SVG React components in `src/components/icons/` (admin set: `icons/admin/index.tsx` → `AdminIcons`) using `stroke="currentColor"` / `fill="currentColor"`. Don't add an icon library.
 10. **Motion:** entrance animation via `useAnimateIn` (fade + 20px rise, ~600ms, staggered delays). Keep new animations subtle and consistent with existing keyframes.
-11. **Admin UI** follows the same theme through the `--admin-*` tokens (`--admin-accent`, `--admin-success`, `--admin-danger`, `--admin-warning`, `--admin-shadow`, …), which alias the site tokens. Use them in `admin*.module.css`; don't write raw colors. Reuse the shared building blocks in `src/components/admin/` (`PageHeader`, `FormField`, `FormDialog`, `ConfirmDialog`, `EmptyState`, `ErrorState`, `Skeleton`, `StatCard`, `AssetInput`, `TagInput`, `DateRangePicker`, …) before making new ones. The admin uses the same 850px breakpoint (the sidebar becomes a drawer).
+11. **Admin UI** follows the same theme through the `--admin-*` tokens (`--admin-accent`, `--admin-success`, `--admin-danger`, `--admin-warning`, `--admin-shadow`, …), which alias the site tokens. Use them in `admin*.module.css`; don't write raw colors. Reuse the shared building blocks in `src/components/admin/` (`PageHeader`, `FormField`, `FormDialog`, `ConfirmDialog`, `EmptyState`, `ErrorState`, `Skeleton`, `StatCard`, `AssetInput`, `TagInput`, `DateRangePicker`, `MarkdownEditor`, …) before making new ones. The admin uses the same 850px breakpoint (the sidebar becomes a drawer).
 
 ---
 

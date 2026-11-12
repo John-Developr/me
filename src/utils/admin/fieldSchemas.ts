@@ -53,3 +53,27 @@ export const textList = (maxItems: number, maxLength: number, label: string) =>
     .transform((items) => [...new Set(items.filter(Boolean))])
     .default([]);
 
+export type PatchParseResult<T> =
+  | { success: true;  data: Partial<T> }
+  | { success: false; error: z.ZodError };
+
+/**
+ * Validates a PATCH body (any subset of fields, e.g. just `{ status }`)
+ * against an input schema.
+ *
+ * Only keys present in the body are returned: zod applies `.default()`
+ * values even inside `.partial()`, which would otherwise reset fields
+ * that weren't sent.
+ */
+export function parsePatch<S extends z.ZodObject>(schema: S, body: unknown): PatchParseResult<z.output<S>> {
+  const parsed = schema.partial().safeParse(body);
+  if (!parsed.success) return { success: false, error: parsed.error };
+
+  const sent = new Set(body && typeof body === "object" ? Object.keys(body) : []);
+  const data = Object.fromEntries(
+    Object.entries(parsed.data as Record<string, unknown>).filter(([key]) => sent.has(key)),
+  ) as Partial<z.output<S>>;
+
+  return { success: true, data };
+}
+

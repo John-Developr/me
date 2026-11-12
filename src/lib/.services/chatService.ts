@@ -229,10 +229,14 @@ export default class ChatService {
      *
      * @param schema       - Shape the model must return
      * @param recentTitles - Latest post titles, so topics and title patterns don't repeat
+     * @param forced       - Category chosen by the admin; otherwise the least used one
      */
-    private async blogConfig(schema: ZodObject<ZodRawShape>, recentTitles: string[]): Promise<AssistantConfig> {
-        const BlogServiceInstance = new BlogService();
-        let category = await BlogServiceInstance.getLeastInsertedCategory();
+    private async blogConfig(
+        schema: ZodObject<ZodRawShape>,
+        recentTitles: string[],
+        forced?: string,
+    ): Promise<AssistantConfig> {
+        let category = forced ?? await new BlogService().getLeastInsertedCategory();
 
         if (!category) {
             const categories = [
@@ -278,9 +282,10 @@ export default class ChatService {
      * dates, reading time and slug uniqueness are handled in code.
      *
      * @param recentTitles - Latest post titles to avoid repeating
+     * @param category     - Category to write about (admin "Generate with AI"); cron leaves it unset
      * @throws When the model returns nothing or an invalid structure
      */
-    async blogMain(recentTitles: string[] = []): Promise<GeneratedBlogPost> {
+    async blogMain(recentTitles: string[] = [], category?: string): Promise<GeneratedBlogPost> {
         const matchSchema = z.object({
             title:    z.string().min(1),
             slug:     z.string(),
@@ -295,7 +300,7 @@ export default class ChatService {
             tags:     z.array(z.string()),
         });
 
-        await this.blogConfig(matchSchema, recentTitles);
+        await this.blogConfig(matchSchema, recentTitles, category);
         const response = await withGeminiKeyFallback((ai) => ai.models.generateContent(this.config));
 
         if (!response.text) {

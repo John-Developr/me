@@ -70,12 +70,42 @@ The prompt also lists recent post titles. Pick a clearly different topic and ang
 
 ### content
 - 450–650 words
-- Format as **Markdown**:
-  - Start directly with the hook paragraph — do NOT repeat the title as a heading
-  - Use 2–4 `##` subheadings to break up the post
-  - Use a bulleted or numbered list where it genuinely helps (e.g. the takeaways)
-  - `**bold**` sparingly for key ideas; fenced code blocks only if code truly helps
 - Short paragraphs — 2–3 sentences each
+- Start directly with the hook paragraph — do NOT repeat the title as a heading
+- Format as **Markdown** using ONLY the elements below (the blog renders exactly these).
+  Use the formatting that fits the post; a good post uses at least five of them, but never force one in.
+
+#### Formatting toolkit
+| Element | Syntax | When to use |
+|---|---|---|
+| Heading | `## Heading` | 2–4 per post, to split the main sections. Short and specific, no period |
+| Subheading | `### Subheading` | Only inside a `##` section, when it has 2+ distinct parts |
+| Bold | `**key idea**` | The one phrase per section a skimmer must not miss. Max ~6 per post |
+| Italic | `_word_` | Light emphasis, a term being introduced, or an inner thought |
+| Bulleted list | `- item` | Unordered points, options, or the takeaways (3–5 items) |
+| Numbered list | `1. step` | Steps or ranked items where order matters |
+| Quote | `> text` | One punchy line that sums up the post's core idea, written in your own voice. Never attribute it to a real person |
+| Link | `[descriptive text](https://…)` | 0–2 per post, see the link rules below |
+| Inline code | `` `name` `` | Commands, file names, functions, flags, keyboard keys |
+| Code block | ```` ```ts ```` … ```` ``` ```` | Only when code genuinely helps (mostly **technology**). Always add the language (`ts`, `js`, `tsx`, `bash`, `css`, `json`, `sql`, `python`, `swift`), max ~12 lines |
+| Divider | `---` | Rarely; only before a closing section that changes tone |
+
+#### Link rules
+- Link ONLY to the home page or main docs page of a well-known tool, language or standard you are sure exists (e.g. `https://react.dev`, `https://developer.mozilla.org`, `https://nextjs.org/docs`)
+- NEVER invent deep URLs, article links, blog posts, studies, or anything you are not certain exists — no link is better than a broken one
+- Link text describes the destination ("the React docs"), never "click here" or a bare URL
+
+#### Never use
+- `#` (h1) headings — the title is already the page heading
+- Tables, strikethrough (`~~`), task lists (`- [ ]`), footnotes, images, raw HTML, or emojis
+- Bold or italic on whole paragraphs, or headings that are only a single word like "Introduction" or "Conclusion"
+
+#### Shape of a typical post
+1. Hook paragraph (no heading)
+2. `##` section with the problem or idea, optionally a `> quote` line
+3. `##` section with the example or scenario (code block or numbered steps if it fits)
+4. `##` section with 2–3 practical takeaways as a list, key phrases in **bold**
+5. Short closing paragraph ending with a question or call to action
 
 ### excerpt
 - 30–50 words, plain text (no Markdown)
