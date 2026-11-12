@@ -41,7 +41,7 @@ Your job is to extend and maintain this codebase **without changing its visual i
 8. **Font:** Karla, loaded by `next/font/google` in `src/app/layout.tsx` as the CSS variable `--font-karla` and applied with `font-family: var(--font-karla), sans-serif` on `*`. Don't add fonts or hard-code the family name.
 9. **Icons:** inline SVG React components in `src/components/icons/` (admin set: `icons/admin/index.tsx` → `AdminIcons`) using `stroke="currentColor"` / `fill="currentColor"`. Don't add an icon library.
 10. **Motion:** entrance animation via `useAnimateIn` (fade + 20px rise, ~600ms, staggered delays). Keep new animations subtle and consistent with existing keyframes.
-11. **Admin UI** follows the same theme through the `--admin-*` tokens (`--admin-accent`, `--admin-success`, `--admin-danger`, `--admin-warning`, `--admin-shadow`, …), which alias the site tokens. Use them in `admin*.module.css`; don't write raw colors. Reuse the shared building blocks in `src/components/admin/` (`PageHeader`, `FormField`, `FormDialog`, `ConfirmDialog`, `EmptyState`, `ErrorState`, `Skeleton`, `StatCard`, `AssetInput`, `TagInput`, `DateRangePicker`, `MarkdownEditor`, …) before making new ones. The admin uses the same 850px breakpoint (the sidebar becomes a drawer).
+11. **Admin UI** follows the same theme through the `--admin-*` tokens (`--admin-accent`, `--admin-success`, `--admin-danger`, `--admin-warning`, `--admin-shadow`, …), which alias the site tokens. Use them in `admin*.module.css`; don't write raw colors. Reuse the shared building blocks in `src/components/admin/` (`PageHeader`, `FormField`, `FormDialog`, `ConfirmDialog`, `EmptyState`, `ErrorState`, `Skeleton`, `StatCard`, `AssetInput`, `TagInput`, `DateRangePicker`, `MonthPicker`, `Select`, `ListSkeletons`, `MarkdownEditor`, …) before making new ones. The admin uses the same 850px breakpoint (the sidebar becomes a drawer).
 
 ---
 
@@ -61,7 +61,7 @@ Your job is to extend and maintain this codebase **without changing its visual i
 - Global client state: `useApp()` from `src/lib/.context/AppContext.tsx` (`isDark`, `toggleTheme`, `isMobile`, `pageLoading`, `showModal`). Site-wide data from the root layout: `SiteProfileContext` (owner profile for header/footer) and `TechLogosContext` (logos for tech chips). Don't add Redux/Zustand.
 - Client-side requests go through **API routes** (`src/app/api/**/route.ts`) and the endpoint registry `src/config/networkDefine.ts`. Never hard-code URLs in components; add them to `networkDefine`.
 - Server logic is in class-based services in `src/lib/.services/`. API routes call a service and return `NextResponse.json(...)` inside `try/catch`.
-- Async list UIs follow the **loading → error → empty → data** pattern with a dedicated Skeleton, Empty, and Error component (see `home-page/blog-section/`, and `components/admin/` for the admin).
+- Async list UIs follow the **loading → error → empty → data** pattern with a dedicated Skeleton, Empty, and Error component (see `home-page/blog-section/`, and `components/admin/` for the admin). **A skeleton must match the loaded layout:** render the real markup and classes with placeholders only where data goes (public: a `.bone` inside the real text element; admin: `components/admin/ListSkeletons.tsx`), so nothing jumps when data arrives.
 - Use `next/image` for images and `next/link` for internal navigation. Remote images are allowed only from the Supabase Storage `media` bucket (`next.config.ts`).
 - Storage keys (localStorage, cookies) come from `src/config/storageKeys.ts`.
 - **Render must be deterministic.** No `Date.now()`, `Math.random()`, `new Date()` formatting or `window` checks in output that is server-rendered. (A `?t=<timestamp>` cache-buster in `SkeletonImage` caused a hydration error on every page.) Use `useEffect` or `TimeAgo`-style client components for time-relative UI.
@@ -113,7 +113,7 @@ Your job is to extend and maintain this codebase **without changing its visual i
 
 ### 4.3 Admin area
 - Auth is checked **three times**: `middleware.ts` (signed-in session → else redirect to `/admin/login?next=…`), `app/admin/(dashboard)/layout.tsx` (`AdminAuthService.getSession()` + `is_admin()`), and RLS in the database. Keep all three for anything new.
-- Admin screens go in `src/app/admin/(dashboard)/<name>/page.tsx` with a short `metadata.title` (template is `%s | Portfolio CMS`; admin pages are `noindex` from `app/admin/layout.tsx`). Add `loading.tsx` for slow lists. Register the screen in `src/components/admin/adminNav.ts` (flip a `kind: "soon"` item to `kind: "route"`).
+- Admin screens go in `src/app/admin/(dashboard)/<name>/page.tsx` with a short `metadata.title` (template is `%s | Portfolio CMS`; admin pages are `noindex` from `app/admin/layout.tsx`). Add `loading.tsx` for slow lists: it renders a `<Name>Skeleton` from the screen's container folder, built from `ListSkeletons` (real `PageHeader` text from `utils/admin/pageHeaders.ts`, real card titles, toolbar and table headers). Register the screen in `src/components/admin/adminNav.ts` (flip a `kind: "soon"` item to `kind: "route"`).
 - **Admin API route recipe** (copy `src/app/api/admin/projects/[id]/route.ts`):
   1. `export const dynamic = "force-dynamic";`
   2. `const auth = await AdminAuthService.authorizeRequest(); if (!auth.ok) return auth.response;`

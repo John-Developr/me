@@ -9,7 +9,7 @@ import TrafficSection from "./TrafficSection";
 import ContentOverviewSection from "./ContentOverviewSection";
 import ActivitySection from "./ActivitySection";
 import QuickActionsSection from "./QuickActionsSection";
-import { CardSkeleton, StatsSkeleton } from "./DashboardSkeletons";
+import { ActivitySkeleton, ContentOverviewSkeleton, StatsSkeleton } from "./DashboardSkeletons";
 
 import styles from "@/styles/pages/adminDashboard.module.css";
 
@@ -35,13 +35,13 @@ export default async function AdminDashboardPage() {
                 {/* Rows (not two independent columns) so cards side by side share a height. */}
                 <div className={styles.row}>
                     <TrafficSection />
-                    <Suspense fallback={<CardSkeleton rows={6} />}>
+                    <Suspense fallback={<ContentOverviewSkeleton />}>
                         <ContentOverviewSection />
                     </Suspense>
                 </div>
 
                 <div className={styles.row}>
-                    <Suspense fallback={<CardSkeleton rows={5} />}>
+                    <Suspense fallback={<ActivitySkeleton />}>
                         <ActivitySection />
                     </Suspense>
                     <QuickActionsSection />

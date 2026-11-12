@@ -9,9 +9,17 @@ import styles from "@/styles/pages/blog.module.css";
  * - `#` headings render as h2, so the post title stays the page's only h1.
  * - External links open in a new tab; site links (`/…`) stay in the tab.
  * - Fenced code with a language (```ts) is syntax highlighted, like the chat.
+ *   Its <pre> wrapper is dropped (the highlighter draws the block), so the
+ *   plain-`<pre>` box doesn't frame the dark block.
  */
 const components: Components = {
   h1: ({ children }) => <h2>{children}</h2>,
+
+  pre: ({ node, children }) => {
+    const code    = node?.children[0];
+    const classes = code?.type === "element" && code.tagName === "code" ? String(code.properties.className ?? "") : "";
+    return /language-w+/.test(classes) ? <>{children}</> : <pre>{children}</pre>;
+  },
 
   a: ({ href = "", children }) => {
     const external = /^https?:\/\//i.test(href);
@@ -27,6 +35,7 @@ const components: Components = {
     return (
       <SyntaxHighlighter
         PreTag="div"
+        className={styles["code-block"]}
         language={language}
         style={dracula}
         customStyle={{ margin: 0, borderRadius: 10, fontSize: "0.9rem" }}>

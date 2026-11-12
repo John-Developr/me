@@ -1,12 +1,5 @@
-import Skeleton from "@/components/admin/Skeleton";
-import { CardSkeleton } from "@/containers/admin-dashboard-page/DashboardSkeletons";
-import adminStyles from "@/styles/pages/admin.module.css";
+import BlogSkeleton from "@/containers/admin-blog-page/BlogSkeleton";
 
 export default function Loading() {
-  return (
-    <div className={adminStyles.page} aria-busy="true" aria-label="Loading blog posts">
-      <Skeleton width={180} height={26} />
-      <CardSkeleton rows={5} />
-    </div>
-  );
+  return <BlogSkeleton />;
 }

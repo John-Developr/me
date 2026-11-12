@@ -7,6 +7,7 @@ import { AdminIcons } from "@/components/icons/admin";
 import AdminAuthService from "@/lib/.services/adminAuthService";
 import AdminBlogService from "@/lib/.services/adminBlogService";
 import { BlogRecord } from "@/utils/types";
+import { ADMIN_PAGE_HEADERS } from "@/utils/admin/pageHeaders";
 import adminStyles from "@/styles/pages/admin.module.css";
 
 import BlogManager from "./BlogManager";
@@ -29,8 +30,8 @@ export default async function AdminBlogPage() {
         <DashboardRefreshProvider>
             <div className={adminStyles.page}>
                 <PageHeader
-                    title="Blog"
-                    description="AI-generated and personal posts. Only published posts appear on your blog."
+                    title={ADMIN_PAGE_HEADERS.blog.title}
+                    description={ADMIN_PAGE_HEADERS.blog.description}
                     actions={
                         <Link href="/admin/blog/new" className={`liquid_glass_btn ${adminStyles["btn-primary"]}`}>
                             <AdminIcons.Plus width={15} height={15} />

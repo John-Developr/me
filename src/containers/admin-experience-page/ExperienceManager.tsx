@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import { sileo } from "sileo";
 
 import ConfirmDialog from "@/components/admin/ConfirmDialog";
+import DashboardCard from "@/components/admin/DashboardCard";
 import EmptyState from "@/components/admin/EmptyState";
 import { AdminIcons } from "@/components/icons/admin";
 import { networkDefine } from "@/config/networkDefine";
@@ -88,7 +89,7 @@ export default function ExperienceManager({ entries }: { entries: ExperienceReco
     }
 
     return (
-        <div className={adminStyles.card}>
+        <DashboardCard title="Timeline" icon={AdminIcons.Briefcase}>
             <div className={styles.toolbar}>
                 <div className={styles.filters} role="group" aria-label="Filter by type">
                     {(["all", ...EXPERIENCE_TYPES] as Filter[]).map((key) => (
@@ -188,6 +189,6 @@ export default function ExperienceManager({ entries }: { entries: ExperienceReco
                 busy={deleting}
                 onConfirm={confirmDelete}
                 onCancel={() => setToDelete(null)} />
-        </div>
+        </DashboardCard>
     );
 }

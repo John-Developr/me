@@ -3,7 +3,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 
 process.env.NEXT_PUBLIC_SUPABASE_URL ??= "https://demo.supabase.co";
-const { categoryInputSchema, categorySlug, skillInputSchema } = await import("../skillSchema.ts");
+const { categoryInputSchema, categorySlug, coreOrderSchema, skillInputSchema } = await import("../skillSchema.ts");
 const MEDIA = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/media/`;
 
 const UUID = "11111111-1111-4111-8111-111111111111";
@@ -40,4 +40,13 @@ test("category slugs and icons", () => {
   const c = categoryInputSchema.parse({ name: "Mobile", icon: "phone" });
   assert.equal(c.slug, "mobile");
   assert.equal(categoryInputSchema.safeParse({ name: "X", icon: "rocket" }).success, false);
+});
+
+test("core order takes unique skill ids", () => {
+  const OTHER = "22222222-2222-4222-8222-222222222222";
+  assert.deepEqual(coreOrderSchema.parse({ ids: [OTHER, UUID] }).ids, [OTHER, UUID]);
+  assert.equal(coreOrderSchema.safeParse({ ids: [] }).success, false);
+  assert.equal(coreOrderSchema.safeParse({ ids: [UUID, UUID] }).success, false);
+  assert.equal(coreOrderSchema.safeParse({ ids: ["nope"] }).success, false);
+  assert.equal(coreOrderSchema.safeParse({}).success, false);
 });

@@ -7,6 +7,7 @@ import { sileo } from "sileo";
 import ConfirmDialog from "@/components/admin/ConfirmDialog";
 import DashboardCard from "@/components/admin/DashboardCard";
 import FormField from "@/components/admin/FormField";
+import Select from "@/components/admin/Select";
 import MarkdownEditor from "@/components/admin/MarkdownEditor";
 import TagInput from "@/components/admin/TagInput";
 import TimeAgo from "@/components/admin/TimeAgo";
@@ -47,6 +48,8 @@ const fromRecord = (p?: BlogRecord): FormState => ({
     status:   p?.status   ?? "draft",
     source:   p?.source   ?? "personal",
 });
+
+const categoryOptions = BLOG_CATEGORIES.map((c) => ({ value: c, label: BLOG_CATEGORY_LABELS[c] }));
 
 // ─── Form ───────────────────────────────────────────────────
 
@@ -213,13 +216,12 @@ export default function BlogForm({ post }: BlogFormProps) {
                         subtitle="Gemini writes a post in the category you pick. Nothing is saved until you do.">
                         <FormField id="gen_category" label="Category" hint="Generating takes up to a minute.">
                             <div className={formStyles["inline-action"]}>
-                                <select
+                                <Select
                                     id="field-gen_category"
                                     value={genCategory}
+                                    options={categoryOptions}
                                     disabled={busy}
-                                    onChange={(e) => setGenCategory(e.target.value as BlogCategory)}>
-                                    {BLOG_CATEGORIES.map((c) => <option key={c} value={c}>{BLOG_CATEGORY_LABELS[c]}</option>)}
-                                </select>
+                                    onChange={setGenCategory} />
                                 <button
                                     type="button"
                                     className={`liquid_glass_btn ${adminStyles["btn-primary"]}`}
@@ -257,10 +259,13 @@ export default function BlogForm({ post }: BlogFormProps) {
                             </FormField>
 
                             <FormField id="category" label="Category" required error={errors.category}>
-                                <select {...text("category")}>
-                                    <option value="" disabled>Choose…</option>
-                                    {BLOG_CATEGORIES.map((c) => <option key={c} value={c}>{BLOG_CATEGORY_LABELS[c]}</option>)}
-                                </select>
+                                <Select
+                                    id="field-category"
+                                    value={values.category}
+                                    options={categoryOptions}
+                                    aria-invalid={!!errors.category || undefined}
+                                    aria-describedby={errors.category ? "field-category-error" : undefined}
+                                    onChange={(v) => set("category", v)} />
                             </FormField>
                         </div>
 

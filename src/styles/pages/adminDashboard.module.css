@@ -127,12 +127,6 @@
   color: var(--admin-danger);
 }
 
-.chart-skeleton {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-}
-
 .refetching {
   opacity: 0.55;
   transition: opacity 0.2s ease;
@@ -450,33 +444,6 @@
   font-size: 10.5px;
   font-weight: 600;
   color: var(--text-muted);
-}
-
-/* ─── Skeletons ───────────────────────────────────────────── */
-
-.skeleton-head {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.skeleton-rows {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-}
-
-.skeleton-row {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.skeleton-row > div {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
 }
 
 /* ─── ≤850px ──────────────────────────────────────────────── */

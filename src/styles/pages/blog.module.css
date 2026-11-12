@@ -347,6 +347,20 @@
     font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 }
 
+/* Highlighted block (BlogMarkdown): its <code> sits in a <div>, so undo the
+   inline-code chip styles that `:not(pre) > code` would add. */
+.prose .code-block {
+    margin: 0;
+}
+
+.prose .code-block code {
+    padding: 0;
+    border: none;
+    border-radius: 0;
+    background: none;
+    font-size: inherit;
+}
+
 .prose hr {
     border: none;
     border-top: 1px solid var(--divider-bottom);
@@ -430,24 +444,18 @@
 }
 
 /* ============================================================
-   BLOG LIST SKELETON
+   SKELETONS (blog list + post)
+   BlogSkeleton / BlogDetailSkeleton render the real markup; a
+   .bone sits inside each text element, so it takes that text's
+   line height and nothing moves when the content loads.
    ============================================================ */
 
-.blog-skeleton .card {
-  padding: 40px 0;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.blog-skeleton .title,
-.blog-skeleton .meta-item,
-.blog-skeleton .dot,
-.blog-skeleton .line,
-.blog-skeleton .views,
-.blog-skeleton .tag,
-.blog-skeleton .read-more {
-  border-radius: 6px;
+.bone {
+  display: inline-block;
+  max-width: 100%;
+  height: 0.9em;
+  vertical-align: middle;
+  border-radius: 4px;
   background: linear-gradient(
     90deg,
     var(--skeleton-base)  25%,
@@ -458,79 +466,12 @@
   animation: shimmer 1.4s ease-in-out infinite;
 }
 
-.blog-skeleton .card:nth-child(2) .title,
-.blog-skeleton .card:nth-child(2) .line,
-.blog-skeleton .card:nth-child(2) .tag { animation-delay: 0.1s; }
-
-.blog-skeleton .card:nth-child(3) .title,
-.blog-skeleton .card:nth-child(3) .line,
-.blog-skeleton .card:nth-child(3) .tag { animation-delay: 0.2s; }
-
-.blog-skeleton .title {
-  height: 28px;
-  width: 80%;
-}
-
-.blog-skeleton .meta {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-top: 2px;
-}
-
-.blog-skeleton .meta-item {
-  height: 13px;
-  width: 120px;
-  border-radius: 4px;
-}
-
-.blog-skeleton .meta-short { width: 70px; }
-
-.blog-skeleton .dot {
-  width: 4px;
-  height: 4px;
+.bone-avatar {
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
-  flex-shrink: 0;
 }
 
-.blog-skeleton .line {
-  height: 14px;
-  width: 100%;
-  border-radius: 4px;
-}
-
-.blog-skeleton .line-short { width: 70%; }
-
-.blog-skeleton .views {
-  height: 13px;
-  width: 60px;
-  margin-top: 2px;
-}
-
-.blog-skeleton .tags {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-  margin-top: 4px;
-}
-
-.blog-skeleton .tag {
-  height: 28px;
-  width: 90px;
-  border-radius: 10px;
-}
-
-.blog-skeleton .tag:nth-child(2) { width: 110px; }
-.blog-skeleton .tag:nth-child(3) { width: 80px;  }
-.blog-skeleton .tag:nth-child(4) { width: 70px;  }
-
-.blog-skeleton .read-more {
-  height: 14px;
-  width: 80px;
-  margin-top: 4px;
-}
-
-.blog-skeleton .card:not(:last-child),
 .blog-card:not(:last-child) {
   border-bottom: 1px solid var(--divider-bottom);
 }
@@ -562,154 +503,4 @@
     font-size: 13px;
     text-align: center;
     color: var(--text-sub);
-}
-
-/* ============================================================
-   BLOG DETAIL SKELETON
-   ============================================================ */
-.blog-detail-skeleton {
-    margin-top: 60px;
-    padding: 40px 0px;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
-
-.blog-detail-skeleton .avatar,
-.blog-detail-skeleton .author-name,
-.blog-detail-skeleton .author-meta,
-.blog-detail-skeleton .title-line-1,
-.blog-detail-skeleton .title-line-2,
-.blog-detail-skeleton .excerpt-line-1,
-.blog-detail-skeleton .excerpt-line-2,
-.blog-detail-skeleton .line,
-.blog-detail-skeleton .tag,
-.blog-detail-skeleton .share-label,
-.blog-detail-skeleton .share-icon {
-    border-radius: 6px;
-    background: linear-gradient(
-        90deg,
-        var(--skeleton-base)  25%,
-        var(--skeleton-shine) 50%,
-        var(--skeleton-base)  75%
-    );
-    background-size: 200% 100%;
-    animation: shimmer 1.4s ease-in-out infinite;
-}
-
-.blog-detail-skeleton > *:nth-child(2) { animation-delay: 0.05s; }
-.blog-detail-skeleton > *:nth-child(3) { animation-delay: 0.10s; }
-.blog-detail-skeleton > *:nth-child(4) { animation-delay: 0.15s; }
-.blog-detail-skeleton > *:nth-child(5) { animation-delay: 0.20s; }
-
-.blog-detail-skeleton .author-section {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 8px;
-}
-
-.blog-detail-skeleton .avatar {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    flex-shrink: 0;
-}
-
-.blog-detail-skeleton .author-info {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-}
-
-.blog-detail-skeleton .author-name {
-    width: 180px;
-    height: 16px;
-}
-
-.blog-detail-skeleton .author-meta {
-    width: 220px;
-    height: 13px;
-}
-
-.blog-detail-skeleton .title-line-1 {
-    width: 90%;
-    height: 32px;
-    border-radius: 6px;
-}
-
-.blog-detail-skeleton .title-line-2 {
-  width: 60%;
-  height: 32px;
-  border-radius: 6px;
-  margin-top: -4px;
-}
-
-.blog-detail-skeleton .excerpt-line-1 {
-  width: 100%;
-  height: 14px;
-  border-radius: 4px;
-  margin-top: 4px;
-}
-
-.blog-detail-skeleton .excerpt-line-2 {
-  width: 75%;
-  height: 14px;
-  border-radius: 4px;
-}
-
-.blog-detail-skeleton .paragraph {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  margin-bottom: 16px;
-}
-
-.blog-detail-skeleton .line {
-  height: 14px;
-  width: 100%;
-  border-radius: 4px;
-}
-
-.blog-detail-skeleton .line-short { width: 65%; }
-
-.blog-detail-skeleton .tags {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-  margin-top: 8px;
-}
-
-.blog-detail-skeleton .tag {
-  height: 30px;
-  width: 100px;
-  border-radius: 10px;
-}
-
-.blog-detail-skeleton .tag:nth-child(2) { width: 120px; }
-.blog-detail-skeleton .tag:nth-child(3) { width: 90px;  }
-.blog-detail-skeleton .tag:nth-child(4) { width: 80px;  }
-.blog-detail-skeleton .tag:nth-child(5) { width: 70px;  }
-
-.blog-detail-skeleton .share-label {
-  width: 90px;
-  height: 12px;
-  margin-top: 16px;
-}
-
-.blog-detail-skeleton .share-icons {
-  display: flex;
-  gap: 10px;
-  margin-top: 8px;
-}
-
-.blog-detail-skeleton .share-icon {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-}
-
-@keyframes shimmer {
-  0%   { background-position:  200% 0; }
-  100% { background-position: -200% 0; }
 }

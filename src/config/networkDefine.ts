@@ -33,6 +33,7 @@ export const networkDefine = {
     ADMIN_SITE_SETTINGS_API: "/api/admin/site-settings",
     ADMIN_SKILLS_API: "/api/admin/skills",
     ADMIN_SKILL_API: (id: string) => "/api/admin/skills/" + id,
+    ADMIN_SKILLS_CORE_ORDER_API: "/api/admin/skills/core-order",
     ADMIN_SKILL_CATEGORIES_API: "/api/admin/skill-categories",
     ADMIN_SKILL_CATEGORY_API: (id: string) => "/api/admin/skill-categories/" + id,
     ADMIN_MEDIA_API: "/api/admin/media",

@@ -51,6 +51,32 @@ export default class SkillService {
     if (!data?.length) throw new ServiceError("Skill not found.", 404);
   }
 
+  /**
+   * Sets the Core Stack order: each skill's `core_order` becomes its position
+   * in `ids`. `ids` must be exactly the current Core Stack (409 otherwise, e.g.
+   * a skill was added in another tab). Only rows that moved are written.
+   */
+  async reorderCore(ids: string[]): Promise<void> {
+    const { data, error } = await this.client
+      .from(Table.skills)
+      .select("id, core_order")
+      .eq("is_core", true)
+      .returns<Pick<SkillRecord, "id" | "core_order">[]>();
+    if (error) throw this.fromPostgres("load the Core Stack", error);
+
+    const current = new Map((data ?? []).map((s) => [s.id, s.core_order]));
+    if (current.size !== ids.length || ids.some((id) => !current.has(id))) {
+      throw new ServiceError("The Core Stack changed in the meantime. Refresh the page and try again.", 409);
+    }
+
+    const moved   = ids.map((id, index) => ({ id, index })).filter(({ id, index }) => current.get(id) !== index);
+    const results = await Promise.all(
+      moved.map(({ id, index }) => this.client.from(Table.skills).update({ core_order: index }).eq("id", id)),
+    );
+    const failed = results.find((r) => r.error)?.error;
+    if (failed) throw this.fromPostgres("save the order", failed);
+  }
+
   // ─── Categories ──────────────────────────────────────────
 
   async createCategory(input: CategoryInput): Promise<SkillCategoryRecord> {

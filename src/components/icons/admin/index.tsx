@@ -151,6 +151,14 @@ export const AdminIcons = {
     ChevronDown: createIcon("ChevronDown", <>
         <path d="m6 9 6 6 6-6" />
     </>),
+    GripVertical: createIcon("GripVertical", <>
+        <circle cx="9" cy="5" r="1" />
+        <circle cx="9" cy="12" r="1" />
+        <circle cx="9" cy="19" r="1" />
+        <circle cx="15" cy="5" r="1" />
+        <circle cx="15" cy="12" r="1" />
+        <circle cx="15" cy="19" r="1" />
+    </>),
     Plus: createIcon("Plus", <>
         <path d="M5 12h14" />
         <path d="M12 5v14" />

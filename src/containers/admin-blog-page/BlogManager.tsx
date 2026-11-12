@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import Link from "next/link";
 
 import ConfirmDialog from "@/components/admin/ConfirmDialog";
+import DashboardCard from "@/components/admin/DashboardCard";
 import EmptyState from "@/components/admin/EmptyState";
 import TimeAgo from "@/components/admin/TimeAgo";
 import { AdminIcons } from "@/components/icons/admin";
@@ -70,7 +71,7 @@ export default function BlogManager({ posts }: { posts: BlogRecord[] }) {
     }
 
     return (
-        <div className={adminStyles.card}>
+        <DashboardCard title="Posts" icon={AdminIcons.FileText}>
             <div className={styles.toolbar}>
                 <div className={styles.filters} role="group" aria-label="Filter by status">
                     {FILTERS.map(({ key, label }) => (
@@ -167,6 +168,6 @@ export default function BlogManager({ posts }: { posts: BlogRecord[] }) {
                 busy={pendingId !== null && pendingId === toDelete?.id}
                 onConfirm={confirmDelete}
                 onCancel={() => setToDelete(null)} />
-        </div>
+        </DashboardCard>
     );
 }

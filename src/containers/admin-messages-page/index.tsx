@@ -3,6 +3,7 @@ import ErrorState from "@/components/admin/ErrorState";
 import AdminAuthService from "@/lib/.services/adminAuthService";
 import MessageService from "@/lib/.services/messageService";
 import { ContactMessage } from "@/utils/types";
+import { ADMIN_PAGE_HEADERS } from "@/utils/admin/pageHeaders";
 import adminStyles from "@/styles/pages/admin.module.css";
 
 import MessagesInbox from "./MessagesInbox";
@@ -24,8 +25,8 @@ export default async function AdminMessagesPage() {
     return (
         <div className={adminStyles.page}>
             <PageHeader
-                title="Contact Messages"
-                description="Messages sent through your portfolio's contact form. Each one is also emailed to you." />
+                title={ADMIN_PAGE_HEADERS.messages.title}
+                description={ADMIN_PAGE_HEADERS.messages.description} />
 
             {messages.ok
                 ? <MessagesInbox messages={messages.data} />

@@ -1,3 +1,4 @@
+import { AdminIconComponent, AdminIcons } from "@/components/icons/admin";
 import { flagEmoji } from "@/utils/analytics";
 import { BreakdownDimension } from "@/utils/types";
 
@@ -52,4 +53,15 @@ export const BREAKDOWN_SINGULAR: Record<BreakdownDimension, string> = {
   browser:  "Browser",
   os:       "Operating system",
   path:     "Page",
+};
+
+/** Card icon per breakdown (Analytics screen and its loading skeleton). */
+export const BREAKDOWN_ICONS: Record<BreakdownDimension, AdminIconComponent> = {
+  country:  AdminIcons.Globe,
+  city:     AdminIcons.Globe,
+  referrer: AdminIcons.ExternalLink,
+  device:   AdminIcons.Layers,
+  browser:  AdminIcons.LayoutGrid,
+  os:       AdminIcons.Settings,
+  path:     AdminIcons.FileText,
 };

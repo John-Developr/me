@@ -7,6 +7,7 @@ import { AdminIcons } from "@/components/icons/admin";
 import AdminAuthService from "@/lib/.services/adminAuthService";
 import ExperienceService from "@/lib/.services/experienceService";
 import { ExperienceRecord } from "@/utils/types";
+import { ADMIN_PAGE_HEADERS } from "@/utils/admin/pageHeaders";
 import adminStyles from "@/styles/pages/admin.module.css";
 
 import ExperienceManager from "./ExperienceManager";
@@ -28,8 +29,8 @@ export default async function AdminExperiencePage() {
         <DashboardRefreshProvider>
             <div className={adminStyles.page}>
                 <PageHeader
-                    title="Work Experience"
-                    description={"Your career timeline: the “Experience.” card on the home page."}
+                    title={ADMIN_PAGE_HEADERS.experience.title}
+                    description={ADMIN_PAGE_HEADERS.experience.description}
                     actions={
                         <Link href="/admin/experience/new" className={`liquid_glass_btn ${adminStyles["btn-primary"]}`}>
                             <AdminIcons.Plus width={15} height={15} />

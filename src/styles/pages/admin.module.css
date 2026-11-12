@@ -1064,6 +1064,12 @@
   to   { background-position: -200% 0; }
 }
 
+/* Helpers for loading screens (components/admin/ListSkeletons.tsx) */
+.skeleton-fill { flex: 1; min-width: 0; }
+.skeleton-gap  { margin-top: 6px; }
+.skeleton-end  { margin-left: auto; }
+.skeleton-line { display: flex; align-items: center; gap: 8px; }
+
 .page-error-title {
   font-size: 16px;
 }

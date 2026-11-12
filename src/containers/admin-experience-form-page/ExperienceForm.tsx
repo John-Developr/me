@@ -8,6 +8,8 @@ import { sileo } from "sileo";
 import ConfirmDialog from "@/components/admin/ConfirmDialog";
 import DashboardCard from "@/components/admin/DashboardCard";
 import FormField from "@/components/admin/FormField";
+import MonthPicker from "@/components/admin/MonthPicker";
+import Select from "@/components/admin/Select";
 import AssetInput from "@/components/admin/AssetInput";
 import TimeAgo from "@/components/admin/TimeAgo";
 import { AdminIcons } from "@/components/icons/admin";
@@ -255,10 +257,13 @@ export default function ExperienceForm({ entry, companies }: ExperienceFormProps
 
                         {values.entry_type === "work" && (
                             <FormField id="employment_type" label="Employment type" error={errors.employment_type}>
-                                <select {...input("employment_type")}>
-                                    <option value="">Not specified</option>
-                                    {EMPLOYMENT_TYPES.map((t) => <option key={t} value={t}>{t}</option>)}
-                                </select>
+                                <Select
+                                    id="field-employment_type"
+                                    value={values.employment_type}
+                                    options={[{ value: "", label: "Not specified" }, ...EMPLOYMENT_TYPES.map((t) => ({ value: t, label: t }))]}
+                                    aria-invalid={!!errors.employment_type || undefined}
+                                    aria-describedby={errors.employment_type ? "field-employment_type-error" : undefined}
+                                    onChange={(v) => set("employment_type", v)} />
                             </FormField>
                         )}
 
@@ -273,12 +278,28 @@ export default function ExperienceForm({ entry, companies }: ExperienceFormProps
                 <DashboardCard title="Dates" icon={AdminIcons.Clock}>
                     <div className={`${formStyles.fields} ${formStyles.two}`}>
                         <FormField id="start_date" label={showEnd ? "Start" : "Date"} required error={errors.start_date}>
-                            <input {...input("start_date")} type="month" max={thisMonth} />
+                            <MonthPicker
+                                id="field-start_date"
+                                value={values.start_date}
+                                max={thisMonth}
+                                aria-invalid={!!errors.start_date || undefined}
+                                aria-describedby={errors.start_date ? "field-start_date-error" : undefined}
+                                onChange={(v) => set("start_date", v)} />
                         </FormField>
 
                         {showEnd && (
                             <FormField id="end_date" label="End" error={errors.end_date}>
-                                <input {...input("end_date")} type="month" min={values.start_date || undefined} max={thisMonth} disabled={values.is_current} />
+                                <MonthPicker
+                                    id="field-end_date"
+                                    value={values.end_date}
+                                    min={values.start_date || undefined}
+                                    max={thisMonth}
+                                    disabled={values.is_current}
+                                    placeholder={values.is_current ? "Present" : "Pick a month"}
+                                    clearable
+                                    aria-invalid={!!errors.end_date || undefined}
+                                    aria-describedby={errors.end_date ? "field-end_date-error" : undefined}
+                                    onChange={(v) => set("end_date", v)} />
                             </FormField>
                         )}
                     </div>
@@ -302,8 +323,8 @@ export default function ExperienceForm({ entry, companies }: ExperienceFormProps
                         <FormField
                             id="logo_url"
                             label="Logo"
-                            error={errors.logo_url}
-                            hint="Square image.">
+                            note="Square image"
+                            error={errors.logo_url}>
                             <AssetInput {...input("logo_url")} shape="square" />
                         </FormField>
                         <FormField

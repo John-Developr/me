@@ -780,30 +780,19 @@ div.title {
 
 /* ============================================================
    BLOG SECTION SKELETON
+   BlogSectionSkeleton renders BlogSectionCard's markup; a .bone
+   inside each text element keeps the loaded card's height.
    ============================================================ */
-.blog-section-skeleton {
-  display: flex;
-  flex-direction: column;
-  gap: 0;
+.fourth .blog .card-container .card.loading {
+  pointer-events: none;
 }
 
-/* Card */
-.blog-section-skeleton .card-skeleton {
-  display: flex;
-  flex-direction: column;
-  gap: 7px;
-  padding: 20px 25px;
-}
-
-.blog-section-skeleton .card-skeleton:last-child {
-  border-bottom: none;
-}
-
-/* Shimmer base */
-.blog-section-skeleton .card-title-skeleton,
-.blog-section-skeleton .card-date-read-skeleton,
-.blog-section-skeleton .card-excerpt-skeleton,
-.blog-section-skeleton .tag-skeleton {
+.bone {
+  display: inline-block;
+  max-width: 100%;
+  height: 0.9em;
+  vertical-align: middle;
+  border-radius: 4px;
   background: linear-gradient(
     90deg,
     var(--skeleton-base)  25%,
@@ -812,50 +801,7 @@ div.title {
   );
   background-size: 200% 100%;
   animation: blogSectionShimmer 1.4s ease-in-out infinite;
-  border-radius: 6px;
 }
-
-.blog-section-skeleton .card-skeleton:nth-child(2) .card-title-skeleton,
-.blog-section-skeleton .card-skeleton:nth-child(2) .card-excerpt-skeleton,
-.blog-section-skeleton .card-skeleton:nth-child(2) .tag-skeleton {
-  animation-delay: 0.15s;
-}
-
-.blog-section-skeleton .card-title-skeleton {
-  height: 20px;
-  width: 85%;
-}
-
-.blog-section-skeleton .card-date-read-skeleton {
-  height: 13px;
-  width: 160px;
-  border-radius: 4px;
-}
-
-.blog-section-skeleton .card-excerpt-skeleton {
-  height: 14px;
-  width: 100%;
-  border-radius: 4px;
-}
-
-.blog-section-skeleton .card-excerpt-skeleton:last-of-type {
-  width: 70%;
-}
-
-.blog-section-skeleton .card-tags-skeleton {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-}
-
-.blog-section-skeleton .tag-skeleton {
-  height: 25px;
-  width: 90px;
-  border-radius: 10px;
-}
-
-.blog-section-skeleton .tag-skeleton:nth-child(2) { width: 110px; }
-.blog-section-skeleton .tag-skeleton:nth-child(3) { width: 75px;  }
 
 .blog .empty-section, .blog .error-section {
   display: flex;

@@ -69,6 +69,11 @@
   font-variant-numeric: tabular-nums;
 }
 
+/* "(Square image)" after the label */
+.field-label .field-note {
+  font-weight: 400;
+}
+
 .field-label .over {
   color: var(--admin-danger);
 }
@@ -105,6 +110,129 @@
 
 .field.invalid :is(input, select, textarea) {
   border-color: var(--admin-danger);
+}
+
+/* ─── Select (components/admin/Select.tsx) ───────────────── */
+
+.select {
+  position: relative;
+  width: 100%;
+}
+
+.select-trigger {
+  width: 100%;
+  min-height: 40px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 12px;
+  border-radius: 8px;
+  border: var(--border-input-field);
+  background: var(--container-bg);
+  color: var(--text);
+  font: inherit;
+  font-size: 14px;
+  line-height: 1.4;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+}
+
+.select-trigger:hover:not(:disabled) {
+  background: var(--clip-hover);
+}
+
+.select-trigger:focus-visible,
+.select-trigger[aria-expanded="true"] {
+  outline: none;
+  border-color: var(--admin-accent);
+  box-shadow: 0 0 0 3px var(--admin-accent-soft);
+}
+
+.select-trigger:disabled {
+  background: var(--disabled-input-bg);
+  color: var(--text-muted);
+  cursor: not-allowed;
+}
+
+.select-trigger.invalid,
+.field.invalid .select-trigger {
+  border-color: var(--admin-danger);
+}
+
+.select-value {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.select-value.placeholder {
+  color: var(--text-muted);
+}
+
+.select-chevron {
+  flex-shrink: 0;
+  color: var(--text-muted);
+  transition: transform 0.15s ease;
+}
+
+.select-trigger[aria-expanded="true"] .select-chevron {
+  transform: rotate(180deg);
+}
+
+/* Fixed + portalled (see Select.tsx); top/left/width set inline. */
+.select-list {
+  position: fixed;
+  z-index: 80;
+  margin: 0;
+  padding: 6px;
+  list-style: none;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  border-radius: 12px;
+  background: var(--container-bg);
+  border: var(--border-container);
+  box-shadow: var(--box-shadow-default), var(--admin-shadow);
+  color: var(--text);
+  animation: selectIn 0.14s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes selectIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: none; }
+}
+
+.select-option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  min-height: 36px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  font-size: 14px;
+  line-height: 1.35;
+  cursor: pointer;
+}
+
+.select-option.active {
+  background: var(--clip-hover);
+}
+
+.select-option.muted {
+  color: var(--text-muted);
+}
+
+.select-option[aria-selected="true"] {
+  font-weight: 700;
+  color: var(--text);
+}
+
+.select-option svg {
+  flex-shrink: 0;
+  color: var(--admin-accent-ink);
 }
 
 .field-hint {
@@ -392,7 +520,7 @@
   gap: 8px;
 }
 
-.inline-action > :is(input, select) {
+.inline-action > :is(input, select, .select) {
   flex: 1;
   min-width: 0;
 }

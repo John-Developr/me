@@ -5,6 +5,8 @@ interface FormFieldProps {
     /** Field name; the control inside must use id `field-${id}`. */
     id:        string;
     label:     string;
+    /** Short format note shown after the label, e.g. "Square image" → "Logo (Square image)". */
+    note?:     string;
     hint?:     ReactNode;
     error?:    string;
     required?: boolean;
@@ -17,12 +19,13 @@ interface FormFieldProps {
  * Label + control + hint/error for admin forms. The error replaces the hint
  * and is linked to the control via `field-${id}-error` (aria-describedby).
  */
-export default function FormField({ id, label, hint, error, required, count, children }: FormFieldProps) {
+export default function FormField({ id, label, note, hint, error, required, count, children }: FormFieldProps) {
     return (
         <div className={`${styles.field} ${error ? styles.invalid : ""}`}>
             <div className={styles["field-label"]}>
                 <label htmlFor={`field-${id}`}>
                     {label}{required && <span aria-hidden="true"> *</span>}
+                    {note && <span className={styles["field-note"]}> ({note})</span>}
                 </label>
                 {count && (
                     <span className={count.value > count.max ? styles.over : ""}>{count.value}/{count.max}</span>

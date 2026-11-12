@@ -8,6 +8,7 @@ import DateRangePicker from "@/components/admin/DateRangePicker";
 import EmptyState from "@/components/admin/EmptyState";
 import ErrorState from "@/components/admin/ErrorState";
 import LineChart from "@/components/admin/LineChart";
+import { ChartSkeleton } from "@/components/admin/ListSkeletons";
 import Skeleton from "@/components/admin/Skeleton";
 import { useDashboardRefresh } from "@/components/admin/DashboardRefresh";
 import { AdminIcons } from "@/components/icons/admin";
@@ -134,9 +135,12 @@ export default function TrafficSection() {
             {state === FetchStateEnum.error ? (
                 <ErrorState message={error} onRetry={() => load(query)} />
             ) : isLoading && !result ? (
-                <div className={styles["chart-skeleton"]} aria-busy="true" aria-label="Loading traffic">
-                    <Skeleton width={140} height={28} />
-                    <Skeleton height={220} radius={10} />
+                <div aria-busy="true" aria-label="Loading traffic">
+                    <div className={styles["traffic-summary"]}>
+                        <Skeleton width={56} height={26} />
+                        <Skeleton width={280} height={13} />
+                    </div>
+                    <ChartSkeleton />
                 </div>
             ) : result && !result.available ? (
                 <EmptyState

@@ -7,6 +7,7 @@ import { AdminIcons } from "@/components/icons/admin";
 import AdminAuthService from "@/lib/.services/adminAuthService";
 import ProjectService from "@/lib/.services/projectService";
 import { ProjectRecord } from "@/utils/types";
+import { ADMIN_PAGE_HEADERS } from "@/utils/admin/pageHeaders";
 import adminStyles from "@/styles/pages/admin.module.css";
 
 import ProjectsManager from "./ProjectsManager";
@@ -29,8 +30,8 @@ export default async function AdminProjectsPage() {
         <DashboardRefreshProvider>
             <div className={adminStyles.page}>
                 <PageHeader
-                    title="Projects"
-                    description="Everything here appears on your portfolio's Projects page once published."
+                    title={ADMIN_PAGE_HEADERS.projects.title}
+                    description={ADMIN_PAGE_HEADERS.projects.description}
                     actions={
                         <Link href="/admin/projects/new" className={`liquid_glass_btn ${adminStyles["btn-primary"]}`}>
                             <AdminIcons.Plus width={15} height={15} />
