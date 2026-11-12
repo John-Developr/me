@@ -68,11 +68,6 @@ export default class DashboardService {
     };
   }
 
-  /** Unread contact messages (for the notification bell). */
-  async countNewMessages(): Promise<number> {
-    return this.count(Table.contactMessages, { column: "status", value: "new" });
-  }
-
   /** Latest activity log entries, newest first. */
   async getRecentActivity(limit = 8): Promise<ActivityLog[]> {
     const { data, error } = await this.client

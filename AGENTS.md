@@ -18,7 +18,7 @@ This is **John Carlo A. Ylanan's personal portfolio** — a Next.js 15 (App Rout
 - A contact form that sends email via Nodemailer/Gmail SMTP and saves to `contact_messages`
 - First-party, privacy-friendly analytics (`PageViewTracker` → `POST /api/p`)
 
-**Admin CMS** (`/admin`, private, Supabase Auth): dashboard, Projects, Personal Profile, Work Experience, Skills & Technologies, Media Library, Analytics, SEO Settings, Account.
+**Admin CMS** (`/admin`, private, Supabase Auth): dashboard, Projects, Personal Profile, Work Experience, Skills & Technologies, Contact Messages (+ notification bell), Media Library, Analytics, SEO Settings, Account.
 
 **All portfolio content lives in Supabase and is edited in the admin.** Nothing is hard-coded in components anymore, and there are no code fallbacks (see §4.1).
 
@@ -150,7 +150,7 @@ Your job is to extend and maintain this codebase **without changing its visual i
 
 ### Package manager & toolchain
 - The project uses **pnpm** (`pnpm-lock.yaml`). Install with `pnpm install` and run scripts with `pnpm <script>`. Don't run `npm install` or commit a `package-lock.json` (two lockfiles drift apart).
-- **Node ≥ 22.18** is required for `pnpm test`: the script uses a glob in `node --test` and Node's built-in TypeScript type stripping. On older Node it fails with `Could not find '…/src/**/*.test.mjs'`. That is an environment problem, not a test failure. Report it instead of "fixing" the script.
+- Tests need **Node ≥ 22.18** (glob in `node --test` + built-in TypeScript type stripping). Run them with `pnpm test`: pnpm uses its own newer Node (`pnpm exec node -v`). `npm test` uses the system Node; on 20.x it fails with `Could not find '…/src/**/*.test.mjs'`. That is an environment problem, not a test failure. Don't "fix" the script.
 
 ### Adding a component
 1. Check `src/components/` (incl. `components/admin/`) and the relevant container folder for something reusable first.
@@ -174,12 +174,13 @@ Migration (table/columns + RLS + seed) → `Table` constant → type in `utils/t
 
 ### Tests
 - Pure logic and every zod schema in `src/utils/` should have a test in `src/utils/**/__tests__/*.test.mjs` (Node's `node:test` + `node:assert/strict`). Import TypeScript with the explicit extension (`../projectSchema.ts`); `resolveTs.mjs` handles `@/` and extensionless imports inside the app code.
+- Tested modules must import from `@/utils/types` with **`import type`**. Node's type stripping can't run `types.ts` (it has enums), so a plain import fails with `ERR_UNSUPPORTED_TYPESCRIPT_SYNTAX`.
 - There are no component or end-to-end tests. UI is verified manually.
 
 ### Before finishing
 - `pnpm lint` must pass. (`next lint` prints a deprecation notice; that's expected.)
 - `pnpm build` must pass. **Known local issue:** in a checkout whose path contains an apostrophe (e.g. `C:\Users\John\Documents\John's Files\…`), `next build` fails with `Module parse failed: Unexpected token` in `next-metadata-route-loader` for every `opengraph-image.tsx`. Next puts the file path into a single-quoted JS string without escaping it. The code is fine, and Vercel builds normally. In that case run `npx tsc --noEmit` for the type check, and say in your final message that the full build couldn't run locally. Don't rename or remove `opengraph-image.tsx` files to work around it. `subst` drive aliases don't help (Node resolves the real path).
-- `pnpm test` passes (or report the Node-version limitation above).
+- `pnpm test` passes.
 - Visually check the change in **light and dark** mode and at **≤850px** width.
 - Don't touch unrelated files; don't reformat whole files.
 - Update [CHANGELOG.md](docs/CHANGELOG.md) under `Unreleased` for user-visible changes (see §7).

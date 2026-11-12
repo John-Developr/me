@@ -23,6 +23,7 @@ This content lives in Supabase and is edited in the admin at `/admin` (sign in a
 | Work, education and milestones | Work Experience | Home "Experience." (grouping and durations are automatic) |
 | Skills, categories, Core Stack, "Right now", tech logos | Skills & Technologies | `/tech-stack`, home "Tech Stack." (first 8 core tools), logos on tech chips everywhere |
 | Images and PDFs | Media Library (or the "Library" button on any image field) | Wherever they're picked |
+| Messages from the contact form (read, reply, archive, delete) | Contact Messages (or the bell in the top bar) | Admin only |
 
 Changes go live when you save. Tech chips (projects, tech stack) show a logo when a skill with that exact name has one.
 

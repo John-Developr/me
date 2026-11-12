@@ -40,6 +40,7 @@ export const networkDefine = {
     ADMIN_MEDIA_IMPORT_API: "/api/admin/media/import",
     ADMIN_EXPERIENCES_API: "/api/admin/experiences",
     ADMIN_EXPERIENCE_API: (id: string) => "/api/admin/experiences/" + id,
+    ADMIN_MESSAGE_API: (id: string) => "/api/admin/messages/" + id,
     ADMIN_ACCOUNT_API: "/api/admin/account",
     ADMIN_PASSWORD_API: "/api/admin/account/password",
     ADMIN_SIGN_OUT_OTHERS_API: "/api/admin/account/sign-out-others",

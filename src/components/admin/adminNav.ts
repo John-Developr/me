@@ -48,7 +48,7 @@ export const ADMIN_NAV: AdminNavGroup[] = [
   {
     title: "Communication",
     items: [
-      { key: "messages", label: "Contact Messages", icon: AdminIcons.Mail, kind: "soon" },
+      { key: "messages", label: "Contact Messages", icon: AdminIcons.Mail, kind: "route", href: "/admin/messages" },
     ],
   },
   {
