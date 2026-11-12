@@ -94,12 +94,14 @@
 .brand-text {
   display: flex;
   flex-direction: column;
+  gap: 4px;
   line-height: 1.2;
   white-space: nowrap;
 }
 
-.brand-text strong {
-  font-size: 14px;
+/* Same wordmark as the site header; --logo-filter keeps it visible in dark mode. */
+.brand-logo {
+  filter: var(--logo-filter);
 }
 
 .brand-text small {

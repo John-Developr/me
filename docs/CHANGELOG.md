@@ -91,6 +91,7 @@ Work in progress on the `liquid-glass` branch.
 - Blog cron dry-run mode: `GET /api/cron/blog?dry=1` (with the cron secret) generates and returns a post without saving it.
 
 ### Changed
+- Admin sidebar header now shows the site logo with "Admin - Portfolio CMS" below it, instead of plain text.
 - Admin account menu (top right) shows your Personal Profile photo instead of initials (initials remain the fallback) and has a "Personal profile" link. `AdminUser` gains `avatarUrl`.
 - **Content now has one source: the database.** Removed the code copies used as fallbacks (`containers/projects-page/projectsData.ts`, `config/experienceDefaults.ts`, the profile values in `config/profileDefaults.ts`, now just an empty profile) and the link constants that moved to the Profile/Projects admin (`CALENDLY_URL`, `MAIL_TO`, `RESUME_URL`, `LINKEDIN_URL`, `FACEBOOK_URL`, `GORDON_*`, `NATIVECAMP_URL`, `PORTFOLIO_GITHUB_URL`). If a page refresh can't reach the database, ISR keeps serving the last good page; the site-wide header/footer render without personal details instead of failing. Empty name/experience are hidden.
 - Removed `/public` files now served from the Media Library: `images/NativeCamp.png`, `images/Featured.jpg`, `images/company/{Forty,Proweaver,UC,CodeTag}.png`, `documents/resume.pdf` (still in git history; the seed migrations reference these paths, so a brand-new database should use "Import site images" before deleting, or re-upload). `images/Avatar.jpg` stays: share images, chat and blog read it directly.
@@ -112,6 +113,7 @@ Work in progress on the `liquid-glass` branch.
 - Faster blog navigation: in-memory client cache for blog API responses, CDN caching on the blog list APIs, view counting moved after the response (`after()`), no 500ms debounce on the first blog list load, a `loading.tsx` skeleton for blog articles, and prefetching for header menu routes and home blog cards.
 
 ### Fixed
+- Unknown `/admin/*` URLs (e.g. `/admin/blogs`) showed the 404 page full-width and unstyled because the admin skips the site's content column; the 404 page now adds the column back on admin paths (`containers/404-page/NotFoundFrame.tsx`).
 - OpenAI logo was invisible in dark mode (black glyph); new `--mono-logo-filter` token inverts it in `.dark` wherever it appears (home and Tech Stack).
 - `Work` icon had one path hard-coded to `stroke="black"` (invisible in dark mode); now `currentColor`.
 - Header menu dropdown no longer zooms with the menu button on hover, and clicking a menu item no longer re-toggles the menu. Menu items show the pointer cursor.
