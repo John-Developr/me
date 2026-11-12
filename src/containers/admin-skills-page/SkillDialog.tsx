@@ -8,6 +8,7 @@ import AssetInput from "@/components/admin/AssetInput";
 import ConfirmDialog from "@/components/admin/ConfirmDialog";
 import FormDialog from "@/components/admin/FormDialog";
 import FormField from "@/components/admin/FormField";
+import Select from "@/components/admin/Select";
 import { networkDefine } from "@/config/networkDefine";
 import { toFieldErrors } from "@/utils/admin/formErrors";
 import { sendJson } from "@/utils/admin/sendJson";
@@ -143,14 +144,17 @@ export default function SkillDialog({ open, skill, categoryId, defaultCore, cate
                         <input {...text("name")} maxLength={80} autoFocus />
                     </FormField>
                     <FormField id="category_id" label="Category" error={errors.category_id}>
-                        <select id="field-category_id" value={values.category_id} onChange={(e) => set("category_id", e.target.value)}>
-                            <option value="">No category (Core Stack only)</option>
-                            {categories.map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}
-                        </select>
+                        <Select
+                            id="field-category_id"
+                            value={values.category_id}
+                            options={[{ value: "", label: "No category (Core Stack only)" }, ...categories.map((c) => ({ value: c.id, label: c.name }))]}
+                            aria-invalid={!!errors.category_id || undefined}
+                            aria-describedby={errors.category_id ? "field-category_id-error" : undefined}
+                            onChange={(v) => set("category_id", v)} />
                     </FormField>
                 </div>
 
-                <FormField id="logo_url" label="Logo" error={errors.logo_url} hint="Shown on chips everywhere this tool appears.">
+                <FormField id="logo_url" label="Logo" note="Shown on chips everywhere this tool appears" error={errors.logo_url}>
                     <AssetInput {...text("logo_url")} name="logo_url" shape="square" libraryOnly />
                 </FormField>
 
@@ -167,7 +171,7 @@ export default function SkillDialog({ open, skill, categoryId, defaultCore, cate
                         <FormField id="description" label="One-line description" required error={errors.description} count={{ value: values.description.trim().length, max: 160 }}>
                             <input {...text("description")} maxLength={160} />
                         </FormField>
-                        <FormField id="core_order" label="Core order" error={errors.core_order} hint="Lower numbers first.">
+                        <FormField id="core_order" label="Core order" error={errors.core_order} hint="Lower numbers first. You can also drag items in the Core Stack list.">
                             <input {...text("core_order")} type="number" min={0} max={9999} inputMode="numeric" />
                         </FormField>
                     </div>

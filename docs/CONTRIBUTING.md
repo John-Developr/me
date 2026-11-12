@@ -23,13 +23,14 @@ This content lives in Supabase and is edited in the admin at `/admin` (sign in a
 | Work, education and milestones | Work Experience | Home "Experience." (grouping and durations are automatic) |
 | Skills, categories, Core Stack, "Right now", tech logos | Skills & Technologies | `/tech-stack`, home "Tech Stack." (first 8 core tools), logos on tech chips everywhere |
 | Images and PDFs | Media Library (or the "Library" button on any image field) | Wherever they're picked |
+| Blog posts (write, generate with AI by category, publish/draft, delete) | Blog | `/blog`, `/blog/[slug]`, home "Recent Blog." |
 | Messages from the contact form (read, reply, archive, delete) | Contact Messages (or the bell in the top bar) | Admin only |
 
 Changes go live when you save. Tech chips (projects, tech stack) show a logo when a skill with that exact name has one.
 
 ### 1.4 Blog posts
 
-Blog posts are **AI-generated**, not hand-written. Monthly, Vercel Cron calls `/api/cron/blog`, which asks Gemini for a post (prompt: `src/docs/blog-instruction.md`) and upserts it into Supabase `ai_blogs` by `slug`.
+Monthly, Vercel Cron calls `/api/cron/blog`, which asks Gemini for a post (prompt: `src/docs/blog-instruction.md`) and inserts it into Supabase `ai_blogs` as published. In **Admin → Blog** you can also write posts by hand, or pick a category and let Gemini draft one (same prompt) to review before saving. Posts have `status` (`draft` | `published`; only published posts are public) and `source` (`ai` | `personal`).
 
 Schema (validated with Zod in `ChatService.blogMain`; type `AIBlogResponse` in `src/utils/types.ts`):
 

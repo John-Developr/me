@@ -1,12 +1,5 @@
-import Skeleton from "@/components/admin/Skeleton";
-import { CardSkeleton } from "@/containers/admin-dashboard-page/DashboardSkeletons";
-import adminStyles from "@/styles/pages/admin.module.css";
+import ExperienceSkeleton from "@/containers/admin-experience-page/ExperienceSkeleton";
 
 export default function Loading() {
-  return (
-    <div className={adminStyles.page} aria-busy="true" aria-label="Loading experience">
-      <Skeleton width={200} height={26} />
-      <CardSkeleton rows={5} />
-    </div>
-  );
+  return <ExperienceSkeleton />;
 }

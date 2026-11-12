@@ -338,6 +338,108 @@
   height: 34px;
 }
 
+/* ─── Month picker (MonthPicker.tsx, form fields) ────────── */
+
+/* Full-width trigger that lines up with the form inputs. */
+.field-trigger {
+  width: 100%;
+  height: 40px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.field-trigger span {
+  flex: 1;
+  text-align: left;
+}
+
+.field-trigger .placeholder {
+  color: var(--text-muted);
+}
+
+.field-trigger:disabled {
+  background: var(--disabled-input-bg);
+  color: var(--text-muted);
+  cursor: not-allowed;
+  opacity: 1;
+}
+
+.field-trigger.invalid {
+  border-color: var(--admin-danger);
+}
+
+.month-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 276px;
+  padding: 14px 16px;
+}
+
+.month-panel .caption {
+  justify-content: space-between;
+}
+
+.nav-prev svg { transform: rotate(90deg); }
+.nav-next svg { transform: rotate(-90deg); }
+
+.month-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+}
+
+.month-btn {
+  position: relative;
+  height: 40px;
+  border: none;
+  border-radius: 9px;
+  background: none;
+  color: var(--text);
+  font: inherit;
+  font-size: 13.5px;
+  cursor: pointer;
+  transition: background 0.12s ease;
+}
+
+.month-btn:hover:not(:disabled) {
+  background: var(--clip-hover);
+}
+
+.month-btn:focus-visible {
+  outline: 2px solid var(--admin-accent);
+  outline-offset: 1px;
+}
+
+.month-btn:disabled {
+  color: var(--text-muted);
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.month-btn.today::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 5px;
+  width: 4px;
+  height: 4px;
+  margin-left: -2px;
+  border-radius: 50%;
+  background: var(--admin-accent-ink);
+}
+
+.month-btn.selected {
+  background: var(--admin-accent);
+  color: white;
+  font-weight: 700;
+}
+
+.month-btn.selected::after {
+  background: white;
+}
+
 /* ─── ≤850px: one month, quick picks on top ──────────────── */
 
 @media (max-width: 850px) {
@@ -378,6 +480,10 @@
   .dp {
     display: flex;
     justify-content: center;
+  }
+
+  .month-panel {
+    width: auto;
   }
 
   .footer {

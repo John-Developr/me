@@ -52,8 +52,9 @@ export default class BlogService {
      * and computes the reading time. Does not save anything.
      *
      * @param instruction - Contents of src/docs/blog-instruction.md
+     * @param category    - Category to write about; the least used one when omitted
      */
-    async generate(instruction: string): Promise<NewBlogRow> {
+    async generate(instruction: string, category?: string): Promise<NewBlogRow> {
         const MAX_ATTEMPTS = 3;
 
         const recentTitles = await this.getRecentTitles(15);
@@ -62,7 +63,7 @@ export default class BlogService {
 
         for (let attempt = 1; attempt <= MAX_ATTEMPTS; attempt++) {
             try {
-                const post = await chat.blogMain(recentTitles);
+                const post = await chat.blogMain(recentTitles, category);
 
                 // Models drift back to cliché titles; retry, but accept on the last attempt.
                 if (BANNED_TITLE_PATTERN.test(post.title) && attempt < MAX_ATTEMPTS) {
@@ -109,7 +110,7 @@ export default class BlogService {
     /**
      * Returns `base` if unused, otherwise `base-2`, `base-3`, ...
      */
-    private async getUniqueSlug(base: string): Promise<string> {
+    async getUniqueSlug(base: string): Promise<string> {
         const { data, error } = await this.server
             .from(this.table)
             .select("slug")
@@ -154,7 +155,8 @@ export default class BlogService {
 
         let query = this.server
             .from(this.table)
-            .select<string, AIBlogResponse>(selectQuery);
+            .select<string, AIBlogResponse>(selectQuery)
+            .eq("status", "published");
 
         if (category && category !== "All") {
             query = query.eq("category", category);
@@ -177,6 +179,7 @@ export default class BlogService {
             .from(this.table)
             .select("*")
             .eq("slug", slug)
+            .eq("status", "published")
             .single();
 
         if (error) {
@@ -214,6 +217,7 @@ export default class BlogService {
             .from(this.table)
             .select("*")
             .eq("slug", slug)
+            .eq("status", "published")
             .maybeSingle<AIBlogResponse>();
 
         if (error) {
@@ -231,6 +235,7 @@ export default class BlogService {
         const { data, error } = await this.server
             .from(this.table)
             .select("slug, generated_at")
+            .eq("status", "published")
             .order("generated_at", { ascending: false });
 
         if (error) {
@@ -245,6 +250,7 @@ export default class BlogService {
         const query = this.server
             .from(this.table)
             .select("*")
+            .eq("status", "published")
             .order("generated_at", { ascending: false }).limit(2);
 
         const { data, error } = await query;

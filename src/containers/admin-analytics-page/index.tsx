@@ -5,36 +5,27 @@ import LineChart from "@/components/admin/LineChart";
 import PageHeader from "@/components/admin/PageHeader";
 import StatCard from "@/components/admin/StatCard";
 import { DashboardRefreshProvider } from "@/components/admin/DashboardRefresh";
-import { AdminIcons, AdminIconComponent } from "@/components/icons/admin";
+import { AdminIcons } from "@/components/icons/admin";
 import AdminAuthService from "@/lib/.services/adminAuthService";
 import AnalyticsService from "@/lib/.services/analyticsService";
 import { ServiceError } from "@/lib/.services/serviceError";
 import { parseRangeParams, presetToRange, TRAFFIC_PRESETS } from "@/utils/admin/dateRange";
 import { formatLongDay, formatNumber, percentChange } from "@/utils/admin/format";
-import { BreakdownDimension, RecentVisitor, TrafficBreakdowns, TrafficRange, TrafficResult } from "@/utils/types";
+import { RecentVisitor, TrafficBreakdowns, TrafficRange, TrafficResult } from "@/utils/types";
+import { ADMIN_PAGE_HEADERS } from "@/utils/admin/pageHeaders";
 import adminStyles from "@/styles/pages/admin.module.css";
 import styles from "@/styles/pages/adminAnalytics.module.css";
 
 import AnalyticsFrame from "./AnalyticsFrame";
 import BreakdownCard from "./BreakdownCard";
 import RecentVisitorsTable from "./RecentVisitorsTable";
-import { breakdownLabel } from "./labels";
+import { BREAKDOWN_ICONS, breakdownLabel } from "./labels";
 
 export interface AnalyticsSearchParams {
     range?: string;
     from?:  string;
     to?:    string;
 }
-
-const BREAKDOWN_ICONS: Record<BreakdownDimension, AdminIconComponent> = {
-    country:  AdminIcons.Globe,
-    city:     AdminIcons.Globe,
-    referrer: AdminIcons.ExternalLink,
-    device:   AdminIcons.Layers,
-    browser:  AdminIcons.LayoutGrid,
-    os:       AdminIcons.Settings,
-    path:     AdminIcons.FileText,
-};
 
 type Loaded = { traffic: TrafficResult; breakdowns: TrafficBreakdowns; recent: RecentVisitor[] };
 
@@ -66,8 +57,8 @@ export default async function AdminAnalyticsPage({ searchParams }: { searchParam
         <DashboardRefreshProvider>
             <div className={adminStyles.page}>
                 <PageHeader
-                    title="Analytics"
-                    description="Anonymous, cookie-free visit stats for your portfolio." />
+                    title={ADMIN_PAGE_HEADERS.analytics.title}
+                    description={ADMIN_PAGE_HEADERS.analytics.description} />
 
                 <AnalyticsFrame key={`${range.from}:${range.to}`} preset={preset ?? null} from={range.from} to={range.to} today={today}>
                     <p className={styles.period}>

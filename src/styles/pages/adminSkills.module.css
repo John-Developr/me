@@ -75,28 +75,140 @@
 
 /* ─── Core Stack list ─────────────────────────────────────── */
 
+/* position: relative makes the list the offsetParent; CoreStackList
+   measures rows with offsetLeft/Top for the slide animation. */
 .core-list {
+  position: relative;
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 8px;
 }
 
-.core-item {
-  width: 100%;
+/* One bordered row: [grip][item button] (CoreStackList.tsx).
+   Hover and keyboard focus highlight the whole row, whichever part is under the pointer. */
+.core-row {
+  position: relative;
   height: 100%;
+  display: flex;
+  border-radius: 10px;
+  border: var(--border-container);
+  background: var(--container-bg);
+  transition: background 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.core-row:hover {
+  background: var(--clip-hover);
+}
+
+.core-row:has(:focus-visible) {
+  border-color: var(--admin-accent);
+  box-shadow: 0 0 0 3px var(--admin-accent-soft);
+}
+
+.core-item {
+  flex: 1;
+  min-width: 0;
   display: flex;
   align-items: center;
   gap: 12px;
   padding: 10px 12px;
   border-radius: 10px;
-  border: var(--border-container);
   text-align: left;
   cursor: pointer;
-  transition: background 0.15s ease;
 }
 
-.core-item:hover {
+.core-handle + .core-item {
+  padding-left: 4px;
+}
+
+/* Drag handle: pointer events need touch-action none to work on phones. */
+.core-handle {
+  width: 30px;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+  cursor: grab;
+  touch-action: none;
+  transition: color 0.15s ease;
+}
+
+.core-row:hover .core-handle {
+  color: var(--text);
+}
+
+/* The row's ring shows focus instead. */
+.core-item:focus-visible,
+.core-handle:focus-visible {
+  outline: none;
+}
+
+.reordering,
+.reordering .core-handle {
+  cursor: grabbing;
+  user-select: none;
+}
+
+/* While dragging, only the lifted row is highlighted. */
+.reordering .core-row:not(.dragging):hover {
+  background: var(--container-bg);
+}
+
+/* Lifted row: follows the pointer (inline transform) above the others,
+   and looks the same as a hovered row (background only, normal border). */
+.core-row.dragging,
+.core-row.dragging:has(:focus-visible) {
+  z-index: 2;
   background: var(--clip-hover);
+  border: var(--border-container);
+  box-shadow: none;
+}
+
+.core-row.dragging .core-handle {
+  color: var(--text);
+}
+
+/* Locked while the new order saves (aria-disabled keeps keyboard focus). */
+.core-handle[aria-disabled="true"],
+.core-row:hover .core-handle[aria-disabled="true"] {
+  color: var(--text-muted);
+  opacity: 0.4;
+  cursor: progress;
+}
+
+/* Indeterminate bar inside the "Saving Core Stack order…" toast */
+.save-progress {
+  display: block;
+  width: 180px;
+  max-width: 100%;
+  height: 4px;
+  margin-top: 8px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: var(--admin-accent-soft);
+}
+
+.save-progress span {
+  display: block;
+  width: 40%;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--admin-accent);
+  animation: saveProgress 1s ease-in-out infinite;
+}
+
+@keyframes saveProgress {
+  from { transform: translateX(-100%); }
+  to   { transform: translateX(250%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .save-progress span {
+    width: 100%;
+    animation: none;
+    opacity: 0.6;
+  }
 }
 
 .core-rank {

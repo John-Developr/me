@@ -1,5 +1,6 @@
 import { ContentListUnion } from "@google/genai/node";
 import type { SkillIconKey } from "@/utils/admin/skillIconKeys";
+import type { BlogCategory } from "@/utils/admin/blogSchema";
 
 // ============================================================
 // BLOG
@@ -51,6 +52,26 @@ export interface GeneratedBlogPost {
 /** A generated post, ready to insert into the blog table. */
 export interface NewBlogRow extends GeneratedBlogPost {
   reading: number;             // minutes, computed from word count
+}
+
+export type BlogStatus = "draft" | "published";
+export type BlogSource = "ai" | "personal";
+
+/** A full `ai_blogs` row as the admin sees it (drafts included). */
+export interface BlogRecord {
+  id:           number;
+  title:        string;
+  slug:         string;
+  category:     BlogCategory;
+  content:      string;        // markdown
+  excerpt:      string;
+  tags:         string[];
+  reading:      number;        // minutes
+  views:        number;
+  status:       BlogStatus;
+  source:       BlogSource;
+  generated_at: string;        // publish date shown on the site
+  updated_at:   string;
 }
 
 // ============================================================

@@ -7,6 +7,7 @@ import { sileo } from "sileo";
 import ConfirmDialog from "@/components/admin/ConfirmDialog";
 import DashboardCard from "@/components/admin/DashboardCard";
 import FormField from "@/components/admin/FormField";
+import Select from "@/components/admin/Select";
 import AssetInput from "@/components/admin/AssetInput";
 import TimeAgo from "@/components/admin/TimeAgo";
 import { AdminIcons } from "@/components/icons/admin";
@@ -236,10 +237,13 @@ export default function ProjectForm({ project, nextOrder = 0 }: ProjectFormProps
                 <DashboardCard title="Details" icon={AdminIcons.Briefcase} subtitle="Shown on the project card. All optional.">
                     <div className={`${formStyles.fields} ${formStyles.two}`}>
                         <FormField id="kind" label="Type" error={errors.kind}>
-                            <select {...text("kind")}>
-                                <option value="">None</option>
-                                {PROJECT_KINDS.map((kind) => <option key={kind} value={kind}>{kind}</option>)}
-                            </select>
+                            <Select
+                                id="field-kind"
+                                value={values.kind}
+                                options={[{ value: "", label: "None" }, ...PROJECT_KINDS.map((kind) => ({ value: kind, label: kind }))]}
+                                aria-invalid={!!errors.kind || undefined}
+                                aria-describedby={errors.kind ? "field-kind-error" : undefined}
+                                onChange={(v) => set("kind", v)} />
                         </FormField>
                         <FormField id="period" label="Period" error={errors.period} hint="e.g. 2023 – Present">
                             <input {...text("period")} maxLength={60} />
@@ -307,10 +311,10 @@ export default function ProjectForm({ project, nextOrder = 0 }: ProjectFormProps
 
                 <DashboardCard title="Images" icon={AdminIcons.Image} subtitle="Choose from the Media Library, or upload there.">
                     <div className={`${formStyles.fields} ${formStyles.two}`}>
-                        <FormField id="logo_url" label="Logo" error={errors.logo_url} hint="Square image.">
+                        <FormField id="logo_url" label="Logo" note="Square image" error={errors.logo_url}>
                             <AssetInput {...text("logo_url")} shape="square" />
                         </FormField>
-                        <FormField id="image_url" label="Screenshot" error={errors.image_url} hint="Shown on the featured card.">
+                        <FormField id="image_url" label="Screenshot" note="Shown on the featured card" error={errors.image_url}>
                             <AssetInput {...text("image_url")} shape="wide" />
                         </FormField>
                     </div>

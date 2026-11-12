@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import ConfirmDialog from "@/components/admin/ConfirmDialog";
+import DashboardCard from "@/components/admin/DashboardCard";
 import EmptyState from "@/components/admin/EmptyState";
 import TimeAgo from "@/components/admin/TimeAgo";
 import { AdminIcons } from "@/components/icons/admin";
@@ -78,7 +79,7 @@ export default function ProjectsManager({ projects }: { projects: ProjectRecord[
     }
 
     return (
-        <div className={adminStyles.card}>
+        <DashboardCard title="Projects" icon={AdminIcons.Folder}>
             <div className={styles.toolbar}>
                 <div className={styles.filters} role="group" aria-label="Filter by status">
                     {FILTERS.map(({ key, label }) => (
@@ -175,6 +176,6 @@ export default function ProjectsManager({ projects }: { projects: ProjectRecord[
                 busy={pendingId !== null && pendingId === toDelete?.id}
                 onConfirm={confirmDelete}
                 onCancel={() => setToDelete(null)} />
-        </div>
+        </DashboardCard>
     );
 }

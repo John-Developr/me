@@ -9,10 +9,12 @@ import PageHeader from "@/components/admin/PageHeader";
 import { AdminIcons } from "@/components/icons/admin";
 import { SKILL_ICONS } from "@/components/tech/skillIcons";
 import { SkillCategoryRecord, SkillRecord } from "@/utils/types";
+import { ADMIN_PAGE_HEADERS } from "@/utils/admin/pageHeaders";
 import adminStyles from "@/styles/pages/admin.module.css";
 import styles from "@/styles/pages/adminSkills.module.css";
 
 import CategoryDialog from "./CategoryDialog";
+import CoreStackList from "./CoreStackList";
 import SkillDialog from "./SkillDialog";
 
 type DialogState =
@@ -64,8 +66,8 @@ export default function SkillsManager({ categories, skills }: SkillsManagerProps
     return (
         <>
             <PageHeader
-                title="Skills & Technologies"
-                description="Your tech stack on /tech-stack and the home page. Logos here also show on project chips."
+                title={ADMIN_PAGE_HEADERS.skills.title}
+                description={ADMIN_PAGE_HEADERS.skills.description}
                 actions={<>
                     <button type="button" className={`liquid_glass_btn ${adminStyles["btn-secondary"]}`} onClick={() => setDialog({ type: "category" })}>
                         <AdminIcons.Layers width={15} height={15} />
@@ -94,7 +96,7 @@ export default function SkillsManager({ categories, skills }: SkillsManagerProps
             <DashboardCard
                 title="Core Stack"
                 icon={AdminIcons.Award}
-                subtitle="Featured on /tech-stack; the first 8 show on the home page."
+                subtitle="Featured on /tech-stack; the first 8 show on the home page. Drag to reorder."
                 actions={
                     <button type="button" className={adminStyles["btn-ghost"]} onClick={() => setDialog({ type: "skill", categoryId: null, core: true })}>
                         <AdminIcons.Plus width={14} height={14} /> Add
@@ -103,25 +105,11 @@ export default function SkillsManager({ categories, skills }: SkillsManagerProps
                 {core.length === 0 ? (
                     <EmptyState compact icon={AdminIcons.Award} title="No core tools" description="Tick “Core Stack” on a skill to feature it." />
                 ) : (
-                    <ol className={styles["core-list"]}>
-                        {core.filter(matches).map((skill, i) => (
-                            <li key={skill.id}>
-                                <button type="button" className={styles["core-item"]} onClick={() => editSkill(skill)}>
-                                    <span className={styles["core-rank"]}>{i + 1}</span>
-                                    <span className={styles["core-logo"]} aria-hidden="true">
-                                        {skill.logo_url
-                                            ? <Image src={skill.logo_url} width={24} height={24} alt="" />
-                                            : <AdminIcons.Code width={16} height={16} />}
-                                    </span>
-                                    <span className={styles["core-text"]}>
-                                        <strong>{skill.name}</strong>
-                                        <small>{skill.description}</small>
-                                    </span>
-                                    {i < 8 && <span className={styles["home-badge"]} title="Shown on the home page">Home</span>}
-                                </button>
-                            </li>
-                        ))}
-                    </ol>
+                    <CoreStackList
+                        key={core.map((s) => s.id).sort().join()}
+                        skills={core}
+                        query={q}
+                        onEdit={editSkill} />
                 )}
             </DashboardCard>
 

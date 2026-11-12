@@ -41,3 +41,13 @@ export const categoryInputSchema = z.object({
 }).transform((d) => ({ ...d, slug: categorySlug(d.name) }));
 
 export type CategoryInput = z.output<typeof categoryInputSchema>;
+
+/** Body of PUT /api/admin/skills/core-order: every Core Stack skill id, in display order. */
+export const coreOrderSchema = z.object({
+  ids: z.array(z.uuid("Invalid skill id."))
+    .min(1, "Nothing to reorder.")
+    .max(500, "Too many skills.")
+    .refine((ids) => new Set(ids).size === ids.length, "Each skill can appear only once."),
+});
+
+export type CoreOrderInput = z.output<typeof coreOrderSchema>;

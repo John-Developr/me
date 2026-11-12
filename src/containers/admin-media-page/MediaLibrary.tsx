@@ -16,6 +16,7 @@ import { networkDefine } from "@/config/networkDefine";
 import { useApp } from "@/lib/.context/AppContext";
 import { isImageMime } from "@/utils/media";
 import { MediaAsset, MediaImportResult, StorageUsage } from "@/utils/types";
+import { ADMIN_PAGE_HEADERS } from "@/utils/admin/pageHeaders";
 import adminStyles from "@/styles/pages/admin.module.css";
 import styles from "@/styles/pages/adminMedia.module.css";
 
@@ -86,8 +87,8 @@ export default function MediaLibrary({ assets, usage }: { assets: MediaAsset[]; 
     return (
         <>
             <PageHeader
-                title="Media Library"
-                description="Images and documents used across your portfolio. Choose them from any image field."
+                title={ADMIN_PAGE_HEADERS.media.title}
+                description={ADMIN_PAGE_HEADERS.media.description}
                 actions={
                     <button type="button" className={`liquid_glass_btn ${adminStyles["btn-secondary"]}`} onClick={() => setImportOpen(true)}>
                         <AdminIcons.Refresh width={15} height={15} />

@@ -146,7 +146,7 @@ export default function ProfileEditor({ profile }: { profile: PortfolioProfile |
                         <FormField id="location" label="Location" error={errors.location}>
                             <input {...input("location")} maxLength={120} />
                         </FormField>
-                        <FormField id="avatar_url" label="Photo" error={errors.avatar_url} hint="Square image.">
+                        <FormField id="avatar_url" label="Photo" note="Square image" error={errors.avatar_url}>
                             <AssetInput {...input("avatar_url")} shape="square" />
                         </FormField>
                     </div>
@@ -174,7 +174,7 @@ export default function ProfileEditor({ profile }: { profile: PortfolioProfile |
                         <FormField id="booking_url" label="Booking link" error={errors.booking_url} hint="Schedule a Call buttons, e.g. your Calendly link.">
                             <input {...input("booking_url")} type="url" inputMode="url" placeholder="https://calendly.com/…" spellCheck={false} />
                         </FormField>
-                        <FormField id="resume_url" label="Resume" error={errors.resume_url} hint="PDF for the Download Resume button.">
+                        <FormField id="resume_url" label="Resume" note="PDF for the Download Resume button" error={errors.resume_url}>
                             <AssetInput {...input("resume_url")} kind="document" />
                         </FormField>
                     </div>

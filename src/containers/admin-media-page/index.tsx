@@ -4,6 +4,7 @@ import { DashboardRefreshProvider } from "@/components/admin/DashboardRefresh";
 import AdminAuthService from "@/lib/.services/adminAuthService";
 import MediaService from "@/lib/.services/mediaService";
 import { MediaAsset, StorageUsage } from "@/utils/types";
+import { ADMIN_PAGE_HEADERS } from "@/utils/admin/pageHeaders";
 import adminStyles from "@/styles/pages/admin.module.css";
 
 import MediaLibrary from "./MediaLibrary";
@@ -30,7 +31,7 @@ export default async function AdminMediaPage() {
                     <MediaLibrary assets={library.assets} usage={library.usage} />
                 ) : (
                     <>
-                        <PageHeader title="Media Library" description="Images and documents used across your portfolio." />
+                        <PageHeader {...ADMIN_PAGE_HEADERS.media} />
                         <ErrorState message="Couldn't load the Media Library. If you just updated, run the Media Library migration, then try again." />
                     </>
                 )}

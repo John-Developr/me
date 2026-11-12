@@ -6,7 +6,7 @@ import { optionalAssetRef, optionalText } from "./fieldSchemas";
    EXPERIENCE VALIDATION
    ------------------------------------------------------------
    Shared by the Work Experience form and the API. Months come
-   from <input type="month"> ("2024-01") and are stored as the
+   from the admin MonthPicker ("2024-01") and are stored as the
    first day of the month ("2024-01-01").
    ============================================================ */
 

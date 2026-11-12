@@ -151,6 +151,14 @@ export const AdminIcons = {
     ChevronDown: createIcon("ChevronDown", <>
         <path d="m6 9 6 6 6-6" />
     </>),
+    GripVertical: createIcon("GripVertical", <>
+        <circle cx="9" cy="5" r="1" />
+        <circle cx="9" cy="12" r="1" />
+        <circle cx="9" cy="19" r="1" />
+        <circle cx="15" cy="5" r="1" />
+        <circle cx="15" cy="12" r="1" />
+        <circle cx="15" cy="19" r="1" />
+    </>),
     Plus: createIcon("Plus", <>
         <path d="M5 12h14" />
         <path d="M12 5v14" />
@@ -224,6 +232,42 @@ export const AdminIcons = {
     Reply: createIcon("Reply", <>
         <path d="m9 17-5-5 5-5" />
         <path d="M20 18v-2a4 4 0 0 0-4-4H4" />
+    </>),
+    // ─── Text formatting (Markdown editor toolbar) ───
+    Bold: createIcon("Bold", <>
+        <path d="M6 12h9a4 4 0 0 1 0 8H7a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h7a4 4 0 0 1 0 8" />
+    </>),
+    Italic: createIcon("Italic", <>
+        <path d="M19 4h-9" />
+        <path d="M14 20H5" />
+        <path d="M15 4 9 20" />
+    </>),
+    Heading2: createIcon("Heading2", <>
+        <path d="M4 12h8" /><path d="M4 18V6" /><path d="M12 18V6" />
+        <path d="M21 18h-4c0-4 4-3 4-6 0-1.5-2-2.5-4-1" />
+    </>),
+    Heading3: createIcon("Heading3", <>
+        <path d="M4 12h8" /><path d="M4 18V6" /><path d="M12 18V6" />
+        <path d="M17.5 10.5c1.7-1 3.5 0 3.5 1.5a2 2 0 0 1-2 2" />
+        <path d="M17 17.5c2 1.5 4 .3 4-1.5a2 2 0 0 0-2-2" />
+    </>),
+    List: createIcon("List", <>
+        <path d="M3 5h.01" /><path d="M3 12h.01" /><path d="M3 19h.01" />
+        <path d="M8 5h13" /><path d="M8 12h13" /><path d="M8 19h13" />
+    </>),
+    ListOrdered: createIcon("ListOrdered", <>
+        <path d="M11 5h10" /><path d="M11 12h10" /><path d="M11 19h10" />
+        <path d="M4 4h1v5" /><path d="M4 9h2" />
+        <path d="M6.5 20H3.4c0-1 2.6-1.925 2.6-3.5a1.5 1.5 0 0 0-2.6-1.02" />
+    </>),
+    Link: createIcon("Link", <>
+        <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+        <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+    </>),
+    SquareCode: createIcon("SquareCode", <>
+        <rect x="3" y="3" width="18" height="18" rx="2" />
+        <path d="m10 9-3 3 3 3" />
+        <path d="m14 15 3-3-3-3" />
     </>),
     Trash: createIcon("Trash", <>
         <path d="M3 6h18" />
