@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 
 import AdminNotifications from "./AdminNotifications";
 import AdminProfileMenu from "./AdminProfileMenu";
+import AdminSearch from "./AdminSearch";
 import { getBreadcrumbs } from "./adminNav";
 
 import { AdminIcons } from "@/components/icons/admin";
@@ -42,15 +43,7 @@ export default function AdminTopbar({ admin, notifications, onOpenMenu }: AdminT
                 </ol>
             </nav>
 
-            {/* Placeholder until global search is built — disabled, not fake. */}
-            <div className={styles.search} title="Search isn't available yet">
-                <AdminIcons.Search width={16} height={16} />
-                <input
-                    type="search"
-                    placeholder="Search (coming soon)"
-                    aria-label="Search (coming soon)"
-                    disabled />
-            </div>
+            <AdminSearch />
 
             <div className={styles["topbar-actions"]}>
                 <AdminNotifications notifications={notifications} />

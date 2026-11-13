@@ -627,3 +627,21 @@ export interface MessageNotifications {
   count:  number;
   latest: MessagePreview[];
 }
+
+// ============================================================
+// ADMIN — GLOBAL SEARCH
+// ============================================================
+
+/** What a topbar search hit points at (picks its icon and group). */
+export type AdminSearchKind = "project" | "blog" | "experience" | "skill" | "message" | "media";
+
+/** One content hit from `GET /api/admin/search`. */
+export interface AdminSearchResult {
+  kind:  AdminSearchKind;
+  id:    string;
+  title: string;
+  /** Short context line, e.g. a post's status or a sender's email. */
+  hint:  string | null;
+  /** Admin screen that opens the item. */
+  href:  string;
+}

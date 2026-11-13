@@ -511,6 +511,19 @@
   width: 100%;
 }
 
+/* The picker opens inside a form `.field`, whose generic input rule
+   (adminForm.module.css) would draw a second border inside the box.
+   Two classes so this wins; the box itself shows the focus border. */
+.picker-body .search input,
+.picker-body .search input:focus {
+  min-height: 0;
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+}
+
 .picker-foot {
   justify-content: flex-end;
   border-top: var(--border-container);

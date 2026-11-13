@@ -2,6 +2,8 @@
 
 import { useSiteProfile } from "@/lib/.context/SiteProfileContext";
 
+import Copyright from "./Copyright";
+
 // SVG
 import { Facebook } from "../icons/Facebook";
 import Instagram from "../icons/Instagram";
@@ -20,18 +22,13 @@ const SOCIALS = [
 
 export default function Footer() {
     const profile     = useSiteProfile();
-    const startYear   = 2025; // <-- your starting year
-    const currentYear = new Date().getFullYear();
     const socials     = SOCIALS.filter(({ key }) => profile.socials[key]);
 
     return (
     <>
         <hr className="hr-horizontal" />
         <footer className="section">
-            <p>
-                © {startYear} {startYear !== currentYear && `\u2013 ${currentYear} `} 
-                {profile.name ? `${profile.name}. ` : ""}All rights reserved.
-            </p>
+            <Copyright />
             {socials.length > 0 && (
                 <section className="socials">
                     <ul>
