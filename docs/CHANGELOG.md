@@ -118,6 +118,7 @@ Work in progress on the `liquid-glass` branch.
 - Faster blog navigation: in-memory client cache for blog API responses, CDN caching on the blog list APIs, view counting moved after the response (`after()`), no 500ms debounce on the first blog list load, a `loading.tsx` skeleton for blog articles, and prefetching for header menu routes and home blog cards.
 
 ### Fixed
+- Admin add/edit screens (Projects, Blog, Work Experience new/edit, and a single Contact Message) showed their list page's table skeleton while loading. Edit screens, Blog "new" and the message view now have their own `loading.tsx` with a skeleton of the real form; adding a project or experience entry shows no skeleton at all (nothing to load) (same cards, labels, hints and save bar; only the inputs shimmer), so nothing jumps when the form appears. New building blocks: `components/admin/FormSkeletons.tsx`.
 - Opening a blog post from far down /blog now starts at the top of the post instead of keeping the list's scroll position. Next.js skips its scroll reset when a route shows a `loading.tsx` fallback, so that fallback now resets it (`components/custom/ScrollToTop.tsx`).
 - Unknown `/admin/*` URLs (e.g. `/admin/blogs`) showed the 404 page full-width and unstyled because the admin skips the site's content column; the 404 page now adds the column back on admin paths (`containers/404-page/NotFoundFrame.tsx`).
 - OpenAI logo was invisible in dark mode (black glyph); new `--mono-logo-filter` token inverts it in `.dark` wherever it appears (home and Tech Stack).
