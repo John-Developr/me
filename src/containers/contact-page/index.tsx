@@ -13,7 +13,13 @@ import styles from "@/styles/pages/contact.module.css";
 import Message from "@/components/icons/Message";
 import Document from "@/components/icons/Document";
 import Send from "@/components/icons/Send";
+import Work from "@/components/icons/Work";
+import Wallet from "@/components/icons/Wallet";
+import Chat from "@/components/icons/Chat";
 import HrHorizontal from "@/components/hr/HrHorizontal";
+import { useSiteProfile } from "@/lib/.context/SiteProfileContext";
+
+import ReachCard from "./ReachCard";
 
 import { networkDefine } from "@/config/networkDefine";
 import { InquiryType } from "@/utils/types";
@@ -22,17 +28,17 @@ const inquiryOptions = [
   {
     label: InquiryType.JobOpportunity,
     description: "Hiring or job-related discussion",
-    icon: "💼",
+    Icon: Work,
   },
   {
     label: InquiryType.FreelanceProject,
     description: "Let's work together on a project",
-    icon: "🚀",
+    Icon: Wallet,
   },
   {
     label: InquiryType.GeneralInquiry,
     description: "Ask me anything or general questions",
-    icon: "💬",
+    Icon: Chat,
   },
 ] as const;
 
@@ -47,6 +53,7 @@ const budgetOptions = [
 export default function ContactPage() {
     const form      = useAnimateIn<HTMLDivElement>({ delay: 200, duration: 600 });
     const formRef   = useRef<HTMLFormElement>(null);
+    const profile   = useSiteProfile();
     
     const [selectedType, setSelectedType]     = useState<InquiryType>(InquiryType.GeneralInquiry);
     const [selectedBudget, setSelectedBudget] = useState<typeof budgetOptions[number]["label"]>(budgetOptions[0].label);
@@ -122,6 +129,7 @@ export default function ContactPage() {
                     <br />
                     <br />
 
+                    <div className={styles["contact-layout"]}>
                     <form 
                         className={styles.contactForm} 
                         onSubmit={handleSubmit} 
@@ -186,7 +194,7 @@ export default function ContactPage() {
                                             ${selectedType === option.label ? styles.active : ""}
                                         `}
                                         onClick={() => setSelectedType(option.label)}>
-                                        <div className={styles.icon}>{option.icon}</div>
+                                        <div className={styles.icon}><option.Icon width={20} height={20} aria-hidden="true" /></div>
                                         <div>
                                             <p className={styles.title}>{option.label}</p>
                                             <p className={styles.description}>{option.description}</p>
@@ -235,6 +243,9 @@ export default function ContactPage() {
                             <Send width={20} height={20} />
                         </button>
                     </form>
+
+                    <ReachCard profile={profile} />
+                    </div>
                 </div>
             <Footer />
         </>

@@ -64,6 +64,7 @@ Aesthetic: minimalist, card-based single column; soft neutral greys in light mod
 | `--disabled-input-bg` | `#f0f0f0` | `#3d404c46` |
 | `--skeleton-base` | `#f1f1f1` | `#1e2330` |
 | `--skeleton-shine` | `#e4e4e4` | `#252b3b` |
+| `--text-soft` | `#5c636d` | `#8b949e` |
 | `--type-badge-bg` | `#e8e8e8` | `#476fff` |
 | `--type-badge-text` | `#3a3a3a` | `#ffffff` |
 | `--overlay-bg` | `rgba(0, 0, 0, 0.45)` | `rgba(0, 0, 0, 0.6)` |
