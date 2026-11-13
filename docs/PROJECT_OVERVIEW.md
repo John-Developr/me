@@ -85,7 +85,7 @@ All content outside the blog (profile, about, stack, experience, featured projec
 | Route | Route file | Container | Notes |
 |---|---|---|---|
 | `/` | `app/page.tsx` | `containers/home-page` | Full SEO metadata, OG, Twitter |
-| `/projects` | `app/projects/page.tsx` | `containers/projects-page` | Featured project, "More Projects." grid, contact CTA — published projects from Supabase (edit in `/admin/projects`) |
+| `/projects` | `app/projects/page.tsx` | `containers/projects-page` | Featured project, "More Projects." tile grid (click a tile for the details drawer), contact CTA — published projects from Supabase (edit in `/admin/projects`) |
 | `/tech-stack` | `app/tech-stack/page.tsx` | `containers/tech-stack-page` | "Right Now", Core Stack and Full Toolkit from Supabase (edit in `/admin/skills`) |
 | `/blog` | `app/blog/page.tsx` | `containers/blog-page` | Category filter + sort, fetches `/api/blog` |
 | `/blog/[slug]` | `app/blog/[slug]/page.tsx` | `containers/blog-detail-page` | Fetches `/api/blog/[slug]`, renders Markdown; shows 404 container if missing |

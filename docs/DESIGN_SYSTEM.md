@@ -64,6 +64,10 @@ Aesthetic: minimalist, card-based single column; soft neutral greys in light mod
 | `--disabled-input-bg` | `#f0f0f0` | `#3d404c46` |
 | `--skeleton-base` | `#f1f1f1` | `#1e2330` |
 | `--skeleton-shine` | `#e4e4e4` | `#252b3b` |
+| `--type-badge-bg` | `#e8e8e8` | `#476fff` |
+| `--type-badge-text` | `#3a3a3a` | `#ffffff` |
+| `--overlay-bg` | `rgba(0, 0, 0, 0.45)` | `rgba(0, 0, 0, 0.6)` |
+| `--tile-scrim` | gradient, transparent → `rgba(0,0,0,0.78)` | gradient, transparent → `rgba(0,0,0,0.85)` |
 | `--logo-filter` | `unset` | CSS filter chain tinting the logo blue |
 
 ### Fixed (non-token) colors in use
@@ -201,6 +205,12 @@ Centered column, max height 350px: title 20px/600 `--text-header`, description 1
 
 ### Modal (side drawer)
 `component.module.css`: overlay `rgba(0,0,0,0.4)`, z-index 2000; 500px panel sliding in from the right (`translateX(100%) → 0`, 0.35s); fixed header/footer with `1px solid rgb(224,224,224)` borders; footer buttons radius 10px (cancel `#f2f2f2`, confirm `--bg-primary`).
+
+### Filter & sort bar (blog, `/projects`)
+`components/filter/FilterSortBar.tsx` (CSS in `component.module.css`): `liquid_glass_btn` pills (radius 100px, 15px), the active one filled `--bg-primary` with white bold text; a 35px round sort button on the right, filled when sorting oldest first. Pills scroll sideways on narrow screens.
+
+### Project tiles + details drawer (`/projects`)
+"More Projects." is a 2-column grid of equal-height tiles (380px; 1 column and 340px ≤850px). Tiles with a screenshot are full-bleed with `--tile-scrim` and white text (name, tagline, tech always visible); the image zooms slightly on hover/focus only. Tiles without one are plain `--container-bg` cards with the logo. Clicking a tile opens a native modal `<dialog>` drawer: 500px from the right (full width ≤850px), `--overlay-bg` backdrop, slides in over 0.32s and out over 0.28s (instant with reduced motion), scrollable body, actions pinned in the footer.
 
 ### Chat panel
 `400×500`, radius 10px (bottom-right 0) with a speech-tail, `--container-bg`, `--border-container`, `--box-shadow-default`. Assistant bubble `--chat-buble-bg`, user bubble `--bg-primary` + white; 13px text, max width 250px. Input is a pill (`radius 50px`) with a 30px circular send button.

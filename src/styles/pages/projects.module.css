@@ -76,24 +76,19 @@
    FEATURED PROJECT
    ============================================================ */
 
+/* One column: heading, description, highlights, tech, actions. */
 .featured {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) 420px;
-    column-gap: 40px;
-    align-items: center;
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
     padding: 30px;
     border-radius: 12px;
     background: var(--container-bg);
     backdrop-filter: var(--container-back-drop-filter);
 }
 
-.featured-body {
-    display: flex;
-    flex-direction: column;
-    row-gap: 20px;
-}
-
 .eyebrow {
+    margin-bottom: -6px;
     font-size: 12px;
     font-weight: 600;
     letter-spacing: 0.08em;
@@ -101,18 +96,16 @@
     color: var(--text-muted);
 }
 
-.featured-name {
-    font-size: 30px;
+.card-header-featured .card-heading h2 {
+    font-size: 26px;
     font-weight: 700;
     line-height: 1.2;
     color: var(--text-header);
 }
 
-.featured-tagline {
+.card-header-featured .card-heading p {
     margin-top: 4px;
-    font-size: 17px;
-    font-weight: 500;
-    color: var(--text-muted);
+    font-size: 15px;
 }
 
 /* Browser-window frame around the screenshot (same idea as the home page) */
@@ -140,50 +133,313 @@
 .browser-dots span:nth-child(2) { background-color: #ffe312; }
 .browser-dots span:nth-child(3) { background-color: #4ed459; }
 
-.browser-image {
-    display: block;
-    width: 100%;
-    height: auto;
+/* Wide window onto the top of the screenshot (cropped, not squashed). */
+.browser-view {
+    position: relative;
+    aspect-ratio: 21 / 9;
+    overflow: hidden;
     border-radius: 0 0 8px 8px;
 }
 
+.browser-view img {
+    object-fit: cover;
+    object-position: top center;
+}
+
 /* ============================================================
-   MORE PROJECTS GRID
+   MORE PROJECTS: TILE GRID
+   Two columns, every tile the same height (taller only if a
+   plain tile's text needs it; its row then grows evenly).
    ============================================================ */
 
-.grid {
+.tiles {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-auto-rows: minmax(380px, auto);
     gap: 20px;
 }
 
-/* Odd number of cards: the last spans the full row so the grid stays balanced */
-.grid > .card:last-child:nth-child(odd) {
-    grid-column: 1 / -1;
-}
-
-.grid > .card:last-child:nth-child(odd) .highlights {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    column-gap: 30px;
-}
-
-.card {
+.tile {
+    position: relative;
+    width: 100%;
     display: flex;
     flex-direction: column;
-    row-gap: 18px;
-    padding: 30px;
+    justify-content: flex-end;
+    overflow: hidden;
+    padding: 26px;
     border-radius: 12px;
-    background: var(--container-bg);
-    backdrop-filter: var(--container-back-drop-filter);
     border: 1px solid transparent;
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
     transition: box-shadow 0.2s ease, border-color 0.2s ease;
 }
 
-.card:hover {
+.tile:hover,
+.tile:focus-visible {
     box-shadow: var(--box-shadow-default);
     border: var(--badges-border);
 }
+
+.tile:focus-visible {
+    outline: 2px solid var(--bg-primary);
+    outline-offset: 3px;
+}
+
+.tile-content {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    row-gap: 8px;
+}
+
+/* Project type badge: filled (gray in light, blue in dark). */
+.tile-kind {
+    align-self: flex-start;
+    padding: 3px 9px;
+    border-radius: 8px;
+    background: var(--type-badge-bg);
+    color: var(--type-badge-text);
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 16px;
+}
+
+.tile-name {
+    font-size: 22px;
+    font-weight: 800;
+    line-height: 1.2;
+}
+
+.tile-details {
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+}
+
+.tile-tagline {
+    font-size: 14px;
+    line-height: 1.45;
+}
+
+.tile-tech {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.tile-tech span {
+    padding: 2px 8px;
+    border-radius: 8px;
+    font-size: 11.5px;
+    line-height: 18px;
+}
+
+/* Screenshot tile: full-bleed image, white text on a dark scrim. */
+.tile-image {
+    background: var(--bg);
+    color: white;
+}
+
+.tile-image img {
+    z-index: 0;
+    object-fit: cover;
+    object-position: top center;
+    transition: transform 0.5s ease;
+}
+
+.tile-image::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: var(--tile-scrim);
+    pointer-events: none;
+}
+
+.tile-image:hover img,
+.tile-image:focus-visible img {
+    transform: scale(1.03);
+}
+
+.tile-image .tile-tech span {
+    border: 1px solid currentColor;
+}
+
+/* No screenshot: a plain card with the logo. */
+.tile-plain {
+    row-gap: 18px;
+    justify-content: flex-start;
+    background: var(--container-bg);
+    backdrop-filter: var(--container-back-drop-filter);
+    color: var(--text);
+}
+
+.tile-plain .tile-name {
+    color: var(--text-header);
+}
+
+.tile-plain .tile-tagline {
+    color: var(--text-muted);
+}
+
+.tile-plain .tile-tech span {
+    border: var(--badges-border);
+    background: var(--badges-bg);
+    color: var(--badges-text);
+}
+
+/* ============================================================
+   PROJECT DETAILS DRAWER (right side)
+   ============================================================ */
+
+.drawer {
+    position: fixed;
+    inset: 0 0 0 auto;
+    width: min(500px, 100vw);
+    max-width: 100vw;
+    height: 100dvh;
+    max-height: 100dvh;
+    margin: 0;
+    padding: 0;
+    border: none;
+    border-left: var(--border-container);
+    background: var(--container-bg);
+    color: var(--text);
+    box-shadow: var(--box-shadow-default);
+}
+
+.drawer[open] {
+    animation: drawer-in 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.drawer::backdrop {
+    background: var(--overlay-bg);
+    animation: drawer-fade 0.32s ease;
+}
+
+@keyframes drawer-in {
+    from { transform: translateX(100%); }
+    to   { transform: none; }
+}
+
+@keyframes drawer-fade {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* Closing: slide back out and fade the backdrop (ProjectDrawer waits 280ms). */
+.drawer[open].drawer-closing {
+    animation: drawer-out 0.28s cubic-bezier(0.7, 0, 0.84, 0) forwards;
+}
+
+.drawer.drawer-closing::backdrop {
+    animation: drawer-fade-out 0.28s ease forwards;
+}
+
+@keyframes drawer-out {
+    from { transform: none; }
+    to   { transform: translateX(100%); }
+}
+
+@keyframes drawer-fade-out {
+    from { opacity: 1; }
+    to   { opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .drawer[open],
+    .drawer::backdrop,
+    .drawer[open].drawer-closing,
+    .drawer.drawer-closing::backdrop {
+        animation: none;
+    }
+}
+
+.drawer-panel {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.drawer-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 24px;
+    border-bottom: 1px solid var(--divider-bottom);
+}
+
+.drawer-back,
+.drawer-close {
+    display: inline-flex;
+    align-items: center;
+    column-gap: 8px;
+    border: none;
+    background: none;
+    font: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    cursor: pointer;
+}
+
+.drawer-back:hover {
+    color: var(--text-muted-hover);
+}
+
+.drawer-back:focus-visible,
+.drawer-close:focus-visible {
+    outline: 2px solid var(--bg-primary);
+    outline-offset: 3px;
+    border-radius: 8px;
+}
+
+.drawer-close {
+    width: 36px;
+    height: 36px;
+    justify-content: center;
+    border-radius: 8px;
+}
+
+.drawer-close:hover {
+    background: var(--clip-hover);
+}
+
+.drawer-body {
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
+    padding: 24px;
+}
+
+.drawer-shot {
+    aspect-ratio: 16 / 10;
+}
+
+.drawer-foot {
+    padding: 16px 24px;
+    border-top: 1px solid var(--divider-bottom);
+}
+
+/* Drawer only: the buttons share one row and split its full width. */
+.drawer-foot .actions > div {
+    flex-wrap: nowrap;
+}
+
+.drawer-foot .actions > div > a {
+    flex: 1 1 0;
+    min-width: 0;
+    height: 40px;
+    padding: 0 12px;
+}
+
+/* ============================================================
+   SHARED HEADING (featured card + drawer)
+   ============================================================ */
 
 .card-header {
     display: grid;
@@ -193,6 +449,8 @@
 }
 
 .card-logo {
+    position: relative;
+    z-index: 2;
     flex-shrink: 0;
     display: inline-flex;
     width: 44px;
@@ -231,10 +489,10 @@
     flex-shrink: 0;
     padding: 3px 9px;
     border-radius: 8px;
-    border: var(--badges-border);
-    background: var(--badges-bg);
-    color: var(--badges-text);
+    background: var(--type-badge-bg);
+    color: var(--type-badge-text);
     font-size: 11px;
+    font-weight: 600;
     line-height: 16px;
     white-space: nowrap;
 }
@@ -258,43 +516,42 @@
     flex-shrink: 0;
 }
 
-/* Pinned to the bottom so actions line up across a row */
-.card-footer {
-    margin-top: auto;
-    padding-top: 18px;
-    border-top: 1px solid var(--divider-bottom);
-}
-
 /* ============================================================
    RESPONSIVE
    ============================================================ */
 
 @media (max-width: 850px) {
     .featured {
-        grid-template-columns: 1fr;
-        row-gap: 25px;
         padding: 20px;
     }
 
-    /* Screenshot first on mobile */
-    .featured-media {
-        order: -1;
+    .browser-view {
+        aspect-ratio: 16 / 10;
     }
 
-    .featured-name {
-        font-size: 26px;
+    .card-header-featured .card-heading h2 {
+        font-size: 22px;
     }
 
-    .grid {
+    .tiles {
         grid-template-columns: 1fr;
+        grid-auto-rows: minmax(340px, auto);
     }
 
-    .grid > .card:last-child:nth-child(odd) .highlights {
-        display: flex;
-    }
-
-    .card {
+    .tile {
         padding: 20px;
+    }
+
+    .drawer {
+        width: 100vw;
+        border-left: none;
+    }
+
+    .drawer-head,
+    .drawer-body,
+    .drawer-foot {
+        padding-left: 16px;
+        padding-right: 16px;
     }
 
     /* Badge under the title so the name and tagline keep their width */

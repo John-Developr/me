@@ -8,8 +8,7 @@ import Header from "@/components/header/Header";
 import Footer from "@/components/footer/Footer";
 import HrHorizontal from "@/components/hr/HrHorizontal";
 import PageIntro from "@/components/header/PageIntro";
-import SortUp from "@/components/icons/SortUp";
-import SortDown from "@/components/icons/SortDown";
+import FilterSortBar from "@/components/filter/FilterSortBar";
 
 import { useAnimateIn } from "@/hooks/useAnimateIn";
 
@@ -107,30 +106,14 @@ export default function BlogPage() {
 
                 <br />
 
-                <div className={styles["filter-sort"]}>
-                    <section>
-                        {blogsStates.categories.map((cat) => (
-                            <button
-                                key={cat.name}
-                                className={`liquid_glass_btn ${cat.active ? styles.active : ""}`}
-                                onClick={() => handleCategoryChange(cat.name)}>
-                                {cat.name}
-                            </button>
-                        ))}
-                    </section>
-                    <button 
-                        className={`
-                            liquid_glass_btn
-                            ${styles.sort} 
-                            ${blogsStates.sort === BlogSortEnum.asc ? styles["active-sort"] : ""}
-                        `} 
-                        aria-label={blogsStates.sort === BlogSortEnum.asc ? "Sort newest first" : "Sort oldest first"}
-                        onClick={handleSortToggle}>
-                        {blogsStates.sort === BlogSortEnum.asc ? 
-                        <SortUp width={20} height={20} /> : 
-                        <SortDown width={20} height={20} />}
-                    </button>
-                </div>
+                <FilterSortBar
+                    options={blogsStates.categories.map((cat) => cat.name)}
+                    active={activeCategory}
+                    onSelect={handleCategoryChange}
+                    ascending={blogsStates.sort === BlogSortEnum.asc}
+                    onToggleSort={handleSortToggle}
+                    filterLabel="Filter posts by category"
+                    sortLabel={blogsStates.sort === BlogSortEnum.asc ? "Sort newest first" : "Sort oldest first"} />
                 <div className={styles.blog}>
                     <BlogMainList 
                         category={activeCategory} 
