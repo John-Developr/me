@@ -4,36 +4,26 @@ import styles from "@/styles/pages/projects.module.css";
 
 import Calendar from "@/components/icons/Calendar";
 import Work from "@/components/icons/Work";
-import { useAnimateIn } from "@/hooks/useAnimateIn";
 import { ProjectItem } from "@/utils/types";
 
-import ProjectTech from "./ProjectTech";
-import ProjectLinks from "./ProjectLinks";
-
-interface ProjectCardProps {
-    project: ProjectItem;
-    index:   number; // for the staggered entrance
+interface ProjectHeadingProps {
+    project:   ProjectItem;
+    /** The featured card uses an h2 and a larger title; grid cards use h3. */
+    featured?: boolean;
 }
 
 /**
- * A project in the "More Projects." grid. Actions are pinned to the
- * bottom so cards in the same row line up.
+ * Logo, name, tagline and type badge, then the role · organization and
+ * period line. Shared by the featured card and the "More Projects." cards.
+ * The heading's id labels the surrounding card.
  */
-export default function ProjectCard({ project, index }: ProjectCardProps) {
-    const { ref, style } = useAnimateIn<HTMLElement>({
-        delay:    120 + index * 80, // 120ms, 200ms, 280ms, ...
-        duration: 600,
-    });
-
+export default function ProjectHeading({ project, featured = false }: ProjectHeadingProps) {
+    const Title    = featured ? "h2" : "h3";
     const roleLine = [project.role, project.organization].filter(Boolean).join(" · ");
 
     return (
-        <article
-            ref={ref}
-            style={style}
-            className={styles.card}
-            aria-labelledby={`project-${project.slug}`}>
-            <header className={styles["card-header"]}>
+        <>
+            <header className={`${styles["card-header"]} ${featured ? styles["card-header-featured"] : ""}`}>
                 {project.logo && (
                     <span className={styles["card-logo"]}>
                         <Image
@@ -44,7 +34,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
                     </span>
                 )}
                 <div className={styles["card-heading"]}>
-                    <h3 id={`project-${project.slug}`}>{project.name}</h3>
+                    <Title id={`project-${project.slug}`}>{project.name}</Title>
                     <p>{project.tagline}</p>
                 </div>
                 {project.kind && (
@@ -68,25 +58,6 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
                     )}
                 </ul>
             )}
-
-            <p className={styles.description}>{project.description}</p>
-
-            {project.highlights.length > 0 && (
-                <ul className={styles.highlights}>
-                    {project.highlights.map((item) => (
-                        <li key={item}>{item}</li>
-                    ))}
-                </ul>
-            )}
-
-            <ProjectTech tech={project.tech} />
-
-            <footer className={styles["card-footer"]}>
-                <ProjectLinks
-                    projectName={project.name}
-                    links={project.links}
-                    note={project.note} />
-            </footer>
-        </article>
+        </>
     );
 }

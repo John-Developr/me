@@ -1,6 +1,6 @@
 'use client'
 
-import React from "react";
+import React, { useCallback, useMemo, useState } from "react";
 
 import styles from "@/styles/pages/projects.module.css";
 
@@ -13,11 +13,17 @@ import Calendar from "@/components/icons/Calendar";
 import { ArrowRightV2 } from "@/components/icons/ArrowRight";
 import PageCta from "@/components/cta/PageCta";
 import SectionTitle from "@/components/header/SectionTitle";
+import FilterSortBar from "@/components/filter/FilterSortBar";
 import { useSiteProfile } from "@/lib/.context/SiteProfileContext";
+import { sortProjectsByYear } from "@/utils/projectSort";
 
 import FeaturedProject from "./FeaturedProject";
-import ProjectCard from "./ProjectCard";
-import { ProjectItem } from "@/utils/types";
+import ProjectDrawer from "./ProjectDrawer";
+import ProjectTile from "./ProjectTile";
+import { ProjectItem, ProjectKindEnum } from "@/utils/types";
+
+const ALL = "All";
+type TypeFilter = typeof ALL | ProjectKindEnum;
 
 interface ProjectsPageProps {
     featured: ProjectItem | null;
@@ -26,6 +32,22 @@ interface ProjectsPageProps {
 
 export default function ProjectsPage({ featured, projects }: ProjectsPageProps) {
     const { bookingUrl } = useSiteProfile();
+    const [selected, setSelected] = useState<ProjectItem | null>(null);
+    const closeDrawer = useCallback(() => setSelected(null), []);
+
+    // Type pills (only types that have projects) + year sort, like the blog bar.
+    const [typeFilter, setTypeFilter] = useState<TypeFilter>(ALL);
+    const [ascending,  setAscending]  = useState<boolean>(false);
+
+    const typeOptions = useMemo<TypeFilter[]>(
+        () => [ALL, ...Object.values(ProjectKindEnum).filter((kind) => projects.some((p) => p.kind === kind))],
+        [projects],
+    );
+
+    const visibleProjects = useMemo(
+        () => sortProjectsByYear(typeFilter === ALL ? projects : projects.filter((p) => p.kind === typeFilter), ascending),
+        [projects, typeFilter, ascending],
+    );
 
     return (
         <>
@@ -50,12 +72,22 @@ export default function ProjectsPage({ featured, projects }: ProjectsPageProps) 
                             title={featured ? "More Projects." : "Projects."}
                             icon={Category} />
 
-                        <div className={styles.grid}>
-                            {projects.map((project, index) => (
-                                <ProjectCard
+                        <FilterSortBar
+                            options={typeOptions}
+                            active={typeFilter}
+                            onSelect={setTypeFilter}
+                            ascending={ascending}
+                            onToggleSort={() => setAscending((v) => !v)}
+                            filterLabel="Filter projects by type"
+                            sortLabel={ascending ? "Sort newest first" : "Sort oldest first"} />
+
+                        <div className={styles.tiles}>
+                            {visibleProjects.map((project, index) => (
+                                <ProjectTile
                                     key={project.slug}
                                     project={project}
-                                    index={index} />
+                                    index={index}
+                                    onOpen={setSelected} />
                             ))}
                         </div>
                     </section>
@@ -82,6 +114,7 @@ export default function ProjectsPage({ featured, projects }: ProjectsPageProps) 
                         }] : []),
                     ]} />
             </main>
+            <ProjectDrawer project={selected} onClose={closeDrawer} />
             <Footer />
         </>
     );
