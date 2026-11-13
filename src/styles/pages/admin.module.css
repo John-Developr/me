@@ -39,8 +39,9 @@
   border: none;
 }
 
-.shell :is(a, button, input, svg[tabindex], summary):focus-visible,
-.login :is(a, button, input):focus-visible {
+/* Text fields are left out: they show focus with their border (see globals.css). */
+.shell :is(a, button, input[type="checkbox"], input[type="radio"], svg[tabindex], summary):focus-visible,
+.login :is(a, button, input[type="checkbox"]):focus-visible {
   outline: 2px solid var(--admin-accent);
   outline-offset: 2px;
 }
@@ -205,12 +206,8 @@
   padding: 0;
 }
 
-/* Collapsed: the name doesn't fit, so the header row stays empty (keeps the 64px alignment with the top bar). */
-.collapsed .brand-link {
-  display: none;
-}
-
-.collapsed :is(.brand-text, .nav-label, .soon-badge, .nav-trailing) {
+/* Collapsed: the 53px logo still fits, so only the "Admin - Portfolio CMS" caption is hidden. */
+.collapsed :is(.brand-text small, .nav-label, .soon-badge, .nav-trailing) {
   display: none;
 }
 
@@ -290,6 +287,7 @@
 }
 
 .search {
+  position: relative;
   flex: 1;
   max-width: 360px;
   margin-left: auto;
@@ -302,21 +300,101 @@
   border: var(--border-input-field);
   background: var(--bg);
   color: var(--text-muted);
-  cursor: not-allowed;
+}
+
+.search:focus-within {
+  border-color: var(--admin-accent);
 }
 
 .search input {
   flex: 1;
   min-width: 0;
   border: none;
+  outline: none;
   background: none;
   font: inherit;
   font-size: 14px;
   color: var(--text);
-  cursor: not-allowed;
 }
 
 .search input::placeholder {
+  color: var(--text-muted);
+}
+
+.search input:disabled {
+  cursor: not-allowed;
+}
+
+.search-kbd {
+  flex-shrink: 0;
+  padding: 1px 6px;
+  border-radius: 6px;
+  border: var(--badges-border);
+  font: inherit;
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.search:focus-within .search-kbd {
+  display: none;
+}
+
+/* Results dropdown: full width of the search box. */
+.search-panel {
+  left: 0;
+  right: 0;
+  max-height: min(70vh, 460px);
+  overflow-y: auto;
+  transform-origin: top center;
+}
+
+.search-list {
+  list-style: none;
+}
+
+.search-group {
+  padding: 8px 10px 4px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.search-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 10px;
+  border-radius: 8px;
+  font-size: 13px;
+  color: var(--text);
+  cursor: pointer;
+}
+
+.search-option[aria-selected="true"] {
+  background: var(--admin-accent-soft);
+}
+
+.search-text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.search-text :is(strong, small) {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.search-text strong {
+  font-weight: 600;
+}
+
+.search-text small {
+  margin-top: 1px;
+  font-size: 12px;
   color: var(--text-muted);
 }
 
@@ -1203,30 +1281,138 @@
   color: var(--text);
 }
 
-.login-card {
+/* Split card: form on the left, illustration on the right. */
+.login-frame {
   width: 100%;
-  max-width: 380px;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  padding: 28px;
+  max-width: 1100px;
+  min-height: 620px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr);
   border-radius: 12px;
+  overflow: hidden;
   background: var(--container-bg);
   border: var(--border-container);
   box-shadow: var(--box-shadow-default);
 }
 
+.login-panel {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 40px 48px;
+}
+
+.login-brand {
+  position: absolute;
+  top: 28px;
+  left: 32px;
+  display: flex;
+}
+
+.login-copyright {
+  position: absolute;
+  left: 32px;
+  right: 32px;
+  bottom: 24px;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.login-card {
+  width: 100%;
+  max-width: 320px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
 .login-head {
   display: flex;
   flex-direction: column;
-  align-items: center;
   gap: 8px;
-  text-align: center;
-  margin-bottom: 4px;
+  margin-bottom: 8px;
 }
 
 .login-head h1 {
-  font-size: 20px;
+  font-size: 26px;
+  color: var(--text-header);
+}
+
+.login-art {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px;
+  background: var(--bg);
+  border-left: var(--border-container);
+}
+
+.login-art-svg {
+  width: 100%;
+  max-width: 600px;
+  height: auto;
+}
+
+/* Illustration paint — theme tokens only, so it follows light/dark. */
+.art-top          { fill: var(--container-bg); }
+.art-side-l       { fill: var(--skeleton-shine); }
+.art-side-r       { fill: var(--clip-hover); }
+.art-top-accent   { fill: var(--admin-chart-line); }
+.art-top-warm     { fill: var(--admin-warning); }
+.art-screen       { fill: var(--bg-primary); }
+.art-ink          { fill: var(--container-bg); opacity: 0.5; }
+.art-bar          { fill: var(--container-bg); opacity: 0.6; }
+.art-bar-warm     { fill: var(--admin-warning); }
+.art-area         { fill: var(--admin-warning); opacity: 0.3; }
+.art-wire-dot     { fill: var(--admin-warning); }
+.art-skin         { fill: var(--text-sub); }
+.art-hair         { fill: var(--text-header); }
+.art-shirt-accent { fill: var(--admin-chart-line); }
+.art-shirt-warm   { fill: var(--admin-warning); }
+.art-shirt-light  { fill: var(--container-bg); stroke: var(--divider-bottom); stroke-width: 1; }
+
+.art-grid,
+.art-line,
+.art-ring,
+.art-area-line,
+.art-area-alt,
+.art-donut-track,
+.art-donut,
+.art-wire,
+.art-net {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.art-grid        { stroke: var(--container-bg); stroke-width: 1; opacity: 0.08; }
+.art-line        { stroke: var(--admin-warning); stroke-width: 2; }
+.art-ring        { stroke: var(--admin-warning); stroke-width: 2; }
+.art-area-line   { stroke: var(--admin-warning); stroke-width: 1.5; }
+.art-area-alt    { stroke: var(--container-bg); stroke-width: 1.5; opacity: 0.55; }
+.art-donut-track { stroke: var(--container-bg); stroke-width: 4; opacity: 0.18; }
+.art-donut       { stroke: var(--admin-warning); stroke-width: 4; }
+.art-wire        { stroke: var(--admin-warning); stroke-width: 1.5; stroke-dasharray: 4 4; opacity: 0.8; }
+.art-net         { stroke: var(--text-muted); stroke-width: 1; opacity: 0.6; }
+.art-leg         { stroke: var(--text-header); stroke-width: 3; stroke-linecap: round; }
+
+.art-stop-soft { stop-color: var(--admin-warning); stop-opacity: 0.15; }
+.art-stop-warm { stop-color: var(--admin-warning); stop-opacity: 0.85; }
+
+.art-float      { animation: login-art-float 4s ease-in-out infinite alternate; }
+.art-float-slow { animation: login-art-float 6s ease-in-out infinite alternate; }
+
+@keyframes login-art-float {
+  from { transform: translateY(0); }
+  to   { transform: translateY(-6px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .art-float,
+  .art-float-slow {
+    animation: none;
+  }
 }
 
 .login-head p {
@@ -1305,6 +1491,30 @@
 
   .sidebar.open {
     transform: none;
+  }
+
+  /* Login: form only; the illustration needs the wide layout. */
+  .login-frame {
+    max-width: 440px;
+    min-height: 0;
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .login-art {
+    display: none;
+  }
+
+  .login-panel {
+    padding: 76px 24px 64px;
+  }
+
+  .login-brand {
+    left: 24px;
+  }
+
+  .login-copyright {
+    left: 24px;
+    right: 24px;
   }
 
   .drawer-close,

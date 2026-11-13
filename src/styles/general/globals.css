@@ -154,6 +154,15 @@ button, a {
   cursor: pointer;
 }
 
+/* Text fields: no browser focus outline. Each field shows focus with its
+   own border/ring instead (e.g. border-color: var(--admin-accent)).
+   Checkboxes, radios, buttons and links keep their focus outline. */
+input:not([type="checkbox"], [type="radio"], [type="range"], [type="file"], [type="color"]),
+textarea,
+select {
+  outline: none;
+}
+
 [data-sileo-header][data-edge="bottom"]{
   top: -8px !important;
 }

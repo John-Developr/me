@@ -48,5 +48,6 @@ export const networkDefine = {
     ADMIN_ACCOUNT_API: "/api/admin/account",
     ADMIN_PASSWORD_API: "/api/admin/account/password",
     ADMIN_SIGN_OUT_OTHERS_API: "/api/admin/account/sign-out-others",
+    ADMIN_SEARCH_API: "/api/admin/search",
 } as const;
   

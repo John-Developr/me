@@ -1,12 +1,16 @@
 'use client'
 
 import { FormEvent, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
+import Copyright from "@/components/footer/Copyright";
 import { AdminIcons } from "@/components/icons/admin";
 import { networkDefine } from "@/config/networkDefine";
 import styles from "@/styles/pages/admin.module.css";
+
+import LoginIllustration from "./LoginIllustration";
 
 interface AdminLoginPageProps {
     /** Where to go after signing in (already validated server-side). */
@@ -67,58 +71,78 @@ export default function AdminLoginPage({ next, notice, signedInWithoutAccess }: 
 
     return (
         <div className={styles.login}>
-            <form className={styles["login-card"]} onSubmit={handleSubmit} noValidate>
-                <div className={styles["login-head"]}>
-                    <h1>Sign in to Portfolio CMS</h1>
-                    <p>Admin access only.</p>
+            <div className={styles["login-frame"]}>
+                <section className={styles["login-panel"]}>
+                    <Link href="/" className={styles["login-brand"]} title="Back to portfolio">
+                        <Image
+                            src="/images/Logo.png"
+                            width={70}
+                            height={16}
+                            alt="Logo"
+                            className={styles["brand-logo"]}
+                            priority />
+                    </Link>
+
+                    <form className={styles["login-card"]} onSubmit={handleSubmit} noValidate>
+                        <div className={styles["login-head"]}>
+                            <h1>Welcome back.</h1>
+                            <p>Sign in to manage your portfolio. Admin access only.</p>
+                        </div>
+
+                        {error && (
+                            <p className={styles["login-error"]} role="alert">
+                                <AdminIcons.AlertCircle width={16} height={16} />
+                                {error}
+                            </p>
+                        )}
+
+                        {signedInWithoutAccess ? (
+                            <button type="button" className={`liquid_glass_btn ${styles["btn-primary"]}`} onClick={handleSwitchAccount}>
+                                <AdminIcons.LogOut width={16} height={16} />
+                                Sign out and use another account
+                            </button>
+                        ) : (
+                            <>
+                                <label className={styles.field}>
+                                    <span>Email</span>
+                                    <input
+                                        type="email"
+                                        name="email"
+                                        autoComplete="username"
+                                        value={email}
+                                        onChange={(e) => setEmail(e.target.value)}
+                                        required
+                                        autoFocus />
+                                </label>
+
+                                <label className={styles.field}>
+                                    <span>Password</span>
+                                    <input
+                                        type="password"
+                                        name="password"
+                                        autoComplete="current-password"
+                                        value={password}
+                                        onChange={(e) => setPassword(e.target.value)}
+                                        required />
+                                </label>
+
+                                <button type="submit" className={`liquid_glass_btn ${styles["btn-primary"]}`} disabled={submitting}>
+                                    <AdminIcons.Lock width={16} height={16} />
+                                    {submitting ? "Signing in…" : "Sign in"}
+                                </button>
+                            </>
+                        )}
+
+                        <Link href="/" className={styles["login-back"]}>← Back to portfolio</Link>
+                    </form>
+
+                    <Copyright className={styles["login-copyright"]} />
+                </section>
+
+                <div className={styles["login-art"]}>
+                    <LoginIllustration />
                 </div>
-
-                {error && (
-                    <p className={styles["login-error"]} role="alert">
-                        <AdminIcons.AlertCircle width={16} height={16} />
-                        {error}
-                    </p>
-                )}
-
-                {signedInWithoutAccess ? (
-                    <button type="button" className={`liquid_glass_btn ${styles["btn-primary"]}`} onClick={handleSwitchAccount}>
-                        <AdminIcons.LogOut width={16} height={16} />
-                        Sign out and use another account
-                    </button>
-                ) : (
-                    <>
-                        <label className={styles.field}>
-                            <span>Email</span>
-                            <input
-                                type="email"
-                                name="email"
-                                autoComplete="username"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                                required
-                                autoFocus />
-                        </label>
-
-                        <label className={styles.field}>
-                            <span>Password</span>
-                            <input
-                                type="password"
-                                name="password"
-                                autoComplete="current-password"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                                required />
-                        </label>
-
-                        <button type="submit" className={`liquid_glass_btn ${styles["btn-primary"]}`} disabled={submitting}>
-                            <AdminIcons.Lock width={16} height={16} />
-                            {submitting ? "Signing in…" : "Sign in"}
-                        </button>
-                    </>
-                )}
-
-                <Link href="/" className={styles["login-back"]}>← Back to portfolio</Link>
-            </form>
+            </div>
         </div>
     );
 }
