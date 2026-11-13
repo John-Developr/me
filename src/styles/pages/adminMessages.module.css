@@ -267,6 +267,14 @@ article.email {
   overflow-wrap: anywhere;
 }
 
+/* Loading lines spaced like 15px text at line-height 1.7 (25.5px). */
+.body-skeleton {
+  display: grid;
+  row-gap: 11.5px;
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+
 .email-facts {
   display: flex;
   flex-wrap: wrap;
