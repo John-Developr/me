@@ -157,7 +157,7 @@ Each row is an `AnimatedSection` (uses `useAnimateIn`, staggered delays 50 / 150
 | Contact details / socials | `ConnectSection.tsx`, `Header.tsx`, `Footer.tsx` | From Supabase (edit in `/admin/profile`) |
 | Blog posts | Supabase `ai_blogs` (shape = `AIBlogResponse` in `utils/types.ts`) | Client fetch → API → Supabase |
 | Chat persona & rules | `src/docs/system-instruction.md` (persona only, no portfolio facts) | Read by `/api/chat` |
-| Chat knowledge | Profile (+ birthdate/civil status, chat only), experience, skills, published projects and posts from Supabase, formatted by `utils/chatKnowledge.ts` | Loaded by `app/getChatKnowledge.ts` on every chat message |
+| Chat knowledge | Profile (+ birthdate/civil status, chat only), experience, skills, published projects and posts from Supabase, formatted by `utils/chatKnowledge.ts` | Loaded by `app/getChatKnowledge.ts`, cached under the `chat-knowledge` tag (1 h safety TTL) and cleared by `revalidateChatKnowledge()` on every admin save and the blog cron |
 | Blog prompt | `src/docs/blog-instruction.md` + Zod schema in `ChatService.blogMain` | Read by `/api/cron/blog` and `/api/admin/blogs/generate` (admin "Generate post") |
 
 ### Blog record (`ai_blogs`)

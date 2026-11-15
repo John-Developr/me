@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import AdminAuthService from "@/lib/.services/adminAuthService";
 import MediaService from "@/lib/.services/mediaService";
 import { serviceErrorResponse } from "@/lib/.services/serviceError";
+import { revalidateChatKnowledge } from "@/lib/.services/chatRouteHelpers";
 
 export const dynamic = "force-dynamic";
 export const maxDuration = 60;
@@ -22,6 +23,7 @@ export async function POST(req: Request) {
     revalidatePath("/");
     revalidatePath("/projects");
     revalidatePath("/admin", "layout");
+    revalidateChatKnowledge();
 
     return NextResponse.json({ message: "Import finished.", data: result, result: true });
   } catch (error) {

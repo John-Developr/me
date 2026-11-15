@@ -3,6 +3,7 @@ import path from "path";
 
 import { NextResponse } from "next/server";
 import BlogService from "@/lib/.services/blogService";
+import { revalidateChatKnowledge } from "@/lib/.services/chatRouteHelpers";
 import { isCronAuthorized } from "@/utils/general/helpers";
 
 // Gemini generation (with retries) can take well over the default timeout.
@@ -34,6 +35,7 @@ export async function GET(req: Request) {
         }
 
         const slug = await service.index(instruction);
+        revalidateChatKnowledge();  // new post: the chat should know about it
 
         return NextResponse.json({
             status: 200,
