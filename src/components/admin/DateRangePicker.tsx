@@ -19,13 +19,13 @@ import styles from "@/styles/pages/adminDatePicker.module.css";
    ============================================================ */
 
 /** "2026-11-05" → local Date at midnight (calendar day, no time zone shift). */
-const toDate = (iso: string): Date => {
+export const toDate = (iso: string): Date => {
     const [y, m, d] = iso.split("-").map(Number);
     return new Date(y, m - 1, d);
 };
 
 /** Local Date → "2026-11-05". */
-const toIso = (date: Date): string =>
+export const toIso = (date: Date): string =>
     `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
 
 const addDays = (date: Date, days: number) => new Date(date.getFullYear(), date.getMonth(), date.getDate() + days);

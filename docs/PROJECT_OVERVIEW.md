@@ -103,7 +103,7 @@ Navigation is the header's kebab dropdown (`components/header/MenuItems.tsx`): H
 | `GET /api/blog?category=&sort=asc\|desc` | `BlogService.getBlogs` | List posts (ordered by `generated_at`) |
 | `GET /api/blog/recent` | `BlogService.getRecentBlogs` | Latest 2 posts (home page) |
 | `GET /api/blog/[slug]` | `BlogService.findBySlug` | One post; increments `views` |
-| `POST /api/chat` `{ message }` | `ChatService.index` | Gemini chat; history in httpOnly cookie `ai_conversation`; returns `"limit"` near 4KB |
+| `POST /api/chat` `{ message }` | `getChatKnowledge` + `ChatService.index` | Gemini chat grounded in live portfolio data (RAG); history in httpOnly cookie `ai_conversation`; oldest turns are dropped so the cookie stays under 4KB (`utils/chatHistory.ts`) |
 | `DELETE /api/chat` | `ChatService.clearChatCookie` | Reset conversation |
 | `POST /api/contact` | `ContactService.index` | Validate, sanitize, send email |
 | `GET /api/cron/blog` | `BlogService.index` | Generate + upsert one AI post. Requires `Authorization: Bearer $CRON_SECRET` |
@@ -156,7 +156,8 @@ Each row is an `AnimatedSection` (uses `useAnimateIn`, staggered delays 50 / 150
 | Featured project | `home-page/project-section/ProjectSection.tsx` | Featured project from Supabase (edit in `/admin/projects`) |
 | Contact details / socials | `ConnectSection.tsx`, `Header.tsx`, `Footer.tsx` | From Supabase (edit in `/admin/profile`) |
 | Blog posts | Supabase `ai_blogs` (shape = `AIBlogResponse` in `utils/types.ts`) | Client fetch → API → Supabase |
-| Chat persona | `src/docs/system-instruction.md` | Read by `/api/chat` |
+| Chat persona & rules | `src/docs/system-instruction.md` (persona only, no portfolio facts) | Read by `/api/chat` |
+| Chat knowledge | Profile (+ birthdate/civil status, chat only), experience, skills, published projects and posts from Supabase, formatted by `utils/chatKnowledge.ts` | Loaded by `app/getChatKnowledge.ts` on every chat message |
 | Blog prompt | `src/docs/blog-instruction.md` + Zod schema in `ChatService.blogMain` | Read by `/api/cron/blog` and `/api/admin/blogs/generate` (admin "Generate post") |
 
 ### Blog record (`ai_blogs`)

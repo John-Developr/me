@@ -8,6 +8,7 @@ import BlogService from "./blogService";
 
 import { AssistantConfig, Message, role, BlogCategoryEnum, GeneratedBlogPost } from "@/utils/types";
 import { storageKeys } from "@/config/storageKeys";
+import { fitHistory, parseHistory } from "@/utils/chatHistory";
 
 // ============================================================
 // GEMINI MODEL & API KEYS
@@ -110,16 +111,11 @@ export default class ChatService {
 
     /**
      * Sends a message to the AI and returns its response.
-     * Maintains conversation history and trims it to the last 10 messages.
+     * Keeps the conversation in a cookie, dropping the oldest turns so it
+     * always fits (see utils/chatHistory.ts).
      */
     async index(message: string): Promise<string> {
         this.config.history = await this.getChatCookie();
-
-        // Check if adding the new message would exceed cookie size limits
-        // return "limit" if it does, so the frontend can handle it (e.g., by clearing history)
-        if (await this.isCookieSizeApproachingLimit()) {
-          return "limit";
-        }
 
         // Create chat session and send message
         const reply = await withGeminiKeyFallback(async (ai) => {
@@ -134,7 +130,7 @@ export default class ChatService {
         // Update local history and persist to cookies
         this.pushMessage("user", message);
         this.pushMessage("model", reply.text);
-        this.setChatCookie(this.getContents());
+        await this.setChatCookie(fitHistory(this.getContents(), storageKeys.cookie.convo));
 
         return reply.text;
     }
@@ -156,15 +152,11 @@ export default class ChatService {
 
     /**
      * Retrieves the current conversation from cookies.
+     * The cookie is visitor-controlled: malformed or tampered values count as no history.
      */
    private async getChatCookie(): Promise<Message[]> {
         const cookieStore = await cookies();
-        const raw = cookieStore.get(storageKeys.cookie.convo)?.value;
-
-        if (!raw) 
-            return [];
-
-        return JSON.parse(raw) as Message[];
+        return parseHistory(cookieStore.get(storageKeys.cookie.convo)?.value);
     }
 
     /**
@@ -201,28 +193,6 @@ export default class ChatService {
             return false;
         }
     }
-    
-    /**
-     * Checks if the serialized conversation cookie is approaching the typical 4KB size limit.
-     *
-     * Cookies generally have a size limit of ~4KB per cookie. This method calculates
-     * the size of the current conversation stored in the "convo" cookie and returns
-     * true if it exceeds 4000 bytes.
-     *
-     * @returns {Promise<boolean>} - Returns `true` if the cookie size exceeds 4000 bytes, otherwise `false`.
-     */
-    private async isCookieSizeApproachingLimit(): Promise<boolean> {
-        const convo: Message[] = await this.getChatCookie();
-        const serializedConvo: string = JSON.stringify(convo);
-        const totalBytes: number = new TextEncoder().encode("convo" + "=" + serializedConvo).length;
-        
-        if (totalBytes > 4000) {
-            console.warn("⚠️ Warning: Cookie is reaching the 4KB limit!");
-            return true;
-        }
-        
-        return false;
-    };
 
     /**
      * Prepares blog generation configuration using a Zod schema.

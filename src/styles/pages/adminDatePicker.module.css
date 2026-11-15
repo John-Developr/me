@@ -440,6 +440,44 @@
   background: white;
 }
 
+/* ─── Date picker (DatePicker.tsx, form fields) ──────────── */
+
+/* Caption ("Jul 1999") is a button that opens the year grid. */
+.caption-btn {
+  height: 32px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 10px;
+  border: none;
+  border-radius: 8px;
+  background: none;
+  color: var(--text);
+  font: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+.caption-btn:hover {
+  background: var(--clip-hover);
+}
+
+.caption-btn:focus-visible {
+  outline: 2px solid var(--admin-accent);
+  outline-offset: 1px;
+}
+
+.caption-btn svg {
+  color: var(--text-muted);
+}
+
+/* Year and month grids match the day view's width (7 × 38px + padding), so the panel doesn't jump. */
+.date-grid {
+  width: 298px;
+}
+
 /* ─── ≤850px: one month, quick picks on top ──────────────── */
 
 @media (max-width: 850px) {
@@ -482,7 +520,8 @@
     justify-content: center;
   }
 
-  .month-panel {
+  .month-panel,
+  .date-grid {
     width: auto;
   }
 

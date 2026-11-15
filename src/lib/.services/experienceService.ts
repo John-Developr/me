@@ -3,7 +3,7 @@ import { PostgrestError, SupabaseClient } from "@supabase/supabase-js";
 import supabaseServer, { Table } from "../.supabase/server";
 import { ServiceError } from "./serviceError";
 import { ExperienceInput } from "@/utils/admin/experienceSchema";
-import { ExperienceRecord, TimelineSource } from "@/utils/types";
+import { ChatExperienceEntry, ExperienceRecord, TimelineSource } from "@/utils/types";
 
 const COLUMNS =
   "id, entry_type, company, position, employment_type, location, start_date, end_date, " +
@@ -93,6 +93,22 @@ export default class ExperienceService {
 
     if (error) {
       console.error("[ExperienceService] getPublic failed:", error.message);
+      throw new Error("Failed to load experience.");
+    }
+
+    return data ?? [];
+  }
+
+  /** Every entry with its description, for the chat assistant's knowledge (service role, server only). */
+  static async getChatEntries(): Promise<ChatExperienceEntry[]> {
+    const { data, error } = await supabaseServer
+      .from(Table.experiences)
+      .select("entry_type, company, position, employment_type, location, start_date, end_date, description")
+      .order("start_date", { ascending: false })
+      .returns<ChatExperienceEntry[]>();
+
+    if (error) {
+      console.error("[ExperienceService] getChatEntries failed:", error.message);
       throw new Error("Failed to load experience.");
     }
 

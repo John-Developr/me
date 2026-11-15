@@ -58,3 +58,14 @@ test("booking and social links", () => {
   assert.ok(!fails({ x_url: "https://x.com/john" }));
   assert.ok(fails({ x_url: "https://mastodon.social/@john" }));
 });
+
+test("personal details: birthdate is an optional real past date; civil status max 40", () => {
+  assert.equal(profileInputSchema.parse({ ...base, birthdate: "" }).birthdate, null);
+  assert.equal(profileInputSchema.parse({ ...base, birthdate: "1999-07-14" }).birthdate, "1999-07-14");
+  assert.ok(fails({ birthdate: "1999-02-30" }));
+  assert.ok(fails({ birthdate: "14/07/1999" }));
+  assert.ok(fails({ birthdate: "1899-12-31" }));
+  assert.ok(fails({ birthdate: "2999-01-01" }));
+  assert.equal(profileInputSchema.parse({ ...base, civil_status: " Single " }).civil_status, "Single");
+  assert.ok(fails({ civil_status: "x".repeat(41) }));
+});

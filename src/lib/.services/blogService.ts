@@ -1,7 +1,7 @@
 import { SupabaseClient } from "@supabase/supabase-js";
 import supabaseServer, { RPC, Table } from "../.supabase/server";
 
-import { AIBlogResponse, NewBlogRow } from "@/utils/types";
+import { AIBlogResponse, ChatBlogEntry, NewBlogRow } from "@/utils/types";
 import { getReadingTime, slugify } from "@/utils/general/stringHelpers";
 import ChatService from "./chatService";
 
@@ -241,6 +241,29 @@ export default class BlogService {
         if (error) {
             console.error(error);
             throw new Error("Failed to fetch sitemap entries.");
+        }
+
+        return data ?? [];
+    }
+
+    /**
+     * Latest published posts without their content, for the chat assistant's knowledge.
+     *
+     * @param limit - Most posts to include (keeps the prompt small)
+     * @throws On database errors
+     */
+    async getChatIndex(limit: number): Promise<ChatBlogEntry[]> {
+        const { data, error } = await this.server
+            .from(this.table)
+            .select("title, slug, category, excerpt, tags, generated_at")
+            .eq("status", "published")
+            .order("generated_at", { ascending: false })
+            .limit(limit)
+            .returns<ChatBlogEntry[]>();
+
+        if (error) {
+            console.error("[BlogService] getChatIndex failed:", error.message);
+            throw new Error("Failed to fetch blogs for chat.");
         }
 
         return data ?? [];

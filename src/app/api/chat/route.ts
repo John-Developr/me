@@ -4,6 +4,7 @@ import path from "path";
 import { NextResponse } from "next/server";
 import ChatService from "@/lib/.services/chatService";
 import RateLimitService from "@/lib/.services/rateLimitService";
+import { getChatKnowledge } from "@/app/getChatKnowledge";
 
 /** Longest chat message accepted, in characters. */
 const MAX_MESSAGE_LENGTH = 1000;
@@ -41,7 +42,9 @@ export async function POST(req: Request) {
       );
     }
 
-    const assistant = new ChatService(instruction);
+    // RAG: ground the reply in live portfolio data (app/getChatKnowledge.ts).
+    const knowledge = await getChatKnowledge();
+    const assistant = new ChatService(`${instruction}\n\n${knowledge}`);
     return NextResponse.json({
       reply: await assistant.index(message) 
     });
