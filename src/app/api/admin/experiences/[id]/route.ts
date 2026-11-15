@@ -5,6 +5,7 @@ import { z } from "zod";
 import AdminAuthService from "@/lib/.services/adminAuthService";
 import ExperienceService from "@/lib/.services/experienceService";
 import { serviceErrorResponse } from "@/lib/.services/serviceError";
+import { revalidateChatKnowledge } from "@/lib/.services/chatRouteHelpers";
 import { experienceInputSchema } from "@/utils/admin/experienceSchema";
 import { toFieldErrors } from "@/utils/admin/formErrors";
 
@@ -18,6 +19,7 @@ const notFound = () => NextResponse.json({ message: "Entry not found.", result: 
 function revalidate() {
   revalidatePath("/");
   revalidatePath("/admin", "layout");
+  revalidateChatKnowledge();
 }
 
 /** Replace an entry (the form sends every field). */

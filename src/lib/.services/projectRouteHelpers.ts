@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import { revalidatePath } from "next/cache";
 
+import { revalidateChatKnowledge } from "./chatRouteHelpers";
+
 import { serviceErrorResponse } from "./serviceError";
 
 /**
@@ -11,6 +13,7 @@ export function revalidateProjectPages(): void {
   revalidatePath("/projects");
   revalidatePath("/");                 // home "Recent Projects." card
   revalidatePath("/admin", "layout");
+  revalidateChatKnowledge();           // chat assistant knowledge
 }
 
 /** JSON error response for the admin project API routes. */

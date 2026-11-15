@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import AdminAuthService from "@/lib/.services/adminAuthService";
 import ExperienceService from "@/lib/.services/experienceService";
 import { serviceErrorResponse } from "@/lib/.services/serviceError";
+import { revalidateChatKnowledge } from "@/lib/.services/chatRouteHelpers";
 import { experienceInputSchema } from "@/utils/admin/experienceSchema";
 import { toFieldErrors } from "@/utils/admin/formErrors";
 
@@ -26,6 +27,7 @@ export async function POST(req: Request) {
     const entry = await new ExperienceService(auth.session.client).create(parsed.data);
     revalidatePath("/");
     revalidatePath("/admin", "layout");
+    revalidateChatKnowledge();
 
     return NextResponse.json({ message: "Entry created.", data: entry, result: true }, { status: 201 });
   } catch (error) {

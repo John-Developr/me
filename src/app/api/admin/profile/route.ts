@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import AdminAuthService from "@/lib/.services/adminAuthService";
 import ProfileService from "@/lib/.services/profileService";
 import { serviceErrorResponse } from "@/lib/.services/serviceError";
+import { revalidateChatKnowledge } from "@/lib/.services/chatRouteHelpers";
 import { profileInputSchema } from "@/utils/admin/profileSchema";
 import { toFieldErrors } from "@/utils/admin/formErrors";
 
@@ -27,6 +28,7 @@ export async function PUT(req: Request) {
 
     // Header/footer (every page) and the home page show the profile.
     revalidatePath("/", "layout");
+    revalidateChatKnowledge();          // chat assistant knowledge (incl. personal details)
 
     return NextResponse.json({ message: "Profile saved.", data: profile, result: true }, { status: 200 });
   } catch (error) {
