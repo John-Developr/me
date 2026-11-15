@@ -9,10 +9,11 @@ import { assistantConfig, AssistantConfig, Role, filteredRoles } from "@/config/
 const RESPONDING_TRANSITION_DELAY = 400;
 
 /**
- * Delay (ms) before the final AI reply replaces the "responding" placeholder.
- * Gives a natural feel instead of an instant text swap.
+ * Minimum time (ms) from sending to showing the reply. Only pads very fast
+ * replies, so the typing indicator never just flashes; slow replies (the usual
+ * case) show as soon as they arrive.
  */
-const FINAL_RESPONSE_DELAY = 1000;
+const MIN_REPLY_DELAY = 900;
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Types
@@ -66,7 +67,7 @@ interface UseChatAssistantReturn {
  *   → useEffect detects new "user" message
  *   → push "responding" placeholder  (after RESPONDING_TRANSITION_DELAY)
  *   → POST /api/chat
- *   → replace placeholder with real reply  (after FINAL_RESPONSE_DELAY)
+ *   → replace placeholder with real reply  (as soon as it arrives, but no sooner than MIN_REPLY_DELAY)
  *      ├─ "model"   — successful AI reply
  *      ├─ "limit"   — rate-limit reached
  *      ├─ "warning" — empty/unexpected response
@@ -141,11 +142,12 @@ export const useChatAssistant = (): UseChatAssistantReturn => {
    * with the final role + message from the AI.
    * Wrapped in `useCallback` so `useEffect` dependency array stays stable.
    *
-   * @param role    - The role to assign to the final message (e.g. `"model"`, `"error"`).
-   * @param message - The text content of the final message.
+   * @param role      - The role to assign to the final message (e.g. `"model"`, `"error"`).
+   * @param message   - The text content of the final message.
+   * @param startedAt - When the request was sent (`Date.now()`), for MIN_REPLY_DELAY.
    */
   const updateAssistant = useCallback(
-    (role: Role, message: string) => {
+    (role: Role, message: string, startedAt: number) => {
       setTimeout(() => {
         setAssistant(prev => {
           const copy = { ...prev };
@@ -153,7 +155,7 @@ export const useChatAssistant = (): UseChatAssistantReturn => {
           copy.pushContent(role, message); // Insert real reply
           return copy;
         });
-      }, FINAL_RESPONSE_DELAY);
+      }, Math.max(0, MIN_REPLY_DELAY - (Date.now() - startedAt)));
     },
     []
   );
@@ -187,6 +189,8 @@ export const useChatAssistant = (): UseChatAssistantReturn => {
       setAssistant({ ...assistant });
     }, RESPONDING_TRANSITION_DELAY);
 
+    const startedAt = Date.now();
+
     const fetchReply = async () => {
       try {
         const res = await fetch("/api/chat", {
@@ -202,18 +206,19 @@ export const useChatAssistant = (): UseChatAssistantReturn => {
         if (data.reply) {
           if (data.reply === "limit") {
             // Rate-limit reached — clear message and signal the UI.
-            updateAssistant(data.reply, "");
+            updateAssistant(data.reply, "", startedAt);
             return;
           }
-          updateAssistant("model", data.reply);
+          updateAssistant("model", data.reply, startedAt);
         } else if (data.warning) {
           // Server-side limit (too many messages / message too long).
-          updateAssistant("warning", data.warning);
+          updateAssistant("warning", data.warning, startedAt);
         } else {
           // Received a response but with no usable reply payload.
           updateAssistant(
             "warning",
-            "Sorry, I'm not able to provide a reply at the moment."
+            "Sorry, I'm not able to provide a reply at the moment.",
+            startedAt
           );
         }
       } catch {
@@ -227,7 +232,8 @@ export const useChatAssistant = (): UseChatAssistantReturn => {
           - Check the latest updates  
           - Come back and say hi again!
 
-          Thanks for your patience and understanding 🙏`
+          Thanks for your patience and understanding 🙏`,
+          startedAt
         );
       }
     };

@@ -221,6 +221,26 @@ export interface AssistantConfig {
   contents: ContentListUnion;
 }
 
+/** One experience entry as the chat sees it (adds the description the timeline hides). */
+export type ChatExperienceEntry = Pick<
+  ExperienceRecord,
+  "entry_type" | "company" | "position" | "employment_type" | "location" | "start_date" | "end_date" | "description"
+>;
+
+/** One published post in the chat's blog index (no full content, to keep the prompt small). */
+export type ChatBlogEntry = Pick<AIBlogResponse, "title" | "slug" | "category" | "excerpt" | "tags" | "generated_at">;
+
+/** Live portfolio data the chat answers from (retrieved per message by app/getChatKnowledge.ts). */
+export interface ChatKnowledgeSource {
+  profile:    PublicProfile;
+  personal:   Pick<PortfolioProfile, "birthdate" | "civil_status">;
+  experience: ChatExperienceEntry[];
+  skills:     PublicSkills;
+  featured:   ProjectItem | null;
+  projects:   ProjectItem[];
+  posts:      ChatBlogEntry[];
+}
+
 // ============================================================
 // ADMIN DASHBOARD
 // ============================================================
@@ -389,6 +409,8 @@ export interface PortfolioProfile extends ProfileRecord {
   facebook_url:  string | null;
   instagram_url: string | null;
   x_url:         string | null;
+  birthdate:     string | null;   // YYYY-MM-DD; chat only, never rendered on the site
+  civil_status:  string | null;   // chat only
   created_at:    string;
 }
 

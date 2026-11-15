@@ -14,7 +14,7 @@ This is **John Carlo A. Ylanan's personal portfolio** — a Next.js 15 (App Rout
 
 **Public site**: home (profile, about, tech stack, experience, featured project, connect, recent blog), `/projects`, `/tech-stack`, `/blog`, `/blog/[slug]`, `/contact`, plus:
 - A blog (Supabase `ai_blogs`): a monthly Vercel cron writes a post with Gemini; the admin can also write posts by hand or generate one per category. Only `status = 'published'` posts are public.
-- A floating AI chat assistant ("Chat with John", Gemini)
+- A floating AI chat assistant ("Chat with John", Gemini) that answers from live portfolio data (RAG: `app/getChatKnowledge.ts` → `utils/chatKnowledge.ts`)
 - A contact form that sends email via Nodemailer/Gmail SMTP and saves to `contact_messages`
 - First-party, privacy-friendly analytics (`PageViewTracker` → `POST /api/p`)
 
@@ -41,7 +41,7 @@ Your job is to extend and maintain this codebase **without changing its visual i
 8. **Font:** Karla, loaded by `next/font/google` in `src/app/layout.tsx` as the CSS variable `--font-karla` and applied with `font-family: var(--font-karla), sans-serif` on `*`. Don't add fonts or hard-code the family name.
 9. **Icons:** inline SVG React components in `src/components/icons/` (admin set: `icons/admin/index.tsx` → `AdminIcons`) using `stroke="currentColor"` / `fill="currentColor"`. Don't add an icon library.
 10. **Motion:** entrance animation via `useAnimateIn` (fade + 20px rise, ~600ms, staggered delays). Keep new animations subtle and consistent with existing keyframes.
-11. **Admin UI** follows the same theme through the `--admin-*` tokens (`--admin-accent`, `--admin-success`, `--admin-danger`, `--admin-warning`, `--admin-shadow`, …), which alias the site tokens. Use them in `admin*.module.css`; don't write raw colors. Reuse the shared building blocks in `src/components/admin/` (`PageHeader`, `FormField`, `FormDialog`, `ConfirmDialog`, `EmptyState`, `ErrorState`, `Skeleton`, `StatCard`, `AssetInput`, `TagInput`, `DateRangePicker`, `MonthPicker`, `Select`, `ListSkeletons`, `MarkdownEditor`, …) before making new ones. The admin uses the same 850px breakpoint (the sidebar becomes a drawer).
+11. **Admin UI** follows the same theme through the `--admin-*` tokens (`--admin-accent`, `--admin-success`, `--admin-danger`, `--admin-warning`, `--admin-shadow`, …), which alias the site tokens. Use them in `admin*.module.css`; don't write raw colors. Reuse the shared building blocks in `src/components/admin/` (`PageHeader`, `FormField`, `FormDialog`, `ConfirmDialog`, `EmptyState`, `ErrorState`, `Skeleton`, `StatCard`, `AssetInput`, `TagInput`, `DateRangePicker`, `MonthPicker`, `DatePicker`, `Select`, `ListSkeletons`, `MarkdownEditor`, …) before making new ones. The admin uses the same 850px breakpoint (the sidebar becomes a drawer).
 
 ---
 
@@ -192,7 +192,7 @@ Migration (table/columns + RLS + seed) → `Table` constant → type in `utils/t
 
 - `src/app/layout.tsx`: the inline `themeScript` prevents a theme flash. Keep it in `<head>` and keep `suppressHydrationWarning`. The layout also loads the site profile, tech logos and SEO settings for every page (including the admin), so its loaders must never throw.
 - `src/middleware.ts`: clears the chat cookie on every page navigation (by design; chat history is per page load) **and** guards `/admin`. Keep both.
-- `src/docs/system-instruction.md` and `src/docs/blog-instruction.md`: runtime prompts for Gemini, read from disk by API routes. Editing them changes AI output in production.
+- `src/docs/system-instruction.md` and `src/docs/blog-instruction.md`: runtime prompts for Gemini, read from disk by API routes. Editing them changes AI output in production. `system-instruction.md` holds persona and rules only. Facts about the owner reach the chat from the database through its KNOWLEDGE block, so never add them to the prompt.
 - `GEMINI_MODEL` in `chatService.ts` is pinned on purpose (not an alias), with automatic fallback to `NEXT_SECRET_GEMINI_API_KEY2`. Don't change the model unless asked.
 - `public/documents/email-template.html`: `{{placeholder}}` names must match `ContactService`.
 - `supabase/migrations/*`: committed migrations are immutable (§4.5).

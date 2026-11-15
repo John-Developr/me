@@ -7,6 +7,8 @@ import { sileo } from "sileo";
 import DashboardCard from "@/components/admin/DashboardCard";
 import FormField from "@/components/admin/FormField";
 import AssetInput from "@/components/admin/AssetInput";
+import DatePicker from "@/components/admin/DatePicker";
+import { toIso } from "@/components/admin/DateRangePicker";
 import TimeAgo from "@/components/admin/TimeAgo";
 import { AdminIcons } from "@/components/icons/admin";
 import { networkDefine } from "@/config/networkDefine";
@@ -25,6 +27,7 @@ const FIELDS = [
     "full_name", "headline", "location", "bio", "avatar_url",
     "email", "phone", "booking_url", "resume_url",
     "github_url", "linkedin_url", "facebook_url", "instagram_url", "x_url", "website_url",
+    "birthdate", "civil_status",
 ] as const;
 
 type FieldKey  = (typeof FIELDS)[number];
@@ -65,17 +68,22 @@ export default function ProfileEditor({ profile }: { profile: PortfolioProfile |
         return () => window.removeEventListener("beforeunload", onBeforeUnload);
     }, [isDirty]);
 
+    const setField = (key: FieldKey, value: string) => {
+        setValues((prev) => ({ ...prev, [key]: value }));
+        if (errors[key]) setErrors((prev) => ({ ...prev, [key]: "" }));
+    };
+
     const input = (key: FieldKey) => ({
         id:                 `field-${key}`,
         name:               key,
         value:              values[key],
         "aria-invalid":     !!errors[key] || undefined,
         "aria-describedby": errors[key] ? `field-${key}-error` : undefined,
-        onChange:           (e: { target: { value: string } }) => {
-            setValues((prev) => ({ ...prev, [key]: e.target.value }));
-            if (errors[key]) setErrors((prev) => ({ ...prev, [key]: "" }));
-        },
+        onChange:           (e: { target: { value: string } }) => setField(key, e.target.value),
     });
+
+    // Latest selectable birthdate. Only used inside the picker popover, so it never affects server-rendered markup.
+    const today = useMemo(() => toIso(new Date()), []);
 
     const focusField = (key: string) => document.getElementById(`field-${key}`)?.focus();
 
@@ -199,6 +207,26 @@ export default function ProfileEditor({ profile }: { profile: PortfolioProfile |
                         </FormField>
                         <FormField id="website_url" label="Website" error={errors.website_url} hint="Optional, e.g. a blog elsewhere.">
                             <input {...input("website_url")} type="url" inputMode="url" placeholder="https://" spellCheck={false} />
+                        </FormField>
+                    </div>
+                </DashboardCard>
+
+                <DashboardCard title="Personal details" icon={AdminIcons.User} subtitle="Only the chat assistant uses these, when a visitor asks. Never shown on the site.">
+                    <div className={`${formStyles.fields} ${formStyles.two}`}>
+                        <FormField id="birthdate" label="Birthdate" error={errors.birthdate} hint="The chat works out your age from this.">
+                            <DatePicker
+                                id="field-birthdate"
+                                value={values.birthdate}
+                                min="1900-01-01"
+                                max={today}
+                                placeholder="Pick your birthdate"
+                                clearable
+                                aria-invalid={!!errors.birthdate || undefined}
+                                aria-describedby={errors.birthdate ? "field-birthdate-error" : undefined}
+                                onChange={(value) => setField("birthdate", value)} />
+                        </FormField>
+                        <FormField id="civil_status" label="Civil status" error={errors.civil_status} hint="e.g. Single">
+                            <input {...input("civil_status")} maxLength={40} />
                         </FormField>
                     </div>
                 </DashboardCard>

@@ -16,7 +16,7 @@ import styles from "@/styles/pages/adminDatePicker.module.css";
    Values go in and out as "YYYY-MM" ("" = empty).
    ============================================================ */
 
-const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+export const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
 const isMonth = (v?: string): v is string => !!v && /^\d{4}-(0[1-9]|1[0-2])$/.test(v);
 const toMonth = (year: number, index: number) => `${year}-${String(index + 1).padStart(2, "0")}`;

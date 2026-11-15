@@ -13,9 +13,19 @@ export class ProfileServiceError extends ServiceError {
   }
 }
 
-const COLUMNS =
+/** Columns the public site reads. */
+const PUBLIC_COLUMNS =
   "id, full_name, headline, bio, avatar_url, email, phone, location, resume_url, " +
   "website_url, github_url, linkedin_url, booking_url, facebook_url, instagram_url, x_url, created_at, updated_at";
+
+/** Personal details: read only by the admin form and the chat, never by public pages. */
+const PERSONAL_COLUMNS = "birthdate, civil_status";
+
+const COLUMNS = `${PUBLIC_COLUMNS}, ${PERSONAL_COLUMNS}`;
+
+type PersonalDetails = Pick<PortfolioProfile, "birthdate" | "civil_status">;
+
+const NO_PERSONAL_DETAILS: PersonalDetails = { birthdate: null, civil_status: null };
 
 /**
  * ProfileService — the single owner profile in `public.profiles`.
@@ -64,12 +74,12 @@ export default class ProfileService {
    * Profile for the public site (service role, server only).
    * Throws on database errors so the page can fall back to its defaults.
    */
-  static async getPublic(): Promise<PortfolioProfile | null> {
+  static async getPublic(): Promise<Omit<PortfolioProfile, keyof PersonalDetails> | null> {
     const { data, error } = await supabaseServer
       .from(Table.profiles)
-      .select(COLUMNS)
+      .select(PUBLIC_COLUMNS)
       .limit(1)
-      .maybeSingle<PortfolioProfile>();
+      .maybeSingle<Omit<PortfolioProfile, keyof PersonalDetails>>();
 
     if (error) {
       console.error("[ProfileService] getPublic failed:", error.message);
@@ -77,6 +87,27 @@ export default class ProfileService {
     }
 
     return data;
+  }
+
+  /**
+   * Birthdate and civil status for the chat assistant's knowledge (service role, server only).
+   * Kept out of `getPublic` so public pages never load them.
+   *
+   * @throws On database errors
+   */
+  static async getChatPersonal(): Promise<PersonalDetails> {
+    const { data, error } = await supabaseServer
+      .from(Table.profiles)
+      .select(PERSONAL_COLUMNS)
+      .limit(1)
+      .maybeSingle<PersonalDetails>();
+
+    if (error) {
+      console.error("[ProfileService] getChatPersonal failed:", error.message);
+      throw new Error("Failed to load personal details.");
+    }
+
+    return data ?? NO_PERSONAL_DETAILS;
   }
 
   private fail(action: string, error: PostgrestError): ProfileServiceError {
