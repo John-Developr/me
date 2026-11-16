@@ -8,6 +8,7 @@ import AssetInput from "@/components/admin/AssetInput";
 import ConfirmDialog from "@/components/admin/ConfirmDialog";
 import FormDialog from "@/components/admin/FormDialog";
 import FormField from "@/components/admin/FormField";
+import { AdminIcons } from "@/components/icons/admin";
 import Select from "@/components/admin/Select";
 import { networkDefine } from "@/config/networkDefine";
 import { toFieldErrors } from "@/utils/admin/formErrors";
@@ -135,6 +136,7 @@ export default function SkillDialog({ open, skill, categoryId, defaultCore, cate
             actions={<>
                 <button type="button" className={`liquid_glass_btn ${adminStyles["btn-secondary"]}`} onClick={onClose} disabled={busy}>Cancel</button>
                 <button type="submit" className={`liquid_glass_btn ${adminStyles["btn-primary"]}`} disabled={busy}>
+                    {busy && <AdminIcons.Loader width={15} height={15} className={adminStyles.spin} />}
                     {busy ? "Saving…" : skill ? "Save" : "Add skill"}
                 </button>
             </>}>

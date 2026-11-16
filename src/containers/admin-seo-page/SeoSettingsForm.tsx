@@ -399,7 +399,7 @@ export default function SeoSettingsForm({ data }: { data: SeoSettingsData }) {
                     </button>
                 )}
                 <button type="submit" className={`liquid_glass_btn ${adminStyles["btn-primary"]}`} disabled={saving || !isDirty}>
-                    <AdminIcons.Check width={15} height={15} />
+                    {saving ? <AdminIcons.Loader width={15} height={15} className={adminStyles.spin} /> : <AdminIcons.Check width={15} height={15} />}
                     {saving ? "Saving…" : "Save SEO settings"}
                 </button>
             </div>

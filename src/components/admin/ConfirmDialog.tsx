@@ -66,6 +66,7 @@ export default function ConfirmDialog({
                     className={`liquid_glass_btn ${danger ? styles["btn-danger"] : styles["btn-primary"]}`}
                     onClick={onConfirm}
                     disabled={busy}>
+                    {busy && <AdminIcons.Loader width={15} height={15} className={styles.spin} />}
                     {busy ? "Working…" : confirmLabel}
                 </button>
             </div>

@@ -7,6 +7,7 @@ import { sileo } from "sileo";
 import ConfirmDialog from "@/components/admin/ConfirmDialog";
 import FormDialog from "@/components/admin/FormDialog";
 import FormField from "@/components/admin/FormField";
+import { AdminIcons } from "@/components/icons/admin";
 import { SKILL_ICONS } from "@/components/tech/skillIcons";
 import { networkDefine } from "@/config/networkDefine";
 import { categoryInputSchema } from "@/utils/admin/skillSchema";
@@ -99,6 +100,7 @@ export default function CategoryDialog({ open, category, skillCount, nextOrder, 
             actions={<>
                 <button type="button" className={`liquid_glass_btn ${adminStyles["btn-secondary"]}`} onClick={onClose} disabled={busy}>Cancel</button>
                 <button type="submit" className={`liquid_glass_btn ${adminStyles["btn-primary"]}`} disabled={busy}>
+                    {busy && <AdminIcons.Loader width={15} height={15} className={adminStyles.spin} />}
                     {busy ? "Saving…" : category ? "Save" : "Add category"}
                 </button>
             </>}>

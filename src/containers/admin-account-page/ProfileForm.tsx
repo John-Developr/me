@@ -88,6 +88,7 @@ export default function ProfileForm({ email, displayName }: ProfileFormProps) {
                         type="submit"
                         className={`liquid_glass_btn ${adminStyles["btn-primary"]}`}
                         disabled={saving || !isDirty}>
+                        {saving && <AdminIcons.Loader width={15} height={15} className={adminStyles.spin} />}
                         {saving ? "Saving…" : "Save name"}
                     </button>
                 </div>

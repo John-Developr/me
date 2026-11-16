@@ -385,7 +385,7 @@ export default function ProjectForm({ project, nextOrder = 0 }: ProjectFormProps
                     {isEdit ? "Back" : "Cancel"}
                 </button>
                 <button type="submit" className={`liquid_glass_btn ${adminStyles["btn-primary"]}`} disabled={saving || (isEdit && !isDirty)}>
-                    <AdminIcons.Check width={15} height={15} />
+                    {saving ? <AdminIcons.Loader width={15} height={15} className={adminStyles.spin} /> : <AdminIcons.Check width={15} height={15} />}
                     {saving ? "Saving…" : isEdit ? "Save changes" : values.status === "published" ? "Create & publish" : "Create draft"}
                 </button>
             </div>

@@ -127,7 +127,9 @@ export default function AdminLoginPage({ next, notice, signedInWithoutAccess }: 
                                 </label>
 
                                 <button type="submit" className={`liquid_glass_btn ${styles["btn-primary"]}`} disabled={submitting}>
-                                    <AdminIcons.Lock width={16} height={16} />
+                                    {submitting
+                                        ? <AdminIcons.Loader width={16} height={16} className={styles.spin} />
+                                        : <AdminIcons.Lock width={16} height={16} />}
                                     {submitting ? "Signing in…" : "Sign in"}
                                 </button>
                             </>
