@@ -39,13 +39,15 @@ type ToolbarStyles = Record<string, string>;
 export function ToolbarSkeleton({ filters, search, styles = tableStyles }: { filters: string[]; search: string; styles?: ToolbarStyles }) {
     return (
         <div className={styles.toolbar}>
-            <div className={styles.filters}>
-                {filters.map((label) => (
-                    <button key={label} type="button" disabled tabIndex={-1}>
-                        {label} <span className={styles.count}>·</span>
-                    </button>
-                ))}
-            </div>
+            {filters.length > 0 && (
+                <div className={styles.filters}>
+                    {filters.map((label) => (
+                        <button key={label} type="button" disabled tabIndex={-1}>
+                            {label} <span className={styles.count}>·</span>
+                        </button>
+                    ))}
+                </div>
+            )}
             <div className={styles.search}>
                 <AdminIcons.Search width={16} height={16} />
                 <input type="search" placeholder={search} disabled tabIndex={-1} aria-hidden="true" />

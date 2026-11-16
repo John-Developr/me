@@ -20,7 +20,7 @@ This content lives in Supabase and is edited in the admin at `/admin` (sign in a
 |---|---|---|
 | Name, headline, location, photo, bio, email, phone, booking link, resume, social links | Personal Profile | Home hero, About Me, Connect, header and footer on every page |
 | Projects (featured, order, published/draft) | Projects | `/projects`, home "Recent Projects." |
-| Work, education and milestones | Work Experience | Home "Experience." (grouping and durations are automatic) |
+| Work, education and milestones | Work Experience (Education lists and adds education entries only) | Home "Experience." (grouping and durations are automatic) |
 | Skills, categories, Core Stack, "Right now", tech logos | Skills & Technologies | `/tech-stack`, home "Tech Stack." (first 8 core tools), logos on tech chips everywhere |
 | Images and PDFs | Media Library (or the "Library" button on any image field) | Wherever they're picked |
 | Blog posts (write, generate with AI by category, publish/draft, delete) | Blog | `/blog`, `/blog/[slug]`, home "Recent Blog." |

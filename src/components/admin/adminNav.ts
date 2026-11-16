@@ -40,7 +40,7 @@ export const ADMIN_NAV: AdminNavGroup[] = [
       { key: "experience",     label: "Work Experience",       icon: AdminIcons.Briefcase,     kind: "route", href: "/admin/experience" },
       { key: "skills",         label: "Skills & Technologies", icon: AdminIcons.Code,          kind: "route", href: "/admin/skills" },
       { key: "blog",           label: "Blog",                  icon: AdminIcons.FileText,      kind: "route", href: "/admin/blog" },
-      { key: "education",      label: "Education",             icon: AdminIcons.GraduationCap, kind: "soon" },
+      { key: "education",      label: "Education",             icon: AdminIcons.GraduationCap, kind: "route", href: "/admin/education" },
       { key: "certifications", label: "Certifications",        icon: AdminIcons.Award,         kind: "soon" },
       { key: "services",       label: "Services",              icon: AdminIcons.Layers,        kind: "soon" },
       { key: "testimonials",   label: "Testimonials",          icon: AdminIcons.Quote,         kind: "soon" },

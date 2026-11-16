@@ -10,6 +10,7 @@ export const ADMIN_PAGE_HEADERS = {
   projects:   { title: "Projects",              description: "Everything here appears on your portfolio's Projects page once published." },
   blog:       { title: "Blog",                  description: "AI-generated and personal posts. Only published posts appear on your blog." },
   experience: { title: "Work Experience",       description: "Your career timeline: the “Experience.” card on the home page." },
+  education:  { title: "Education",             description: "Degrees and courses. They show in the “Experience.” card on the home page, with your work." },
   skills:     { title: "Skills & Technologies", description: "Your tech stack on /tech-stack and the home page. Logos here also show on project chips." },
   media:      { title: "Media Library",         description: "Images and documents used across your portfolio. Choose them from any image field." },
   messages:   { title: "Contact Messages",      description: "Messages sent through your portfolio's contact form. Each one is also emailed to you." },

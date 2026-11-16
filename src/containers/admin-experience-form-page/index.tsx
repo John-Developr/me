@@ -6,6 +6,7 @@ import { DashboardRefreshProvider } from "@/components/admin/DashboardRefresh";
 import AdminAuthService from "@/lib/.services/adminAuthService";
 import ExperienceService from "@/lib/.services/experienceService";
 import { ExperienceRecord } from "@/utils/types";
+import { EXPERIENCE_SCREENS, ExperienceScreen } from "@/utils/admin/experienceSchema";
 import adminStyles from "@/styles/pages/admin.module.css";
 
 import ExperienceForm, { KnownCompany } from "./ExperienceForm";
@@ -23,8 +24,14 @@ const toCompanies = (entries: ExperienceRecord[]): KnownCompany[] => {
     return [...map.values()];
 };
 
-export default async function AdminExperienceFormPage({ id }: { id?: string }) {
+interface AdminExperienceFormPageProps {
+    id?:     string;
+    screen?: ExperienceScreen;   // "education": only education entries can be opened here
+}
+
+export default async function AdminExperienceFormPage({ id, screen = "experience" }: AdminExperienceFormPageProps) {
     if (id !== undefined && !UUID.test(id)) notFound();
+    const fixedType = EXPERIENCE_SCREENS[screen].type;
 
     let entry:     ExperienceRecord | undefined;
     let companies: KnownCompany[] = [];
@@ -35,11 +42,12 @@ export default async function AdminExperienceFormPage({ id }: { id?: string }) {
         const session = await AdminAuthService.getSession();
         if (session.status !== "admin") throw new Error("Not authorized.");
 
-        const all = await new ExperienceService(session.client).list();
-        companies = toCompanies(all);
+        const all   = await new ExperienceService(session.client).list();
+        const scope = fixedType ? all.filter((e) => e.entry_type === fixedType) : all;
+        companies = toCompanies(scope);
 
         if (id) {
-            entry   = all.find((e) => e.id === id);
+            entry   = scope.find((e) => e.id === id);
             missing = !entry;
         }
     } catch {
@@ -52,12 +60,12 @@ export default async function AdminExperienceFormPage({ id }: { id?: string }) {
         <DashboardRefreshProvider>
             <div className={adminStyles.page}>
                 <PageHeader
-                    title={entry ? `Edit “${entry.position}”` : "Add Experience"}
+                    title={entry ? `Edit “${entry.position}”` : fixedType ? "Add Education" : "Add Experience"}
                     description="Saved changes appear on your home page right away." />
 
                 {failed
                     ? <ErrorState message="Couldn't load this entry. Check your connection and try again." />
-                    : <ExperienceForm key={entry?.id ?? "new"} entry={entry} companies={companies} />}
+                    : <ExperienceForm key={entry?.id ?? "new"} entry={entry} companies={companies} screen={screen} />}
             </div>
         </DashboardRefreshProvider>
     );

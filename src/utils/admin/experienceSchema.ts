@@ -67,3 +67,14 @@ export const EXPERIENCE_LABELS = {
   education: { type: "Education", company: "School",    position: "Degree / course", plural: "Education" },
   milestone: { type: "Milestone", company: "Title",     position: "Description",     plural: "Milestones" },
 } as const;
+
+/**
+ * Admin screens that edit `experiences`: the whole timeline, or education
+ * entries only. Both use the same API and form; `type` fixes the entry type.
+ */
+export const EXPERIENCE_SCREENS = {
+  experience: { href: "/admin/experience", type: null },
+  education:  { href: "/admin/education",  type: "education" },
+} as const;
+
+export type ExperienceScreen = keyof typeof EXPERIENCE_SCREENS;
