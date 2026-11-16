@@ -18,7 +18,7 @@ This is **John Carlo A. Ylanan's personal portfolio** — a Next.js 15 (App Rout
 - A contact form that sends email via Nodemailer/Gmail SMTP and saves to `contact_messages`
 - First-party, privacy-friendly analytics (`PageViewTracker` → `POST /api/p`)
 
-**Admin CMS** (`/admin`, private, Supabase Auth): dashboard, Projects, Personal Profile, Work Experience, Skills & Technologies, Blog, Contact Messages (+ notification bell), Media Library, Analytics, SEO Settings, Account.
+**Admin CMS** (`/admin`, private, Supabase Auth): dashboard, Projects, Personal Profile, Work Experience, Education, Skills & Technologies, Blog, Contact Messages (+ notification bell), Media Library, Analytics, SEO Settings, Account.
 
 **All portfolio content lives in Supabase and is edited in the admin.** Nothing is hard-coded in components anymore, and there are no code fallbacks (see §4.1).
 

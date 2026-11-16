@@ -14,7 +14,9 @@ import AssetInput from "@/components/admin/AssetInput";
 import TimeAgo from "@/components/admin/TimeAgo";
 import { AdminIcons } from "@/components/icons/admin";
 import { networkDefine } from "@/config/networkDefine";
-import { EMPLOYMENT_TYPES, EXPERIENCE_LABELS, EXPERIENCE_TYPES, experienceInputSchema } from "@/utils/admin/experienceSchema";
+import {
+    EMPLOYMENT_TYPES, EXPERIENCE_LABELS, EXPERIENCE_SCREENS, EXPERIENCE_TYPES, ExperienceScreen, experienceInputSchema,
+} from "@/utils/admin/experienceSchema";
 import { isAssetRef } from "@/utils/admin/fieldSchemas";
 import { toFieldErrors } from "@/utils/admin/formErrors";
 import { formatDuration, formatRange, monthsBetween } from "@/utils/experienceTimeline";
@@ -43,8 +45,8 @@ interface FormState {
 
 type TextKey = Exclude<keyof FormState, "entry_type" | "is_current">;
 
-const fromEntry = (e?: ExperienceRecord): FormState => ({
-    entry_type:      e?.entry_type ?? "work",
+const fromEntry = (e?: ExperienceRecord, newType: ExperienceType = "work"): FormState => ({
+    entry_type:      e?.entry_type ?? newType,
     company:         e?.company ?? "",
     position:        e?.position ?? "",
     employment_type: e?.employment_type ?? "",
@@ -77,13 +79,15 @@ const CURRENT_LABEL: Record<Exclude<ExperienceType, "milestone">, string> = {
 interface ExperienceFormProps {
     entry?:    ExperienceRecord;
     companies: KnownCompany[];
+    screen?:   ExperienceScreen;   // "education": type is fixed and the Type card is hidden
 }
 
-export default function ExperienceForm({ entry, companies }: ExperienceFormProps) {
+export default function ExperienceForm({ entry, companies, screen = "experience" }: ExperienceFormProps) {
     const router = useRouter();
     const isEdit = !!entry;
+    const { href: listHref, type: fixedType } = EXPERIENCE_SCREENS[screen];
 
-    const initial = useMemo(() => fromEntry(entry), [entry]);
+    const initial = useMemo(() => fromEntry(entry, fixedType ?? "work"), [entry, fixedType]);
 
     const [values,   setValues]   = useState<FormState>(initial);
     const [baseline, setBaseline] = useState<FormState>(initial);
@@ -166,7 +170,7 @@ export default function ExperienceForm({ entry, companies }: ExperienceFormProps
                 router.refresh();
             } else {
                 setBaseline(values);
-                router.push("/admin/experience");
+                router.push(listHref);
                 router.refresh();
             }
         } catch {
@@ -188,7 +192,7 @@ export default function ExperienceForm({ entry, companies }: ExperienceFormProps
             }
             sileo.success({ title: "Entry deleted", description: entry.position });
             setBaseline(values);
-            router.push("/admin/experience");
+            router.push(listHref);
             router.refresh();
         } catch {
             sileo.error({ title: "Network error", description: "Check your connection and try again." });
@@ -215,27 +219,29 @@ export default function ExperienceForm({ entry, companies }: ExperienceFormProps
     return (
         <form className={formStyles.form} onSubmit={handleSubmit} noValidate>
             <div className={formStyles["form-main"]}>
-                <DashboardCard title="Type" icon={AdminIcons.Layers}>
-                    <fieldset className={`${formStyles.radios} ${formStyles["radios-row"]}`}>
-                        <legend className={adminStyles["sr-only"]}>Entry type</legend>
-                        {EXPERIENCE_TYPES.map((type) => (
-                            <label key={type} className={values.entry_type === type ? formStyles.checked : ""}>
-                                <input
-                                    type="radio"
-                                    name="entry_type"
-                                    value={type}
-                                    checked={values.entry_type === type}
-                                    onChange={() => set("entry_type", type)} />
-                                <span>
-                                    <strong>{EXPERIENCE_LABELS[type].type}</strong>
-                                    <small>
-                                        {type === "work" ? "A role at a company" : type === "education" ? "A degree or course" : "A single moment"}
-                                    </small>
-                                </span>
-                            </label>
-                        ))}
-                    </fieldset>
-                </DashboardCard>
+                {!fixedType && (
+                    <DashboardCard title="Type" icon={AdminIcons.Layers}>
+                        <fieldset className={`${formStyles.radios} ${formStyles["radios-row"]}`}>
+                            <legend className={adminStyles["sr-only"]}>Entry type</legend>
+                            {EXPERIENCE_TYPES.map((type) => (
+                                <label key={type} className={values.entry_type === type ? formStyles.checked : ""}>
+                                    <input
+                                        type="radio"
+                                        name="entry_type"
+                                        value={type}
+                                        checked={values.entry_type === type}
+                                        onChange={() => set("entry_type", type)} />
+                                    <span>
+                                        <strong>{EXPERIENCE_LABELS[type].type}</strong>
+                                        <small>
+                                            {type === "work" ? "A role at a company" : type === "education" ? "A degree or course" : "A single moment"}
+                                        </small>
+                                    </span>
+                                </label>
+                            ))}
+                        </fieldset>
+                    </DashboardCard>
+                )}
 
                 <DashboardCard title="Details" icon={AdminIcons.Briefcase}>
                     <div className={`${formStyles.fields} ${formStyles.two}`}>
@@ -384,7 +390,7 @@ export default function ExperienceForm({ entry, companies }: ExperienceFormProps
                     type="button"
                     className={`liquid_glass_btn ${adminStyles["btn-secondary"]}`}
                     disabled={saving}
-                    onClick={() => (isDirty ? setConfirm("discard") : router.push("/admin/experience"))}>
+                    onClick={() => (isDirty ? setConfirm("discard") : router.push(listHref))}>
                     {isEdit ? "Back" : "Cancel"}
                 </button>
                 <button type="submit" className={`liquid_glass_btn ${adminStyles["btn-primary"]}`} disabled={saving || (isEdit && !isDirty)}>
@@ -399,7 +405,7 @@ export default function ExperienceForm({ entry, companies }: ExperienceFormProps
                 title="Discard unsaved changes?"
                 description="Your edits to this entry haven't been saved."
                 confirmLabel="Discard changes"
-                onConfirm={() => { setBaseline(values); setConfirm(null); router.push("/admin/experience"); }}
+                onConfirm={() => { setBaseline(values); setConfirm(null); router.push(listHref); }}
                 onCancel={() => setConfirm(null)} />
 
             <ConfirmDialog

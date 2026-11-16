@@ -6,39 +6,53 @@ import {
     FieldSkeleton, MetaSkeleton, RadiosSkeleton, SaveBarSkeleton,
 } from "@/components/admin/FormSkeletons";
 import { AdminIcons } from "@/components/icons/admin";
+import { EXPERIENCE_LABELS, EXPERIENCE_SCREENS, ExperienceScreen } from "@/utils/admin/experienceSchema";
 import adminStyles from "@/styles/pages/admin.module.css";
 import formStyles from "@/styles/pages/adminForm.module.css";
 import styles from "@/styles/pages/adminExperience.module.css";
 
 /**
- * Loading screen for /admin/experience/[id]/edit: the same header, cards,
- * labels and save bar as ExperienceForm, laid out for a Work entry (the most
- * common type). Adding an entry has no skeleton: there is no data to wait for.
+ * Loading screen for /admin/experience/[id]/edit (laid out for a Work entry,
+ * the most common type) and /admin/education/[id]/edit: the same header,
+ * cards, labels and save bar as ExperienceForm. Adding an entry has no
+ * skeleton: there is no data to wait for.
  */
-export default function ExperienceFormSkeleton() {
+export default function ExperienceFormSkeleton({ screen = "experience" }: { screen?: ExperienceScreen }) {
+    const education = EXPERIENCE_SCREENS[screen].type === "education";
+
     return (
-        <div className={adminStyles.page} aria-busy="true" aria-label="Loading experience">
+        <div className={adminStyles.page} aria-busy="true" aria-label={`Loading ${screen}`}>
             <PageHeader
-                title="Edit Experience"
+                title={education ? "Edit Education" : "Edit Experience"}
                 description="Saved changes appear on your home page right away." />
 
             <div className={formStyles.form}>
                 <div className={formStyles["form-main"]}>
-                    <DashboardCard title="Type" icon={AdminIcons.Layers}>
-                        <RadiosSkeleton row options={[
-                            { title: "Work",      text: "A role at a company" },
-                            { title: "Education", text: "A degree or course" },
-                            { title: "Milestone", text: "A single moment" },
-                        ]} />
-                    </DashboardCard>
+                    {!education && (
+                        <DashboardCard title="Type" icon={AdminIcons.Layers}>
+                            <RadiosSkeleton row options={[
+                                { title: "Work",      text: "A role at a company" },
+                                { title: "Education", text: "A degree or course" },
+                                { title: "Milestone", text: "A single moment" },
+                            ]} />
+                        </DashboardCard>
+                    )}
 
                     <DashboardCard title="Details" icon={AdminIcons.Briefcase}>
-                        <div className={`${formStyles.fields} ${formStyles.two}`}>
-                            <FieldSkeleton label="Company" required hint="Use the same name for each role to group them." />
-                            <FieldSkeleton label="Role" required />
-                            <FieldSkeleton label="Employment type" />
-                            <FieldSkeleton label="Location" hint="Optional, e.g. Cebu City or Remote" />
-                        </div>
+                        {education ? (
+                            <div className={`${formStyles.fields} ${formStyles.two}`}>
+                                <FieldSkeleton label={EXPERIENCE_LABELS.education.company} required />
+                                <FieldSkeleton label={EXPERIENCE_LABELS.education.position} required />
+                                <FieldSkeleton label="Location" hint="Optional, e.g. Cebu City or Remote" />
+                            </div>
+                        ) : (
+                            <div className={`${formStyles.fields} ${formStyles.two}`}>
+                                <FieldSkeleton label="Company" required hint="Use the same name for each role to group them." />
+                                <FieldSkeleton label="Role" required />
+                                <FieldSkeleton label="Employment type" />
+                                <FieldSkeleton label="Location" hint="Optional, e.g. Cebu City or Remote" />
+                            </div>
+                        )}
                     </DashboardCard>
 
                     <DashboardCard title="Dates" icon={AdminIcons.Clock}>
@@ -46,7 +60,9 @@ export default function ExperienceFormSkeleton() {
                             <FieldSkeleton label="Start" required />
                             <FieldSkeleton label="End" />
                         </div>
-                        <CheckboxSkeleton title="I currently work here" text="Shows “Present” and counts the duration up to this month." />
+                        <CheckboxSkeleton
+                            title={education ? "I'm currently studying here" : "I currently work here"}
+                            text="Shows “Present” and counts the duration up to this month." />
                     </DashboardCard>
 
                     <DashboardCard title="More" icon={AdminIcons.FileText}>

@@ -152,7 +152,7 @@ Each row is an `AnimatedSection` (uses `useAnimateIn`, staggered delays 50 / 150
 | Profile / role / location | `home-page/detail-section/DetailSection.tsx` | From Supabase (edit in `/admin/profile`) |
 | About | `home-page/about-section/AboutSection.tsx` | From Supabase (edit in `/admin/profile`) |
 | Tech stack | `home-page/stack-section/StackSection.tsx` — the first 8 Core Stack tools | From Supabase (edit in `/admin/skills`), 2-col grid (1-col mobile) |
-| Experience | `home-page/experience-section/ExperienceSection.tsx` — roles grouped by company, durations computed | From Supabase (edit in `/admin/experience`) |
+| Experience | `home-page/experience-section/ExperienceSection.tsx` — roles grouped by company, durations computed | From Supabase (edit in `/admin/experience`; education also in `/admin/education`) |
 | Featured project | `home-page/project-section/ProjectSection.tsx` | Featured project from Supabase (edit in `/admin/projects`) |
 | Contact details / socials | `ConnectSection.tsx`, `Header.tsx`, `Footer.tsx` | From Supabase (edit in `/admin/profile`) |
 | Blog posts | Supabase `ai_blogs` (shape = `AIBlogResponse` in `utils/types.ts`) | Client fetch → API → Supabase |
