@@ -200,7 +200,10 @@
     color: var(--text-soft);
 } 
 
-.btn {
+/* `button.btn` outranks the global .liquid_glass_btn (same specificity as a
+   lone class, and globals.css can load later), so the primary fill isn't
+   replaced by the glass `background` shorthand */
+button.btn {
     background-color: var(--bg-primary);
     color: white;
     padding: 0px 20px;
