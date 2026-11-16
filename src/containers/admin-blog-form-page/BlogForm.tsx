@@ -229,7 +229,7 @@ export default function BlogForm({ post }: BlogFormProps) {
                                     aria-busy={generating}
                                     onClick={() => (hasText ? setConfirm("replace") : generate())}>
                                     {generating
-                                        ? <AdminIcons.Refresh width={15} height={15} className={adminStyles.spin} />
+                                        ? <AdminIcons.Loader width={15} height={15} className={adminStyles.spin} />
                                         : <AdminIcons.Zap width={15} height={15} />}
                                     {generating ? "Writing…" : "Generate post"}
                                 </button>
@@ -376,7 +376,7 @@ export default function BlogForm({ post }: BlogFormProps) {
                     {isEdit ? "Back" : "Cancel"}
                 </button>
                 <button type="submit" className={`liquid_glass_btn ${adminStyles["btn-primary"]}`} disabled={busy || (isEdit && !isDirty)}>
-                    <AdminIcons.Check width={15} height={15} />
+                    {saving ? <AdminIcons.Loader width={15} height={15} className={adminStyles.spin} /> : <AdminIcons.Check width={15} height={15} />}
                     {saving ? "Saving…" : isEdit ? "Save changes" : values.status === "published" ? "Create & publish" : "Create draft"}
                 </button>
             </div>

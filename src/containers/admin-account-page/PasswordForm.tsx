@@ -106,6 +106,7 @@ export default function PasswordForm({ email }: { email: string }) {
 
                 <div className={styles["form-actions"]}>
                     <button type="submit" className={`liquid_glass_btn ${adminStyles["btn-primary"]}`} disabled={saving}>
+                        {saving && <AdminIcons.Loader width={15} height={15} className={adminStyles.spin} />}
                         {saving ? "Changing…" : "Change password"}
                     </button>
                 </div>

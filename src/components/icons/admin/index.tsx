@@ -173,6 +173,10 @@ export const AdminIcons = {
         <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16" />
         <path d="M8 16H3v5" />
     </>),
+    /** Busy indicator for submit buttons; spin it with `admin.module.css` `.spin`. */
+    Loader: createIcon("Loader", <>
+        <path d="M21 12a9 9 0 1 1-6.219-8.56" />
+    </>),
     Activity: createIcon("Activity", <>
         <path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2" />
     </>),

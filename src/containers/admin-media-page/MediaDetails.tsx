@@ -124,6 +124,7 @@ export default function MediaDetails({ asset, onDeleted, onChanged }: MediaDetai
                         type="submit"
                         className={`liquid_glass_btn ${adminStyles["btn-secondary"]}`}
                         disabled={savingAlt || alt.trim() === (asset.alt_text ?? "")}>
+                        {savingAlt && <AdminIcons.Loader width={15} height={15} className={adminStyles.spin} />}
                         {savingAlt ? "Saving…" : "Save alt text"}
                     </button>
                 </form>
