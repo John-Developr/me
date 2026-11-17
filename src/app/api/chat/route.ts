@@ -6,6 +6,12 @@ import ChatService from "@/lib/.services/chatService";
 import RateLimitService from "@/lib/.services/rateLimitService";
 import { getChatKnowledge } from "@/app/getChatKnowledge";
 
+/**
+ * The main model can take ~20 s to fail before the fallback answers, which is
+ * past Vercel's default function limit, so the visitor got an error.
+ */
+export const maxDuration = 60;
+
 /** Longest chat message accepted, in characters. */
 const MAX_MESSAGE_LENGTH = 1000;
 
