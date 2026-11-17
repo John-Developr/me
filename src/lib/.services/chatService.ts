@@ -17,6 +17,24 @@ import { fitHistory, parseHistory } from "@/utils/chatHistory";
 /** Gemini model for the chat assistant and blog generation (pinned, not an alias). */
 const GEMINI_MODEL = "gemini-3.6-flash";
 
+/**
+ * Used when GEMINI_MODEL is overloaded, not responding or out of quota on
+ * every key. Google's "high demand" 503s hit a model for all keys at once,
+ * so switching keys alone doesn't help.
+ */
+const GEMINI_FALLBACK_MODEL = "gemini-3.1-flash-lite";
+
+/** Models in the order they are tried. */
+const GEMINI_MODELS = [GEMINI_MODEL, GEMINI_FALLBACK_MODEL];
+
+/**
+ * Time limit for one Gemini attempt, in ms. Without it an overloaded model
+ * can hang for minutes and the fallback never gets a turn. Blog posts are
+ * longer to write; 40 s + the fallback still fits the routes' 60 s maxDuration.
+ */
+const CHAT_TIMEOUT_MS = 20_000;
+const BLOG_TIMEOUT_MS = 40_000;
+
 /** API keys in priority order; empty ones are skipped. */
 const GEMINI_API_KEYS: string[] = [
     process.env.NEXT_SECRET_GEMINI_API_KEY,
@@ -36,50 +54,73 @@ let activeKeyIndex = 0;
 
 /**
  * Whether an error is specific to the API key (so another key may succeed):
- * rate/quota limits, invalid or disabled keys, and service unavailability.
+ * rate/quota limits and invalid or disabled keys.
  */
-function isKeyFallbackError(error: unknown): boolean {
+function isKeyError(error: unknown): boolean {
     if (!(error instanceof ApiError)) return false;
-    if ([401, 403, 429, 500, 503].includes(error.status)) return true;
+    if ([401, 403, 429].includes(error.status)) return true;
     return error.status === 400 && /API_KEY_INVALID|API key/i.test(error.message);
 }
 
 /**
- * Runs a Gemini call with automatic key fallback: tries the active key first,
- * and on a key-specific error retries with the next key.
- *
- * @param call - Receives a client for the key being tried
- * @throws The last error if every key fails, or immediately for non-key errors
+ * Whether the model itself is unavailable (overloaded, server error or our
+ * time limit). Other keys would hit the same model, so the next model is tried.
  */
-async function withGeminiKeyFallback<T>(call: (ai: GoogleGenAI) => Promise<T>): Promise<T> {
+function isModelError(error: unknown): boolean {
+    if (error instanceof ApiError) return [500, 502, 503, 504].includes(error.status);
+    return error instanceof Error && (error.name === "AbortError" || error.name === "TimeoutError");
+}
+
+/** Short reason for the log line (never includes the key). */
+function failureReason(error: unknown): string {
+    if (error instanceof ApiError) return String(error.status);
+    return error instanceof Error ? error.name : "unknown";
+}
+
+/**
+ * Runs a Gemini call with automatic fallback. For each model in GEMINI_MODELS,
+ * tries the keys starting with the one that last worked: a key error moves to
+ * the next key, a model error moves to the next model.
+ *
+ * @param call - Receives a client for the key being tried and the model to use
+ * @throws The last error if everything fails, or immediately for other errors
+ */
+async function withGeminiFallback<T>(call: (ai: GoogleGenAI, model: string) => Promise<T>): Promise<T> {
     if (GEMINI_API_KEYS.length === 0) {
         throw new Error("No Gemini API key configured.");
     }
 
     let lastError: unknown;
 
-    for (let offset = 0; offset < GEMINI_API_KEYS.length; offset++) {
-        const index = (activeKeyIndex + offset) % GEMINI_API_KEYS.length;
-        const key   = GEMINI_API_KEYS[index];
+    for (const model of GEMINI_MODELS) {
+        for (let offset = 0; offset < GEMINI_API_KEYS.length; offset++) {
+            const index = (activeKeyIndex + offset) % GEMINI_API_KEYS.length;
+            const key   = GEMINI_API_KEYS[index];
 
-        let client = geminiClients.get(key);
-        if (!client) {
-            client = new GoogleGenAI({ apiKey: key });
-            geminiClients.set(key, client);
-        }
+            let client = geminiClients.get(key);
+            if (!client) {
+                client = new GoogleGenAI({ apiKey: key });
+                geminiClients.set(key, client);
+            }
 
-        try {
-            const result   = await call(client);
-            activeKeyIndex = index;
-            return result;
-        } catch (error) {
-            lastError = error;
+            try {
+                const result   = await call(client, model);
+                activeKeyIndex = index;
+                return result;
+            } catch (error) {
+                lastError = error;
 
-            if (!isKeyFallbackError(error)) throw error;
+                const modelDown = isModelError(error);
+                if (!modelDown && !isKeyError(error)) throw error;
 
-            // Log which key slot failed (never the key itself).
-            const status = error instanceof ApiError ? error.status : "unknown";
-            console.warn(`[Gemini] key #${index + 1} failed with ${status}; trying the next key.`);
+                // Log which key slot failed (never the key itself).
+                console.warn(
+                    `[Gemini] ${model} key #${index + 1} failed with ${failureReason(error)}; ` +
+                    (modelDown ? "trying the next model." : "trying the next key.")
+                );
+
+                if (modelDown) break;
+            }
         }
     }
 
@@ -120,8 +161,12 @@ export default class ChatService {
         this.config.history = await this.getChatCookie();
 
         // Create chat session and send message
-        const reply = await withGeminiKeyFallback(async (ai) => {
-            const chat = ai.chats.create(this.config);
+        const reply = await withGeminiFallback(async (ai, model) => {
+            const chat = ai.chats.create({
+                ...this.config,
+                model,
+                config: { ...this.config.config, httpOptions: { timeout: CHAT_TIMEOUT_MS } },
+            });
             return chat.sendMessage({ message });
         });
 
@@ -273,7 +318,11 @@ export default class ChatService {
         });
 
         await this.blogConfig(matchSchema, recentTitles, category);
-        const response = await withGeminiKeyFallback((ai) => ai.models.generateContent(this.config));
+        const response = await withGeminiFallback((ai, model) => ai.models.generateContent({
+            ...this.config,
+            model,
+            config: { ...this.config.config, httpOptions: { timeout: BLOG_TIMEOUT_MS } },
+        }));
 
         if (!response.text) {
             throw new Error("AI returned an empty response.");
