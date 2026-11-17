@@ -28,6 +28,16 @@ const GEMINI_FALLBACK_MODEL = "gemini-3.1-flash-lite";
 const GEMINI_MODELS = [GEMINI_MODEL, GEMINI_FALLBACK_MODEL];
 
 /**
+ * How long a model is skipped after a model error, in ms. An overloaded model
+ * can take ~20 s to fail, so without this every message would wait that long
+ * before the fallback answers.
+ */
+const MODEL_COOLDOWN_MS = 5 * 60_000;
+
+/** When each recently failed model may be tried again (epoch ms). */
+const modelRetryAt = new Map<string, number>();
+
+/**
  * Time limit for one Gemini attempt, in ms. Without it an overloaded model
  * can hang for minutes and the fallback never gets a turn. Blog posts are
  * longer to write; 40 s + the fallback still fits the routes' 60 s maxDuration.
@@ -80,7 +90,8 @@ function failureReason(error: unknown): string {
 /**
  * Runs a Gemini call with automatic fallback. For each model in GEMINI_MODELS,
  * tries the keys starting with the one that last worked: a key error moves to
- * the next key, a model error moves to the next model.
+ * the next key, a model error moves to the next model and skips the failed
+ * model for MODEL_COOLDOWN_MS (unless every model is cooling down).
  *
  * @param call - Receives a client for the key being tried and the model to use
  * @throws The last error if everything fails, or immediately for other errors
@@ -92,7 +103,11 @@ async function withGeminiFallback<T>(call: (ai: GoogleGenAI, model: string) => P
 
     let lastError: unknown;
 
-    for (const model of GEMINI_MODELS) {
+    const now    = Date.now();
+    const ready  = GEMINI_MODELS.filter((model) => (modelRetryAt.get(model) ?? 0) <= now);
+    const models = ready.length > 0 ? ready : GEMINI_MODELS;
+
+    for (const model of models) {
         for (let offset = 0; offset < GEMINI_API_KEYS.length; offset++) {
             const index = (activeKeyIndex + offset) % GEMINI_API_KEYS.length;
             const key   = GEMINI_API_KEYS[index];
@@ -106,6 +121,7 @@ async function withGeminiFallback<T>(call: (ai: GoogleGenAI, model: string) => P
             try {
                 const result   = await call(client, model);
                 activeKeyIndex = index;
+                modelRetryAt.delete(model);
                 return result;
             } catch (error) {
                 lastError = error;
@@ -119,7 +135,10 @@ async function withGeminiFallback<T>(call: (ai: GoogleGenAI, model: string) => P
                     (modelDown ? "trying the next model." : "trying the next key.")
                 );
 
-                if (modelDown) break;
+                if (modelDown) {
+                    modelRetryAt.set(model, Date.now() + MODEL_COOLDOWN_MS);
+                    break;
+                }
             }
         }
     }
