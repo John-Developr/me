@@ -21,6 +21,8 @@ const GEMINI_MODEL = "gemini-3.6-flash";
 const GEMINI_API_KEYS: string[] = [
     process.env.NEXT_SECRET_GEMINI_API_KEY,
     process.env.NEXT_SECRET_GEMINI_API_KEY2,
+    process.env.NEXT_SECRET_GEMINI_API_KEY3,
+    process.env.NEXT_SECRET_GEMINI_API_KEY4,
 ].filter((key): key is string => !!key);
 
 /** One client per key, created lazily and reused across requests. */
@@ -28,7 +30,7 @@ const geminiClients = new Map<string, GoogleGenAI>();
 
 /**
  * Index of the key that last worked. After a key hits its limit, later
- * requests start with the other key instead of failing on the first one again.
+ * requests start with the next key instead of failing on the first one again.
  */
 let activeKeyIndex = 0;
 
