@@ -218,6 +218,7 @@ See [`.env.example`](../.env.example).
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | public | Present in env; not currently read by code |
 | `NEXT_SECRET_SUPABASE_ROLE_KEY` | server | Supabase client key |
 | `NEXT_SECRET_GEMINI_API_KEY` | server | `ChatService` |
+| `NEXT_SECRET_GEMINI_API_KEY2`–`4` | server | `ChatService` (optional fallback keys, tried in order) |
 | `GMAIL_USER_EMAIL` | server | `ContactService` (sender + recipient) |
 | `GMAIL_APP_PASSWORD` | server | `ContactService` |
 | `CRON_SECRET` | server | `/api/cron/blog` auth |
